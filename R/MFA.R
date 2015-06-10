@@ -130,7 +130,7 @@ MFA <- function(Data, Grupo, TipoGrupo = rep("n",length(Grupo)), NomeGrupos = NU
     PCol <- NULL   # Matriz com os pesos das coluna nula
     
     ### INICIO - Centraliza na Media e Padroniza os dados por coluna,  ###
-    ### assim teremos media zero e soma quadrado igual ao nº de linhas ###
+    ### assim teremos media zero e soma quadrado igual ao numero de linhas ###
     MC <- as.matrix(DataQ) # Matriz dados por grupo de variaveis
     
     if (sum(PondGeral)!=0) # usado para equilibrar os conjuntos quantitativos e categoricos, quando ha tabelas de frequencias 
@@ -145,7 +145,7 @@ MFA <- function(Data, Grupo, TipoGrupo = rep("n",length(Grupo)), NomeGrupos = NU
     else
       SqSum <- sqrt(colSums(MC^2)/nrow(MC))
     
-    MC <- sweep(MC, 2, SqSum, FUN = "/") # Normaliza os dados ou seja as somas dos quadrados e o nº de linhas  
+    MC <- sweep(MC, 2, SqSum, FUN = "/") # Normaliza os dados ou seja as somas dos quadrados e o numero de linhas  
     ### FIM - Centraliza na Media e Padroniza os dados  ###  
     
     if (sum(PondGeral)!=0) # usado para equilibrar os conjuntos quantitativos e categoricos, quando ha tabelas de frequencias
@@ -166,7 +166,7 @@ MFA <- function(Data, Grupo, TipoGrupo = rep("n",length(Grupo)), NomeGrupos = NU
       MC <- sweep(MC, 2, SCol2, FUN = "/")
     }
     
-    Pe <- GSVD(MC,PLin,rep(1,ncol(MC)))$d[1]^2   # Encontra o 1º auto valor de MC
+    Pe <- GSVD(MC,PLin,rep(1,ncol(MC)))$d[1]^2   # Encontra o primeiro auto valor de MC
     
     PCol <- cbind(PCol,t(rep(1/Pe,ncol(MC)))) # Matriz com os pesos das colunas
     
@@ -199,7 +199,7 @@ MFA <- function(Data, Grupo, TipoGrupo = rep("n",length(Grupo)), NomeGrupos = NU
     
     IM <- cbind(IM,DB) # Matriz Indicadora
     
-    PVS <- CA_MFA(DB)  # Encontra o 1º Valor Singular
+    PVS <- CA_MFA(DB)  # Encontra o primeiro Valor Singular
     
     NL  <- nrow(DB)    # numero de linhas
     
@@ -210,7 +210,7 @@ MFA <- function(Data, Grupo, TipoGrupo = rep("n",length(Grupo)), NomeGrupos = NU
     
     MB1 <- sweep(DB,1,PRL,FUN="*") # matriz pre-balanciada 1
     
-    PVS <- CA_MFA(MB1) # Encontra o 1º Valor Singular de MC
+    PVS <- CA_MFA(MB1) # Encontra o primeiro Valor Singular de MC
     
     SLI <- apply(MB1,2,sum)  # soma das colunas
     
@@ -229,7 +229,7 @@ MFA <- function(Data, Grupo, TipoGrupo = rep("n",length(Grupo)), NomeGrupos = NU
     if (sum(PondGeral)!=0) # usado para equilibrar os conjuntos quantitativos e categoricos, quando ha tabelas de frequencias
       VET <- sqrt(colSums(sweep(as.matrix(MC^2),1,PRL,FUN="*")))  # raiz quadrada da soma ao quadrado dos elementos de MC dividido pelas linhas ponderadas da tabela de frequencia
     else
-      VET <- sqrt(colSums(MC^2)/NL)  # raiz quadrada da soma ao quadrado dos elementos de MC dividido pelo nº de linhas
+      VET <- sqrt(colSums(MC^2)/NL)  # raiz quadrada da soma ao quadrado dos elementos de MC dividido pelo numero de linhas
     
     MB  <- sweep(MC,2,VET,FUN="/") # matriz balanciada - divide MB2 por VET
     
@@ -269,13 +269,13 @@ MFA <- function(Data, Grupo, TipoGrupo = rep("n",length(Grupo)), NomeGrupos = NU
     
     SCol <- as.matrix(FACI$MatrixSCol) # Matriz com as Somas das colunas da Matriz de Frequencia
     
-    MPVS <- NULL  # Matriz com os 1ºs Valores Singulares 
+    MPVS <- NULL  # Matriz com os primeiros Valores Singulares 
     
-    PVS <- GSVD(MACI, SLin, SCol)$d[1]^2 # Encontra o 1º Auto Valor do Grupo i
+    PVS <- GSVD(MACI, SLin, SCol)$d[1]^2 # Encontra o primeiro Auto Valor do Grupo i
     
-    MPVS <- rbind(MPVS,as.matrix(rep(PVS,ncol(MACI)))) # Matriz com os 1ºs Valores Singulares 
+    MPVS <- rbind(MPVS,as.matrix(rep(PVS,ncol(MACI)))) # Matriz com os primeiros Valores Singulares 
     
-    PCol <- sweep(SCol,1,MPVS,FUN="/") # Matriz com os Pesos das Colunas - divide cada soma das linhas pelos 1ºs Auto Valores de cada grupo
+    PCol <- sweep(SCol,1,MPVS,FUN="/") # Matriz com os Pesos das Colunas - divide cada soma das linhas pelos primeiros Auto Valores de cada grupo
     
     Lista <- list(MZ=MACI, PLin=SLin, PCol=PCol)
     

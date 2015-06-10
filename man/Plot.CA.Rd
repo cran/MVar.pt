@@ -26,7 +26,6 @@ Marcelo Angelo Cirillo
 \seealso{\code{\link{CA}}}
 
 \examples{
-
 data(DataFreq) # conjunto de dados de frequencia
 
 Dat <- DataFreq[,2:ncol(DataFreq)]

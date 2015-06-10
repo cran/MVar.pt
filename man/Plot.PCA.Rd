@@ -26,7 +26,6 @@ Marcelo Angelo Cirillo
 \seealso{\code{\link{PCA}}}
 
 \examples{
-
 data(DataQuan) # conjunto de dados quantitativos
 
 Dat <- DataQuan[,2:8]

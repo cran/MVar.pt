@@ -27,9 +27,9 @@
 }
 
 \references{
-RENCHER, A.C.; \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
+MINGOTI, S. A. \emph{Analise de dados atraves de metodos de estatistica multivariada:} uma abordagem aplicada. Belo Horizonte: UFMG, 2005. 297 p.
 
-MINGOTI, SUELI APARECIDA; \emph{Analise de dados atraves de metodos de estatistica multivariada: uma abordagem aplicada}. Belo Horizonte: Editora UFMG, 2005. 297 p.
+RENCHER, A.C.; \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
 }
 
 \author{
@@ -41,7 +41,6 @@ Marcelo Angelo Cirillo
 \seealso{\code{\link{Plot.CA}}}
 
 \examples{
-
 data(DataFreq) # conjunto de dados de frequencia
 
 Dat <- DataFreq[,2:ncol(DataFreq)]

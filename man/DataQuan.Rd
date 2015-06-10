@@ -14,10 +14,9 @@
 
 \note{Este conjunto de dados foi extraido de (ABDI; WILLIAMS, 2010) e os titulos das colunas foram adaptados a cafe.}
 
-\references{ABDI, H; WILLIAMS, L; Principal Component Analysis.\emph{WIREs Comp Stat} 2010 2 433-459 DOI: 10.1002/wics.101}
+\references{ABDI, H.; WILLIAMS, L. Principal component analysis. \emph{WIREs Computational Statatistics}, New York, v. 2, n. 4, p. 433-459, July/Aug. 2010.}
 
 \examples{
-
 data(DataQuan)
 DataQuan
 }

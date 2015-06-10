@@ -36,7 +36,6 @@ Marcelo Angelo Cirillo
 \seealso{\code{\link{MFA}}}
 
 \examples{
-
 data(DataMix) # conjunto de dados mistos
 
 Matriz = DataMix[,2:ncol(DataMix)] 

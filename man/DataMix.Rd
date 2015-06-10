@@ -19,7 +19,6 @@ Marcelo Angelo Cirillo
 }
 
 \examples{
-
 data(DataMix)
 DataMix
 }

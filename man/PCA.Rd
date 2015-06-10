@@ -24,9 +24,9 @@
 }
 
 \references{
-HOTELLING, H.; Analysis of a complex of statistical variables into principal components. \emph{Journal of Educational Psychology}, v. 24, P. 417-441, set. 1933:
+HOTELLING, H. Analysis of a complex of statistical variables into principal components. \emph{Journal of Educational Psychology}, Arlington, v. 24, p. 417-441, Sept. 1933.
 
-MINGOTI, SUELI APARECIDA; \emph{Analise de dados atraves de metodos de estatistica multivariada: uma abordagem aplicada}. Belo Horizonte: Editora UFMG, 2005. 297 p.
+MINGOTI, S. A. \emph{Analise de dados atraves de metodos de estatistica multivariada:} uma abordagem aplicada. Belo Horizonte: UFMG, 2005. 297 p.
 
 RENCHER, A.C.; \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
 }
@@ -40,7 +40,6 @@ Marcelo Angelo Cirillo
 \seealso{\code{\link{Plot.PCA}}}
 
 \examples{
-
 data(DataQuan) # conjunto de dados quantitativos
 
 Dat <- DataQuan[,2:8]

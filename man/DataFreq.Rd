@@ -14,10 +14,10 @@
 
 \note{Este conjunto de dados foi extraido de (GREENACRE; BLASIUS, 2006) e os titulos das colunas foram adaptados a cafe.}
 
-\references{GREENACRE, M.; BLASIUS, J.; \emph{Multiple Correspondence Analysis and Related Methods}. 1th. ed. New York: Taylor and Francis Group, 2006. 607 p.}
+\references{GREENACRE, M.; BLASIUS, J. \emph{Multiple correspondence analysis and related methods.} New York: Taylor and Francis, 2006. 607 p.
+}
 
 \examples{
-
 data(DataFreq)
 DataFreq
 }

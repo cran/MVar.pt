@@ -1,6 +1,6 @@
 Plot.MFA <- function(MFA,Titles = matrix(NA,1,3), PosLeg=2, BoxLeg="s", Color="s",NamArr="n") {
   # Rotina para Plotar Graficos do Metodo MFA desenvolvida 
-  # por Paulo Cesar Ossani em 09/2013 à 01/2014
+  # por Paulo Cesar Ossani em 09/2013 a 01/2014
   
   # Entrada:
   # MF - Dados da funcao MFA
@@ -173,7 +173,7 @@ Plot.MFA <- function(MFA,Titles = matrix(NA,1,3), PosLeg=2, BoxLeg="s", Color="s
     
   }
   
-  legend(PosLeg, NomeGrupos, lty = (cor+1):(cor+NumGrupos), col = Color_b, text.col = Color_b,
+  legend(PosLeg, NomeGrupos, lty = cor:(cor+NumGrupos), col = Color_b, text.col = Color_b,
          bty=BoxLeg, text.font = 6, y.intersp = 0.8,xpd = TRUE) # cria a legenda
   ##### FIM - Plotagem das Correlacoes dos Componentes Principais com as Variaveis Originais #####
   

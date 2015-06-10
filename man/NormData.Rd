@@ -22,7 +22,6 @@ Marcelo Angelo Cirillo
 }
 
 \examples{
-
 data(DataQuan) # conjunto de dados quantitativos
 
 Dat <- DataQuan[,2:8]

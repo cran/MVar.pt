@@ -21,7 +21,7 @@
  \item{v}{Autovetores referentes das colunas}
 }
 
-\references{ABDI, H; Singular Value Decomposition (SVD) and Generalized Singular Value Decomposition (GSVD). In:Salkind NJ, \emph{ed. Encyclopedia of Measurement and Statistics.} Thousand Oaks, CA: Sage; 2007.}
+\references{ABDI, H. Singular Value Decomposition (SVD) and Generalized Singular Value Decomposition (GSVD). In: SALKIND, N. J. (Ed.). \emph{Encyclopedia of measurement and statistics.} Thousand Oaks: Sage, 2007. p. 907-912.}
 
 \author{
 Paulo Cesar Ossani
@@ -30,7 +30,6 @@ Marcelo Angelo Cirillo
 }
 
 \examples{
-
 M = matrix(c(1,2,3,4,5,6,7,8,9,10,11,12),nrow=4,ncol=3)
 
 svd(M)  # Decomposicao de Valor Singular usual
