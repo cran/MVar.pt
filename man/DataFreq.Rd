@@ -6,15 +6,18 @@
 
 \title{Conjunto de Dados de Frequencia}
 
-\description{Conjunto de Dados de Frequencia, sobre consumo de cafes.}
+\description{Conjunto simulado de dados com a frequencia semanal do numero de chicaras de cafes consumidas semanalmente em algumas capitais mundiais.}
 
 \usage{data(DataFreq)}
 
-\format{Conjunto de dados com 6 linhas e 9 colunas. Sendo 6 observacoes descritas por 9 variaveis: Grupo por sexo e idade,  Paris - Cafe Bourbon,	NY - Cafe Bourbon,	Tokyo - Cafe Bourbon,	NY - Cafe Acaia,	Tokyo - Cafe Acaia,	Paris - Cafe Catuai,	NY - Cafe Catuai,	 Tokyo - Cafe Catuai.}
+\format{Conjunto de dados com 6 linhas e 9 colunas. Sendo 6 observacoes descritas por 9 variaveis: Grupo por sexo e idade, Sao Paulo - Cafe Bourbon, Londres - Cafe Bourbon, Atenas - Cafe Bourbon, Londres - Cafe Acaia, Atenas - Cafe Acaia, Sao Paulo - Cafe Catuai, Londres - Cafe Catuai, Atenas - Cafe Catuai.
 
-\note{Este conjunto de dados foi extraido de (GREENACRE; BLASIUS, 2006) e os titulos das colunas foram adaptados a cafe.}
+}
 
-\references{GREENACRE, M.; BLASIUS, J. \emph{Multiple correspondence analysis and related methods.} New York: Taylor and Francis, 2006. 607 p.
+\author{
+Paulo Cesar Ossani
+
+Marcelo Angelo Cirillo
 }
 
 \examples{

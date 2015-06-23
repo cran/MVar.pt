@@ -24,9 +24,9 @@ Matriz = Data_Individuos[,2:ncol(Data_Individuos)]
 
 rownames(Matriz) <- as.character(t(Data_Individuos[1:nrow(Data_Individuos),1]))
 
-GroupNames = c("Grupo 1","Grupo 2","Grupo 3","Grupo 4")
+GroupNames = c("Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4")
 
-MF <- MFA(Matriz,c(16,16,16,16),c(rep("f",4)),GroupNames) # analise dos dados
+MF <- MFA(Matriz, c(16,16,16,16), c(rep("f",4)), GroupNames) # analise dos dados
 
 print("Variancias dos Componentes Principais:")
 print(round(MF$MatrixA,2))
@@ -34,9 +34,9 @@ print(round(MF$MatrixA,2))
 print("Matriz das Inercias Parciais/Escores das Variaveis:")
 print(round(MF$MatrixEscVar,2))
 
-Titulos=c("Individuos","Individuos/Grupos Individuos","Inercias Grupos")
+Titulos = c("Individuos", "Individuos/Grupos Individuos", "Inercias Grupos")
 
-Plot.MFA(MF,Titulos,2,"n","s","n") # Imprime varios graficos da tela
+Plot.MFA(MF, Titulos, 2, "n", "s", "n") # Imprime varios graficos da tela
 }
 
 \keyword{Conjunto de Dados}

@@ -47,7 +47,7 @@ Dat <- DataFreq[,2:ncol(DataFreq)]
 
 rownames(Dat) <- as.character(t(DataFreq[1:nrow(DataFreq),1]))
 
-Resp <- CA(Dat,"f") # realiza CA
+Resp <- CA(Dat, "f") # realiza CA
 
 print("Existe dependencia entre as linhas e as colunas?"); print(Resp$DepData)
 

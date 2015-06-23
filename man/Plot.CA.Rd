@@ -32,11 +32,11 @@ Dat <- DataFreq[,2:ncol(DataFreq)]
 
 rownames(Dat) <- as.character(t(DataFreq[1:nrow(DataFreq),1]))
 
-Resp <- CA(Dat,"f") # realiza CA
+Resp <- CA(Dat, "f") # realiza CA
 
-Titles = c("Observacoes","Variaveis","Observacoes/Variaveis")
+Titles = c("Observacoes", "Variaveis", "Observacoes/Variaveis")
 
-Plot.CA(Resp,Titles,Color="s")
+Plot.CA(Resp, Titles, Color = "s")
 
 
 data(DataQuali) # Conjunto de dados qualitativos
@@ -45,11 +45,11 @@ Dat <- DataQuali[,2:ncol(DataQuali)]
 
 rownames(Dat) <- as.character(t(DataQuali[1:nrow(DataQuali),1]))
 
-Resp <- CA(Dat,"c","b") # realiza CA
+Resp <- CA(Dat, "c", "b") # realiza CA
 
 Titles = c("","Graficos das Variaveis")
 
-Plot.CA(Resp,Titles,Color="s")
+Plot.CA(Resp, Titles, Color = "s")
 
 }
 

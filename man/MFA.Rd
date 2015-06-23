@@ -84,9 +84,9 @@ Matriz = DataMix[,2:ncol(DataMix)]
 
 rownames(Matriz) <- as.character(t(DataMix[1:nrow(DataMix),1]))
 
-GroupNames=c("Notas Cafes/Trabalho","Formacao/Dedicacao","Cafes")
+GroupNames = c("Notas Cafes/Trabalho", "Formacao/Dedicacao", "Cafes")
 
-MF <- MFA(Matriz, c(2,2,2),TipoGrupo=c("n","c","f"), GroupNames) # realiza MFA
+MF <- MFA(Matriz, c(2,2,2), TipoGrupo = c("n","c","f"), GroupNames) # realiza MFA
 
 print("Variancias dos Componentes Principais:")
 print(round(MF$MatrixA,2))

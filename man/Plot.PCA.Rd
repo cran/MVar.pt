@@ -32,11 +32,11 @@ Dat <- DataQuan[,2:8]
 
 rownames(Dat) <- as.character(t(DataQuan[1:nrow(DataQuan),1]))
 
-PC <- PCA(Dat, 1) # Executa o PCA
+PC <- PCA(Dat, 2) # Executa o PCA
 
-Titles = c("Grafico das Observacoes","Circulo de Correlacoes")
+Titles = c("Grafico das Observacoes", "Circulo de Correlacoes")
 
-Plot.PCA(PC,Titles,Color="S")
+Plot.PCA(PC, Titles, Color = "S")
 }
 
 \keyword{Analise de Componentes Principais}

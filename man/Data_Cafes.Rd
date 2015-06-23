@@ -26,9 +26,9 @@ Matriz = Data_Cafes[,2:ncol(Data_Cafes)]
 
 rownames(Matriz) <- as.character(t(Data_Cafes[1:nrow(Data_Cafes),1]))
 
-GroupNames =c("Cafe A","Cafe B","Cafe C","Cafe D")
+GroupNames = c("Cafe A", "Cafe B", "Cafe C", "Cafe D")
 
-MF <- MFA(Matriz,c(16,16,16,16),c(rep("f",4)),GroupNames) 
+MF <- MFA(Matriz, c(16,16,16,16), c(rep("f",4)), GroupNames) 
 
 print("Variancias dos Componentes Principais:")
 print(round(MF$MatrixA,2))
@@ -36,9 +36,9 @@ print(round(MF$MatrixA,2))
 print("Matriz das Inercias Parciais/Escores das Variaveis:")
 print(round(MF$MatrixEscVar,2))
 
-Titulos=c("Individuos","Individuos/Tipos Cafes","Inercias Grupos")
+Titulos = c("Individuos", "Individuos/Tipos Cafes", "Inercias Grupos")
 
-Plot.MFA(MF,Titulos,2,"n","s","n") # Imprime varios graficos da tela
+Plot.MFA(MF, Titulos, 2, "n", "s", "n") # Imprime varios graficos da tela
 
 }
 

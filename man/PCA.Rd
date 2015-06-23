@@ -46,7 +46,7 @@ Dat <- DataQuan[,2:8]
 
 rownames(Dat) <- as.character(t(DataQuan[1:nrow(DataQuan),1]))
 
-PC <- PCA(Dat, 1) # Executa o PCA
+PC <- PCA(Dat, 2) # Executa o PCA
 
 print("Matriz de Covariancia/Correlacao:"); round(PC$MatrixMC,2)
 

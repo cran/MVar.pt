@@ -26,9 +26,9 @@ Marcelo Angelo Cirillo
 }
 
 \examples{
-Date=matrix(c("S","S","N","N",1,2,3,4,"N","S","T","N"),nrow=4,ncol=3)
+Date = matrix(c("S","S","N","N",1,2,3,4,"N","S","T","N"), nrow = 4, ncol = 3)
 
-IM(Date,"n")
+IM(Date, "n")
 
 data(DataQuali) # Conjunto de dados qualitativos
 

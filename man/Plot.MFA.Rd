@@ -6,8 +6,9 @@
 
 \description{Desenha graficos da Analise de Multiplos Fatores (MFA).}
 
-\usage{Plot.MFA(MFA,Titles = matrix(NA,1,3), PosLeg=2, BoxLeg="s", Color="s",NamArr="n")}
-
+\usage{
+Plot.MFA(MFA,Titles = matrix(NA,1,3), PosLeg = 2, BoxLeg = "s", Color = "s", NamArr = "n")}
+ 
 \arguments{
   \item{MFA}{Dados da funcao MFA}
   \item{Titles}{Titulos para os graficos. Se nao for definido assume texto padrao.}
@@ -42,13 +43,13 @@ Matriz = DataMix[,2:ncol(DataMix)]
 
 rownames(Matriz) <- as.character(t(DataMix[1:nrow(DataMix),1]))
 
-GroupNames=c("Notas Cafes/Trabalho","Formacao/Dedicacao","Cafes")
+GroupNames = c("Notas Cafes/Trabalho", "Formacao/Dedicacao", "Cafes")
            
-MF <- MFA(Matriz, c(2,2,2),TipoGrupo=c("n","c","f"), GroupNames) # realiza MFA
+MF <- MFA(Matriz, c(2,2,2), TipoGrupo = c("n","c","f"), GroupNames) # realiza MFA
 
-Titulos=c("Observacoes","Observacoes/Variaveis","Inercias Grupos Variaveis")
+Titulos = c("Observacoes","Observacoes/Variaveis","Inercias Grupos Variaveis")
 
-Plot.MFA(MF,Titulos,2,"n","s","n") # Imprime varios graficos da tela
+Plot.MFA(MF, Titulos, 2, "n", "s", "n") # Imprime varios graficos da tela
 }
 
 \keyword{Analise de Multiplos Fatores}

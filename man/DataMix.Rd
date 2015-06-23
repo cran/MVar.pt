@@ -6,7 +6,7 @@
 
 \title{Conjunto de Dados Mistos}
 
-\description{Conjunto de Dados Mistos, sobre consumo de cafes.}
+\description{Conjunto simulado de Dados Mistos, sobre consumo de cafes.}
 
 \usage{data(DataMix)}
 
