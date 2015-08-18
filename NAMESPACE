@@ -1,1 +1,5 @@
 exportPattern("^[[:alpha:]]+")
+
+importFrom("grDevices", "xy.coords")
+importFrom("graphics", "abline", "arrows", "barplot", "legend", "par", "plot", "points", "segments", "strheight", "strwidth", "symbols", "text")
+importFrom("stats", "cor", "cov", "qchisq", "runif", "sd")

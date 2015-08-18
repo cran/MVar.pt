@@ -81,7 +81,8 @@ Plot.MFA <- function(MFA,Titles = matrix(NA,1,3), PosLeg=2, BoxLeg="s", Color="s
   
   abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
   
-  text(MFA$MatrixF,cex=1,NomeLinhas,pos=3,xpd = TRUE)  # Coloca os nomes dos pontos das coordenadas principais das linhas
+  LocLab(MFA$MatrixF[,1:2], NomeLinhas)  # Coloca os nomes dos pontos das coordenadas principais das linhas
+  #text(MFA$MatrixF, cex=1, NomeLinhas, pos=3, xpd = TRUE)  # Coloca os nomes dos pontos das coordenadas principais das linhas
   ##### FIM - Plotagem da Analise Global #####
   
   ##### INICIO - Plotagem da Analise por Grupo Juntamente com a Analise Global #####
@@ -108,7 +109,8 @@ Plot.MFA <- function(MFA,Titles = matrix(NA,1,3), PosLeg=2, BoxLeg="s", Color="s
   
   abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
   
-  text(MFA$MatrixF, cex=1,NomeLinhas,pos=3,xpd = TRUE)  # Coloca os nomes dos pontos das coordenadas principais da analise global
+  LocLab(MFA$MatrixF[,1:2], NomeLinhas)  # Coloca os nomes dos pontos das coordenadas principais da analise global
+  #text(MFA$MatrixF, cex=1,NomeLinhas, pos=3, xpd = TRUE)  # Coloca os nomes dos pontos das coordenadas principais da analise global
   ## Acrescenta no grafico da Analise Global as coordenadas principais da Analise por Grupo
   NumObserv = 4 # numero de centroides a considerar para plotagem das orbitas
   NumLinhas = nrow(MFA$MatrixEFG[[1]]) # numero de linhas
@@ -128,7 +130,8 @@ Plot.MFA <- function(MFA,Titles = matrix(NA,1,3), PosLeg=2, BoxLeg="s", Color="s
     if (NamArr=="N") 
       points(MFA$MatrixEFG[[i]][Observ,1:2], pch = (2 + ifelse(Color=="S",i,0)), cex = 1.2, col = 1 + ifelse(Color=="S",i,0)) # adiciona ao grafico as coordenadas principais dos Grupos
     else
-      text(MFA$MatrixEFG[[i]][Observ,1:2], pos=3, cex=1, NomeGrupos[i], col = 1 + ifelse(Color=="S",i,0),xpd = TRUE) # Coloca os nomes dos pontos das coordenadas principais dos Grupos
+      LocLab(MFA$MatrixEFG[[i]][Observ,1:2],NomeGrupos[i], col = 1 + ifelse(Color=="S",i,0)) # Coloca os nomes dos pontos das coordenadas principais dos Grupos
+      #text(MFA$MatrixEFG[[i]][Observ,1:2], pos=3, cex=1, NomeGrupos[i], col = 1 + ifelse(Color=="S",i,0),xpd = TRUE) # Coloca os nomes dos pontos das coordenadas principais dos Grupos
   }
   
   ## liga os pontos de cada Analise Global com cada ponto da Analise por Grupo
@@ -165,7 +168,8 @@ Plot.MFA <- function(MFA,Titles = matrix(NA,1,3), PosLeg=2, BoxLeg="s", Color="s
     else
       NomeVar<- colnames(MFA$MatrixCCP[,j:k])
     
-    text(t(MFA$MatrixCCP[,j:k]), cex=1, pos=3, NomeVar, col = ifelse(Color=="S",cor + i,cor), xpd = TRUE)  # Coloca os nomes dos pontos das coordenadas principais
+    LocLab(t(MFA$MatrixCCP[,j:k]), NomeVar, col = ifelse(Color=="S",cor + i,cor)) # Coloca os nomes dos pontos das coordenadas principais
+    #text(t(MFA$MatrixCCP[,j:k]), cex=1, pos=3, NomeVar, col = ifelse(Color=="S",cor + i,cor), xpd = TRUE)  # Coloca os nomes dos pontos das coordenadas principais
     
     j <- j + Grupos[i]  # coluna inicial do Grupo de variaveis
     
@@ -195,6 +199,7 @@ Plot.MFA <- function(MFA,Titles = matrix(NA,1,3), PosLeg=2, BoxLeg="s", Color="s
   
   abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
   
-  text(MFA$MatrixEscVar,cex=1, rownames(MFA$MatrixEscVar), pos=3, xpd = TRUE)  # Coloca os nomes dos pontos das coordenadas principais das linhas
+  LocLab(MFA$MatrixEscVar[,1:2],rownames(MFA$MatrixEscVar))  # Coloca os nomes dos pontos das coordenadas principais das linhas
+  #text(MFA$MatrixEscVar,cex=1, rownames(MFA$MatrixEscVar), pos=3, xpd = TRUE)  # Coloca os nomes dos pontos das coordenadas principais das linhas
   ##### FIM - Plotagem das Inercias Parciais/Escores das Variareis #####
 }

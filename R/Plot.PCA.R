@@ -43,7 +43,8 @@ Plot.PCA <- function(PC, Titles = matrix(NA,1,2), Color = "s") {
   
   abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
   
-  text(PC$MatrixEsc, cex = 1, pos = 3, rownames(PC$MatrixEsc))  # Coloca os nomes dos pontos das coordenadas principais das linhas
+  LocLab(PC$MatrixEsc[,1:2],rownames(PC$MatrixEsc))  # Coloca os nomes dos pontos das coordenadas principais das linhas
+  #text(PC$MatrixEsc, cex = 1, pos = 3, rownames(PC$MatrixEsc)) # Coloca os nomes dos pontos das coordenadas principais das linhas
   ##### FIM - Plotagem dos Dados das linhas #####
   
   ##### INICIO - Plotagem das Correlacoes dos Componentes Principais com as Variaveis Originais #####
@@ -61,7 +62,8 @@ Plot.PCA <- function(PC, Titles = matrix(NA,1,2), Color = "s") {
   abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
   
   arrows(0,0,PC$MatrixCCP[1,],PC$MatrixCCP[2,], lty=1, code = 2, angle = 10, col = ifelse(Color=="S","Blue","Black")) # cria a seta apontando para cada coordenada principal
-  
-  text(t(PC$MatrixCCP), cex=1, colnames(PC$MatrixCCP) , col = ifelse(Color=="S","Blue","Black"), pos = 3, xpd = TRUE)  # Coloca os nomes dos pontos das coordenadas principais
+
+  LocLab(t(PC$MatrixCCP[1:2,]),colnames(PC$MatrixCCP),col = ifelse(Color=="S","Blue","Black"))  # Coloca os nomes dos pontos das coordenadas principais das linhas
+  #text(t(PC$MatrixCCP), cex=1, colnames(PC$MatrixCCP) , col = ifelse(Color=="S","Blue","Black"), pos = 3, xpd = TRUE)  # Coloca os nomes dos pontos das coordenadas principais
   ##### FIM - Plotagem das Correlacoes dos Componentes Principais com as Variaveis Originais #####
 }

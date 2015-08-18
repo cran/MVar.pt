@@ -44,5 +44,5 @@ apply(Resp, 2, sd) # desvio padrao por coluna
 colMeans(Resp)     # medias das colunas
 }
 
-\keyword{Decomposicao de Valor Singular Generalizado}
-\keyword{GSVD}
+\keyword{Normaliza dados}
+

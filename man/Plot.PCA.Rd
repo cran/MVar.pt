@@ -2,9 +2,9 @@
 
 \alias{Plot.PCA}
 
-\title{Desenha graficos da Analise de Componentes Principais (PCA)}
+\title{Graficos da Analise de Componentes Principais (PCA)}
 
-\description{Desenha graficos da Analise de Componentes Principais (PCA)}
+\description{Graficos da Analise de Componentes Principais (PCA)}
 
 \usage{Plot.PCA(PC, Titles = matrix(NA,1,2), Color = "s")}
 

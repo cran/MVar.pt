@@ -2,9 +2,9 @@
 
 \alias{Plot.MFA}
 
-\title{Desenha graficos da Analise de Multiplos Fatores (MFA)}
+\title{Graficos da Analise de Multiplos Fatores (MFA)}
 
-\description{Desenha graficos da Analise de Multiplos Fatores (MFA).}
+\description{Graficos da Analise de Multiplos Fatores (MFA).}
 
 \usage{
 Plot.MFA(MFA,Titles = matrix(NA,1,3), PosLeg = 2, BoxLeg = "s", Color = "s", NamArr = "n")}

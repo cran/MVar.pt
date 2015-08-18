@@ -1,3 +1,4 @@
+
 Biplot <- function(Data, alfa=0.5, Title=NA, Label_x=NA, Label_y=NA, Color="s") {
   # Rotina para gerar Biplot desenvolvida 
   # por Paulo Cesar Ossani em 20/06/2015
@@ -23,13 +24,14 @@ Biplot <- function(Data, alfa=0.5, Title=NA, Label_x=NA, Label_y=NA, Color="s") 
   # PVar   - Proporcao dos componentes principais.
   
   ##### INICIO - Informacoes usadas nos Graficos #####
+  
   Color  = ifelse(Color=="s","S",ifelse(Color=="n","N",Color))    # transforma em maiusculo
   
   if (!is.data.frame(Data)) 
      return(print("Entrada 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!"))
   
   if (!is.numeric(alfa) || alfa < 0 || alfa > 1)
-     return(print("Entrada para alfa deve numerica, com valor entre 0 e 1. Verifique!"))
+     return(print("Entrada para 'alfa' deve numerica, com valor entre 0 e 1. Verifique!"))
   
   if (!is.character(Title) || is.na(Title)) Title = "Grafico Biplot"  
   
@@ -65,7 +67,7 @@ Biplot <- function(Data, alfa=0.5, Title=NA, Label_x=NA, Label_y=NA, Color="s") 
   MaxY <- max(Coor_I[,2],Coor_V[,2])+1 # Dimenssoes maximas das colunas
   MinY <- min(Coor_I[,2],Coor_V[,2])-1 # Dimenssoes minimas das colunas
   
-  cor  <- 1 # cor inicial
+  cor  <- c(1) # cor inicial
   
   ##### INICIO - Grafico Biplot #####  
   plot(0,0, # Plota as variaveis
@@ -81,13 +83,17 @@ Biplot <- function(Data, alfa=0.5, Title=NA, Label_x=NA, Label_y=NA, Color="s") 
   
   NomeVar <- colnames(MData) # nomes das variaveis
   for (i in 1:nrow(Coor_V)) {  # foi necessario criar este for para poder colocar cores diferentes para cada variavel
-    arrows(0,0,Coor_V[i,1],Coor_V[i,2], lwd = 2, code = 2, angle = 10, col = ifelse(Color=="S",cor + i,1)) # cria a seta apontando para cada variavel  
-    text(Coor_V[i,1], Coor_V[i,2], cex = 1, pos = 4, NomeVar[i], col = ifelse(Color=="S",cor + i,1), xpd = TRUE)  # Coloca os nomes das variaveis
+    arrows(0,0,Coor_V[i,1],Coor_V[i,2], lwd = 2, code = 2, angle = 10, col = ifelse(Color=="S", cor + i, 1)) # cria a seta apontando para cada variavel  
+    #text(Coor_V[i,1], Coor_V[i,2], cex = 1, pos = 4, NomeVar[i], col = ifelse(Color=="S", cor + i, 1), xpd = TRUE)  # Coloca os nomes das variaveis
   }
   
+  if (Color=="S") cor <- c((cor+1):(length(NomeVar)+1))
+  LocLab(Coor_V[,1:2], NomeVar, col = cor)  # Coloca os nomes das variaveis
+  
   NomeVar <- rownames(MData) # nomes os individuos
-  for (i in 1:nrow(Coor_I)) 
-    text(Coor_I[i,1],Coor_I[i,2], cex = 1, pos = 3, NomeVar[i], xpd = TRUE)  # Coloca os nomes dos individuos
+  LocLab(Coor_I[,1:2], NomeVar) # Coloca os nomes dos individuos
+  #for (i in 1:nrow(Coor_I)) 
+    #text(Coor_I[i,1], Coor_I[i,2], cex = 1, pos = 3, NomeVar[i], xpd = TRUE)  # Coloca os nomes dos individuos
   
   points(Coor_I,    # Coloca pontos nas posicoes dos individuos
          asp = 1,   # Aspecto do grafico

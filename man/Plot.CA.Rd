@@ -2,9 +2,9 @@
 
 \alias{Plot.CA}
 
-\title{Desenha graficos da Analise de Correspondencia (CA) simples e multipla}
+\title{Graficos da Analise de Correspondencia (CA) simples e multipla}
 
-\description{Desenha graficos da Analise de Correspondencia (CA) simples e multipla.}
+\description{Graficos da Analise de Correspondencia (CA) simples e multipla.}
 
 \usage{Plot.CA(AC, Titles = matrix(NA,1,3), Color = "s")}
 

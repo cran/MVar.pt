@@ -45,7 +45,8 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s") {
     
     abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
     
-    text(AC$MatrixX,cex=1, pos=3, rownames(AC$MatrixX))  # Coloca os nomes dos pontos das coordenadas principais das linhas
+    LocLab(AC$MatrixX[,1:2],rownames(AC$MatrixX))  # Coloca os nomes dos pontos das coordenadas principais das linhas
+    #text(AC$MatrixX,cex=1, pos=3, rownames(AC$MatrixX))  # Coloca os nomes dos pontos das coordenadas principais das linhas
   }
   ##### FIM - Plotagem dos Dados das linhas #####
   
@@ -63,7 +64,8 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s") {
   
   abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
   
-  text(AC$MatrixY, cex=1, pos=3, rownames(AC$MatrixY))  # Coloca os nomes dos pontos das coordenadas principais das colunas
+  LocLab(AC$MatrixY[,1:2],rownames(AC$MatrixY)) # Coloca os nomes dos pontos das coordenadas principais das colunas
+  #text(AC$MatrixY, cex=1, pos=3, rownames(AC$MatrixY))  # Coloca os nomes dos pontos das coordenadas principais das colunas
   ##### FIM - Plotagem dos Dados das colunas #####
   
   ##### INICIO - Plotagem dos Dados das linhas e colunas conjuntamente #####
@@ -83,9 +85,11 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s") {
     
     abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
     
-    text(AC$MatrixX, cex=1,  pos=3, rownames(AC$MatrixX))  # Coloca os nomes dos pontos das coordenadas principais das linhas
+    CoordXY = rbind(AC$MatrixX[,1:2],AC$MatrixY[,1:2]) # coordenas linhas e colunas
+    LocLab(CoordXY,rownames(CoordXY)) # Coloca os nomes dos pontos das coordenadas principais das linhas e colunas
     
-    text(AC$MatrixY, cex=1, pos=3, rownames(AC$MatrixY))  # Coloca os nomes dos pontos das coordenadas principais das colunas
+    #text(AC$MatrixX, cex=1,  pos=3, rownames(AC$MatrixX))  # Coloca os nomes dos pontos das coordenadas principais das linhas
+    #text(AC$MatrixY, cex=1, pos=3, rownames(AC$MatrixY))  # Coloca os nomes dos pontos das coordenadas principais das colunas
   }
   ##### FIM - Plotagem dos Dados das linhas e colunas conjuntamente #####
 }
