@@ -2,25 +2,25 @@
 
 \alias{PCA}
 
-\title{Analise de Componentes Principais (PCA)}
+\title{Analise de componentes principais (PCA)}
 
-\description{Realiza Analise de Componentes Principais (PCA) em um conjunto de dados.}
+\description{Realiza analise de componentes principais (PCA) em um conjunto de dados.}
 
 \usage{PCA(Data, Type = 1)}
 
 \arguments{
-\item{Data}{Dados a serem a analizados}
-\item{Type}{1 para analise utilizando a matriz de covariancia - default\cr
-            2 para analise utilizando a matriz de correlacao}
+\item{Data}{Dados a serem a analizados.}
+\item{Type}{1 para analise utilizando a matriz de covariancia - default,\cr
+            2 para analise utilizando a matriz de correlacao.}
 }
 
 \value{
-\item{MatrixMC      }{Matriz de Covariancia ou de  Correlacao conforme Type}
-\item{MatrixAutoVlr }{Matriz de Autovalores (Variancias) com as proporcoes e proporcoes acumuladas}
-\item{MatrixAutoVec }{Matriz de Autovetores - Componentes Principais}
-\item{MatrixVCP     }{Matriz da Covariancia dos Componentes Principais com as Variaveis Originais}
-\item{MatrixCCP     }{Matriz da Correlacao dos Componentes Principais com as Variaveis Originais}
-\item{MatrixEsc     }{Matriz com os escores dos Componentes Principais}
+\item{MatrixMC      }{Matriz de covariancia ou de correlacao conforme "Type".}
+\item{MatrixAutoVlr }{Matriz de autovalores (variancias) com as proporcoes e proporcoes acumuladas.}
+\item{MatrixAutoVec }{Matriz de autovetores - componentes principais.}
+\item{MatrixVCP     }{Matriz da covariancia dos componentes principais com as variaveis originais.}
+\item{MatrixCCP     }{Matriz da correlacao dos componentes principais com as variaveis originais.}
+\item{MatrixEsc     }{Matriz com os escores dos componentes principais.}
 }
 
 \references{
@@ -61,5 +61,5 @@ print("Correlacao dos Componentes Principais"); round(PC$MatrixCCP,2)
 print("Escores dos Componentes Principais"); round(PC$MatrixEsc,2)
 }
 
-\keyword{Analise de Componentes Principais}
+\keyword{Analise de componentes principais}
 \keyword{PCA}

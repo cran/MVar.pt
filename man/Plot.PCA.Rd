@@ -2,17 +2,17 @@
 
 \alias{Plot.PCA}
 
-\title{Graficos da Analise de Componentes Principais (PCA)}
+\title{Graficos da analise de componentes principais (PCA)}
 
-\description{Graficos da Analise de Componentes Principais (PCA)}
+\description{Graficos da analise de componentes principais (PCA)}
 
 \usage{Plot.PCA(PC, Titles = matrix(NA,1,2), Color = "s")}
 
 \arguments{
-\item{PC}{Dados da funcao PCA}
-\item{Titles}{Titulos para os graficos}
-\item{Color}{"s" para graficos coloridos - default\cr
-             "n" para graficos em preto e branco}
+\item{PC}{Dados da funcao PCA.}
+\item{Titles}{Titulos para os graficos.}
+\item{Color}{"s" para graficos coloridos - default,\cr
+             "n" para graficos em preto e branco.}
 }
 
 \value{Retorna varios graficos.}
@@ -39,5 +39,5 @@ Titles = c("Grafico das Observacoes", "Circulo de Correlacoes")
 Plot.PCA(PC, Titles, Color = "S")
 }
 
-\keyword{Analise de Componentes Principais}
+\keyword{Analise de componentes principais}
 \keyword{PCA}

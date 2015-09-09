@@ -4,9 +4,9 @@
 
 \docType{data}
 
-\title{Conjunto de Dados Quantitativos}
+\title{Conjunto de dados quantitativos}
 
-\description{Conjunto simulado de dados Quantitativos, sobre notas dadas a algumas caracteristas sensoriais dos cafes.}
+\description{Conjunto simulado de dados quantitativos, sobre notas dadas a algumas caracteristas sensoriais dos cafes.}
 
 \usage{data(DataQuan)}
 
@@ -23,4 +23,4 @@ data(DataQuan)
 DataQuan
 }
 
-\keyword{Conjunto de Dados}
+\keyword{Conjunto de dados}

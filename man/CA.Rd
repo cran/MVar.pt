@@ -2,28 +2,37 @@
 
 \alias{CA}
 
-\title{Analise de Correspondencia }
+\title{Analise de correspondencia}
 
-\description{Realiza Analise de Correspondencia Simples (CA) e Multipla (MCA) em um conjunto de dados.}
+\description{Realiza analise de correspondencia simples (CA) e multipla (MCA) em um conjunto de dados.}
 
 \usage{CA(Data, TypData, TypMatrix = "I")}
 
 \arguments{
-\item{Data}{Dados a serem analisados, isto e, Tabela de Contingencia}
-\item{TypData}{"f" para Dados de Frequencia\cr
-               "c" para Dados Qualitativos}
-\item{TypMatrix}{Matriz usada para calculos quanto TypData = "c"\cr
-                 "I" para Matriz Indicadora - Default\cr
-                 "B" para Matriz de Burt}
+\item{Data}{Dados a serem analisados, isto e, tabela de contingencia.}
+\item{TypData}{"f" para dados de frequencia,\cr
+               "c" para dados qualitativos.}
+\item{TypMatrix}{Matriz usada para calculos quanto TypData = "c".\cr
+                 "I" para matriz indicadora - Default,\cr
+                 "B" para matriz de Burt.}
 }
 
 \value{
-\item{DepData}{Verificacao se os dados sao Dependentes ou Independentes a nivel 5\% de significancia}
-\item{TypData}{Tipo de dados: "F" Frequencia ou "C" Qualitativo}
-\item{NumCood}{Numero de coordenadas principais}
-\item{MatrixX}{Matriz com as coordenadas principais das Linhas}
-\item{MatrixY}{Matriz com as coordenadas principais das Colunas}
-\item{MatrixAutoVlr}{Matriz das inercias (variancias), com as proporcoes e proporcoes acumuladas}
+\item{DepData}{Verifica se os dados sao dependentes ou independentes a nivel 5\% de significancia.}
+\item{TypData}{Tipo de dados: "F" frequencia ou "C" qualitativo.}
+\item{NumCood}{Numero de coordenadas principais.}
+\item{MatrixP}{Matriz da frequencia relativa.}
+\item{VectorR}{Vetor com as somas das linhas.}
+\item{VectorC}{Vetor com as somas das colunas.}
+\item{MatrixPR}{Matriz com perfil das linhas.}
+\item{MatrixPC}{Matriz com perfil das colunas.}
+\item{MatrixZ}{Matriz Z.}
+\item{MatrixU}{Matriz com os autovetores U.}
+\item{MatrixV}{Matriz com os autovetores V.}
+\item{MatrixL}{Matriz com os autovalores.}
+\item{MatrixX}{Matriz com as coordenadas principais das linhas.}
+\item{MatrixY}{Matriz com as coordenadas principais das colunas.}
+\item{MatrixAutoVlr}{Matriz das inercias (variancias), com as proporcoes e proporcoes acumuladas.}
 }
 
 \references{
@@ -60,7 +69,7 @@ print("Coordenadas principais das Colunas:"); round(Resp$MatrixY,2)
 print("Inercias das componentes principais:"); round(Resp$MatrixAutoVlr,2)
 }
 
-\keyword{Analise de Correspondencia Simples}
-\keyword{Analise de Correspondencia Multipla} 
+\keyword{Analise de correspondencia simples}
+\keyword{Analise de correspondencia multipla} 
 \keyword{CA}
 \keyword{MCA}

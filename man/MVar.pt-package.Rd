@@ -6,18 +6,18 @@
 
 \docType{package}
 
-\title{Analise Multivariada (Brazilian Portuguese)}
+\title{Analise multivariada (brazilian portuguese)}
 
-\description{Pacote para Analise Multivariada, que possui funcoes que executam Analise de Correspondencia Simples (CA) e Multipla (MCA), Analise de Componentes Principais (PCA), Analise de Multiplos Fatores (MFA) para dados Quantitativos, Qualitativos, Frequencia (MFACT) e dados Mistos. Tambem possuim outras funcoes uteis para a Analise Multivariada.
+\description{Pacote para analise multivariada, que possui funcoes que executam analise de correspondencia simples (CA) e multipla (MCA), analise de componentes principais (PCA), analise de multiplos fatores (MFA) para dados quantitativos, qualitativos, de frequencia (MFACT) e dados mistos. Tambem possuim outras funcoes uteis para a analise multivariada.
 }
 
 \details{
 \tabular{ll}{
 Package: \tab MVar.pt\cr
 Type: \tab Package\cr
-Version: \tab 1.3\cr
-Date: \tab 2015-06-23\cr
-License: \tab GPL-2\cr
+Version: \tab 1.4\cr
+Date: \tab 2015-09-09\cr
+License: \tab GPL(>= 2)\cr
 LazyLoad: \tab yes\cr
 }
 }
@@ -82,4 +82,4 @@ OSSANI, P. C. et al.; Multiplos fatores em analise de tabela de contingencia: Um
 RENCHER, A.C.; \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
 }
 
-\keyword{Analise Multivariada}
+\keyword{Analise multivariada}

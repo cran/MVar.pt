@@ -16,7 +16,7 @@
 \item{Title}{Titulo para o grafico. Se nao for definido assume texto padrao.}
 \item{Label_x}{Rotulo do eixo X. Se nao for definido assume texto padrao.}
 \item{Label_y}{Rotulo do eixo Y. Se nao for definido assume texto padrao.}
-\item{Color}{"s" para graficos coloridos - default\cr
+\item{Color}{"s" para graficos coloridos - default,\cr
              "n" para graficos em preto e branco.}
 }
 

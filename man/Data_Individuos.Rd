@@ -4,9 +4,9 @@
 
 \docType{data}
 
-\title{Conjunto de Dados de Frequencia}
+\title{Conjunto de dados de frequencia}
 
-\description{Conjunto de Dados Categorizados por Individuos, sobre habilidades sensoriais no consumo de cafes especiais.}
+\description{Conjunto de dados categorizados por individuos, sobre habilidades sensoriais no consumo de cafes especiais.}
 
 \usage{data(Data_Individuos)}
 
@@ -39,4 +39,4 @@ Titulos = c("Individuos", "Individuos/Grupos Individuos", "Inercias Grupos")
 Plot.MFA(MF, Titulos, 2, "n", "s", "n") # Imprime varios graficos da tela
 }
 
-\keyword{Conjunto de Dados}
+\keyword{Conjunto de dados}

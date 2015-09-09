@@ -2,20 +2,20 @@
 
 \alias{IM}
 
-\title{Matriz Indicadora}
+\title{Matriz indicadora.}
 
 \description{
-Na Matriz Indicadora os elementos estao dispostos na forma de variaveis \emph{dummy}, em outras palavras, 1 para uma categoria escolhida como variavel resposta e 0 para as outras categorias de uma mesma variavel.}
+Na matriz indicadora os elementos estao dispostos na forma de variaveis \emph{dummy}, em outras palavras, 1 para uma categoria escolhida como variavel resposta e 0 para as outras categorias de uma mesma variavel.}
 
 \usage{IM(Data, Names = "s")}
 
 \arguments{
-\item{Data}{Dados Categoricos}
-\item{Names}{"s" para incluir os nomes das variaveis nos niveis da Matriz Indicadora - default\cr
-             "n" nao inclui}
+\item{Data}{Dados categoricos.}
+\item{Names}{"s" para incluir os nomes das variaveis nos niveis da matriz indicadora - default,\cr
+             "n" nao inclui.}
 }
 
-\value{\item{Dados}{Retorna dados convertidos em Matriz Indicadora.}}
+\value{\item{Dados}{Retorna dados convertidos em matriz indicadora.}}
 
 \references{RENCHER, A.C.; \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.}
 
@@ -35,5 +35,5 @@ data(DataQuali) # Conjunto de dados qualitativos
 IM(DataQuali)
 }
 
-\keyword{Variaveis Dummy}
-\keyword{Matriz Indicadora}
+\keyword{Variaveis dummy}
+\keyword{Matriz indicadora}

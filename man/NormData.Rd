@@ -2,18 +2,18 @@
 
 \alias{NormData}
 
-\title{Normaliza os dados}
+\title{Normaliza os dados.}
 
-\description{Funcao que normaliza os dados globalmente ou por coluna.}
+\description{Funcao que normaliza os dados globalmente, ou por coluna.}
 
 \usage{NormData(Data, Type = 1)}
 \arguments{
-  \item{Data}{Dados a serem a normalizados}
-  \item{Type}{1 normaliza global - default\cr
-              2 normaliza por coluna}
+  \item{Data}{Dados a serem a normalizados.}
+  \item{Type}{1 normaliza global - default,\cr
+              2 normaliza por coluna.}
 }
 
-\value{\item{DataNorm}{Dados Normalizados}}
+\value{\item{DataNorm}{Dados normalizados.}}
 
 \author{
 Paulo Cesar Ossani

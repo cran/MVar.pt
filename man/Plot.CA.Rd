@@ -2,17 +2,17 @@
 
 \alias{Plot.CA}
 
-\title{Graficos da Analise de Correspondencia (CA) simples e multipla}
+\title{Graficos da analise de correspondencia (CA) simples e multipla}
 
-\description{Graficos da Analise de Correspondencia (CA) simples e multipla.}
+\description{Graficos da analise de correspondencia (CA) simples e multipla.}
 
 \usage{Plot.CA(AC, Titles = matrix(NA,1,3), Color = "s")}
 
 \arguments{
-\item{AC}{Dados da funcao CA}
-\item{Titles}{Titulos para os graficos}
-\item{Color}{"s" para graficos coloridos - default\cr
-             "n" para graficos em preto e branco}
+\item{AC}{Dados da funcao CA.}
+\item{Titles}{Titulos para os graficos.}
+\item{Color}{"s" para graficos coloridos - default,\cr
+             "n" para graficos em preto e branco.}
 }
 
 \value{Retorna varios graficos.}
@@ -53,5 +53,5 @@ Plot.CA(Resp, Titles, Color = "s")
 
 }
 
-\keyword{Analise de Correspondencia}
+\keyword{Analise de correspondencia}
 \keyword{CA}

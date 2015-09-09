@@ -2,33 +2,33 @@
 
 \alias{MFA}
 
-\title{Analise de Multiplos Fatores (MFA)}
+\title{Analise de multiplos fatores (MFA)}
 
-\description{Realiza Analise de Multiplos Fatores (MFA) em grupos de variaveis. Os grupos de variaveis podem ser dados Quantitativos, Qualitativos, de Frequencia (MFACT) ou dados Mistos.}
+\description{Realiza analise de multiplos fatores (MFA) em grupos de variaveis. Os grupos de variaveis podem ser dados quantitativos, qualitativos, de frequencia (MFACT), ou dados mistos.}
 
 \usage{MFA(Data, Grupo, TipoGrupo = rep("n", length(Grupo)), NomeGrupos = NULL)}
 \arguments{
-  \item{Data}{Dados a serem analisados}
-  \item{Grupo}{Numero de colunas para cada Grupo em ordem seguindo a ordem dos Dados de 'Data'}
-  \item{TipoGrupo}{"n" para dados Numericos - default\cr
-                   "c" para dados Categoricos\cr
-                   "f" para dados de Frequencia}
-  \item{NomeGrupos}{Nomes para cada Grupo}
+  \item{Data}{Dados a serem analisados.}
+  \item{Grupo}{Numero de colunas para cada grupo em ordem seguindo a ordem dos dados de "Data".}
+  \item{TipoGrupo}{"n" para dados numericos - default,\cr
+                   "c" para dados categoricos,\cr
+                   "f" para dados de frequencia.}
+  \item{NomeGrupos}{Nomes para cada grupo.}
 }
 
 \value{
-\item{MatrixG}{Matriz com os tamanhos de cada grupo}
-\item{MatrixNG}{Matriz com os nomes de cada grupo}
-\item{MatrixPLin}{Matriz com os valores usados para balancear as linhas da Matriz Z}
-\item{MatrixPCol}{Matriz com os valores usados para balancear as colunas da Matriz Z}
-\item{MatrixZ}{Matriz Concatenada e Balanceada}
-\item{MatrixA}{Matriz com Autovalores (Variancias)}
-\item{MatrixU}{Matriz U da decomposicao singular da Matriz Z}
-\item{MatrixV}{Matriz V da decomposicao singular da Matriz Z}
-\item{MatrixF}{Matriz Global dos Escores dos Fatores onde cada linhas sao as observacoes e as colunas os componentes}
-\item{MatrixEFG}{Matriz dos Escores dos Fatores por Grupo}
-\item{MatrixCCP}{Matriz de Correlacao dos Componentes Principais com as Variaveis Originais}
-\item{MatrixEscVar}{Matriz das Inercias Parciais/Escores das Variareis}
+\item{MatrixG}{Matriz com os tamanhos de cada grupo.}
+\item{MatrixNG}{Matriz com os nomes de cada grupo.}
+\item{MatrixPLin}{Matriz com os valores usados para balancear as linhas da matriz Z.}
+\item{MatrixPCol}{Matriz com os valores usados para balancear as colunas da matriz Z.}
+\item{MatrixZ}{Matriz concatenada e balanceada.}
+\item{MatrixA}{Matriz com autovalores (variancias).}
+\item{MatrixU}{Matriz U da decomposicao singular da matriz Z.}
+\item{MatrixV}{Matriz V da decomposicao singular da matriz Z.}
+\item{MatrixF}{Matriz global dos escores dos fatores onde as linhas sao as observacoes e as colunas os componentes.}
+\item{MatrixEFG}{Matriz dos escores dos fatores por grupo.}
+\item{MatrixCCP}{Matriz de correlacao dos componentes principais com as variaveis originais.}
+\item{MatrixEscVar}{Matriz das inercias parciais/escores das variareis.}
 }
 
 \references{
@@ -95,7 +95,7 @@ print("Matriz das Inercias Parciais/Escores das Variaveis:")
 print(round(MF$MatrixEscVar,2))
 }
 
-\keyword{Analise de Multiplos Fatores}
+\keyword{Analise de multiplos fatores}
 \keyword{MFA}
 \keyword{MFACT}
 

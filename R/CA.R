@@ -11,11 +11,20 @@ CA <- function(Data, TypData, TypMatrix = "I") {
   #             B Matriz de Burt
   
   # Retorna:
-  # DepData       - Verificacao se os dados sao Dependentes ou Independentes a nivel 5% de significancia
-  # TypData       - Tipo de dados: "F" Frequencia ou "C" Qualitativo
-  # NumCood       - Numero de Coordenadas principais 
-  # MatrixX       - Matriz com as coordenadas principais das Linhas 
-  # MatrixY       - Matriz com as coordenadas principais das Colunas
+  # DepData       - Verificacao se os dados sao dependentes ou independentes a nivel 5% de significancia
+  # TypData       - Tipo de dados: "F" frequencia ou "C" qualitativo
+  # NumCood       - Numero de coordenadas principais
+  # MatrixP       - Matriz da frequencia relativa
+  # VectorR       - Vetor com as somas das linhas
+  # VectorC       - Vetor com as somas das colunas
+  # MatrixPR      - Matriz com perfil das linhas
+  # MatrixPC      - Matriz com perfil das colunas
+  # MatrixZ       - Matriz Z
+  # MatrixU       - Matriz com os autovetores U
+  # MatrixV       - Matriz com os autovetores V
+  # MatrixL       - Matriz com os autovalores 
+  # MatrixX       - Matriz com as coordenadas principais das linhas 
+  # MatrixY       - Matriz com as coordenadas principais das colunas
   # MatrixAutoVlr - Matriz das inercias (Variancias), com as proporcoes e proporcoes acumuladas
   
   if (!is.data.frame(Data)) 
@@ -117,7 +126,9 @@ CA <- function(Data, TypData, TypMatrix = "I") {
   ##### FIM - Calculo das Inercia Total #####
   
   Lista <- list(DepData = DData, TypData = TypData, NumCood = Nc,
-                MatrixX = X[,1:Nc], MatrixY= Y[,1:Nc], MatrixAutoVlr = MEigen)
+                MatrixP = MP, VectorR = r, VectorC = c, MatrixPR = PR, 
+                MatrixPC = PC, MatrixZ = MZ, MatrixU = Mu, MatrixV = Mv, 
+                MatrixL = Md, MatrixX = X[,1:Nc], MatrixY= Y[,1:Nc], MatrixAutoVlr = MEigen)
   
   return(Lista)
 }

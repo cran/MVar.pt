@@ -4,9 +4,9 @@
 
 \docType{data}
 
-\title{Conjunto de Dados Qualitativos}
+\title{Conjunto de dados qualitativos}
 
-\description{Conjunto de Dados Qualitativos, sobre consumo de cafes.}
+\description{Conjunto de dados qualitativos, sobre consumo de cafes.}
 
 \usage{data(DataQuali)}
 
@@ -23,4 +23,4 @@ data(DataQuali)
 DataQuali
 }
 
-\keyword{Conjunto de Dados}
+\keyword{Conjunto de dados}
