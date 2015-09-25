@@ -6,13 +6,15 @@
 
 \description{Graficos da analise de correspondencia (CA) simples e multipla.}
 
-\usage{Plot.CA(AC, Titles = matrix(NA,1,3), Color = "s")}
+\usage{Plot.CA(AC, Titles = matrix(NA,1,3), Color = "s", LinLab = NULL)}
 
 \arguments{
 \item{AC}{Dados da funcao CA.}
 \item{Titles}{Titulos para os graficos.}
 \item{Color}{"s" para graficos coloridos - default,\cr
              "n" para graficos em preto e branco.}
+\item{LinLab}{Vetor com o rotulo para as linhas, para dados de frequencia.\cr
+              Se nao informado retorna o padrao dos dados.}
 }
 
 \value{Retorna varios graficos.}
@@ -42,8 +44,6 @@ Plot.CA(Resp, Titles, Color = "s")
 data(DataQuali) # Conjunto de dados qualitativos
 
 Dat <- DataQuali[,2:ncol(DataQuali)]
-
-rownames(Dat) <- as.character(t(DataQuali[1:nrow(DataQuali),1]))
 
 Resp <- CA(Dat, "c", "b") # realiza CA
 

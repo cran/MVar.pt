@@ -1,4 +1,4 @@
-Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s") {
+Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s", LinLab = NULL) {
   # Rotina para Plotar Graficos do Metodo AC desenvolvida 
   # por Paulo Cesar Ossani em 11/2014
   
@@ -7,6 +7,8 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s") {
   # Titles - Titulos para os graficos
   # Color  - "s" para graficos coloridos - default
   #          "n" para graficos em preto e branco
+  # LinLab - Vetor com o rotulo para as linhas para dados de frequencia,
+  #          se nao informado retorna o padrao dos dados.
   
   # Retorna:
   # Varios graficos
@@ -16,16 +18,22 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s") {
   if (!is.character(Titles[1]) || is.na(Titles[1])) Titles[1] = c("Grafico Correspondente as Linhas (Observacoes)")
   if (!is.character(Titles[2]) || is.na(Titles[2])) Titles[2] = c("Grafico Correspondente as Colunas(Variaveis)")
   if (!is.character(Titles[3]) || is.na(Titles[3])) Titles[3] = c("Grafico Correspondente as Observacoes e Variaveis")
-  
+
   Color  = ifelse(Color=="s","S",ifelse(Color=="n","N",Color))  # transforma em maiusculo
-  
+
   if (Color!="S" && Color!="N")
-    return(print("Entrada para 'Color' esta incorreta. Verifique!"))
+     return(print("Entrada para 'Color' esta incorreta. Verifique!"))
   
+  if (!is.null(LinLab) && length(LinLab)!=nrow(AC$MatrixX) && AC$TypData=="F")
+     return(print("O numero elementos do rotulo para linhas (LinLab) difere do numero de linhas da base de dados. Verifique!"))
+  
+  if (is.null(LinLab) && AC$TypData=="F")
+     LinLab <- rownames(AC$MatrixX)
+
   DescEixo1  = paste("Primeira Coordenada Principal (",round(AC$MatrixAutoVlr[1,2],2),"%)",sep="")
   DescEixo2  = paste("Segunda Coordenada Principal (",round(AC$MatrixAutoVlr[2,2],2),"%)",sep="")
   #####   FIM - Informacoes usadas nos Graficos  #####
-  
+
   ##### INICIO - Plotagem dos Autovalores #####
   mp <- barplot(AC$MatrixAutoVlr[,1],names.arg=paste(round(AC$MatrixAutoVlr[,2],2),"%",sep=""),main = "Autovalor")
   ##### FIM - Plotagem dos Autovalores #####
@@ -45,8 +53,7 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s") {
     
     abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
     
-    LocLab(AC$MatrixX[,1:2],rownames(AC$MatrixX))  # Coloca os nomes dos pontos das coordenadas principais das linhas
-    #text(AC$MatrixX,cex=1, pos=3, rownames(AC$MatrixX))  # Coloca os nomes dos pontos das coordenadas principais das linhas
+    text(AC$MatrixX,cex=1, pos=3, LinLab)  # Coloca os nomes dos pontos das coordenadas principais das linhas
   }
   ##### FIM - Plotagem dos Dados das linhas #####
   
@@ -64,13 +71,12 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s") {
   
   abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
   
-  LocLab(AC$MatrixY[,1:2],rownames(AC$MatrixY)) # Coloca os nomes dos pontos das coordenadas principais das colunas
-  #text(AC$MatrixY, cex=1, pos=3, rownames(AC$MatrixY))  # Coloca os nomes dos pontos das coordenadas principais das colunas
+  text(AC$MatrixY, cex=1, pos=3, rownames(AC$MatrixY))  # Coloca os nomes dos pontos das coordenadas principais das colunas
   ##### FIM - Plotagem dos Dados das colunas #####
   
   ##### INICIO - Plotagem dos Dados das linhas e colunas conjuntamente #####
-  if (AC$TypData=="F") { # plota se nao for analise de correspondencia multipla
-    plot(AC$MatrixX,      # cria grafico para as coordenadas principais das linhas
+  if (AC$TypData=="F") {    # plota se nao for analise de correspondencia multipla
+    plot(AC$MatrixX,        # cria grafico para as coordenadas principais das linhas
          xlab = DescEixo1,  # Nomeia Eixo X
          ylab = DescEixo2,  # Nomeia Eixo Y
          main = Titles[3],  # Titulo
@@ -85,11 +91,9 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s") {
     
     abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
     
-    CoordXY = rbind(AC$MatrixX[,1:2],AC$MatrixY[,1:2]) # coordenas linhas e colunas
-    LocLab(CoordXY,rownames(CoordXY)) # Coloca os nomes dos pontos das coordenadas principais das linhas e colunas
+    text(AC$MatrixX, cex=1,  pos=3, LinLab)  # Coloca os nomes dos pontos das coordenadas principais das linhas
     
-    #text(AC$MatrixX, cex=1,  pos=3, rownames(AC$MatrixX))  # Coloca os nomes dos pontos das coordenadas principais das linhas
-    #text(AC$MatrixY, cex=1, pos=3, rownames(AC$MatrixY))  # Coloca os nomes dos pontos das coordenadas principais das colunas
+    text(AC$MatrixY, cex=1, pos=3, rownames(AC$MatrixY))  # Coloca os nomes dos pontos das coordenadas principais das colunas
   }
   ##### FIM - Plotagem dos Dados das linhas e colunas conjuntamente #####
 }
