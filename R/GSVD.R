@@ -12,14 +12,27 @@ GSVD <- function(Data, PLin = NULL, PCol = NULL) {
   # u - Autovetores referentes das linhas
   # v - Autovetores referentes das colunas
   
-  if (is.null(PLin)) PLin <- rep(1, nrow(Data))
-  else PLin = PLin / sum(PLin)
-  
   if (is.null(PCol)) PCol <- rep(1, ncol(Data))
   
-  if (class(PLin)!="numeric") PLin <- as.numeric(PLin)
+  if (is.null(PLin)) PLin <- rep(1, nrow(Data))
   
-  if (class(PCol)!="numeric") PCol <- as.numeric(PCol)
+  else if (is.numeric(PLin)) PLin = PLin / sum(PLin)
+  
+  if (!is.numeric(PLin))
+     stop("Entrada para 'PLin' deve ser um vetor numerico. Verifique!")
+  
+  if (!is.numeric(PCol))
+     stop("Entrada para 'PCol' deve ser um vetor numerico. Verifique!")
+  
+  if (nrow(Data) != length(PLin))
+     stop("O numero de elementos em 'Plin' deve ser igual ao numero de linhas de 'Data'. Verifique!")
+  
+  if (ncol(Data) != length(PCol))
+     stop("O numero de elementos em 'PCol' deve ser igual ao numero de colunas de 'Data'. Verifique!")
+  
+  PLin <- as.vector(PLin)
+  
+  PCol <- as.vector(PCol)
   
   ncv <- min(nrow(Data)-1,ncol(Data)) # numero de colunas validas
   

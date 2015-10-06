@@ -11,7 +11,7 @@ NormData <- function(Data, Type = 1) {
   # DataNorm  - Dados Normalizados
   
   if (Type!=1 && Type!=2) 
-     return(print("Entrada para 'Type' esta incorreta. Verifique!"))
+     stop("Entrada para 'Type' esta incorreta, deve ser numerica, sendo 1 ou 2. Verifique!")
   
   DataNorm = as.matrix(Data)  # DataNorm com os Dados a serem Normalizados
   

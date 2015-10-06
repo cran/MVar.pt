@@ -21,10 +21,10 @@ Plot.PCA <- function(PC, Titles = matrix(NA,1,2), Color = "s", LinLab = NULL) {
   Color  = ifelse(Color=="s","S",ifelse(Color=="n","N",Color))    # transforma em maiusculo
 
   if (Color!="S" && Color!="N")
-     return(print("Entrada para 'Color' esta incorreta. Verifique!"))
-
+     stop("Entrada para 'Color' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
+  
   if (!is.null(LinLab) && length(LinLab)!=nrow(PC$MatrixEsc))
-     return(print("O numero elementos do rotulo para linhas (LinLab) difere do numero de linhas da base de dados. Verifique!"))
+     stop("O numero elementos do rotulo para linhas 'LinLab' difere do numero de linhas da base de dados. Verifique!")
   
   if (is.null(LinLab))
      LinLab <- rownames(PC$MatrixEsc)

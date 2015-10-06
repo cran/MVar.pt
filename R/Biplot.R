@@ -1,4 +1,3 @@
-
 Biplot <- function(Data, alfa=0.5, Title=NA, Label_x=NA, Label_y=NA, Color="s") {
   # Rotina para gerar Biplot desenvolvida 
   # por Paulo Cesar Ossani em 20/06/2015
@@ -25,18 +24,27 @@ Biplot <- function(Data, alfa=0.5, Title=NA, Label_x=NA, Label_y=NA, Color="s") 
   
   ##### INICIO - Informacoes usadas nos Graficos #####
   
-  Color  = ifelse(Color=="s","S",ifelse(Color=="n","N",Color))    # transforma em maiusculo
-  
   if (!is.data.frame(Data)) 
-     return(print("Entrada 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!"))
+     stop("Entrada para 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!")
   
   if (!is.numeric(alfa) || alfa < 0 || alfa > 1)
-     return(print("Entrada para 'alfa' deve numerica, com valor entre 0 e 1. Verifique!"))
+     stop("Entrada para 'alfa' esta incorreta, deve ser numerica, com valor entre 0 e 1. Verifique!")
   
-  if (!is.character(Title) || is.na(Title)) Title = "Grafico Biplot"  
+  if (!is.character(Title) && !is.na(Title))
+     stop("Entrada para 'Title' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
+  if (!is.character(Label_x) && !is.na(Label_x))
+     stop("Entrada para 'Label_x' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
+  if (!is.character(Label_y) && !is.na(Label_y))
+     stop("Entrada para 'Label_y' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+
+  Color  = ifelse(Color=="s","S",ifelse(Color=="n","N", Color))    # transforma em maiusculo
   
   if (Color!="S" && Color!="N") 
-     return(print("Entrada para 'Color' esta incorreta. Verifique!"))
+     stop("Entrada para 'Color' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
+  
+  if (is.na(Title)) Title = "Grafico Biplot" 
   
   MData = as.matrix(Data) # transforma dados em matriz
   
@@ -56,10 +64,10 @@ Biplot <- function(Data, alfa=0.5, Title=NA, Label_x=NA, Label_y=NA, Color="s") 
   
   PVar <- (Md^2/sum(Md^2)) * 100 # Proporcao dos primeiros (dim) componentes principais
   
-  if (!is.character(Label_x) || is.na(Label_x))
+  if (is.na(Label_x))
      Label_x = paste("Primeiro Componente (",round(PVar[1],2),"%)",sep="")
 
-  if (!is.character(Label_y) || is.na(Label_y))
+  if (is.na(Label_y))
      Label_y = paste("Segundo Componente (",round(PVar[2],2),"%)",sep="")
   
   MaxX <- max(Coor_I[,1],Coor_V[,1])+1 # Dimenssoes maximas das linhas

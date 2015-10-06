@@ -1,10 +1,10 @@
-CA <- function(Data, TypData, TypMatrix = "I") {
+CA <- function(Data, TypData = "f", TypMatrix = "I") {
   # Funcao Executa a Analise de Correspondencia - CA
   # Desenvolvida por Paulo Cesar Ossani em 06/2013
   
   # Entrada:
   # Data    - Dados a serem a analizados
-  # TypData - "f" for frequency data
+  # TypData - "f" for frequency data - Default
   #           "c" for qualitative data
   # TypMatrix - Usado quando TypData = c;
   #             I Matriz Indicadora - Default
@@ -28,21 +28,21 @@ CA <- function(Data, TypData, TypMatrix = "I") {
   # MatrixAutoVlr - Matriz das inercias (Variancias), com as proporcoes e proporcoes acumuladas
   
   if (!is.data.frame(Data)) 
-     return(print("Entrada 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!"))
-  
+     stop("Entrada 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!")
+
   TypData   = ifelse(TypData=="f","F",ifelse(TypData=="c","C",TypData)) # transforma em maiusculo
   TypMatrix = ifelse(TypMatrix=="i","I",ifelse(TypMatrix=="b","B",TypMatrix)) # transforma em maiusculo
   
-  if (TypData!="F" && TypData!="C")
-     return(print("Entrada para o tipo de dados (TypData) errada. Verifique!"))
+  if (TypData!="F" && TypData!="C" || !is.character(TypData))
+     stop("Entrada para o tipo de dados 'TypData' esta incorreta, deve ser do tipo caracter, sendo 'f' ou 'c'. Verifique!")
   
-  if (TypMatrix!="I" && TypMatrix!="B")
-     return(print("Entrada para o tipo matriz (TypMatrix) errada. Verifique!"))
-  
+  if (TypMatrix!="I" && TypMatrix!="B" || !is.character(TypMatrix))
+     stop("Entrada para o tipo matriz 'TypMatrix' esta incorreta, deve ser do tipo caracter, sendo 'i' ou 'b'. Verifique!")
+
   # verifica se os dados sao oriundos de contagem
   if (TypData=="F")  # para dados numericos
     if (sum(Data)!=round(sum(abs(Data)),0))
-       return(print("Os dados devem ser de numeros inteiros positivos oriundos de contagem. Verifique!"))
+       stop("Os dados devem ser de numeros inteiros positivos oriundos de contagem. Verifique!")
   
   Nc = min(nrow(Data) - 1, ncol(Data) - 1) # numero de coordenadas principais
   

@@ -286,19 +286,19 @@ MFA <- function(Data, Grupo, TipoGrupo = rep("n",length(Grupo)), NomeGrupos = NU
      NomeGrupos <- paste("Variavel", 1:length(TipoGrupo), sep = " ")
   
   if (!is.numeric(Grupo))
-     return(print("A entrada 'Grupo' deve ser do tipo numerico. Verifique!"))
+     stop("A entrada para 'Grupo' esta incorreta, deve ser do tipo numerico. Verifique!")
   
   if (!is.character(TipoGrupo))
-     return(print("A entrada 'TipoGrupo' deve ser do tipo caracter. Verifique!"))
+     stop("A entrada para 'TipoGrupo' esta incorreta, deve ser do tipo caracter. Verifique!")
   
   if (!is.character(NomeGrupos))
-     return(print("A entrada 'NomeGrupos' deve ser do tipo caracter ou string. Verifique!"))
+     stop("A entrada para 'NomeGrupos' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
 
   if (length(TipoGrupo)!=length(Grupo))
-     return(print("O numero de componetes da entrada 'TipoGrupo' difere da entrada 'Grupo'. Verifique!"))
+     stop("O numero de componetes da entrada 'TipoGrupo' difere da entrada 'Grupo'. Verifique!")
 
   if (length(NomeGrupos)!=length(Grupo))
-     return(print("O numero de componetes da entrada 'NomeGrupos' difere da entrada 'Grupo'. Verifique!"))
+     stop("O numero de componetes da entrada 'NomeGrupos' difere da entrada 'Grupo'. Verifique!")
   
   if (is.null(NomeGrupos)) # Cria nomes para as variaveis caso nao exista
      NomeGrupos <- paste("Variavel", 1:length(TipoGrupo), sep = " ")
@@ -308,7 +308,7 @@ MFA <- function(Data, Grupo, TipoGrupo = rep("n",length(Grupo)), NomeGrupos = NU
     
   for (i in 1:length(TipoGrupo)) 
     if (TipoGrupo[i]!="N" && TipoGrupo[i]!="C" && TipoGrupo[i]!="F")
-       return(print("A entrada 'TipoGrupo' deve ser: n, c, ou f. Verifique!"))
+       stop("A entrada 'TipoGrupo' esta incorreta, deve ser: n, c, ou f. Verifique!")
   
   ### Inicio - Balanceia os valores dos grupos de variaveis ###
   NumGrupos = length(Grupo) # numero de grupos formados

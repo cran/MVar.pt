@@ -22,10 +22,10 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s", LinLab = NULL) {
   Color  = ifelse(Color=="s","S",ifelse(Color=="n","N",Color))  # transforma em maiusculo
 
   if (Color!="S" && Color!="N")
-     return(print("Entrada para 'Color' esta incorreta. Verifique!"))
+     stop("Entrada para 'Color' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
   
   if (!is.null(LinLab) && length(LinLab)!=nrow(AC$MatrixX) && AC$TypData=="F")
-     return(print("O numero elementos do rotulo para linhas (LinLab) difere do numero de linhas da base de dados. Verifique!"))
+     stop("O numero elementos do rotulo para linhas 'LinLab' difere do numero de linhas da base de dados. Verifique!")
   
   if (is.null(LinLab) && AC$TypData=="F")
      LinLab <- rownames(AC$MatrixX)
@@ -40,20 +40,20 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s", LinLab = NULL) {
   
   ##### INICIO - Plotagem dos Dados das linhas #####
   if (AC$TypData=="F") { # plota se nao for analise de correspondencia multipla
-    plot(AC$MatrixX, # cria grafico para as coordenadas principais das linhas
-         xlab = DescEixo1,  # Nomeia Eixo X
-         ylab = DescEixo2,  # Nomeia Eixo Y
-         main = Titles[1],  # Titulo
-         asp = 1,                # Aspecto do Grafico
-         pch = 15,               # Formato dos pontos 
-         cex=1,                  # Tamanho dos pontos
-         xlim=c(min(AC$MatrixX[,1])-0.1,max(AC$MatrixX[,1])+0.1), # Dimensao para as linhas do grafico
-         ylim=c(min(AC$MatrixX[,2]-0.1),max(AC$MatrixX[,2])+0.1), # Dimensao para as colunas do grafico
-         col = ifelse(Color=="S","red","black"))             # Cor dos pontos
+     plot(AC$MatrixX, # cria grafico para as coordenadas principais das linhas
+          xlab = DescEixo1,  # Nomeia Eixo X
+          ylab = DescEixo2,  # Nomeia Eixo Y
+          main = Titles[1],  # Titulo
+          asp = 1,           # Aspecto do Grafico
+          pch = 15,          # Formato dos pontos 
+          cex=1,             # Tamanho dos pontos
+          xlim=c(min(AC$MatrixX[,1])-0.1,max(AC$MatrixX[,1])+0.1), # Dimensao para as linhas do grafico
+          ylim=c(min(AC$MatrixX[,2]-0.1),max(AC$MatrixX[,2])+0.1), # Dimensao para as colunas do grafico
+          col = ifelse(Color=="S","red","black"))             # Cor dos pontos
     
-    abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
+     abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
     
-    text(AC$MatrixX,cex=1, pos=3, LinLab)  # Coloca os nomes dos pontos das coordenadas principais das linhas
+     text(AC$MatrixX,cex=1, pos=3, LinLab)  # Coloca os nomes dos pontos das coordenadas principais das linhas
   }
   ##### FIM - Plotagem dos Dados das linhas #####
   
@@ -75,23 +75,23 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s", LinLab = NULL) {
   ##### FIM - Plotagem dos Dados das colunas #####
   
   ##### INICIO - Plotagem dos Dados das linhas e colunas conjuntamente #####
-  if (AC$TypData=="F") {    # plota se nao for analise de correspondencia multipla
-    plot(AC$MatrixX,        # cria grafico para as coordenadas principais das linhas
-         xlab = DescEixo1,  # Nomeia Eixo X
-         ylab = DescEixo2,  # Nomeia Eixo Y
-         main = Titles[3],  # Titulo
-         asp = 1,           # Aspecto do Grafico
-         pch = 15,          # Formato dos pontos 
-         cex=1,             # Tamanho dos pontos
-         xlim=c(min(AC$MatrixX[,1])-0.1,max(AC$MatrixX[,1])+0.1), # Dimensao para as linhas do grafico
-         ylim=c(min(AC$MatrixX[,2]-0.1),max(AC$MatrixX[,2])+0.1), # Dimensao para as colunas do grafico
-         col = ifelse(Color=="S","red","black"))             # Cor dos pontos
+  if (AC$TypData=="F") {     # plota se nao for analise de correspondencia multipla
+     plot(AC$MatrixX,        # cria grafico para as coordenadas principais das linhas
+          xlab = DescEixo1,  # Nomeia Eixo X
+          ylab = DescEixo2,  # Nomeia Eixo Y
+          main = Titles[3],  # Titulo
+          asp = 1,           # Aspecto do Grafico
+          pch = 15,          # Formato dos pontos 
+          cex=1,             # Tamanho dos pontos
+          xlim=c(min(AC$MatrixX[,1])-0.1,max(AC$MatrixX[,1])+0.1), # Dimensao para as linhas do grafico
+          ylim=c(min(AC$MatrixX[,2]-0.1),max(AC$MatrixX[,2])+0.1), # Dimensao para as colunas do grafico
+          col = ifelse(Color=="S","red","black"))             # Cor dos pontos
     
-    points(AC$MatrixY, pch = 16, cex = 1.2, col = ifelse(Color=="S","blue","black")) # adiciona ao grafico as coordenadas principais das colunas
+     points(AC$MatrixY, pch = 16, cex = 1.2, col = ifelse(Color=="S","blue","black")) # adiciona ao grafico as coordenadas principais das colunas
     
-    abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
+     abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
     
-    text(AC$MatrixX, cex=1,  pos=3, LinLab)  # Coloca os nomes dos pontos das coordenadas principais das linhas
+     text(AC$MatrixX, cex=1,  pos=3, LinLab)  # Coloca os nomes dos pontos das coordenadas principais das linhas
     
     text(AC$MatrixY, cex=1, pos=3, rownames(AC$MatrixY))  # Coloca os nomes dos pontos das coordenadas principais das colunas
   }

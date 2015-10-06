@@ -6,11 +6,11 @@
 
 \description{Realiza analise de correspondencia simples (CA) e multipla (MCA) em um conjunto de dados.}
 
-\usage{CA(Data, TypData, TypMatrix = "I")}
+\usage{CA(Data, TypData = "f", TypMatrix = "I")}
 
 \arguments{
 \item{Data}{Dados a serem analisados, isto e, tabela de contingencia.}
-\item{TypData}{"f" para dados de frequencia,\cr
+\item{TypData}{"f" para dados de frequencia - Default,\cr
                "c" para dados qualitativos.}
 \item{TypMatrix}{Matriz usada para calculos quanto TypData = "c".\cr
                  "I" para matriz indicadora - Default,\cr

@@ -17,7 +17,7 @@ IM <- function(Data, Names = "s") {
   Names = ifelse(Names=="s","S",ifelse(Names=="n","N",Names)) # transforma em maiusculo
   
   if (Names!="S" && Names!="N") 
-     return(print("Entrada para 'Names' esta incorreta. Verifique!"))
+     stop("Entrada para 'Names' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
   
   NumLinha  <- nrow(Data)  # Numero de linhas na tabela
   

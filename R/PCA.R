@@ -16,15 +16,16 @@ PCA <- function(Data, Type = 1) {
   # MatrixEsc     - Matriz com os escores dos Componentes Principais
   
   if (!is.data.frame(Data)) 
-     return(print("Entrada 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!"))
+     stop("Entrada 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!")
   
   if (Type!=1 && Type!=2) 
-     return(print("Entrada para 'Type' esta incorreta. Verifique!"))
+     stop("Entrada para 'Type' esta incorreta, deve ser numerica, sendo 1 ou 2. Verifique!")
   
-  if (Type == 1)    # Considera a Matriz de Covariancia para a decomposicao
-    MC <- cov(Data) # Matriz de Covariancia
-  if (Type == 2)    # Considera a Matriz de Correlacao para a decomposicao
-    MC <- cor(Data) # Matriz de Correlacao
+  if (Type == 1)     # Considera a Matriz de Covariancia para a decomposicao
+     MC <- cov(Data) # Matriz de Covariancia
+  
+  if (Type == 2)     # Considera a Matriz de Correlacao para a decomposicao
+     MC <- cor(Data) # Matriz de Correlacao
   
   ## Encontrando a Matriz de Decomposicao Expectral
   MAV <- eigen(MC) # Encontra a matriz de autovalor e autovetor

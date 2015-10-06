@@ -32,16 +32,16 @@ Plot.MFA <- function(MFA,Titles = matrix(NA,1,3), PosLeg=2, BoxLeg="s", Color="s
   NamArr = ifelse(NamArr=="s","S",ifelse(NamArr=="n","N",NamArr)) # transforma em maiusculo
   
   if (PosLeg<1 || PosLeg>4)
-     return(print("Entrada para posicao da legenda (PosLeg) esta incorreta. Verifique!"))
+     stop("Entrada para posicao da legenda 'PosLeg' esta incorreta. Verifique!")
   
   if (BoxLeg!="S" && BoxLeg!="N") 
-     return(print("Entrada para moldura da legenda (BoxLeg) esta incorreta. Verifique!"))
+     stop("Entrada para moldura da legenda 'BoxLeg' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
   
   if (Color!="S" && Color!="N") 
-     return(print("Entrada para 'Color' esta incorreta. Verifique!"))
-  
+     stop("Entrada para 'Color' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
+
   if (NamArr!="S" && NamArr!="N") 
-     return(print("Entrada para 'NamArr' esta incorreta. Verifique!"))
+     stop("Entrada para 'NamArr' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
   
   Grupos     = MFA$MatrixG  # tamanho de cada grupo
   NomeGrupos = MFA$MatrixNG # nomes de cada grupo

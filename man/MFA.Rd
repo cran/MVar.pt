@@ -89,10 +89,10 @@ GroupNames = c("Notas Cafes/Trabalho", "Formacao/Dedicacao", "Cafes")
 MF <- MFA(Matriz, c(2,2,2), TipoGrupo = c("n","c","f"), GroupNames) # realiza MFA
 
 print("Variancias dos Componentes Principais:")
-print(round(MF$MatrixA,2))
+round(MF$MatrixA,2)
 
 print("Matriz das Inercias Parciais/Escores das Variaveis:")
-print(round(MF$MatrixEscVar,2))
+round(MF$MatrixEscVar,2)
 }
 
 \keyword{Analise de multiplos fatores}
