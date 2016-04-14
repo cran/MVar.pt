@@ -4,7 +4,7 @@
 
 \docType{data}
 
-\title{Conjunto de dados quantitativos}
+\title{Conjunto de dados quantitativos.}
 
 \description{Conjunto simulado de dados quantitativos, sobre notas dadas a algumas caracteristas sensoriais dos cafes.}
 

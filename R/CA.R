@@ -4,14 +4,14 @@ CA <- function(Data, TypData = "f", TypMatrix = "I") {
   
   # Entrada:
   # Data    - Dados a serem a analizados
-  # TypData - "f" for frequency data - Default
+  # TypData - "f" for frequency data (default)
   #           "c" for qualitative data
   # TypMatrix - Usado quando TypData = c;
-  #             I Matriz Indicadora - Default
+  #             I Matriz Indicadora (default)
   #             B Matriz de Burt
   
   # Retorna:
-  # DepData       - Verificacao se os dados sao dependentes ou independentes a nivel 5% de significancia
+  # DepData       - Verifica se as linhas e colunas sao dependentes ou independentes pelo teste Qui-quadrado, a nivel 5% de significancia
   # TypData       - Tipo de dados: "F" frequencia ou "C" qualitativo
   # NumCood       - Numero de coordenadas principais
   # MatrixP       - Matriz da frequencia relativa
@@ -88,12 +88,29 @@ CA <- function(Data, TypData = "f", TypMatrix = "I") {
   
   PC = MP%*%solve(Dc) # Matriz com perfil das colunas
   
-  #### INICIO - Teste Chi-Quadrado para independencia/dependencia dos dados #####
-  Chi.Quad.Encontrado <- SDados*sum(diag(solve(Dr)%*%(MP-r%*%t(c))%*%solve(Dc)%*%t(MP-r%*%t(c))))
-  gl =  (ncol(Data) - 1)*(nrow(Data) - 1) # grau de liberdade
+  #### INICIO - Teste Qui-quadrado para independencia/dependencia entre as linhas e colunas #####
+  Chi.Quad.Observado <- SDados*sum(diag(solve(Dr)%*%(MP-r%*%t(c))%*%solve(Dc)%*%t(MP-r%*%t(c))))
+  gl = (ncol(Data) - 1)*(nrow(Data) - 1) # grau de liberdade
   qt = qchisq(0.95,gl,ncp=0) # teste a nivel de 5% de significancia
-  DData = ifelse(Chi.Quad.Encontrado>=qt,"TRUE","FALSE")
-  #### FIM - Teste Chi-Quadrado para independencia/dependencia dos dados #####
+
+  Texto1 <- c("### Teste Qui-quadrado para dependencia entre linhas e colunas ###")
+    
+  Texto2 <- paste("Grau de liberdade observado:", round(gl,2))
+    
+  Texto3 <- paste("Valor da estatistica do teste Qui-quadrado (Chiq1):", round(Chi.Quad.Observado,2))
+      
+  Texto4 <- paste("Valor Qui-quadrado observado (Chiq2) com 5% de significancia:", round(qt,2))
+  
+  if (Chi.Quad.Observado>qt) Texto5 <- c("Como Chiq1 > Chiq2, verifica-se que EXISTE dependencia entre as linhas e as colunas.")
+      
+  if (Chi.Quad.Observado<=qt) Texto5 <- c("Como Chiq1 <= Chiq2, verifica-se que NAO EXISTE dependencia entre as linhas e as colunas.")
+  
+  Texto6 <- paste("Valor-p:", round(pchisq(Chi.Quad.Observado,gl,ncp=0, lower.tail = F),5))
+    
+  DData <- rbind(Texto1,Texto2,Texto3,Texto4,Texto5, Texto6)
+  
+  rownames(DData) <- NULL 
+  #### FIM - Teste Qui-quadrado para independencia/dependencia entre as linhas e colunas #####
   
   ##### INICIO Calculo das Coordenadas principais das Linhas e Colunas #####
   MZ = diag(1/sqrt(diag(Dr)))%*%(MP - r%*%t(c))%*%diag(1/sqrt(diag(Dc))) # Matriz Z
@@ -125,7 +142,7 @@ CA <- function(Data, TypData = "f", TypMatrix = "I") {
   MEigen[, "% acumulada da variancia"] <- cumsum(MEigen[,"% da variancia"])
   ##### FIM - Calculo das Inercia Total #####
   
-  Lista <- list(DepData = DData, TypData = TypData, NumCood = Nc,
+  Lista <- list(DepData = as.character(DData), TypData = TypData, NumCood = Nc,
                 MatrixP = MP, VectorR = r, VectorC = c, MatrixPR = PR, 
                 MatrixPC = PC, MatrixZ = MZ, MatrixU = Mu, MatrixV = Mv, 
                 MatrixL = Md, MatrixX = X[,1:Nc], MatrixY= Y[,1:Nc], MatrixAutoVlr = MEigen)

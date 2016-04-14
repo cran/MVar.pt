@@ -6,17 +6,17 @@
 
 \docType{package}
 
-\title{Analise multivariada (brazilian portuguese)}
+\title{Analise multivariada (brazilian portuguese).}
 
-\description{Pacote para analise multivariada, que possui funcoes que executam analise de correspondencia simples (CA) e multipla (MCA), analise de componentes principais (PCA), analise de multiplos fatores (MFA) para dados quantitativos, qualitativos, de frequencia (MFACT) e dados mistos. Tambem possuim outras funcoes uteis para a analise multivariada.
+\description{Pacote para analise multivariada, que possui funcoes que executam analise de correspondencia simples (CA) e multipla (MCA), analise de componentes principais (PCA), analise de correlacao canonica (CCA), analise fatorial (FA), analise de multiplos fatores (MFA), para dados quantitativos, qualitativos, de frequencia (MFACT) e dados mistos. Tambem possui outras funcoes uteis para a analise multivariada.
 }
 
 \details{
 \tabular{ll}{
 Package: \tab MVar.pt\cr
 Type: \tab Package\cr
-Version: \tab 1.6\cr
-Date: \tab 2015-10-06\cr
+Version: \tab 1.7\cr
+Date: \tab 2016-04-03\cr
 License: \tab GPL(>= 2)\cr
 LazyLoad: \tab yes\cr
 }

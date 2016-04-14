@@ -4,7 +4,7 @@
 
 \docType{data}
 
-\title{Conjunto de dados de frequencia}
+\title{Conjunto de dados de frequencia.}
 
 \description{Conjunto simulado de dados com a frequencia semanal do numero de chicaras de cafes consumidas semanalmente em algumas capitais mundiais.}
 

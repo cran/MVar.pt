@@ -7,7 +7,7 @@ MFA <- function(Data, Grupo, TipoGrupo = rep("n",length(Grupo)), NomeGrupos = NU
   # Data - Dados a serem analisados
   # Grupo - Numero de colunas para cada Grupo em 
   #         ordem seguindo a ordem dos Dados de 'Data'
-  # TipoGrupo - "n" para dados Numericos - default
+  # TipoGrupo - "n" para dados Numericos (default)
   #             "c" para dados Categoricos
   #             "f" para dados de Frequencia
   # NomeGrupos - Nomes para cada Grupo

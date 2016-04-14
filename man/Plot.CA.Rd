@@ -2,7 +2,7 @@
 
 \alias{Plot.CA}
 
-\title{Graficos da analise de correspondencia (CA) simples e multipla}
+\title{Graficos da analise de correspondencia (CA) simples e multipla.}
 
 \description{Graficos da analise de correspondencia (CA) simples e multipla.}
 
@@ -11,7 +11,7 @@
 \arguments{
 \item{AC}{Dados da funcao CA.}
 \item{Titles}{Titulos para os graficos.}
-\item{Color}{"s" para graficos coloridos - default,\cr
+\item{Color}{"s" para graficos coloridos (default),\cr
              "n" para graficos em preto e branco.}
 \item{LinLab}{Vetor com o rotulo para as linhas, para dados de frequencia.\cr
               Se nao informado retorna o padrao dos dados.}

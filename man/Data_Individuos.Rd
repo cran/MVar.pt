@@ -4,7 +4,7 @@
 
 \docType{data}
 
-\title{Conjunto de dados de frequencia}
+\title{Conjunto de dados de frequencia.}
 
 \description{Conjunto de dados categorizados por individuos, sobre habilidades sensoriais no consumo de cafes especiais.}
 

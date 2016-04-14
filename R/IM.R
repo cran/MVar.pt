@@ -5,7 +5,7 @@ IM <- function(Data, Names = "s") {
   
   # Entrada:
   # Data  - Dados Categoricos 
-  # Names - "s" para incluir os nomes das variaveis nos niveis da Matriz Indicadora - default
+  # Names - "s" para incluir os nomes das variaveis nos niveis da Matriz Indicadora (default)
   #         "n" nao inclui
   
   # Retorna:

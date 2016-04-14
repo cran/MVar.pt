@@ -6,17 +6,17 @@ Plot.MFA <- function(MFA,Titles = matrix(NA,1,3), PosLeg=2, BoxLeg="s", Color="s
   # MF - Dados da funcao MFA
   # Titles - Titulos para os graficos. Se nao for definido assume texto padrao.
   # PosLeg - 1 para legenda no canto superior esquerdo
-  #          2 para legenda no canto superior direito - default
+  #          2 para legenda no canto superior direito (default)
   #          3 para legenda no canto inferior direito
   #          4 para legenda no canto inferior esquerdo
-  # BoxLeg - "s" para colocar moldura na legenda - default
+  # BoxLeg - "s" para colocar moldura na legenda (default)
   #          "n" nao coloca moldura na legenda
-  # Color  - "s" para graficos coloridos - default
+  # Color  - "s" para graficos coloridos (default)
   #          "n" para graficos em preto e branco
   # NamArr - "s" para colocar nomes pontos na nuvem ao redor do
   #              centroide no Grafico Correspondente a 
   #              Analise Global dos Individuos e Variaveis
-  #          "n" Caso contrario - default
+  #          "n" Caso contrario (default)
   
   # Retorna:
   # Varios graficos

@@ -4,7 +4,7 @@ PCA <- function(Data, Type = 1) {
   
   # Entrada:
   # Data - Dados a serem a analizados
-  # Type - 1 para analise utilizando a matriz de covariancia - default
+  # Type - 1 para analise utilizando a matriz de covariancia (default)
   #        2 para analise utilizando a matriz de correlacao
   
   # Retorna:

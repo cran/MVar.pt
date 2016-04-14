@@ -2,7 +2,7 @@
 
 \alias{CA}
 
-\title{Analise de correspondencia}
+\title{Analise de correspondencia (CA).}
 
 \description{Realiza analise de correspondencia simples (CA) e multipla (MCA) em um conjunto de dados.}
 
@@ -10,15 +10,15 @@
 
 \arguments{
 \item{Data}{Dados a serem analisados, isto e, tabela de contingencia.}
-\item{TypData}{"f" para dados de frequencia - Default,\cr
+\item{TypData}{"f" para dados de frequencia (default),\cr
                "c" para dados qualitativos.}
 \item{TypMatrix}{Matriz usada para calculos quanto TypData = "c".\cr
-                 "I" para matriz indicadora - Default,\cr
+                 "I" para matriz indicadora (default),\cr
                  "B" para matriz de Burt.}
 }
 
 \value{
-\item{DepData}{Verifica se os dados sao dependentes ou independentes a nivel 5\% de significancia.}
+\item{DepData}{Verifica se as linhas e colunas sao dependentes, ou independentes pelo teste Qui-quadrado, a nivel 5\% de significancia.}
 \item{TypData}{Tipo de dados: "F" frequencia ou "C" qualitativo.}
 \item{NumCood}{Numero de coordenadas principais.}
 \item{MatrixP}{Matriz da frequencia relativa.}

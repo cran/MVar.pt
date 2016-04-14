@@ -4,7 +4,7 @@ NormData <- function(Data, Type = 1) {
   # Paulo Cesar Ossani em 07/2013
   
   # Data - Dados a serem a normalizados
-  # Type - 1 Normaliza global - default
+  # Type - 1 Normaliza global (default)
   #        2 Normaliza por coluna
   
   # Retorna:

@@ -2,7 +2,7 @@
 
 \alias{Plot.MFA}
 
-\title{Graficos da analise de multiplos fatores (MFA)}
+\title{Graficos da analise de multiplos fatores (MFA).}
 
 \description{Graficos da nalise de multiplos fatores (MFA).}
 
@@ -13,17 +13,17 @@ Plot.MFA(MFA,Titles = matrix(NA,1,3), PosLeg = 2, BoxLeg = "s", Color = "s", Nam
   \item{MFA}{Dados da funcao MFA.}
   \item{Titles}{Titulos para os graficos. Se nao for definido assume texto padrao.}
   \item{PosLeg}{1 para legenda no canto superior esquerdo,\cr
-                2 para legenda no canto superior direito - default,\cr
+                2 para legenda no canto superior direito (default),\cr
                 3 para legenda no canto inferior direito,\cr
                 4 para legenda no canto inferior esquerdo.}
-  \item{BoxLeg}{"s" para colocar moldura na legenda - default.\cr
+  \item{BoxLeg}{"s" para colocar moldura na legenda (default).\cr
                 "n" nao coloca moldura na legenda.}
-  \item{Color}{"s" para graficos coloridos - default,\cr
+  \item{Color}{"s" para graficos coloridos (default),\cr
                "n" para graficos em preto e branco.}
   \item{NamArr}{"s" para colocar nomes nos pontos na nuvem ao redor do
                     centroide no grafico correspondente a 
                     analise global dos individuos e variaveis,\cr
-                "n" caso contrario - default.}
+                "n" caso contrario (default).}
 }
 
 \value{Retorna varios graficos.}

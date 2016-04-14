@@ -10,7 +10,7 @@ Biplot <- function(Data, alfa=0.5, Title=NA, Label_x=NA, Label_y=NA, Color="s") 
   # Title  - Titulo para o grafico. Se nao for definido assume texto padrao.
   # Label_x - Rotulo do eixo X. Se nao for definido assume texto padrao.
   # Label_y - Rotulo do eixo Y. Se nao for definido assume texto padrao.
-  # Color  - "s" para graficos coloridos - default
+  # Color  - "s" para graficos coloridos (default)
   #          "n" para graficos em preto e branco.
   
   # Retorna:

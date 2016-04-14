@@ -2,16 +2,16 @@
 
 \alias{Plot.PCA}
 
-\title{Graficos da analise de componentes principais (PCA)}
+\title{Graficos da analise de componentes principais (PCA).}
 
-\description{Graficos da analise de componentes principais (PCA)}
+\description{Graficos da analise de componentes principais (PCA).}
 
 \usage{Plot.PCA(PC, Titles = matrix(NA,1,2), Color = "s", LinLab = NULL)}
 
 \arguments{
 \item{PC}{Dados da funcao PCA.}
 \item{Titles}{Titulos para os graficos.}
-\item{Color}{"s" para graficos coloridos - default,\cr
+\item{Color}{"s" para graficos coloridos (default),\cr
              "n" para graficos em preto e branco.}
 \item{LinLab}{Vetor com o rotulo para as linhas, se nao
               informado retorna o padrao dos dados.}

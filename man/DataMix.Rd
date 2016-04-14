@@ -4,7 +4,7 @@
 
 \docType{data}
 
-\title{Conjunto de dados mistos}
+\title{Conjunto de dados mistos.}
 
 \description{Conjunto simulado de dados mistos, sobre consumo de cafes.}
 

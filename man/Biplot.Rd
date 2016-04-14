@@ -2,7 +2,7 @@
 
 \alias{Biplot}
 
-\title{Grafico Biplot}
+\title{Grafico Biplot.}
 
 \description{Realiza o grafico Biplot.}
 

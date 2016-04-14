@@ -2,7 +2,7 @@
 
 \alias{GSVD}
 
-\title{Decomposicao de valor singular generalizada (GSVD)}
+\title{Decomposicao de valor singular generalizada (GSVD).}
 
 \description{Dada a matriz \eqn{A} de ordem \eqn{nxm}, a decomposicao de valor singular generalizada (GSVD), envolve a utilizacao de dois conjuntos de matrizes quadradas positivas de ordem \eqn{nxn}  e \eqn{mxm}, respectivamente. Estas duas matrizes expressam restricoes impostas, respectivamente, nas linhas e colunas de \eqn{A}.}
 
@@ -13,7 +13,7 @@
   \item{PCol}{Peso para as colunas.}
 }
 
-\details{Se nao for utilizado Plin ou PCOL, sera calculada como a decomposicao em valor singular usual.}
+\details{Se nao for utilizado PLin ou PCol, sera calculada como a decomposicao em valor singular usual.}
 
 \value{
  \item{d}{Autovalores, isto e, vector linha com os valores singulares da decomposicao.}

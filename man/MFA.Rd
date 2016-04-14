@@ -2,7 +2,7 @@
 
 \alias{MFA}
 
-\title{Analise de multiplos fatores (MFA)}
+\title{Analise de multiplos fatores (MFA).}
 
 \description{Realiza analise de multiplos fatores (MFA) em grupos de variaveis. Os grupos de variaveis podem ser dados quantitativos, qualitativos, de frequencia (MFACT), ou dados mistos.}
 
@@ -10,7 +10,7 @@
 \arguments{
   \item{Data}{Dados a serem analisados.}
   \item{Grupo}{Numero de colunas para cada grupo em ordem seguindo a ordem dos dados de "Data".}
-  \item{TipoGrupo}{"n" para dados numericos - default,\cr
+  \item{TipoGrupo}{"n" para dados numericos (default),\cr
                    "c" para dados categoricos,\cr
                    "f" para dados de frequencia.}
   \item{NomeGrupos}{Nomes para cada grupo.}
@@ -88,10 +88,10 @@ GroupNames = c("Notas Cafes/Trabalho", "Formacao/Dedicacao", "Cafes")
 
 MF <- MFA(Matriz, c(2,2,2), TipoGrupo = c("n","c","f"), GroupNames) # realiza MFA
 
-print("Variancias dos Componentes Principais:")
+print("Variancias dos Componentes Principais:");
 round(MF$MatrixA,2)
 
-print("Matriz das Inercias Parciais/Escores das Variaveis:")
+print("Matriz das Inercias Parciais/Escores das Variaveis:");
 round(MF$MatrixEscVar,2)
 }
 

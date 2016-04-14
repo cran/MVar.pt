@@ -2,7 +2,7 @@
 
 \alias{PCA}
 
-\title{Analise de componentes principais (PCA)}
+\title{Analise de componentes principais (PCA).}
 
 \description{Realiza analise de componentes principais (PCA) em um conjunto de dados.}
 
@@ -10,7 +10,7 @@
 
 \arguments{
 \item{Data}{Dados a serem a analizados.}
-\item{Type}{1 para analise utilizando a matriz de covariancia - default,\cr
+\item{Type}{1 para analise utilizando a matriz de covariancia (default),\cr
             2 para analise utilizando a matriz de correlacao.}
 }
 
