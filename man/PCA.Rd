@@ -44,7 +44,7 @@ data(DataQuan) # conjunto de dados quantitativos
 
 Dat <- DataQuan[,2:8]
 
-rownames(Dat) <- as.character(t(DataQuan[1:nrow(DataQuan),1]))
+rownames(Dat) <- DataQuan[1:nrow(DataQuan),1]
 
 PC <- PCA(Dat, 2) # Executa o PCA
 

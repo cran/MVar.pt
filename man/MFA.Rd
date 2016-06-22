@@ -82,7 +82,7 @@ data(DataMix) # conjunto de dados mistos
 
 Matriz = DataMix[,2:ncol(DataMix)] 
 
-rownames(Matriz) <- as.character(t(DataMix[1:nrow(DataMix),1]))
+rownames(Matriz) <- DataMix[1:nrow(DataMix),1]
 
 GroupNames = c("Notas Cafes/Trabalho", "Formacao/Dedicacao", "Cafes")
 
