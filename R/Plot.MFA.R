@@ -64,8 +64,15 @@ Plot.MFA <- function(MFA,Titles = matrix(NA,1,3), PosLeg=2, BoxLeg="s", Color="s
   #####   FIM - Informacoes usadas nos Graficos  #####
   
   ##### INICIO - Plotagem dos Autovalores #####
-  mp <- barplot(MFA$MatrixA[,1],names.arg=paste(round(MFA$MatrixA[,2],2),"%",sep=""),main = "Autovalor")
+  mp <- barplot(MFA$MatrixA[,1],names.arg=paste(round(MFA$MatrixA[,2],2),"%",sep=""),main = "Variancias dos componentes")
   ##### FIM - Plotagem dos Autovalores #####
+  
+  ##### INICIO - Scree-plot dos componentes #####
+  plot(1:length(MFA$MatrixA[,1]), MFA$MatrixA[,1], type = "b", 
+       xlab = "Ordem dos componentes", 
+       ylab = "Variancia",
+       main = "Scree-plot das variancias dos componentes")
+  ##### FIM - Scree-plot dos componentes #####
   
   ##### INICIO - Plotagem da Analise Global #####
   plot(MFA$MatrixF, # cria grafico para as coordenadas principais da Analise Global

@@ -1,4 +1,4 @@
-0190b940daf749975be73e77f7fe2612 *DESCRIPTION
+7207a3ee9ae6974b23c0294ba43ea5b3 *DESCRIPTION
 fadac23f36b43dd66257cb85d0a693b7 *NAMESPACE
 108151d3169385aebb183bda7cac7833 *R/Biplot.R
 55e4b0f1b815f0167fd9080cecbc7aec *R/CA.R
@@ -12,10 +12,10 @@ f52bfcbbd561fc577a6e1edab8634ce4 *R/MFA.R
 aca60ab2ac0d74f2663435dc52ea2d30 *R/NormData.R
 9ed8a559e06a9a2e682e6df73f320e4a *R/NormTest.R
 072a8ed389443310933b4a13dd92f7d1 *R/PCA.R
-d528e509f3711d51566e2686dab3e964 *R/Plot.CA.R
+df8ecad8710c5e94da59a13739ca9a56 *R/Plot.CA.R
 bdec600d520d140b83bc4b32bff6c2f3 *R/Plot.CCA.R
-9c10e7511d85c33d561d2fafab393bab *R/Plot.MFA.R
-2833aed524cc97863bd7b815e5d83a5c *R/Plot.PCA.R
+8736b12b58adb66fe07aab5f35f0dfa8 *R/Plot.MFA.R
+fb273ae816e87f871ec31ce604984c44 *R/Plot.PCA.R
 60ec5791f9ae9ce5bc2b030c02af5499 *data/DataFreq.rda
 c70edf1404e15bbcd73c90699f727d91 *data/DataMix.rda
 e580c80080840bbb9d74cfd6e003c528 *data/DataQuali.rda
@@ -36,12 +36,12 @@ d0567742d35181154b0c79d41f9ec8a1 *man/FA.Rd
 ee409e7ce32552ad395b7e7d81d52458 *man/GSVD.Rd
 f1ac822fd8180d9accc9bb4d758cb154 *man/IM.Rd
 6f76eb911e009a52bfc7c46c9ec8f58c *man/LocLab.Rd
-f1ba40124edceadc47b7cf803a399a23 *man/MFA.Rd
-923b25d7ac369d41695204c0b72bb2d4 *man/MVar.pt-package.Rd
+0b60e546c8fc38ddbe5eef3bde6db5c9 *man/MFA.Rd
+09ee4aa2dc465219d36575ac74e4c03f *man/MVar.pt-package.Rd
 16405760d628ccd5baf3502bb5676a4b *man/NormData.Rd
 96f1f45d20ad730882db552aadc408f7 *man/NormTest.Rd
 b2b511d56d0e97969d80c5cc4ec27fa5 *man/PCA.Rd
 96ccc03eccf48ee28c74144f547b665b *man/Plot.CA.Rd
 7204723699f21b1c6560023c66339a1e *man/Plot.CCA.Rd
-ffbbf924f3372e44e8d1a2154546638e *man/Plot.MFA.Rd
+afe5cbde5636bec8e3ce375b6a9abb0a *man/Plot.MFA.Rd
 7263cad0a44c72165f5edd38b8c47349 *man/Plot.PCA.Rd

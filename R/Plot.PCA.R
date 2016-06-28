@@ -21,21 +21,28 @@ Plot.PCA <- function(PC, Titles = matrix(NA,1,2), Color = "s", LinLab = NULL) {
   Color  = ifelse(Color=="s","S",ifelse(Color=="n","N",Color))    # transforma em maiusculo
   
   if (Color!="S" && Color!="N")
-    stop("Entrada para 'Color' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
+     stop("Entrada para 'Color' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
   
   if (!is.null(LinLab) && length(LinLab)!=nrow(PC$MatrixEsc))
-    stop("O numero elementos do rotulo para linhas 'LinLab' difere do numero de linhas da base de dados. Verifique!")
+     stop("O numero elementos do rotulo para linhas 'LinLab' difere do numero de linhas da base de dados. Verifique!")
   
   if (is.null(LinLab))
-    LinLab <- rownames(PC$MatrixEsc)
+     LinLab <- rownames(PC$MatrixEsc)
   
   DescEixo1  = paste("Primeira Coordenada Principal (",round(PC$MatrixAutoVlr[1,2],2),"%)",sep="")
   DescEixo2  = paste("Segunda Coordenada Principal (",round(PC$MatrixAutoVlr[2,2],2),"%)",sep="")
   #####   FIM - Informacoes usadas nos Graficos  #####
   
   ##### INICIO - Plotagem dos Autovalores #####
-  mp <- barplot(PC$MatrixAutoVlr[,1],names.arg=paste(round(PC$MatrixAutoVlr[,2],2),"%",sep=""),main = "Autovalor")
+  mp <- barplot(PC$MatrixAutoVlr[,1],names.arg=paste(round(PC$MatrixAutoVlr[,2],2),"%",sep=""),main = "Variancias dos componentes")
   ##### FIM - Plotagem dos Autovalores #####
+  
+  ##### INICIO - Scree-plot dos componentes #####
+  plot(1:length(PC$MatrixAutoVlr[,1]), PC$MatrixAutoVlr[,1], type = "b", 
+       xlab = "Ordem dos componentes", 
+       ylab = "Variancia",
+       main = "Scree-plot das variancias dos componentes")
+  ##### FIM - Scree-plot dos componentes #####
   
   ##### INICIO - Plotagem dos Dados das linhas #####
   plot(PC$MatrixEsc, # cria grafico para as coordenadas principais das linhas

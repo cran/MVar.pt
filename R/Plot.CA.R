@@ -35,8 +35,15 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s", LinLab = NULL) {
   #####   FIM - Informacoes usadas nos Graficos  #####
   
   ##### INICIO - Plotagem dos Autovalores #####
-  mp <- barplot(AC$MatrixAutoVlr[,1],names.arg=paste(round(AC$MatrixAutoVlr[,2],2),"%",sep=""),main = "Autovalor")
+  mp <- barplot(AC$MatrixAutoVlr[,1],names.arg=paste(round(AC$MatrixAutoVlr[,2],2),"%",sep=""),main = "Variancias dos componentes")
   ##### FIM - Plotagem dos Autovalores #####
+  
+  ##### INICIO - Scree-plot dos componentes #####
+  plot(1:length(AC$MatrixAutoVlr[,1]), AC$MatrixAutoVlr[,1], type = "b", 
+       xlab = "Ordem dos componentes", 
+       ylab = "Variancia",
+       main = "Scree-plot das variancias dos componentes")
+  ##### FIM - Scree-plot dos componentes #####
   
   ##### INICIO - Plotagem dos Dados das linhas #####
   if (AC$TypData=="F") { # plota se nao for analise de correspondencia multipla
@@ -85,8 +92,8 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s", LinLab = NULL) {
           asp = 1,           # Aspecto do Grafico
           pch = 15,          # Formato dos pontos 
           cex=1,             # Tamanho dos pontos
-          xlim=c(min(AC$MatrixX[,1])-0.1,max(AC$MatrixX[,1])+0.1), # Dimensao para as linhas do grafico
-          ylim=c(min(AC$MatrixX[,2]-0.1),max(AC$MatrixX[,2])+0.1), # Dimensao para as colunas do grafico
+          xlim=c(min(AC$MatrixX[,1],AC$MatrixY)-0.1,max(AC$MatrixX[,1],AC$MatrixY)+0.1), # Dimensao para as linhas do grafico
+          ylim=c(min(AC$MatrixX[,2],AC$MatrixY)-0.1,max(AC$MatrixX[,2],AC$MatrixY)+0.1), # Dimensao para as colunas do grafico
           col = ifelse(Color=="S","red","black"))             # Cor dos pontos
     
      points(AC$MatrixY, pch = 16, cex = 1.2, col = ifelse(Color=="S","blue","black")) # adiciona ao grafico as coordenadas principais das colunas
