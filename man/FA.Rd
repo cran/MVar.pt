@@ -2,14 +2,13 @@
 
 \alias{FA}
 
-\title{Analise Fatorial (FA).}
+\title{Analise fatorial (FA).}
 
 \description{Realiza analise fatorial (FA) em um conjunto de dados.}
 
-\usage{FA(Data, Method = "PC", Type = 2, NFactor = 1,
-          Rotation = "None", ScoresObs = "Bartlett", 
-          Screeplot = TRUE, Converg = 1e-5, 
-          Iteracao = 1000, TestFit = TRUE) 
+\usage{FA(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None",
+   ScoresObs = "Bartlett", Screeplot = TRUE, Converg = 1e-5, 
+   Iteracao = 1000, TestFit = TRUE) 
 }
 
 \arguments{
@@ -50,6 +49,8 @@ MINGOTI, S. A. \emph{Analise de dados atraves de metodos de estatistica multivar
 Kaiser, H. F..\emph{The varimax criterion for analytic rotation in factor analysis.} Psychometrika 23, 187-200, 1958.
 
 RENCHER, A.C.; \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
+
+FERREIRA, D. F.; \emph{Estatistica Multivariada.} 2a ed. revisada e ampliada. Lavras: Editora UFLA, 2011. 676 p.
 }
 
 \author{

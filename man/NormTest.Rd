@@ -13,12 +13,19 @@
 \item{Sign}{Grau de significancia do teste (default 5\%).}
 }
 
-\value{{Resultados do teste.}}
+\value{
+\item{Statistic  }{Valor Chi-quadrado observado, ou seja, a estatistica do teste.}
+\item{ChiQuadrado}{Valor Chi-quadrado calculado.}
+\item{GL         }{Grau de liberdade.}
+\item{p.Value    }{Valor p.}
+}
 
 \references{
 MINGOTI, S. A. \emph{Analise de dados atraves de metodos de estatistica multivariada:} uma abordagem aplicada. Belo Horizonte: UFMG, 2005. 297 p.
 
 RENCHER, A.C.; \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
+
+FERREIRA, D. F.; \emph{Estatistica Multivariada.} 2a ed. revisada e ampliada. Lavras: Editora UFLA, 2011. 676 p.
 }
 
 \author{

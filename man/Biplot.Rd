@@ -6,7 +6,8 @@
 
 \description{Realiza o grafico Biplot.}
 
-\usage{Biplot(Data, alfa = 0.5, Title = NA, Label_x = NA, Label_y = NA, Color = "s")}
+\usage{Biplot(Data, alfa = 0.5, Title = NA, Label_x = NA,
+       Label_y = NA, Color = "s")}
 
 \arguments{
 \item{Data}{Dados para plotagem.}

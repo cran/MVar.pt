@@ -282,6 +282,9 @@ MFA <- function(Data, Grupo, TipoGrupo = rep("n",length(Grupo)), NomeGrupos = NU
     return(Lista)  
   }
   
+  if (!is.data.frame(Data)) 
+     stop("Entrada 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!")
+  
   if (is.null(NomeGrupos)) # Cria nomes para as variaveis caso nao exista
      NomeGrupos <- paste("Variavel", 1:length(TipoGrupo), sep = " ")
   

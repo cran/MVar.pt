@@ -37,10 +37,11 @@
 \references{
 MINGOTI, S. A. \emph{Analise de dados atraves de metodos de estatistica multivariada:} uma abordagem aplicada. Belo Horizonte: UFMG, 2005. 297 p.
 
+FERREIRA, D. F.; \emph{Estatistica Multivariada.} 2a ed. revisada e ampliada. Lavras: Editora UFLA, 2011. 676 p.
+
 RENCHER, A.C.; \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
 
 LATTIN, J., CARROL J. D., GREEN P.E.; \emph{Analise de dados multivariados.} 1th. ed. Sao Paulo: Cengage Learning, 2011. 455 p.
-
 }
 
 \author{

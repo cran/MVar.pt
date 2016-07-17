@@ -8,7 +8,12 @@ NormTest <- function(Data, Sign = 0.05) {
   # Data - Dados a serem analisados
   # Sign - Grau de significancia do teste (default 5%)
   
-  # Saida: Resultado do teste
+  
+  # Retorna:
+  # Statistic   - Valor Chi-quadrado observado, ou seja, a estatistica do teste.
+  # ChiQuadrado - Valor Chi-quadrado calculado.
+  # GL      - Grau de liberdade.
+  # p.Value - Valor p.
   
   if (!is.data.frame(Data) && !is.matrix(Data)) 
      stop("Entrada 'Data' esta incorreta, deve ser do tipo dataframe ou matriz. Verifique!")
@@ -33,18 +38,24 @@ NormTest <- function(Data, Sign = 0.05) {
   
   Chi.Quad.Observado <- n*B1p/6 # Estatistica do Teste
   
-  qt = qchisq(1-Sign,gl,ncp=0)
+  qt = qchisq(1-Sign,gl,ncp=0) # Valor Qui-quadrado calculado
   
-  cat(paste("Grau de liberdade observado:", round(gl,7)),"\n")
+  pVal <- pchisq(Chi.Quad.Observado,gl,ncp=0, lower.tail = F)
   
-  cat(paste("Valor da estatistica do teste Qui-quadrado (Chiq1):", round(Chi.Quad.Observado,7)),"\n")
+#  cat(paste("Grau de liberdade observado:", round(gl,7)),"\n")
+
+#  cat(paste("Valor da estatistica do teste Qui-quadrado (Chiq1):", round(Chi.Quad.Observado,7)),"\n")
   
-  cat(paste("Valor Qui-quadrado observado (Chiq2) com", Sign*100,"% de significancia:", round(qt,7)),"\n")
+#  cat(paste("Valor Qui-quadrado calculado (Chiq2) com", Sign*100,"% de significancia:", round(qt,7)),"\n")
   
-  if (Chi.Quad.Observado<=qt) cat("Como Chiq1 <= Chiq2, VERIFICA-SE a normalidade dos dados.\n")
+#  if (Chi.Quad.Observado<=qt) cat("Como Chiq1 <= Chiq2, VERIFICA-SE a normalidade dos dados.\n")
   
-  if (Chi.Quad.Observado>qt) cat("Como Chiq1 > Chiq2, NAO VERIFICA-SE a normalidade dos dados.\n")
+#  if (Chi.Quad.Observado>qt) cat("Como Chiq1 > Chiq2, NAO VERIFICA-SE a normalidade dos dados.\n")
   
-  cat("Valor-p:", pchisq(Chi.Quad.Observado,gl,ncp=0, lower.tail = F))
+#  cat("Valor-p:", pVal)
+  
+  Lista <- list(Statistic = Chi.Quad.Observado, ChiQuadrado = qt, GL = gl, p.Value = pVal)
+  
+  returnValue(Lista)
   
 }

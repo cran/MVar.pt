@@ -6,8 +6,8 @@
 
 \description{Graficos da nalise de multiplos fatores (MFA).}
 
-\usage{
-Plot.MFA(MFA,Titles = matrix(NA,1,3), PosLeg = 2, BoxLeg = "s", Color = "s", NamArr = "n")}
+\usage{Plot.MFA(MFA, Titles = matrix(NA,1,3), PosLeg = 2, 
+         BoxLeg = "s", Color = "s", NamArr = "n")}
  
 \arguments{
   \item{MFA}{Dados da funcao MFA.}

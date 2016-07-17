@@ -1,0 +1,73 @@
+\name{Regressao}
+
+\alias{Regressao}
+
+\title{Regressao linear.}
+
+\description{Realiza a regressao linear em um conjunto de dados.}
+
+\usage{Regressao(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05)}
+
+\arguments{
+\item{Y}{Respotas.}
+\item{X}{Variaveis regressoras.}
+\item{NameVarX}{Nome da variavel, ou variaveis X, se omitido retorna padrao.}
+\item{Intercepts}{"s" para considerar o intercepto na regressao (default),\cr
+                  "n" para nao considerar o intercepto na regressao.}
+\item{SigF}{Nivel de significancia dos testes dos residuos (default = 5\%).}
+}
+
+\value{
+\item{Betas}{Coeficientes da regressao.}
+\item{CovBetas}{Matriz de covariancias dos coeficientes da regressao.}
+\item{ICc}{Intervalo de confianca dos coeficientes da regressao.}
+\item{Hip.Test}{Teste de hipoteses dos coeficientes da regressao.}
+\item{ANOVA}{Analise de variancia da regressao.}
+\item{R}{Coeficiente de determinacao.}
+\item{Rc}{Coeficiente de determinacao corrigido.}
+\item{Ra}{Coeficiente de determinacao ajustado.}
+\item{QME}{Variancias dos residuos.}
+\item{Prev}{Previsao do ajuste da regressao.}
+\item{Error}{Residuos do ajuste da regressao.}
+\item{ICr}{Intervalo de confianca dos residuos.}
+\item{ICp}{Intervalo de confianca das previsoes.}
+\item{IPp}{Intervalo das previsoes.}
+\item{Error.Test}{Retorna a 5\% de significancia o teste de independencia, de \cr
+                  normalidade e de homogeneidade da variancia dos residuos.}
+}
+
+\references{
+CHARNET, R., at al.. \emph{Analise de modelos de regressao lienar,} 2a ed. Campinas: Editora da Unicamp, 2008. 357 p.
+
+RENCHER, A.C.; \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
+}
+
+\author{
+Paulo Cesar Ossani
+}
+
+\seealso{\code{\link{Plot.Regressao}}}
+
+\examples{
+data(DataMix)
+
+Y <- DataMix[,2]
+
+X <- DataMix[,7]
+
+NomeY <- "Medias notas"
+
+NomeX <- "Cafes Comerciais"
+
+Res <- Regressao(Y, X, NameVarX = NomeX ,Intercepts = "s", SigF = 0.05)
+
+print("Coeficientes da Regressao:"); round(Res$Betas,4)
+print("Analise de Variancia"); Res$ANOVA
+print("Teste de Hipoteses dos Coeficientes da Regressao:"); round(Res$Hip.Test,4)
+print("Coeficiente de Determinacao:"); round(Res$R,4)
+print("Coeficiente de Determinacao Corrigido:"); round(Res$Rc,4) 
+print("Coeficiente de Determinacao Ajustado:"); round(Res$Ra,4)
+print("Testes dos Residuos:"); Res$Error.Test
+}
+
+\keyword{Regressao}

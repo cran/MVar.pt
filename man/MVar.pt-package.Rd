@@ -8,15 +8,15 @@
 
 \title{Analise multivariada (brazilian portuguese).}
 
-\description{Pacote para analise multivariada, que possui funcoes que executam analise de correspondencia simples (CA) e multipla (MCA), analise de componentes principais (PCA), analise de correlacao canonica (CCA), analise fatorial (FA), analise de multiplos fatores (MFA), para dados quantitativos, qualitativos, de frequencia (MFACT) e dados mistos. Tambem possui outras funcoes uteis para a analise multivariada.
+\description{Pacote para analise multivariada, que possui funcoes que executam analise de correspondencia simples (CA) e multipla (MCA), analise de componentes principais (PCA), analise de correlacao canonica (CCA), analise fatorial (FA), escalonamento multidimensional (MDS), analise de cluster hierarquico e nao hierarquico, regressao linear, analise de multiplos fatores (MFA) para dados quantitativos, qualitativos, de frequencia (MFACT) e dados mistos. Tambem possui outras funcoes uteis para a analise multivariada.
 }
 
 \details{
 \tabular{ll}{
 Package: \tab MVar.pt\cr
 Type: \tab Package\cr
-Version: \tab 1.9.1\cr
-Date: \tab 2016-06-27\cr
+Version: \tab 1.9.2\cr
+Date: \tab 2016-07-17\cr
 License: \tab GPL(>= 2)\cr
 LazyLoad: \tab yes\cr
 }
@@ -46,6 +46,8 @@ BECUE-BERTAUT, M.; PAGES, J. A principal axes method for comparing contingency t
 BECUE-BERTAUT, M.; PAGES, J. Multiple factor analysis and clustering of a mixture of quantitative, categorical and frequency data. \emph{Computational Statistics & Data Analysis}, New York, v. 52, n. 6, p. 3255-3268, Feb. 2008.
 
 BENZECRI, J. Analyse de l'inertie intraclasse par l'analyse d'un tableau de contingence: intra-classinertia analysis through the analysis of a contingency table. \emph{Les Cahiers de l'Analyse des Donnees}, Paris, v. 8, n. 3, p. 351-358, 1983.
+
+CHARNET, R., at al.. \emph{Analise de modelos de regressao lienar,} 2a ed. Campinas: Editora da Unicamp, 2008. 357 p.
 
 ESCOFIER, B. Analyse factorielle en reference a un modele: application a l'analyse d'un tableau d'echanges. \emph{Revue de Statistique Appliquee}, Paris, v. 32, n. 4, p. 25-36, 1984.
 
