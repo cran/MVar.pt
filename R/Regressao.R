@@ -20,11 +20,11 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
   # Rc       - Coeficiente de determinacao corrigido.
   # Ra       - Coeficiente de determinacao ajustado.
   # QME      - Variancia dos residuos.
+  # ICQME    - Intervalo de confianca da variancia dos residuos.
   # Prev     - Previsao do ajuste da regressao.
-  # Error    - Residuos do ajuste da regressao.
-  # ICr      - Intervalo de confianca dos residuos.
+  # IPp      - Intervalo das previsoes.  
   # ICp      - Intervalo de confianca das previsoes.
-  # IPp      - Intervalo das previsoes.
+  # Error    - Residuos do ajuste da regressao.
   # Error.Test - Retorna a 5% de significancia o teste de independencia, de 
   #              normalidade e de homogeneidade da variancia dos residuos.
   
@@ -59,7 +59,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
   
   gl_i <- ifelse(Intercepts=="S", 1, 0) # grau de liberdade o intercepto
   
-  B <- MASS::ginv(t(X)%*%X)%*%t(X)%*%Y # Calculo dos coeficientes
+  B <- solve(t(X)%*%X)%*%t(X)%*%Y # Calculo dos coeficientes
   V <- ifelse(Intercepts=="S",1,0)
   rownames(B) <- paste("B",(1-V):ifelse(ncol(X)>1,(ncol(X)-V),ncol(X)),sep="") 
   colnames(B) <- c("Coeficientes")
@@ -101,7 +101,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
      ANOVA_X[,"G.L."]  <- c(rep(1,p))
      for (i in 1:p) {
        Xn <- X[,-(i + gl_i)]
-       Bn    <- MASS::ginv(t(Xn)%*%Xn)%*%t(Xn)%*%Y  # novos valores para os coeficientes (beta)
+       Bn    <- solve(t(Xn)%*%Xn)%*%t(Xn)%*%Y  # novos valores para os coeficientes (beta)
        SQRa  <- t(Bn)%*%t(Xn)%*%Y - n*MediaY^2 # Soma dos Quadrados da Regressao da variavel em questao
        QMRx  <- SQR - SQRa # Soma do quadrado da regressao final para a variavel em questao
        FCalX <- QMRx / QME # F Calculado
@@ -187,14 +187,14 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
   ## Fim - Tabela de Falta de Ajuste
   
   ## Inicio -  Matriz de covariancias dos coeficientes de regressao
-  CovB <- as.numeric(QME)*MASS::ginv(t(X)%*%X) # Matriz de covariancias dos coeficientes de regressao
+  CovB <- as.numeric(QME)*solve(t(X)%*%X) # Matriz de covariancias dos coeficientes de regressao
   rownames(CovB) <- paste("B",(1-V):ifelse(ncol(X)>1,(ncol(X)-V),ncol(X)),sep="") 
   colnames(CovB) <- rownames(CovB)
   ## Fim -  Matriz de covariancias dos coeficientes de regressao
   
   ## Inicio - Intervalo de Confianca dos coeficientes da regressao
   ICc <- as.data.frame(matrix(NA, nrow=nrow(B), ncol=2))
-  C <- diag(MASS::ginv(t(X)%*%X))
+  C <- diag(solve(t(X)%*%X))
   for (i in 1:nrow(B)) {
     Vlr <- qt(SigF/2,(n - p - gl_i),lower.tail = FALSE)*sqrt(QME*C[i])
     ICc[i,1] <- B[i] - Vlr # limite inferior
@@ -207,7 +207,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
   
   ## Inicio - Teste de Hipoteses para os coeficientes de regressao
   Hip.Test <- as.data.frame(matrix(NA, nrow=nrow(B), ncol=4))
-  C <- diag(MASS::ginv(t(X)%*%X))
+  C <- diag(solve(t(X)%*%X))
   for (i in 1:nrow(B)) {
     ErroPadrao <- sqrt(QME*C[i])
     tCalc <- B[i] / ErroPadrao # t calculado
@@ -232,17 +232,17 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
   Ra <- as.numeric(Ra)
   ## Fim - Coeficiente de determinacao
   
-  ## Inicio - Intervalo de Confianca dos residuos 
+  ## Inicio - Intervalo de Confianca da variancia dos residuos 
   Li  <- qchisq(SigF/2,(n - p - gl_i),lower.tail = FALSE)
   Ls  <- qchisq(1-SigF/2,(n - p - gl_i),lower.tail = FALSE)
-  ICr <- t(c(SQE/Li,SQE/Ls))
-  colnames(ICr) <- c("Lim.Infereior","Lim.Superior")
-  rownames(ICr) <- c("Variancia")
-  ## Fim - Intervalo de Confianca dos residuos 
+  ICQME <- t(c(SQE/Li,SQE/Ls))
+  colnames(ICQME) <- c("Lim.Infereior","Lim.Superior")
+  rownames(ICQME) <- c("Variancia")
+  ## Fim - Intervalo de Confianca da variancia dos residuos 
   
   ## Inicio - Intervalo de Confianca dos coeficientes 
   ICc <- as.data.frame(matrix(NA, nrow=nrow(B), ncol=3))
-  C   <- diag(MASS::ginv(t(X)%*%X))
+  C   <- diag(solve(t(X)%*%X))
   for (i in 1:nrow(B)) {
     ErroPadrao <- qt(SigF/2,(n - p - gl_i),lower.tail = FALSE)*sqrt(QME*C[i])
     ICc[i,1] <- ErroPadrao
@@ -256,7 +256,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
   
   ## Inicio - Intervalo de Confianca das previsoes
   ICp <- as.data.frame(matrix(NA, nrow=nrow(Y), ncol=3))
-  C   <- MASS::ginv(t(X)%*%X)
+  C   <- solve(t(X)%*%X)
   Prev <- X%*%B # previsao
   colnames(Prev) <- c("Previsao")
   for (i in 1:nrow(Y)) {
@@ -271,7 +271,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
   
   ## Inicio - Intervalo das previsoes
   IPp <- as.data.frame(matrix(NA, nrow=nrow(Y), ncol=3))
-  #C <- MASS::ginv(t(X)%*%X)
+  #C <- solve(t(X)%*%X)
   #Prev <- X%*%B # previsao
   for (i in 1:nrow(Y)) {
     ErroPadrao <- as.numeric(qt(SigF/2,(n - p - gl_i),lower.tail = FALSE)*sqrt(QME%*%(1+t(X[i,])%*%C%*%X[i,])))
@@ -294,7 +294,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
   Homo.Test    <- bartlett.test(Error,c(rep("A",First.Group),rep("B",Second.Group))) # teste de homogeneidade da variancia dos residuos
   
   MResi <- as.data.frame(matrix(NA, nrow=3, ncol=3))
-  rownames(MResi) <- c("Teste de independenacia","Teste de normalidade","Teste de homocedasticidade")
+  rownames(MResi) <- c("Teste de independencia","Teste de normalidade","Teste de homocedasticidade")
   colnames(MResi) <- c("Nome do teste","Estatistica do teste","Valor-p")
   MResi[,"Nome do teste"]        <- c("Box-Pierce","Coeficiente de assimetria","Bartlett")
   MResi[,"Estatistica do teste"] <- c(Cor.Test$statistic, Norm.Test$Statistic, Homo.Test$statistic)
@@ -305,7 +305,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
   
   Lista <- list(Y = Y, X = X, Intercepts = Intercepts, Betas = B, CovBetas = CovB,
                  ICc = ICc, Hip.Test = Hip.Test, ANOVA = ANOVA, R = R, Rc = Rc,
-                 Ra = Ra, QME = QME, Prev = Prev, Error = Error, ICr = ICr,
+                 Ra = Ra, QME = QME, Prev = Prev, Error = Error, ICQME= ICQME,
                  ICp = ICp, IPp = IPp, Error.Test = MResi)
   
   return(Lista)

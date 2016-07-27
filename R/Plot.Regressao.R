@@ -77,10 +77,10 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
   
   ## Inicio - Grafico da regressao
   if (TypeGraf == "Regression") {
-     if (ncol(X)!=1) 
-        print("Atencao! O Grafico da regressao so he possivel apenas para uma variavel regressora.")
+     #if (ncol(X)!=1) 
+    #    print("Atencao! O Grafico da regressao so he possivel apenas para uma variavel regressora.")
     
-     if (ncol(X)==1) { # para calculos de regressao simples
+    # if (ncol(X)==1) { # para calculos de regressao simples
         
         if (is.null(LabelX))
            LabelX = "Eixo x"  # Nomeia Eixo X  
@@ -91,38 +91,39 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
         if (is.null(Title))
            Title = c("Grafico da regressao linear")
         
-        plot(X,Reg$Y, # cria grafico
+        plot(X[,1],Reg$Y, # cria grafico
             xlab = LabelX,  # Nomeia Eixo X
             ylab = LabelY,  # Nomeia Eixo Y
             main = Title,   # Titulo
             pch = 15,       # Formato dos pontos 
             cex=1,          # Tamanho dos pontos
-            xlim=c(min(X)-0.1,max(X)+0.1), # Dimensao para as linhas do grafico
+            xlim=c(min(X[,1])-0.1,max(X[,1])+0.1), # Dimensao para as linhas do grafico
             ylim=c(min(cbind(Reg$Y,Reg$ICp[,4:5],Reg$IPp[,4:5])),max(cbind(Reg$Y,Reg$ICp[,4:5],Reg$IPp[,4:5]))+0.1), # Dimensao para as colunas do grafico
             col = ifelse(Color=="S","red","black"))             # Cor dos pontos
         
         ## Inicio - Acrescenta a reta ajustada
-        if (Reg$Intercepts=="N") # Sem intersepto
-           abline(0,Reg$Betas[1], lty=1) # acrescenta a reta ajustada
+        #if (Reg$Intercepts=="N") # Sem intersepto
+        #   abline(0,Reg$Betas[1], lty=1) # acrescenta a reta ajustada
         
-        if (Reg$Intercepts=="S") # Com intersepto 
-           abline(Reg$Betas[1],Reg$Betas[2], lty=1) # acrescenta a reta ajustada
+        #if (Reg$Intercepts=="S") # Com intersepto 
+        #   abline(Reg$Betas[1],Reg$Betas[2], lty=1) # acrescenta a reta ajustada
+        lines(X[,1],Reg$Prev) # acrescenta a reta ajustada
         ## Fim - Acrescenta a reta ajustada
         
         ## Inicio - Acrescenta o Intervalo de Confianca das previsoes
         if (IntConf == "S") {
-           lines(sort(X),sort(Reg$ICp[,4]), lty=3) # acrescenta I.C. Lim.Infereior
-           lines(sort(X),sort(Reg$ICp[,5]), lty=3) # acrescenta I.C. Lim.Superior
+           lines(sort(X[,1]),Reg$ICp[,4], lty=3) # acrescenta I.C. Lim.Infereior
+           lines(sort(X[,1]),Reg$ICp[,5], lty=3) # acrescenta I.C. Lim.Superior
         }
         ## Fim - Acrescenta o Intervalo de Confianca das previsoes
         
         ## Inicio - Acrescenta o Intervalo das previsoes
         if (IntPrev == "S") {
-           lines(sort(X),sort(Reg$IPp[,4]), lty=1) # acrescenta I.C. Lim.Infereior
-           lines(sort(X),sort(Reg$IPp[,5]), lty=1) # acrescenta I.C. Lim.Superior
+           lines(sort(X[,1]),Reg$IPp[,4], lty=1) # acrescenta I.C. Lim.Infereior
+           lines(sort(X[,1]),Reg$IPp[,5], lty=1) # acrescenta I.C. Lim.Superior
         }
         ## Fim - Acrescenta o Intervalo das previsoes
-     }
+    # }
   }
   ## Fim - Grafico da regressao
   

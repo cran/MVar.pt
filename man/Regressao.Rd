@@ -26,12 +26,12 @@
 \item{R}{Coeficiente de determinacao.}
 \item{Rc}{Coeficiente de determinacao corrigido.}
 \item{Ra}{Coeficiente de determinacao ajustado.}
-\item{QME}{Variancias dos residuos.}
+\item{QME}{Variancia dos residuos.}
+\item{ICQME}{Intervalo de confianca da variancia dos residuos.}
 \item{Prev}{Previsao do ajuste da regressao.}
-\item{Error}{Residuos do ajuste da regressao.}
-\item{ICr}{Intervalo de confianca dos residuos.}
-\item{ICp}{Intervalo de confianca das previsoes.}
 \item{IPp}{Intervalo das previsoes.}
+\item{ICp}{Intervalo de confianca das previsoes.}
+\item{Error}{Residuos do ajuste da regressao.}
 \item{Error.Test}{Retorna a 5\% de significancia o teste de independencia, de \cr
                   normalidade e de homogeneidade da variancia dos residuos.}
 }
