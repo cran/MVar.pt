@@ -83,7 +83,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
   colnames(ANOVA) <- c("G.L.", "Soma Quadrados","Quadrados Medios", "F.Calc.","F.Tab.","Valor-p")
   ANOVA[,"G.L."]             <- c(p,(n-p-gl_i), n-gl_i)
   ANOVA[,"Soma Quadrados"]   <- c(round(SQR,2),round(SQE,2),round(SQT,2))
-  ANOVA[,"Quadrados Medios"] <- c(round(QMR,2),round(QME,2), "-")
+  ANOVA[,"Quadrados Medios"] <- c(round(QMR,4),round(QME,4), "-")
   ANOVA[,"F.Calc."]          <- c(round(FCal,3),"-","-")
   ANOVA[,"F.Tab."]           <- c(round(FTab,3),"-","-")
   ANOVA[,"Valor-p"]          <- c(round(VlrP,4),"-","-")
@@ -108,7 +108,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
        FTabX <- qf(SigF,1,(n-p-gl_i),lower.tail = FALSE)  # F Tabelado
        VlrPX <- pf(FCalX,1,(n-p-gl_i),lower.tail = FALSE) # Valor-p
        ANOVA_X[i,"Soma Quadrados"]   <- round(QMRx,2)
-       ANOVA_X[i,"Quadrados Medios"] <- round(QMRx,2)
+       ANOVA_X[i,"Quadrados Medios"] <- round(QMRx,4)
        ANOVA_X[i,"F.Calc."]          <- round(FCalX,3)
        ANOVA_X[i,"F.Tab."]           <- round(FTabX,3)
        ANOVA_X[i,"Valor-p"]          <- round(VlrPX,4)
@@ -178,7 +178,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
     colnames(ANOVAjuste) <- c("G.L.", "Soma Quadrados","Quadrados Medios", "F.Calc.","F.Tab.","Valor-p")
     ANOVAjuste[,"G.L."]             <- c(GLfa,GLep, n-gl_i)
     ANOVAjuste[,"Soma Quadrados"]   <- c(round(SQFa,2),round(SQRp,2),round(SQT,2))
-    ANOVAjuste[,"Quadrados Medios"] <- c(round(QMFa,2),round(QMRp,2), "-")
+    ANOVAjuste[,"Quadrados Medios"] <- c(round(QMFa,4),round(QMRp,2), "-")
     ANOVAjuste[,"F.Calc."]          <- c(round(FCalFa,3),"-","-")
     ANOVAjuste[,"F.Tab."]           <- c(round(FTabFa,3),"-","-")
     ANOVAjuste[,"Valor-p"]          <- c(round(VlrPFa,4),"-","-")
@@ -201,7 +201,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
     ICc[i,2] <- B[i] + Vlr # limite superior
   }
   ICc <- cbind(B,ICc)
-  colnames(ICc) <- c("Coeficientes","I.C. Lim.Infereior","I.C. Lim.Superior")
+  colnames(ICc) <- c("Coeficientes","I.C. Lim.Inferior","I.C. Lim.Superior")
   rownames(ICc) <- rownames(B)
   ## Fim - Intervalo de Confianca dos coeficientes da regressao
   
@@ -236,7 +236,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
   Li  <- qchisq(SigF/2,(n - p - gl_i),lower.tail = FALSE)
   Ls  <- qchisq(1-SigF/2,(n - p - gl_i),lower.tail = FALSE)
   ICQME <- t(c(SQE/Li,SQE/Ls))
-  colnames(ICQME) <- c("Lim.Infereior","Lim.Superior")
+  colnames(ICQME) <- c("Lim.Inferior","Lim.Superior")
   rownames(ICQME) <- c("Variancia")
   ## Fim - Intervalo de Confianca da variancia dos residuos 
   
@@ -250,7 +250,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
     ICc[i,3] <- B[i] + ErroPadrao # limite superior
   }
   ICc <- cbind(B,ICc)
-  colnames(ICc) <- c("Coeficientes","Erro Padrao","I.C. Lim.Infereior","I.C. Lim.Superior")
+  colnames(ICc) <- c("Coeficientes","Erro Padrao","I.C. Lim.Inferior","I.C. Lim.Superior")
   rownames(ICc) <- rownames(B)
   ## Fim - Intervalo de Confianca dos coeficientes
   
@@ -266,7 +266,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
     ICp[i,3] <- Prev[i] + ErroPadrao # limite superior
   }
   ICp <- cbind(Y,Prev,ICp)
-  colnames(ICp) <- c("Y","Previsao","Erro Padrao","I.C. Lim.Infereior","I.C. Lim.Superior")
+  colnames(ICp) <- c("Y","Previsao","Erro Padrao","I.C. Lim.Inferior","I.C. Lim.Superior")
   ## Fim - Intervalo de Confianca das previsoes
   
   ## Inicio - Intervalo das previsoes
@@ -280,7 +280,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
     IPp[i,3] <- Prev[i] + ErroPadrao # limite superior
   }
   IPp <- cbind(Y,Prev,IPp)
-  colnames(IPp) <- c("Y","Previsao","Erro Padrao","I.P. Lim.Infereior","I.P. Lim.Superior")
+  colnames(IPp) <- c("Y","Previsao","Erro Padrao","I.P. Lim.Inferior","I.P. Lim.Superior")
   ## Fim - Intervalo das previsoes
   
   Error <- Y - Prev # Erro do ajuste 

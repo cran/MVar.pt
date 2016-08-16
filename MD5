@@ -1,5 +1,5 @@
-cf599fa630e3db420729fe66e18cf074 *DESCRIPTION
-85001d665813be13f6c7bf59c83a7c27 *NAMESPACE
+b8842d841bdcbf2f7dbd85085f62ac29 *DESCRIPTION
+2e98c29c17d3626a0abf5398a72be1c0 *NAMESPACE
 108151d3169385aebb183bda7cac7833 *R/Biplot.R
 55e4b0f1b815f0167fd9080cecbc7aec *R/CA.R
 26e2da8fac939a65d9dc358cdc8f5941 *R/CCA.R
@@ -18,8 +18,8 @@ df8ecad8710c5e94da59a13739ca9a56 *R/Plot.CA.R
 bdec600d520d140b83bc4b32bff6c2f3 *R/Plot.CCA.R
 8736b12b58adb66fe07aab5f35f0dfa8 *R/Plot.MFA.R
 fb273ae816e87f871ec31ce604984c44 *R/Plot.PCA.R
-ca209f9634b868fb475a5f377a803de5 *R/Plot.Regressao.R
-18cccadd92d16f57e4dca644209b3cdf *R/Regressao.R
+3c851f7458629fc28da85c4ba0ce4799 *R/Plot.Regressao.R
+0b02c26df886182572fb42c7e19e8a2d *R/Regressao.R
 60ec5791f9ae9ce5bc2b030c02af5499 *data/DataFreq.rda
 c70edf1404e15bbcd73c90699f727d91 *data/DataMix.rda
 e580c80080840bbb9d74cfd6e003c528 *data/DataQuali.rda
@@ -43,7 +43,7 @@ f1ac822fd8180d9accc9bb4d758cb154 *man/IM.Rd
 6f76eb911e009a52bfc7c46c9ec8f58c *man/LocLab.Rd
 81afb2a791849b5a9797ee01396fcd51 *man/MDS.Rd
 0b60e546c8fc38ddbe5eef3bde6db5c9 *man/MFA.Rd
-2a5c47916eb9c71ac0480a24c6b6290b *man/MVar.pt-package.Rd
+23d220050b6bc6deed14ada6b7949972 *man/MVar.pt-package.Rd
 16405760d628ccd5baf3502bb5676a4b *man/NormData.Rd
 ebf74254cc8301f923d49396e116fee0 *man/NormTest.Rd
 6940c3e2da63d64e417f241c7d3d0d4b *man/PCA.Rd
