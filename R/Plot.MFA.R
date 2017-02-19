@@ -1,4 +1,4 @@
-Plot.MFA <- function(MFA,Titles = matrix(NA,1,3), PosLeg=2, BoxLeg="s", Color="s",NamArr="n") {
+Plot.MFA <- function(MFA,Titles = matrix(NA,1,4), PosLeg=2, BoxLeg="s", Color="s",NamArr="n") {
   # Rotina para Plotar Graficos do Metodo MFA desenvolvida 
   # por Paulo Cesar Ossani em 09/2013 a 01/2014
   
@@ -23,9 +23,10 @@ Plot.MFA <- function(MFA,Titles = matrix(NA,1,3), PosLeg=2, BoxLeg="s", Color="s
   
   ##### INICIO - Informacoes usadas nos Graficos #####
   # Cria Titulos para os graficos caso nao existam
-  if (!is.character(Titles[1]) || is.na(Titles[1])) Titles[1] = c("Grafico Correspondente a Analise Global dos Individuos")
-  if (!is.character(Titles[2]) || is.na(Titles[2])) Titles[2] = c("Grafico Correspondente a Analise Global dos Individuos e Variaveis")
-  if (!is.character(Titles[3]) || is.na(Titles[3])) Titles[3] = c("Grafico das Inercias dos Grupos de Variaveis")
+  if (!is.character(Titles[1]) || is.na(Titles[1])) Titles[1] = c("Scree-plot das variancias dos componentes")
+  if (!is.character(Titles[2]) || is.na(Titles[2])) Titles[2] = c("Grafico Correspondente a Analise Global dos Individuos")
+  if (!is.character(Titles[3]) || is.na(Titles[3])) Titles[3] = c("Grafico Correspondente a Analise\n Global dos Individuos e Variaveis")
+  if (!is.character(Titles[4]) || is.na(Titles[4])) Titles[4] = c("Grafico das Inercias dos Grupos de Variaveis")
   
   Color  = ifelse(Color=="s","S",ifelse(Color=="n","N",Color))    # transforma em maiusculo
   BoxLeg = ifelse(BoxLeg=="s","S",ifelse(BoxLeg=="n","N",BoxLeg)) # transforma em maiusculo
@@ -71,14 +72,14 @@ Plot.MFA <- function(MFA,Titles = matrix(NA,1,3), PosLeg=2, BoxLeg="s", Color="s
   plot(1:length(MFA$MatrixA[,1]), MFA$MatrixA[,1], type = "b", 
        xlab = "Ordem dos componentes", 
        ylab = "Variancia",
-       main = "Scree-plot das variancias dos componentes")
+       main = Titles[1])
   ##### FIM - Scree-plot dos componentes #####
   
   ##### INICIO - Plotagem da Analise Global #####
   plot(MFA$MatrixF, # cria grafico para as coordenadas principais da Analise Global
        xlab = DescEixo1,  # Nomeia Eixo X
        ylab = DescEixo2,  # Nomeia Eixo Y
-       main = Titles[1],  # Titulo
+       main = Titles[2],  # Titulo
        asp = 2,           # Aspecto do Grafico
        pch = 15,          # Formato dos pontos 
        cex=1,             # Tamanho dos pontos
@@ -106,7 +107,7 @@ Plot.MFA <- function(MFA,Titles = matrix(NA,1,3), PosLeg=2, BoxLeg="s", Color="s
   plot(MFA$MatrixF, # cria grafico para as coordenadas principais da Analise por Grupo
        xlab = DescEixo1,  # Nomeia Eixo X
        ylab = DescEixo2,  # Nomeia Eixo Y
-       main = Titles[2], # Titulo
+       main = Titles[3], # Titulo
        asp = 1,           # Aspecto do grafico
        pch = 15,          # Formato dos pontos 
        cex=1,             # Tamanho dos pontos
@@ -196,7 +197,7 @@ Plot.MFA <- function(MFA,Titles = matrix(NA,1,3), PosLeg=2, BoxLeg="s", Color="s
   plot(MFA$MatrixEscVar, # cria grafico para as coordenadas Inercias Parciais/Escores das Variareis
        xlab = DescEixo1,  # Nomeia Eixo X
        ylab = DescEixo2,  # Nomeia Eixo Y
-       main = Titles[3], # Titulo
+       main = Titles[4], # Titulo
        asp = 1,           # Aspecto do grafico
        pch = 15,          # Formato dos pontos 
        cex=1,             # Tamanho dos pontos

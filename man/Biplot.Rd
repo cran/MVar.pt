@@ -7,7 +7,7 @@
 \description{Realiza o grafico Biplot.}
 
 \usage{Biplot(Data, alfa = 0.5, Title = NA, Label_x = NA,
-       Label_y = NA, Color = "s")}
+       Label_y = NA, Color = "s", Observation = "s")}
 
 \arguments{
 \item{Data}{Dados para plotagem.}
@@ -19,6 +19,8 @@
 \item{Label_y}{Rotulo do eixo Y. Se nao for definido assume texto padrao.}
 \item{Color}{"s" para graficos coloridos - default,\cr
              "n" para graficos em preto e branco.}
+\item{Observation}{"s" acrescenta as observacoes ao grafico (default),\cr
+                   "n" nao acrescenta as observacoes ao grafico.}
 }
 
 \value{
@@ -50,10 +52,10 @@ rownames(Dat) <- DataQuan[,1]
 Biplot(Dat)
 
 Biplot(Dat, alfa = 0.6, Title = "Biplot dos Dados\n valorizando os individuos",
-       Label_x = "Eixo X", Label_y = "Eixo Y", Color = "s")
+       Label_x = "Eixo X", Label_y = "Eixo Y", Color = "s", Observation = "s")
        
 Biplot(Dat, alfa = 0.4, Title = "Grafico valorizando as variaveis",
-       Label_x = "", Label_y = "", Color = "n")
+       Label_x = "", Label_y = "", Color = "n", Observation = "n")
 }
 
 \keyword{Biplot}

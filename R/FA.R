@@ -1,4 +1,4 @@
-FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", ScoresObs = "Bartlett", Screeplot = TRUE, Converg = 1e-5, Iteracao = 1000, TestFit = TRUE) {
+FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", ScoresObs = "Bartlett", Converg = 1e-5, Iteracao = 1000, TestFit = TRUE) {
    # Funcao executa a Analise Fatorial.
    # Desenvolvida por Paulo Cesar Ossani em 22/06/2013 e adapitada em 25/03/2016
    
@@ -13,7 +13,6 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
    # Rotation  - Tipo de rotacao: "None" (default) e "Varimax" 
    # NFactor   - Numero de fatores (default = 1)
    # ScoresObs - Tipo de scores para as observacoes: "Bartlett" (default) ou "Regression"
-   # Screeplot - Gera o grafico Screeplot para as variancias dos fatores (defaut = TRUE), somente para Rotation="None"
    # Converg   - Valor limite para convergencia para soma do quadrado dos residuos para metodo de Maxima Verossimilhanca (default = 1e-5)
    # Iteracao  - Numero maximo de iteracoes para metodo de Maxima Verossimilhanca (default = 1000)
    # TestFit   - Testa o ajusto do modelo para o metodo de Maxima Verossimilhanca (default = TRUE)
@@ -59,8 +58,8 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
    if (ScoresObs!="Bartlett" && ScoresObs!="Regression") 
       stop("Entrada para 'ScoresObs' esta incorreta, deve ser 'Bartlett' ou 'Regression'. Verifique!")
    
-   if (!is.logical(Screeplot))
-      stop("Entrada para 'Screeplot' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+   # if (!is.logical(Screeplot))
+   #    stop("Entrada para 'Screeplot' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
        
    if (Type == 1)     # Considera a Matriz de Covariancia para a decomposicao
       MC <- cov(Data) # Matriz de Covariancia
@@ -90,8 +89,9 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
   
       Gama = MAutoVec%*%diag(sqrt(abs(MAutoVlr)),nrow(MC),ncol(MC)) # Matriz de Cargas Fatoriais
       if (Rotation!="None") {
-        Gama <- Rotacao(Gama[,1:NFactor],Rotation)
-        MAutoVlr <- colSums(Gama^2)
+         Gama <- Rotacao(Gama,Rotation)
+         # Gama <- Rotacao(Gama[,1:NFactor],Rotation)
+         MAutoVlr <- colSums(Gama^2)
       }
       rownames(Gama) <- colnames(Data)
       colnames(Gama) <- paste("Fator",1:ncol(Gama))
@@ -137,7 +137,8 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
 
       Gama = MAutoVec%*%diag(sqrt(abs(MAutoVlr)),nrow(MC),ncol(MC)) # Matriz de Cargas Fatoriais
       if (Rotation!="None") {
-        Gama <- Rotacao(Gama[,1:NFactor],Rotation)
+        Gama <- Rotacao(Gama,Rotation)
+        # Gama <- Rotacao(Gama[,1:NFactor],Rotation)
         MAutoVlr <- colSums(Gama^2)
       }
       rownames(Gama) <- colnames(Data)
@@ -154,7 +155,8 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
       M = MC - (Gama[,1:NFactor]%*%t(Gama[,1:NFactor]) + diag(Psi))
       SQR = sum(diag(M%*%t(M)))
       if (Rotation!="None") {
-        Gama <- Rotacao(Gama[,1:NFactor],Rotation)
+        Gama <- Rotacao(Gama,Rotation)
+        # Gama <- Rotacao(Gama[,1:NFactor],Rotation)
         MAutoVlr <- colSums(Gama^2)
       }
       rownames(Gama) <- colnames(Data)
@@ -227,8 +229,10 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
       
       Gama = Gama_new # Matriz com as cargas fatoriais
   
-      if (Rotation!="None") 
-         Gama <- Rotacao(Gama[,1:NFactor],Rotation,Normalise=TRUE)
+      if (Rotation!="None") {
+         Gama <- Rotacao(Gama,Rotation,Normalise=TRUE)
+         # Gama <- Rotacao(Gama[,1:NFactor],Rotation,Normalise=TRUE)
+      }
 
       rownames(Gama) <- colnames(Data)
       colnames(Gama) <- paste("Fator",1:ncol(Gama))
@@ -298,13 +302,13 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
       ### FIM - Teste da falta de ajusto do modelo fatorial - teste Qui-quadrado ###
    }
    
-   ### INICIO - Scree-plot dos fatores ####
-   if (Screeplot && Rotation=="None")
-      plot(1:length(MEigen[,1]), MEigen[,1], type = "b", 
-           xlab = "Ordem dos fatores", 
-           ylab = "Variancia dos fatores",
-           main = "Scree-plot das variancias dos fatores sem rotacao")
-   ### FIM - Scree-plot dos fatores
+   # ### INICIO - Scree-plot dos fatores ####
+   # if (Screeplot && Rotation=="None")
+   #    plot(1:length(MEigen[,1]), MEigen[,1], type = "b", 
+   #         xlab = "Ordem dos fatores", 
+   #         ylab = "Variancia dos fatores",
+   #         main = "Scree-plot das variancias dos fatores sem rotacao")
+   # ### FIM - Scree-plot dos fatores
    
    ### INICIO - encontrar os scores das observacoes ###
    if (Type == 1)  {   # Considera a Matriz de Covariancia para os calculos
@@ -339,11 +343,18 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
    rownames(Scores) <- rownames(Data)
    ### FIM - encontrar os scores das observacoes ###  
    
+   ### INCIO - encontra scores dos coeficientes ###
+   CoefScore <- t(MASS::ginv(t(Gama)%*%MASS::ginv(diag(Psi))%*%Gama)%*%t(Gama)%*%MASS::ginv(diag(Psi)))
+   colnames(CoefScore) <- paste("Fator", 1:ncol(CoefScore))
+   rownames(CoefScore) <- colnames(Data)
+   ### FIM - encontra scores dos coeficientes ###
+
    Lista <- list(MatrixMC = MC, MatrixAutoVlr = MAutoVlr,
                  MatrixAutoVec = MAutoVec, MatrixVar = MEigen,
                  MatrixCarga = Gama[,1:NFactor], MatrixVarEsp = Psi,
                  MatrixComuna = Comun, MatrixResiduo = M, VlrSQRS = SQRS,
-                 VlrSQR = SQR, MatrixResult = Result, MatrixScores=Scores[,1:NFactor])
+                 VlrSQR = SQR, MatrixResult = Result, MatrixScores = Scores[,1:NFactor],
+                 CoefScores = CoefScore[,1:NFactor])
 
    return(Lista)
 }

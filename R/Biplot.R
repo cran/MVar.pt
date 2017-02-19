@@ -1,4 +1,4 @@
-Biplot <- function(Data, alfa=0.5, Title=NA, Label_x=NA, Label_y=NA, Color="s") {
+Biplot <- function(Data, alfa=0.5, Title=NA, Label_x=NA, Label_y=NA, Color="s", Observation="s") {
   # Rotina para gerar Biplot desenvolvida 
   # por Paulo Cesar Ossani em 20/06/2015
   
@@ -10,8 +10,10 @@ Biplot <- function(Data, alfa=0.5, Title=NA, Label_x=NA, Label_y=NA, Color="s") 
   # Title  - Titulo para o grafico. Se nao for definido assume texto padrao.
   # Label_x - Rotulo do eixo X. Se nao for definido assume texto padrao.
   # Label_y - Rotulo do eixo Y. Se nao for definido assume texto padrao.
-  # Color  - "s" para graficos coloridos (default)
+  # Color  - "s" para graficos coloridos (default),
   #          "n" para graficos em preto e branco.
+  # Observation - "s" acrescenta as observacoes ao grafico (default),
+  #               "n" nao acrescenta as observacoes ao grafico.
   
   # Retorna:
   # Grafico Biplot.
@@ -39,10 +41,15 @@ Biplot <- function(Data, alfa=0.5, Title=NA, Label_x=NA, Label_y=NA, Color="s") 
   if (!is.character(Label_y) && !is.na(Label_y))
      stop("Entrada para 'Label_y' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
 
-  Color  = ifelse(Color=="s","S",ifelse(Color=="n","N", Color))    # transforma em maiusculo
+  Color = ifelse(Color=="s","S",ifelse(Color=="n","N", Color)) # transforma em maiusculo
   
   if (Color!="S" && Color!="N") 
      stop("Entrada para 'Color' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
+ 
+  Observation = ifelse(Observation=="s","S",ifelse(Observation=="n","N",Observation)) # transforma em maiusculo
+  
+  if (Observation!="S" && Observation!="N") 
+     stop("Entrada para 'Observation' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
   
   if (is.na(Title)) Title = "Grafico Biplot" 
   
@@ -75,7 +82,7 @@ Biplot <- function(Data, alfa=0.5, Title=NA, Label_x=NA, Label_y=NA, Color="s") 
   MaxY <- max(Coor_I[,2],Coor_V[,2])+1 # Dimenssoes maximas das colunas
   MinY <- min(Coor_I[,2],Coor_V[,2])-1 # Dimenssoes minimas das colunas
   
-  cor  <- c(1) # cor inicial
+  # cor  <- "red" # cor inicial
   
   ##### INICIO - Grafico Biplot #####  
   plot(0,0, # Plota as variaveis
@@ -89,25 +96,32 @@ Biplot <- function(Data, alfa=0.5, Title=NA, Label_x=NA, Label_y=NA, Color="s") 
   
   abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
+  # NomeVar <- colnames(MData) # nomes das variaveis
+  arrows(0,0,Coor_V[,1],Coor_V[,2], lwd = 1, code = 2, length = 0.08, angle = 25, col = ifelse(Color=="S","Red","Black")) # cria a seta apontando para cada variavel  
+
+  # NomeVar <- colnames(MData) # nomes das variaveis
+  # for (i in 1:nrow(Coor_V)) {  # foi necessario criar este for para poder colocar cores diferentes para cada variavel
+  #   arrows(0,0,Coor_V[i,1],Coor_V[i,2], lwd = 1, code = 2, length = 0.08, angle = 25, col = ifelse(Color=="S", "Red","Black")) # cria a seta apontando para cada variavel  
+  #   #text(Coor_V[i,1], Coor_V[i,2], cex = 1, pos = 4, NomeVar[i], col = ifelse(Color=="S", cor + i, 1), xpd = TRUE)  # Coloca os nomes das variaveis
+  # }
+
+  # if (Color=="S") cor <- c((cor+1):(length(NomeVar)+1))
   NomeVar <- colnames(MData) # nomes das variaveis
-  for (i in 1:nrow(Coor_V)) {  # foi necessario criar este for para poder colocar cores diferentes para cada variavel
-    arrows(0,0,Coor_V[i,1],Coor_V[i,2], lwd = 2, code = 2, angle = 10, col = ifelse(Color=="S", cor + i, 1)) # cria a seta apontando para cada variavel  
-    #text(Coor_V[i,1], Coor_V[i,2], cex = 1, pos = 4, NomeVar[i], col = ifelse(Color=="S", cor + i, 1), xpd = TRUE)  # Coloca os nomes das variaveis
+  
+  LocLab(Coor_V[,1:2], NomeVar, col = ifelse(Color=="S","Blue","Black"))  # Coloca os nomes das variaveis
+    
+  if (Observation=="S") {
+     NomeVar <- rownames(MData) # nomes os individuos
+     LocLab(Coor_I[,1:2], NomeVar, col = "Black") # Coloca os nomes dos individuos
+     #for (i in 1:nrow(Coor_I)) 
+         #text(Coor_I[i,1], Coor_I[i,2], cex = 1, pos = 3, NomeVar[i], xpd = TRUE)  # Coloca os nomes dos individuos
+  
+     points(Coor_I,    # Coloca pontos nas posicoes dos individuos
+            asp = 1,   # Aspecto do grafico
+            pch = 15,  # Formato dos pontos 
+            cex = 1.2, # Tamanho dos pontos         
+            col = ifelse(Color=="S","Red","Black"))
   }
-  
-  if (Color=="S") cor <- c((cor+1):(length(NomeVar)+1))
-  LocLab(Coor_V[,1:2], NomeVar, col = cor)  # Coloca os nomes das variaveis
-  
-  NomeVar <- rownames(MData) # nomes os individuos
-  LocLab(Coor_I[,1:2], NomeVar) # Coloca os nomes dos individuos
-  #for (i in 1:nrow(Coor_I)) 
-    #text(Coor_I[i,1], Coor_I[i,2], cex = 1, pos = 3, NomeVar[i], xpd = TRUE)  # Coloca os nomes dos individuos
-  
-  points(Coor_I,    # Coloca pontos nas posicoes dos individuos
-         asp = 1,   # Aspecto do grafico
-         pch = 15,  # Formato dos pontos 
-         cex = 1.2, # Tamanho dos pontos         
-         col = ifelse(Color=="S",2,1))
  
   ##### FIM - Grafico Biplot #####
   

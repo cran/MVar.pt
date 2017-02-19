@@ -1,4 +1,4 @@
-Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s", LinLab = NULL) {
+Plot.CA <- function(AC, Titles = matrix(NA,1,4), Color = "s", LinLab = NULL) {
   # Rotina para Plotar Graficos do Metodo AC desenvolvida 
   # por Paulo Cesar Ossani em 11/2014
   
@@ -15,9 +15,10 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s", LinLab = NULL) {
   
   ##### INICIO - Informacoes usadas nos Graficos #####
   # Cria Titulos para os graficos caso nao existam
-  if (!is.character(Titles[1]) || is.na(Titles[1])) Titles[1] = c("Grafico Correspondente as Linhas (Observacoes)")
-  if (!is.character(Titles[2]) || is.na(Titles[2])) Titles[2] = c("Grafico Correspondente as Colunas(Variaveis)")
-  if (!is.character(Titles[3]) || is.na(Titles[3])) Titles[3] = c("Grafico Correspondente as Observacoes e Variaveis")
+  if (!is.character(Titles[1]) || is.na(Titles[1])) Titles[1] = c("Scree-plot das variancias dos componentes")
+  if (!is.character(Titles[2]) || is.na(Titles[2])) Titles[2] = c("Grafico Correspondente as Linhas (Observacoes)")
+  if (!is.character(Titles[3]) || is.na(Titles[3])) Titles[3] = c("Grafico Correspondente as Colunas(Variaveis)")
+  if (!is.character(Titles[4]) || is.na(Titles[4])) Titles[4] = c("Grafico Correspondente as Observacoes e Variaveis")
   
   Color  = ifelse(Color=="s","S",ifelse(Color=="n","N",Color))  # transforma em maiusculo
   
@@ -42,7 +43,7 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s", LinLab = NULL) {
   plot(1:length(AC$MatrixAutoVlr[,1]), AC$MatrixAutoVlr[,1], type = "b", 
        xlab = "Ordem dos componentes", 
        ylab = "Variancia",
-       main = "Scree-plot das variancias dos componentes")
+       main = Titles[1])
   ##### FIM - Scree-plot dos componentes #####
   
   ##### INICIO - Plotagem dos Dados das linhas #####
@@ -50,7 +51,7 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s", LinLab = NULL) {
     plot(AC$MatrixX, # cria grafico para as coordenadas principais das linhas
          xlab = DescEixo1,  # Nomeia Eixo X
          ylab = DescEixo2,  # Nomeia Eixo Y
-         main = Titles[1],  # Titulo
+         main = Titles[2],  # Titulo
          asp = 1,           # Aspecto do Grafico
          pch = 15,          # Formato dos pontos 
          cex=1,             # Tamanho dos pontos
@@ -69,7 +70,7 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s", LinLab = NULL) {
   plot(AC$MatrixY, # cria grafico para as coordenadas principais das linhas
        xlab = DescEixo1,  # Nomeia Eixo X
        ylab = DescEixo2,  # Nomeia Eixo Y
-       main = Titles[2],  # Titulo
+       main = Titles[3],  # Titulo
        asp = 1,           # Aspecto do Grafico
        pch = 16,          # Formato dos pontos 
        cex=1.2,           # Tamanho dos pontos
@@ -88,7 +89,7 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,3), Color = "s", LinLab = NULL) {
      plot(AC$MatrixX,        # cria grafico para as coordenadas principais das linhas
           xlab = DescEixo1,  # Nomeia Eixo X
           ylab = DescEixo2,  # Nomeia Eixo Y
-          main = Titles[3],  # Titulo
+          main = Titles[4],  # Titulo
           asp = 1,           # Aspecto do Grafico
           pch = 15,          # Formato dos pontos 
           cex=1,             # Tamanho dos pontos

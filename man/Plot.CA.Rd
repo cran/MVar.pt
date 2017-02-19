@@ -6,7 +6,7 @@
 
 \description{Graficos da analise de correspondencia (CA) simples e multipla.}
 
-\usage{Plot.CA(AC, Titles = matrix(NA,1,3), Color = "s", LinLab = NULL)}
+\usage{Plot.CA(AC, Titles = matrix(NA,1,4), Color = "s", LinLab = NULL)}
 
 \arguments{
 \item{AC}{Dados da funcao CA.}
@@ -36,7 +36,7 @@ rownames(Dat) <- DataFreq[1:nrow(DataFreq),1]
 
 Resp <- CA(Dat, "f") # realiza CA
 
-Titles = c("Observacoes", "Variaveis", "Observacoes/Variaveis")
+Titles = c("Scree-plot","Observacoes", "Variaveis", "Observacoes/Variaveis")
 
 Plot.CA(Resp, Titles, Color = "s")
 
@@ -47,7 +47,7 @@ Dat <- DataQuali[,2:ncol(DataQuali)]
 
 Resp <- CA(Dat, "c", "b") # realiza CA
 
-Titles = c("","Graficos das Variaveis")
+Titles = c("","","Graficos das Variaveis")
 
 Plot.CA(Resp, Titles, Color = "s")
 

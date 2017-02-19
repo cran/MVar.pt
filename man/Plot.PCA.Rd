@@ -6,7 +6,7 @@
 
 \description{Graficos da analise de componentes principais (PCA).}
 
-\usage{Plot.PCA(PC, Titles = matrix(NA,1,2), Color = "s", LinLab = NULL)}
+\usage{Plot.PCA(PC, Titles = matrix(NA,1,3), Color = "s", LinLab = NULL)}
 
 \arguments{
 \item{PC}{Dados da funcao PCA.}
@@ -36,7 +36,7 @@ rownames(Dat) <- DataQuan[1:nrow(DataQuan),1]
 
 PC <- PCA(Dat, 2) # Executa o PCA
 
-Titles = c("Grafico das Observacoes", "Circulo de Correlacoes")
+Titles = c("Scree-plot","Grafico das Observacoes", "Circulo de Correlacoes")
 
 Plot.PCA(PC, Titles, Color = "S")
 }

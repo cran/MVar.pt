@@ -15,8 +15,8 @@
 \tabular{ll}{
 Package: \tab MVar.pt\cr
 Type: \tab Package\cr
-Version: \tab 1.9.5\cr
-Date: \tab 2016-10-27\cr
+Version: \tab 1.9.6\cr
+Date: \tab 2017-02-19\cr
 License: \tab GPL(>= 2)\cr
 LazyLoad: \tab yes\cr
 }

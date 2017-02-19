@@ -6,7 +6,7 @@
 
 \description{Graficos da nalise de multiplos fatores (MFA).}
 
-\usage{Plot.MFA(MFA, Titles = matrix(NA,1,3), PosLeg = 2, 
+\usage{Plot.MFA(MFA, Titles = matrix(NA,1,4), PosLeg = 2, 
          BoxLeg = "s", Color = "s", NamArr = "n")}
  
 \arguments{
@@ -47,7 +47,7 @@ GroupNames = c("Notas Cafes/Trabalho", "Formacao/Dedicacao", "Cafes")
            
 MF <- MFA(Dat, c(2,2,2), TipoGrupo = c("n","c","f"), GroupNames) # realiza MFA
 
-Titulos = c("Observacoes","Observacoes/Variaveis","Inercias Grupos Variaveis")
+Titulos = c("Scree-plot","Observacoes","Observacoes/Variaveis","Inercias Grupos Variaveis")
 
 Plot.MFA(MF, Titulos, 2, "n", "s", "n") # Imprime varios graficos da tela
 }

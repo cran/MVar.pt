@@ -7,8 +7,8 @@
 \description{Realiza analise fatorial (FA) em um conjunto de dados.}
 
 \usage{FA(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None",
-   ScoresObs = "Bartlett", Screeplot = TRUE, Converg = 1e-5, 
-   Iteracao = 1000, TestFit = TRUE) 
+   ScoresObs = "Bartlett", Converg = 1e-5, Iteracao = 1000, 
+   TestFit = TRUE) 
 }
 
 \arguments{
@@ -22,7 +22,6 @@
 \item{Rotation}{Tipo de rotacao: "None" (default) e "Varimax".}
 \item{NFactor}{Numero de fatores (default = 1).}
 \item{ScoresObs}{Tipo de scores para as observacoes: "Bartlett" (default) ou "Regression".}
-\item{Screeplot}{Gera o grafico screeplot para as variancias dos fatores (defaut = TRUE), somente para Rotation = "None".}
 \item{Converg}{Valor limite para convergencia para soma do quadrado dos residuos para metodo de Maxima Verossimilhanca (default = 1e-5).}
 \item{Iteracao}{Numero maximo de iteracoes para metodo de Maxima Verossimilhanca (default = 1000).}
 \item{TestFit}{Testa o ajusto do modelo para o metodo de Maxima Verossimilhanca (default = TRUE).}
@@ -41,6 +40,7 @@
 \item{VlrSQR}{Soma dos quadrados dos residuos.}
 \item{MatrixResult}{Matriz com todos os resultados associados.}
 \item{MatrixScores}{Matriz com os escores das observarcoes.}
+\item{CoefScores}{Matriz com os escores dos coeficientes dos fatores.}
 }
 
 \references{
@@ -59,6 +59,8 @@ Paulo Cesar Ossani
 Marcelo Angelo Cirillo
 }
 
+\seealso{\code{\link{Plot.FA}}}
+
 \examples{
 data(DataQuan) # conjunto de dados
 
@@ -74,7 +76,9 @@ print("Soma dos Quadrados dos Residuos"); round(Resp$VlrSQR,3)
 
 print("Matriz das Cargas Fatoriais:"); round(Resp$MatrixCarga,3)
 
-print("Matriz das Cargas Fatoriais das Observacoes:"); round(Resp$MatrixScores,3)
+print("Matriz com os escores das observacoes:"); round(Resp$MatrixScores,3)
+
+print("Matriz com os escores dos coeficientes dos fatores:"); round(Resp$CoefScores,3)
 
 }
 
