@@ -50,12 +50,16 @@ CA <- function(Data, TypData = "f", TypMatrix = "I") {
     # Converte para variaveis Dummy para execucao analise
     # de Correspondencia Multipla, ou seja, em 0 e 1, caso dados nominais
     NumLinha  <- nrow(Data)  # Numero de linhas na tabela
+    
     for (k in 1:ncol(Data)) {
+      
       MConver   <- as.factor(Data[,k]) # Matriz com os dados para a conversao
       Nivel     <- levels(MConver)     # Nomes dos Niveis
       Qtd_Nivel <- nlevels(MConver)    # Quantidade de Niveis
       MDummy = matrix(0,NumLinha,Qtd_Nivel) # Cria Matriz Vazia com elementos zero
-      colnames(MDummy) <- (Nivel)      # Nomeia as colunas
+      colnames(MDummy) <- paste(colnames(Data)[k],Nivel,sep=":")      # Nomeia as colunas
+      # colnames(MDummy) <- (Nivel)      # Nomeia as colunas
+ 
       for (i in 1:Qtd_Nivel)
         for ( j in 1:NumLinha)
           if (MConver[j]==Nivel[i]) MDummy[j,i] = 1
@@ -64,12 +68,14 @@ CA <- function(Data, TypData = "f", TypMatrix = "I") {
       else
         MFinal <- cbind(MFinal,MDummy)
     }
+    
     Data = MFinal 
     
     if (TypMatrix == "B") { # Matriz de Burt
       Data <- as.matrix(Data)
       Data <- t(Data)%*%Data
     }
+    
   } 
   
   SDados <- sum(Data) # Soma Total dos Dados

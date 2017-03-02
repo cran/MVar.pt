@@ -53,7 +53,7 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,4), Color = "s", LinLab = NULL) {
          ylab = DescEixo2,  # Nomeia Eixo Y
          main = Titles[2],  # Titulo
          asp = 1,           # Aspecto do Grafico
-         pch = 15,          # Formato dos pontos 
+         pch = 17,          # Formato dos pontos 
          cex=1,             # Tamanho dos pontos
          xlim=c(min(AC$MatrixX[,1])-0.1,max(AC$MatrixX[,1])+0.1), # Dimensao para as linhas do grafico
          ylim=c(min(AC$MatrixX[,2]-0.1),max(AC$MatrixX[,2])+0.1), # Dimensao para as colunas do grafico
@@ -66,23 +66,23 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,4), Color = "s", LinLab = NULL) {
   }
   ##### FIM - Plotagem dos Dados das linhas #####
   
-  ##### INICIO - Plotagem dos Dados das colunas #####
+  ##### INICIO - Plotagem Dados das colunas #####
   plot(AC$MatrixY, # cria grafico para as coordenadas principais das linhas
        xlab = DescEixo1,  # Nomeia Eixo X
        ylab = DescEixo2,  # Nomeia Eixo Y
        main = Titles[3],  # Titulo
        asp = 1,           # Aspecto do Grafico
-       pch = 16,          # Formato dos pontos 
+       pch = ifelse(AC$TypData=="C",17,16),          # Formato dos pontos 
        cex=1.2,           # Tamanho dos pontos
        xlim=c(min(AC$MatrixY[,1])-0.1,max(AC$MatrixY[,1])+0.1), # Dimensao para as linhas do grafico
        ylim=c(min(AC$MatrixY[,2]-0.1),max(AC$MatrixY[,2])+0.1), # Dimensao para as colunas do grafico
-       col = ifelse(Color=="S","blue","black"))             # Cor dos pontos
+       col = ifelse(Color=="S",ifelse(AC$TypData=="C","red","blue"),"black"))             # Cor dos pontos
   
   abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
   
   #text(AC$MatrixY, cex=1, pos=3, rownames(AC$MatrixY))  # Coloca os nomes dos pontos das coordenadas principais das colunas
   LocLab(AC$MatrixY, cex=1, rownames(AC$MatrixY))
-  ##### FIM - Plotagem dos Dados das colunas #####
+  ##### FIM - Plotagem Dados das colunas #####
   
   ##### INICIO - Plotagem dos Dados das linhas e colunas conjuntamente #####
   if (AC$TypData=="F") {     # plota se nao for analise de correspondencia multipla
@@ -91,7 +91,7 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,4), Color = "s", LinLab = NULL) {
           ylab = DescEixo2,  # Nomeia Eixo Y
           main = Titles[4],  # Titulo
           asp = 1,           # Aspecto do Grafico
-          pch = 15,          # Formato dos pontos 
+          pch = 17,          # Formato dos pontos 
           cex=1,             # Tamanho dos pontos
           xlim=c(min(AC$MatrixX[,1],AC$MatrixY)-0.1,max(AC$MatrixX[,1],AC$MatrixY)+0.1), # Dimensao para as linhas do grafico
           ylim=c(min(AC$MatrixX[,2],AC$MatrixY)-0.1,max(AC$MatrixX[,2],AC$MatrixY)+0.1), # Dimensao para as colunas do grafico

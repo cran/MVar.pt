@@ -38,7 +38,7 @@ IM <- function(Data, Names = "s") {
         if (MConver[j]==Nivel[i]) MDummy[j,i] <- 1
     
     if (Names=="S")
-      colnames(MDummy) <- paste("(",Nivel,") ",colnames(Data[k]),sep="")# Nomeia as colunas 
+      colnames(MDummy) <- paste(colnames(Data[k]),Nivel,sep=":")# Nomeia as colunas 
     
     if (Names=="N")
       colnames(MDummy) <- Nivel # Nomeia as colunas  

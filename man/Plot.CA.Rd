@@ -47,7 +47,7 @@ Dat <- DataQuali[,2:ncol(DataQuali)]
 
 Resp <- CA(Dat, "c", "b") # realiza CA
 
-Titles = c("","","Graficos das Variaveis")
+Titles = c("","","Grafico das Variaveis")
 
 Plot.CA(Resp, Titles, Color = "s")
 
