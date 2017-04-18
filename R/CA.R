@@ -30,11 +30,12 @@ CA <- function(Data, TypData = "f", TypMatrix = "I") {
   if (!is.data.frame(Data)) 
      stop("Entrada 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!")
 
-  TypData   = ifelse(TypData=="f","F",ifelse(TypData=="c","C",TypData)) # transforma em maiusculo
-  TypMatrix = ifelse(TypMatrix=="i","I",ifelse(TypMatrix=="b","B",TypMatrix)) # transforma em maiusculo
+  TypData   <- toupper(TypData)   # transforma em maiusculo
   
   if (TypData!="F" && TypData!="C" || !is.character(TypData))
      stop("Entrada para o tipo de dados 'TypData' esta incorreta, deve ser do tipo caracter, sendo 'f' ou 'c'. Verifique!")
+  
+  TypMatrix <- toupper(TypMatrix) # transforma em maiusculo
   
   if (TypMatrix!="I" && TypMatrix!="B" || !is.character(TypMatrix))
      stop("Entrada para o tipo matriz 'TypMatrix' esta incorreta, deve ser do tipo caracter, sendo 'i' ou 'b'. Verifique!")

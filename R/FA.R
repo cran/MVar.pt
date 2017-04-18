@@ -31,6 +31,8 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
    # MatrixResult  - Matriz com todos os resultados associados
    # MatrixScores  - Matriz com os escores das observarcoes
 
+   Method <- toupper(Method)   # transforma em maiusculo
+   
    if (!is.data.frame(Data)) 
       stop("Entrada 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!")
   

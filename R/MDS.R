@@ -30,7 +30,7 @@ MDS <- function(Data, Distance = "euclidean", Eixos = "S",
      stop("Entrada para 'Metodo' esta incorreta, deve ser: 'euclidean', 
           'maximum', 'manhattan', 'canberra', 'binary' ou 'minkowski'. Verifique!")
   
-  Eixos = ifelse(Eixos=="s","S",ifelse(Eixos=="n","N",Eixos)) # transforma em maiusculo
+  Eixos <- toupper(Eixos) # transforma em maiusculo
   
   if (Eixos!="S" && Eixos!="N") 
      stop("Entrada para 'Eixos' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
@@ -46,7 +46,7 @@ MDS <- function(Data, Distance = "euclidean", Eixos = "S",
   if (is.null(Title))
      Title = "Escalonamento Multidimensional" # Titulo
   
-  Color  = ifelse(Color=="s","S",ifelse(Color=="n","N",Color))    # transforma em maiusculo
+  Color <- toupper(Color) # transforma em maiusculo
   
   if (Color!="S" && Color!="N")
      stop("Entrada para 'Color' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")

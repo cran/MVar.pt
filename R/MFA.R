@@ -26,6 +26,37 @@ MFA <- function(Data, Grupo, TipoGrupo = rep("n",length(Grupo)), NomeGrupos = NU
   # MatrixCCP - Matriz com a Correlacao dos Componentes Principais com os Grupos
   # MatrixEscVar - Matriz das Inercias Parciais/Escores das Variareis
  
+  if (!is.data.frame(Data)) 
+     stop("Entrada 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!")
+  
+  if (is.null(NomeGrupos)) # Cria nomes para as variaveis caso nao exista
+     NomeGrupos <- paste("Variavel", 1:length(TipoGrupo), sep = " ")
+  
+  if (!is.numeric(Grupo))
+     stop("A entrada para 'Grupo' esta incorreta, deve ser do tipo numerico. Verifique!")
+  
+  if (!is.character(TipoGrupo))
+     stop("A entrada para 'TipoGrupo' esta incorreta, deve ser do tipo caracter. Verifique!")
+  
+  if (!is.character(NomeGrupos))
+     stop("A entrada para 'NomeGrupos' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
+  if (length(TipoGrupo)!=length(Grupo))
+     stop("O numero de componetes da entrada 'TipoGrupo' difere da entrada 'Grupo'. Verifique!")
+  
+  if (length(NomeGrupos)!=length(Grupo))
+     stop("O numero de componetes da entrada 'NomeGrupos' difere da entrada 'Grupo'. Verifique!")
+  
+  if (is.null(NomeGrupos)) # Cria nomes para as variaveis caso nao exista
+     NomeGrupos <- paste("Variavel", 1:length(TipoGrupo), sep = " ")
+  
+  TipoGrupo <- toupper(TipoGrupo) # transforma em maiusculo
+  
+  for (i in 1:length(TipoGrupo)) 
+    if (TipoGrupo[i]!="N" && TipoGrupo[i]!="C" && TipoGrupo[i]!="F")
+      stop("A entrada 'TipoGrupo' esta incorreta, deve ser: n, c, ou f. Verifique!")
+  
+  
   CA_MFA <- function(Data) {
     # Funcao que executa Analise de Correspondencia - CA 
     # nos dados e retorna o primeiro autovalor     
@@ -204,9 +235,9 @@ MFA <- function(Data, Grupo, TipoGrupo = rep("n",length(Grupo)), NomeGrupos = NU
     NL  <- nrow(DB)    # numero de linhas
     
     if (sum(PondGeral)!=0) # usado para equilibrar os conjuntos quantitativos e categoricos, quando ha tabelas de frequencias      
-      PRL <- as.vector(PondGeral)  # pondera as linhas de acordo com os pesos das linhas da tabela de frequencia
+       PRL <- as.vector(PondGeral)  # pondera as linhas de acordo com os pesos das linhas da tabela de frequencia
     else  
-      PRL <- as.vector(rep(1/NL,NL)) # probabilidade de ocorrencia de cada elemento da linha
+       PRL <- as.vector(rep(1/NL,NL)) # probabilidade de ocorrencia de cada elemento da linha
     
     MB1 <- sweep(DB,1,PRL,FUN="*") # matriz pre-balanciada 1
     
@@ -215,21 +246,21 @@ MFA <- function(Data, Grupo, TipoGrupo = rep("n",length(Grupo)), NomeGrupos = NU
     SLI <- apply(MB1,2,sum)  # soma das colunas
     
     if (sum(PondGeral)!=0) # usado para equilibrar os conjuntos quantitativos e categoricos, quando ha tabelas de frequencias
-      MCO <- colSums(MB1)  # media das colunas
+       MCO <- colSums(MB1)  # media das colunas
     else 
-      MCO <- apply(MB1,2,mean) # media das colunas
+       MCO <- apply(MB1,2,mean) # media das colunas
     
     DIF <- 1-SLI             # 1 menos soma das colunas
     
     if (sum(PondGeral)!=0) # usado para equilibrar os conjuntos quantitativos e categoricos, quando ha tabelas de frequencias
-      MC <- sweep(DB,2,MCO,FUN="-") # matriz pre-balanciada 2 
+       MC <- sweep(DB,2,MCO,FUN="-") # matriz pre-balanciada 2 
     else 
-      MC <- sweep(MB1,2,MCO,FUN="-") # matriz pre-balanciada 2 - subtrai MCO(media) de MB1
+       MC <- sweep(MB1,2,MCO,FUN="-") # matriz pre-balanciada 2 - subtrai MCO(media) de MB1
     
     if (sum(PondGeral)!=0) # usado para equilibrar os conjuntos quantitativos e categoricos, quando ha tabelas de frequencias
-      VET <- sqrt(colSums(sweep(as.matrix(MC^2),1,PRL,FUN="*")))  # raiz quadrada da soma ao quadrado dos elementos de MC dividido pelas linhas ponderadas da tabela de frequencia
+       VET <- sqrt(colSums(sweep(as.matrix(MC^2),1,PRL,FUN="*")))  # raiz quadrada da soma ao quadrado dos elementos de MC dividido pelas linhas ponderadas da tabela de frequencia
     else
-      VET <- sqrt(colSums(MC^2)/NL)  # raiz quadrada da soma ao quadrado dos elementos de MC dividido pelo numero de linhas
+       VET <- sqrt(colSums(MC^2)/NL)  # raiz quadrada da soma ao quadrado dos elementos de MC dividido pelo numero de linhas
     
     MB  <- sweep(MC,2,VET,FUN="/") # matriz balanciada - divide MB2 por VET
     
@@ -281,37 +312,6 @@ MFA <- function(Data, Grupo, TipoGrupo = rep("n",length(Grupo)), NomeGrupos = NU
     
     return(Lista)  
   }
-  
-  if (!is.data.frame(Data)) 
-     stop("Entrada 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!")
-  
-  if (is.null(NomeGrupos)) # Cria nomes para as variaveis caso nao exista
-     NomeGrupos <- paste("Variavel", 1:length(TipoGrupo), sep = " ")
-  
-  if (!is.numeric(Grupo))
-     stop("A entrada para 'Grupo' esta incorreta, deve ser do tipo numerico. Verifique!")
-  
-  if (!is.character(TipoGrupo))
-     stop("A entrada para 'TipoGrupo' esta incorreta, deve ser do tipo caracter. Verifique!")
-  
-  if (!is.character(NomeGrupos))
-     stop("A entrada para 'NomeGrupos' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
-
-  if (length(TipoGrupo)!=length(Grupo))
-     stop("O numero de componetes da entrada 'TipoGrupo' difere da entrada 'Grupo'. Verifique!")
-
-  if (length(NomeGrupos)!=length(Grupo))
-     stop("O numero de componetes da entrada 'NomeGrupos' difere da entrada 'Grupo'. Verifique!")
-  
-  if (is.null(NomeGrupos)) # Cria nomes para as variaveis caso nao exista
-     NomeGrupos <- paste("Variavel", 1:length(TipoGrupo), sep = " ")
-  
-  for (i in 1:length(TipoGrupo)) # transforma em maiusculo
-    TipoGrupo[i]= ifelse(TipoGrupo[i]=="n","N",ifelse(TipoGrupo[i]=="c","C",ifelse(TipoGrupo[i]=="f","F",TipoGrupo[i])))   
-    
-  for (i in 1:length(TipoGrupo)) 
-    if (TipoGrupo[i]!="N" && TipoGrupo[i]!="C" && TipoGrupo[i]!="F")
-       stop("A entrada 'TipoGrupo' esta incorreta, deve ser: n, c, ou f. Verifique!")
   
   ### Inicio - Balanceia os valores dos grupos de variaveis ###
   NumGrupos = length(Grupo) # numero de grupos formados

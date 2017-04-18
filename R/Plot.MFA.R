@@ -28,19 +28,21 @@ Plot.MFA <- function(MFA,Titles = matrix(NA,1,4), PosLeg=2, BoxLeg="s", Color="s
   if (!is.character(Titles[3]) || is.na(Titles[3])) Titles[3] = c("Grafico Correspondente a Analise\n Global dos Individuos e Variaveis")
   if (!is.character(Titles[4]) || is.na(Titles[4])) Titles[4] = c("Grafico das Inercias dos Grupos de Variaveis")
   
-  Color  = ifelse(Color=="s","S",ifelse(Color=="n","N",Color))    # transforma em maiusculo
-  BoxLeg = ifelse(BoxLeg=="s","S",ifelse(BoxLeg=="n","N",BoxLeg)) # transforma em maiusculo
-  NamArr = ifelse(NamArr=="s","S",ifelse(NamArr=="n","N",NamArr)) # transforma em maiusculo
-  
   if (PosLeg<1 || PosLeg>4)
      stop("Entrada para posicao da legenda 'PosLeg' esta incorreta. Verifique!")
+  
+  BoxLeg <- toupper(BoxLeg) # transforma em maiusculo
   
   if (BoxLeg!="S" && BoxLeg!="N") 
      stop("Entrada para moldura da legenda 'BoxLeg' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
   
+  Color  <- toupper(Color)  # transforma em maiusculo
+  
   if (Color!="S" && Color!="N") 
      stop("Entrada para 'Color' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
 
+  NamArr <- toupper(NamArr) # transforma em maiusculo
+  
   if (NamArr!="S" && NamArr!="N") 
      stop("Entrada para 'NamArr' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
   

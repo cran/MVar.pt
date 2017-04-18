@@ -14,7 +14,7 @@ IM <- function(Data, Names = "s") {
   if (!is.data.frame(Data)) 
      Data = as.data.frame(Data)
   
-  Names = ifelse(Names=="s","S",ifelse(Names=="n","N",Names)) # transforma em maiusculo
+  Names <- toupper(Names) # transforma em maiusculo
   
   if (Names!="S" && Names!="N") 
      stop("Entrada para 'Names' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")

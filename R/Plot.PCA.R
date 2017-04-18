@@ -19,7 +19,7 @@ Plot.PCA <- function(PC, Titles = matrix(NA,1,3), Color = "s", LinLab = NULL) {
   if (!is.character(Titles[2]) || is.na(Titles[2])) Titles[2] = c("Grafico Correspondente as Linhas (Observacoes)")
   if (!is.character(Titles[3]) || is.na(Titles[3])) Titles[3] = c("Grafico Correspondente as Colunas (Variaveis)")
   
-  Color  = ifelse(Color=="s","S",ifelse(Color=="n","N",Color))    # transforma em maiusculo
+  Color <- toupper(Color) # transforma em maiusculo
   
   if (Color!="S" && Color!="N")
      stop("Entrada para 'Color' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")

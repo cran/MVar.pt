@@ -17,10 +17,10 @@ Plot.CCA <- function(CCA, Titles = matrix(NA,1,4), Axis = NULL, Color = "s") {
   if (!is.character(Titles[2]) || is.na(Titles[2])) Titles[2] = c("Circulo de Correlacoes")
   if (!is.character(Titles[3]) || is.na(Titles[3])) Titles[3] = c("Grafico com os scores do grupo X")
   if (!is.character(Titles[4]) || is.na(Titles[4])) Titles[4] = c("Grafico com os scores do grupo Y")
-  
-  Color  = ifelse(Color=="s","S",ifelse(Color=="n","N",Color))    # transforma em maiusculo
   #####   FIM - Informacoes usadas nos Graficos  #####
   
+  Color <- toupper(Color) # transforma em maiusculo
+
   if (Color!="S" && Color!="N") 
      stop("Entrada para 'Color' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
 

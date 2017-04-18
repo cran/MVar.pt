@@ -41,12 +41,12 @@ Biplot <- function(Data, alfa=0.5, Title=NA, Label_x=NA, Label_y=NA, Color="s", 
   if (!is.character(Label_y) && !is.na(Label_y))
      stop("Entrada para 'Label_y' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
 
-  Color = ifelse(Color=="s","S",ifelse(Color=="n","N", Color)) # transforma em maiusculo
+  Color <- toupper(Color) # transforma em maiusculo
   
   if (Color!="S" && Color!="N") 
      stop("Entrada para 'Color' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
  
-  Observation = ifelse(Observation=="s","S",ifelse(Observation=="n","N",Observation)) # transforma em maiusculo
+  Observation <- toupper(Observation) # transforma em maiusculo
   
   if (Observation!="S" && Observation!="N") 
      stop("Entrada para 'Observation' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")

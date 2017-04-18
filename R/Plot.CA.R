@@ -20,7 +20,7 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,4), Color = "s", LinLab = NULL) {
   if (!is.character(Titles[3]) || is.na(Titles[3])) Titles[3] = c("Grafico Correspondente as Colunas(Variaveis)")
   if (!is.character(Titles[4]) || is.na(Titles[4])) Titles[4] = c("Grafico Correspondente as Observacoes e Variaveis")
   
-  Color  = ifelse(Color=="s","S",ifelse(Color=="n","N",Color))  # transforma em maiusculo
+  Color <- toupper(Color) # transforma em maiusculo
   
   if (Color!="S" && Color!="N")
      stop("Entrada para 'Color' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")

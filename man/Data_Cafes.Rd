@@ -14,10 +14,11 @@
 
 
 \references{
-OSSANI, P. C.; CIRILLO, M. A.; Habilidades Sensoriais de Grupos Heterogeneos de Consumidores de Cafes Especiais Discriminadas pelo Metodo MFACT. in: XIII ENCONTRO MINEIRO DE ESTATISTICA (MGEST), 13., 2014, Diamantina. \emph{Anais}...Diamantina: UFVJM, 2014.
+OSSANI, P. C.; CIRILLO, M. A.; BOREM, F. M.; RIBEIRO, D. E.; CORTEZ, R. M. - \emph{Qualidade de cafes especiais: uma avaliacao sensorial feita com consumidores utilizando a tecnica MFACT.} Revista Ciencia Agronomica (UFC. Online).  , v.48, p.92 - 100, 2017. DOI: 10.5935/1806-6690.20170010.
 
 OSSANI, P. C. \emph{Qualidade de cafes especiais e nao especiais por meio da analise de multiplos fatores para tabelas de contingencias.} 2015. 107 p. Dissertacao (Mestrado em Estatistica e Experimentacao Agropecuaria) - Universidade Federal de Lavras, Lavras, 2015.
 }
+
 
 \examples{
 data(Data_Cafes) # conjundo de dados categorizados

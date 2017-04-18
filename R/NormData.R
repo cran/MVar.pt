@@ -26,10 +26,12 @@ NormData <- function(Data, Type = 1) {
   }
 
   if (Type==2) { # normaliza os dados por coluna
-     Media    <- apply(DataNorm, 2, mean) # encontra as medias por colunas
-     DataNorm <- sweep(DataNorm, 2, Media, FUN = "-")   # Centraliza na media
-     Desvio   <- sqrt(colSums(DataNorm^2)/(nrow(DataNorm)-1)) # raiz da soma do quadrado - desvio padrao amostral
-     DataNorm <- sweep(DataNorm, 2, Desvio, FUN = "/")  # Divide pelo desvio padrao
+     # Media    <- apply(DataNorm, 2, mean) # encontra as medias por colunas
+     # DataNorm <- sweep(DataNorm, 2, Media, FUN = "-")   # Centraliza na media
+     # Desvio   <- sqrt(colSums(DataNorm^2)/(nrow(DataNorm)-1)) # raiz da soma do quadrado - desvio padrao amostral
+     # DataNorm <- sweep(DataNorm, 2, Desvio, FUN = "/")  # Divide pelo desvio padrao
+     ## Modo mais simples e rapido
+     DataNorm <- scale(DataNorm, center = TRUE, scale = TRUE)
   }
   
   return(DataNorm)

@@ -40,12 +40,10 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
   if (is.null(NameVarX))
      NameVarX <- c(paste("X",1:ncol(as.matrix(X)),sep=""))
   
-  Intercepts = ifelse(Intercepts=="s","S",ifelse(Intercepts=="n","N",Intercepts)) # transforma em maiusculo
+  Intercepts <- toupper(Intercepts) # transforma em maiusculo
     
   if (Intercepts!="S" && Intercepts!="N") 
      stop("Entrada para 'Intercepts' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
-  
-  #library("MASS")
   
   #### INICIO - Analises #####
   Y <- as.matrix(Y) # variavel resposta

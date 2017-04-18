@@ -35,17 +35,17 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
      stop("Entrada para 'TypeGraf' esta incorreta, deve ser: 'Scatterplot', 
           'Regression', 'QQPlot', 'Histogram', 'Fits' ou 'Order'. Verifique!")
 
-  Color  = ifelse(Color=="s","S",ifelse(Color=="n","N",Color))    # transforma em maiusculo
+  Color <- toupper(Color) # transforma em maiusculo
   
   if (Color!="S" && Color!="N")
      stop("Entrada para 'Color' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
   
-  IntConf  = ifelse(IntConf=="s","S",ifelse(IntConf=="n","N",IntConf))    # transforma em maiusculo
+  IntConf <- toupper(IntConf) # transforma em maiusculo
   
   if (IntConf!="S" && IntConf!="N")
      stop("Entrada para 'IntConf' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
   
-  IntPrev  = ifelse(IntPrev=="s","S",ifelse(IntPrev=="n","N",IntPrev))    # transforma em maiusculo
+  IntPrev <- toupper(IntPrev) # transforma em maiusculo
   
   if (IntPrev!="S" && IntPrev!="N")
      stop("Entrada para 'IntPrev' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
@@ -116,7 +116,7 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
              cex=1,          # Tamanho dos pontos
              xlim=c(min(X)-0.1,max(X)+0.1), # Dimensao para as linhas do grafico
              ylim=c(min(cbind(Predicao,Inter.Conf[,2:3],Inter.Pred[,2:3])),max(cbind(Predicao,Inter.Conf[,2:3],Inter.Pred[,2:3]))+0.1), # Dimensao para as colunas do grafico
-             col = ifelse(Color=="S","red","black"))             # Cor dos pontos
+             col = ifelse(Color=="S","red","black")) # Cor dos pontos
         
         
         ## Inicio - Acrescenta a reta ajustada

@@ -37,7 +37,7 @@ Cluster <- function(Data, Hierarquico = "s", Analise = "Obs", CorAbs = "n",
   if (!is.data.frame(Data)) 
      stop("Entrada 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!")
   
-  Hierarquico = ifelse(Hierarquico=="s","S",ifelse(Hierarquico=="n","N",Hierarquico)) # transforma em maiusculo
+  Hierarquico <- toupper(Hierarquico) # transforma em maiusculo
   
   if (Hierarquico!="S" && Hierarquico!="N") 
      stop("Entrada para 'Hierarquico' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
@@ -45,12 +45,12 @@ Cluster <- function(Data, Hierarquico = "s", Analise = "Obs", CorAbs = "n",
   if (Analise!="Obs" && Analise!="Var") 
      stop("Entrada para 'Analise' esta incorreta, deve ser 'Obs' para as observacoes ou 'Var' para as variaveis. Verifique!")
 
-  CorAbs = ifelse(CorAbs=="s","S",ifelse(CorAbs=="n","N",CorAbs)) # transforma em maiusculo
+  CorAbs <- toupper(CorAbs) # transforma em maiusculo
   
   if (CorAbs!="S" && CorAbs!="N") 
      stop("Entrada para 'CorAbs' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
   
-  Normaliza = ifelse(Normaliza=="s","S",ifelse(Normaliza=="n","N",Normaliza)) # transforma em maiusculo
+  Normaliza <- toupper(Normaliza) # transforma em maiusculo
   
   if (Normaliza!="S" && Normaliza!="N") 
      stop("Entrada para 'Normaliza' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
@@ -65,7 +65,7 @@ Cluster <- function(Data, Hierarquico = "s", Analise = "Obs", CorAbs = "n",
      stop("Entrada para 'Metodo' esta incorreta, deve ser: 'complete', 'ward.D', 
           'ward.D2', 'single', 'average', 'mcquitty', 'median' ou 'centroid'. Verifique!")
   
-  Horizontal = ifelse(Horizontal=="s","S",ifelse(Horizontal=="n","N",Horizontal)) # transforma em maiusculo
+  Horizontal <- toupper(Horizontal) # transforma em maiusculo
   
   if (Horizontal!="S" && Horizontal!="N") 
      stop("Entrada para 'Horizontal' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
