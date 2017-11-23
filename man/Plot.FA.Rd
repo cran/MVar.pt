@@ -6,13 +6,12 @@
 
 \description{Graficos da analise fatorial (FA).}
 
-\usage{Plot.FA(FA, Titles = matrix(NA,1,4), Color = "s", LinLab = NULL)}
+\usage{Plot.FA(FA, Titles = matrix(NA,1,4), Color = TRUE, LinLab = NULL)}
 
 \arguments{
 \item{FA}{Dados da funcao FA.}
 \item{Titles}{Titulos para os graficos.}
-\item{Color}{"s" para graficos coloridos (default),\cr
-             "n" para graficos em preto e branco.}
+\item{Color}{Graficos coloridos (default = TRUE).}
 \item{LinLab}{Vetor com o rotulo para as linhas, se nao
               informado retorna o padrao dos dados.}
 }
@@ -38,7 +37,7 @@ Resp <- FA(Dat, Method = "PC", Type = 2, NFactor = 3)
 
 Titles = c("Scree-plot","Scores das observacoes","Cargas Fatoriais","Biplot")
 
-Plot.FA(Resp, Titles, Color = "s", LinLab = rep("",nrow(Dat)))
+Plot.FA(Resp, Titles, Color = TRUE, LinLab = rep("", nrow(Dat)))
 
 }
 

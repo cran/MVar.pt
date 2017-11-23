@@ -6,21 +6,19 @@
 
 \description{Realiza o grafico Biplot.}
 
-\usage{Biplot(Data, alfa = 0.5, Title = NA, Label_x = NA,
-       Label_y = NA, Color = "s", Observation = "s")}
+\usage{Biplot(Data, alfa = 0.5, Title = NA, Label_x = NA, 
+       Label_y = NA, Color = TRUE, Observation= TRUE)}
 
 \arguments{
 \item{Data}{Dados para plotagem.}
 \item{alfa}{Representatividade dos individuos (alfa),
-            representatividade das variaveis (1 - alfa).\cr
+            representatividade das variaveis (1 - alfa).
             Sendo 0.5 o default.}
 \item{Title}{Titulo para o grafico. Se nao for definido assume texto padrao.}
 \item{Label_x}{Rotulo do eixo X. Se nao for definido assume texto padrao.}
 \item{Label_y}{Rotulo do eixo Y. Se nao for definido assume texto padrao.}
-\item{Color}{"s" para graficos coloridos - default,\cr
-             "n" para graficos em preto e branco.}
-\item{Observation}{"s" acrescenta as observacoes ao grafico (default),\cr
-                   "n" nao acrescenta as observacoes ao grafico.}
+\item{Color}{Graficos coloridos (default = TRUE).}
+\item{Observation}{Acrescenta as observacoes ao grafico (default = TRUE).}
 }
 
 \value{
@@ -34,7 +32,7 @@
 }
 
 \references{
-RENCHER, A.C.; \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
+RENCHER, A. C. \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
 }
 
 \author{
@@ -52,10 +50,10 @@ rownames(Dat) <- DataQuan[,1]
 Biplot(Dat)
 
 Biplot(Dat, alfa = 0.6, Title = "Biplot dos Dados\n valorizando os individuos",
-       Label_x = "Eixo X", Label_y = "Eixo Y", Color = "s", Observation = "s")
+       Label_x = "Eixo X", Label_y = "Eixo Y", Color = TRUE, Observation = TRUE)
        
 Biplot(Dat, alfa = 0.4, Title = "Grafico valorizando as variaveis",
-       Label_x = "", Label_y = "", Color = "n", Observation = "n")
+       Label_x = "", Label_y = "", Color = FALSE, Observation = FALSE)
 }
 
 \keyword{Biplot}

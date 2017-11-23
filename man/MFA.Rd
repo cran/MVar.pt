@@ -9,7 +9,7 @@
 \usage{MFA(Data, Grupo, TipoGrupo = rep("n", length(Grupo)), NomeGrupos = NULL)}
 \arguments{
   \item{Data}{Dados a serem analisados.}
-  \item{Grupo}{Numero de colunas para cada grupo em ordem seguindo a ordem dos dados de "Data".}
+  \item{Grupo}{Numero de colunas para cada grupo em ordem seguindo a ordem dos dados em 'Data'.}
   \item{TipoGrupo}{"n" para dados numericos (default),\cr
                    "c" para dados categoricos,\cr
                    "f" para dados de frequencia.}
@@ -32,7 +32,7 @@
 }
 
 \references{
-ABDESSEMED, L. and ESCOFIER, B.; Analyse factorielle multiple de tableaux de frequencies: comparaison avec l'analyse canonique des correspondences. \emph{Journal de la Societe de Statistique de Paris}, Paris, v. 137, n. 2, p. 3-18, 1996..
+ABDESSEMED, L.; ESCOFIER, B. Analyse factorielle multiple de tableaux de frequencies: comparaison avec l'analyse canonique des correspondences. \emph{Journal de la Societe de Statistique de Paris}, Paris, v. 137, n. 2, p. 3-18, 1996..
 
 ABDI, H. Singular Value Decomposition (SVD) and Generalized Singular Value Decomposition (GSVD). In: SALKIND, N. J. (Ed.). \emph{Encyclopedia of measurement and statistics.} Thousand Oaks: Sage, 2007. p. 907-912.
 
@@ -41,7 +41,6 @@ ABDI, H.; VALENTIN, D. Multiple factor analysis (MFA). In: SALKIND, N. J. (Ed.).
 ABDI, H.; WILLIAMS, L. Principal component analysis. \emph{WIREs Computational Statatistics}, New York, v. 2, n. 4, p. 433-459, July/Aug. 2010.
 
 ABDI, H.; WILLIAMS, L.; VALENTIN, D. Multiple factor analysis: principal component analysis for multitable and multiblock data sets. \emph{WIREs Computational Statatistics}, New York, v. 5, n. 2, p. 149-179, Feb. 2013.
-
 
 BECUE-BERTAUT, M.; PAGES, J. A principal axes method for comparing contingency tables: MFACT. \emph{Computational Statistics & Data Analysis}, New York, v. 45, n. 3, p. 481-503, Feb. 2004
 
@@ -63,9 +62,11 @@ ESCOFIER, B.; PAGES, J. Multiple factor analysis (AFUMULT package). \emph{Comput
 
 GREENACRE, M.; BLASIUS, J. \emph{Multiple correspondence analysis and related methods.} New York: Taylor and Francis, 2006. 607 p.
 
+OSSANI, P. C.; CIRILLO, M. A.; BOREM, F. M.; RIBEIRO, D. E.; CORTEZ, R. M.. Quality of specialty coffees: a sensory evaluation by consumers using the MFACT technique. \emph{Revista Ciencia Agronomica (UFC. Online)}, v. 48, p. 92-100, 2017.
+
 PAGES, J. Analyse factorielle multiple appliquee aux variables qualitatives et aux donnees mixtes. \emph{Revue de Statistique Appliquee}, Paris, v. 50, n. 4, p. 5-37, 2002.
 
-PAGES, J. Multiple factor analysis: main features and application to sensory data. \emph{Revista Colombiana de Estadistica}, Bogota, v. 27, n. 1, p. 1-26, 2004.
+PAGES, J.. Multiple factor analysis: main features and application to sensory data. \emph{Revista Colombiana de Estadistica}, Bogota, v. 27, n. 1, p. 1-26, 2004.
 
 }
 
@@ -98,4 +99,3 @@ round(MF$MatrixEscVar,2)
 \keyword{Analise de multiplos fatores}
 \keyword{MFA}
 \keyword{MFACT}
-

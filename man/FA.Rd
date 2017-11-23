@@ -24,7 +24,7 @@
 \item{ScoresObs}{Tipo de scores para as observacoes: "Bartlett" (default) ou "Regression".}
 \item{Converg}{Valor limite para convergencia para soma do quadrado dos residuos para metodo de Maxima Verossimilhanca (default = 1e-5).}
 \item{Iteracao}{Numero maximo de iteracoes para metodo de Maxima Verossimilhanca (default = 1000).}
-\item{TestFit}{Testa o ajusto do modelo para o metodo de Maxima Verossimilhanca (default = TRUE).}
+\item{TestFit}{Testa o ajuste do modelo para o metodo de Maxima Verossimilhanca (default = TRUE).}
 }
 
 \value{
@@ -46,11 +46,11 @@
 \references{
 MINGOTI, S. A. \emph{Analise de dados atraves de metodos de estatistica multivariada:} uma abordagem aplicada. Belo Horizonte: UFMG, 2005. 297 p.
 
-Kaiser, H. F..\emph{The varimax criterion for analytic rotation in factor analysis.} Psychometrika 23, 187-200, 1958.
+Kaiser, H. F.\emph{The varimax criterion for analytic rotation in factor analysis.} Psychometrika 23, 187-200, 1958.
 
-RENCHER, A.C.; \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
+RENCHER, A. C. \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
 
-FERREIRA, D. F.; \emph{Estatistica Multivariada.} 2a ed. revisada e ampliada. Lavras: Editora UFLA, 2011. 676 p.
+FERREIRA, D. F. \emph{Estatistica Multivariada.} 2a ed. revisada e ampliada. Lavras: Editora UFLA, 2011. 676 p.
 }
 
 \author{

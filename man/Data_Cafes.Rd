@@ -10,11 +10,11 @@
 
 \usage{data(Data_Cafes)}
 
-\format{Conjunto de dados de uma pesquisa feita com o proposito de avaliar a concordancia entre as respostas de diferentes grupos de consumidores com diferentes habilidades sensoriais. O experimento relaciona a analise sensorial de cafes especiais definidos por (A) Bourbon Amarelo, cultivado a altitudes maiores do que 1200 m.; (D) idem a (A) diferenciando apenas no preparo das amostras; (B) Acaia cultivados a altitude menores do que 1.100m; (C)  idem ao (B) porem diferenciando o preparo das amostras. Aqui os dados estao categorizados por cafes. O exemplo dado demonstra os resultados encontrados em OSSANI e CIRILLO (2014).}
+\format{Conjunto de dados de uma pesquisa feita com o proposito de avaliar a concordancia entre as respostas de diferentes grupos de consumidores com diferentes habilidades sensoriais. O experimento relaciona a analise sensorial de cafes especiais definidos por (A) Bourbon Amarelo, cultivado a altitudes maiores do que 1200 m.; (D) idem a (A) diferenciando apenas no preparo das amostras; (B) Acaia cultivados a altitude menores do que 1.100m; (C)  idem ao (B) porem diferenciando o preparo das amostras. Aqui os dados estao categorizados por cafes. O exemplo dado demonstra os resultados encontrados em OSSANI et al. (2017).}
 
 
 \references{
-OSSANI, P. C.; CIRILLO, M. A.; BOREM, F. M.; RIBEIRO, D. E.; CORTEZ, R. M. - \emph{Qualidade de cafes especiais: uma avaliacao sensorial feita com consumidores utilizando a tecnica MFACT.} Revista Ciencia Agronomica (UFC. Online).  , v.48, p.92 - 100, 2017. DOI: 10.5935/1806-6690.20170010.
+OSSANI, P. C.; CIRILLO, M. A.; BOREM, F. M.; RIBEIRO, D. E.; CORTEZ, R. M.. Quality of specialty coffees: a sensory evaluation by consumers using the MFACT technique. \emph{Revista Ciencia Agronomica (UFC. Online)}, v. 48, p. 92-100, 2017.
 
 OSSANI, P. C. \emph{Qualidade de cafes especiais e nao especiais por meio da analise de multiplos fatores para tabelas de contingencias.} 2015. 107 p. Dissertacao (Mestrado em Estatistica e Experimentacao Agropecuaria) - Universidade Federal de Lavras, Lavras, 2015.
 }
@@ -37,9 +37,9 @@ print(round(MF$MatrixA,2))
 print("Matriz das Inercias Parciais/Escores das Variaveis:")
 print(round(MF$MatrixEscVar,2))
 
-Titulos = c("Individuos", "Individuos/Tipos Cafes", "Inercias Grupos")
+Titulos = c("Scree-plot","Individuos", "Individuos/Tipos Cafes", "Inercias Grupos")
 
-Plot.MFA(MF, Titulos, 2, "n", "s", "n") # Imprime varios graficos da tela
+Plot.MFA(MF, Titulos, 2, FALSE, TRUE, FALSE) # Imprime varios graficos da tela
 
 }
 

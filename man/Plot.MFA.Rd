@@ -6,8 +6,8 @@
 
 \description{Graficos da nalise de multiplos fatores (MFA).}
 
-\usage{Plot.MFA(MFA, Titles = matrix(NA,1,4), PosLeg = 2, 
-         BoxLeg = "s", Color = "s", NamArr = "n")}
+\usage{Plot.MFA(MFA, Titles = matrix(NA,1,4), PosLeg = 2, BoxLeg = TRUE,
+         Color = TRUE, NamArr = FALSE, RowNames = NULL)}
  
 \arguments{
   \item{MFA}{Dados da funcao MFA.}
@@ -16,14 +16,10 @@
                 2 para legenda no canto superior direito (default),\cr
                 3 para legenda no canto inferior direito,\cr
                 4 para legenda no canto inferior esquerdo.}
-  \item{BoxLeg}{"s" para colocar moldura na legenda (default).\cr
-                "n" nao coloca moldura na legenda.}
-  \item{Color}{"s" para graficos coloridos (default),\cr
-               "n" para graficos em preto e branco.}
-  \item{NamArr}{"s" para colocar nomes nos pontos na nuvem ao redor do
-                    centroide no grafico correspondente a 
-                    analise global dos individuos e variaveis,\cr
-                "n" caso contrario (default).}
+  \item{BoxLeg}{Colocar moldura na legenda (default = TRUE).}
+  \item{Color}{Graficos coloridos (default = TRUE).}
+  \item{NamArr}{Colocar nomes pontos na nuvem ao redor do centroide no Grafico Correspondente a Analise Global dos Individuos e Variaveis (default = FALSE).}
+  \item{RowNames}{Nomes dos centroides, se omitido retorna os rotulos das linhas.}
 }
 
 \value{Retorna varios graficos.}
@@ -49,7 +45,9 @@ MF <- MFA(Dat, c(2,2,2), TipoGrupo = c("n","c","f"), GroupNames) # realiza MFA
 
 Titulos = c("Scree-plot","Observacoes","Observacoes/Variaveis","Inercias Grupos Variaveis")
 
-Plot.MFA(MF, Titulos, 2, "n", "s", "n") # Imprime varios graficos da tela
+Plot.MFA(MF, Titulos, 2, FALSE, TRUE, FALSE) # Imprime varios graficos da tela
+
+Plot.MFA(MF, Titulos, 2, FALSE, TRUE, FALSE, rep("A?",10)) # Imprime varios graficos da tela
 }
 
 \keyword{Analise de multiplos fatores}

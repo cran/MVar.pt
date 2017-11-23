@@ -1,12 +1,11 @@
-IM <- function(Data, Names = "s") {
+IM <- function(Data, Names = TRUE) {
   # Converte para variaveis Dummy para execucao da Analise
   # de Correspondencia Multipla, ou seja, em 0 e 1, caso dados nominais
   # Esta funcao e usada na funcao que balanceia dados Categoricos
   
   # Entrada:
   # Data  - Dados Categoricos 
-  # Names - "s" para incluir os nomes das variaveis nos niveis da Matriz Indicadora (default)
-  #         "n" nao inclui
+  # Names - Incluir os nomes das variaveis nos niveis da Matriz Indicadora (default = TRUE).
   
   # Retorna:
   # Dados - Dados convertidos em Matriz Indicadora
@@ -14,10 +13,8 @@ IM <- function(Data, Names = "s") {
   if (!is.data.frame(Data)) 
      Data = as.data.frame(Data)
   
-  Names <- toupper(Names) # transforma em maiusculo
-  
-  if (Names!="S" && Names!="N") 
-     stop("Entrada para 'Names' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
+  if (!is.logical(Names)) 
+     stop("Entrada para 'Names' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
   NumLinha  <- nrow(Data)  # Numero de linhas na tabela
   
@@ -37,11 +34,11 @@ IM <- function(Data, Names = "s") {
         
         if (MConver[j]==Nivel[i]) MDummy[j,i] <- 1
     
-    if (Names=="S")
-      colnames(MDummy) <- paste(colnames(Data[k]),Nivel,sep=":")# Nomeia as colunas 
+    if (Names)
+       colnames(MDummy) <- paste(colnames(Data[k]),Nivel,sep=":") # Nomeia as colunas 
     
     if (Names=="N")
-      colnames(MDummy) <- Nivel # Nomeia as colunas  
+       colnames(MDummy) <- Nivel # Nomeia as colunas  
     
     if (k==1) MFinal <- MDummy
     

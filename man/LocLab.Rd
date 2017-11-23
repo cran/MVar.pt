@@ -10,10 +10,9 @@ Funcao para melhor posicao dos rotulos nos graficos.
 
 \usage{
 LocLab(x, y = NULL, labels = seq(along = x), cex = 1,
-                       method = c("SANN", "GA"),
-                       allowSmallOverlap = FALSE,
-                       trace = FALSE, shadotext = FALSE,
-                       doPlot = TRUE, \dots)
+       method = c("SANN", "GA"), allowSmallOverlap = FALSE,
+       trace = FALSE, shadotext = FALSE, 
+       doPlot = TRUE, \dots)
 }
 
 \arguments{

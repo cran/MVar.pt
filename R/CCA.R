@@ -36,7 +36,7 @@ CCA <- function(X = NULL, Y = NULL, Type = 1, Test = "Bartlett", Sign = 0.05) {
       stop("O numero de observacoes de 'X' deve ser igual a de 'Y'. Verifique!")
   
    if (Type!=1 && Type!=2) 
-      stop("Entrada para 'Type' esta incorreta. Verifique!")
+      stop("Entrada para 'Type' esta incorreta, deve ser 1 ou 2. Verifique!")
   
    if (Test!="Bartlett" && Test!="Rao")
       stop("Entrada para 'Test' esta incorreta, deve ser 'Bartlett' ou 'Rao'. Verifique!")

@@ -1,6 +1,6 @@
-MDS <- function(Data, Distance = "euclidean", Eixos = "S", 
+MDS <- function(Data, Distance = "euclidean", Eixos = TRUE, 
                 LabelX = NULL, LabelY = NULL, Title = NULL,
-                Color = "S", LinLab = NULL) {
+                Color = TRUE, LinLab = NULL) {
   # Esta funcao executa a Escalonamento Multidimensional
   # desenvolvida por Paulo Cesar Ossani em 07/2016
   
@@ -8,13 +8,11 @@ MDS <- function(Data, Distance = "euclidean", Eixos = "S",
   # Data - Dados a serem a analizados.
   # Distance - Metrica das distancias: "euclidean" (default), "maximum", 
   #            "manhattan", "canberra", "binary" ou "minkowski".
-  # Color  - "s" para grafico colorido (default),
-  #          "n" para grafico em preto e branco.
-  # Eixos  - "s" coloca eixos no grafico (default),
-  #          "n" nao coloca eixos no grafico,
+  # Color  - Graficos coloridos (default = TRUE).
+  # Eixos  - Coloca eixos no grafico (default = TRUE).
   # LabelX - Nomeia o eixo X, se nulo retorna padrao.
   # LabelY - Nomeia o eixo Y, se nulo retorna padrao.
-  # Title - Titulo do grafico, se nulo retorna padrao.
+  # Title  - Titulo do grafico, se nulo retorna padrao.
   # LinLab - Vetor com o rotulo para as linhas, se nao
   #          informado retorna o padrao dos dados.
   
@@ -29,27 +27,21 @@ MDS <- function(Data, Distance = "euclidean", Eixos = "S",
   if (is.na(pmatch(Distance, DISTANCE))) 
      stop("Entrada para 'Metodo' esta incorreta, deve ser: 'euclidean', 
           'maximum', 'manhattan', 'canberra', 'binary' ou 'minkowski'. Verifique!")
-  
-  Eixos <- toupper(Eixos) # transforma em maiusculo
-  
-  if (Eixos!="S" && Eixos!="N") 
-     stop("Entrada para 'Eixos' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
-  
-  Eixos <- ifelse(Eixos=="S", TRUE, FALSE)
-  
+
+  if (!is.logical(Eixos)) 
+     stop("Entrada para 'Eixos' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+ 
   if (is.null(LabelX))
-     LabelX = "Eixo x"  # Nomeia Eixo X  
+     LabelX = "Eixo x" # Nomeia Eixo X  
   
   if (is.null(LabelY))
-     LabelY = "Eixo y"  # Nomeia Eixo Y
+     LabelY = "Eixo y" # Nomeia Eixo Y
   
   if (is.null(Title))
-     Title = "Escalonamento Multidimensional" # Titulo
+     Title = "Escalonamento multidimensional" # Titulo
   
-  Color <- toupper(Color) # transforma em maiusculo
-  
-  if (Color!="S" && Color!="N")
-     stop("Entrada para 'Color' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
+  if (!is.logical(Color))
+     stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
   if (!is.null(LinLab) && length(LinLab)!=nrow(Data))
      stop("O numero elementos do rotulo para linhas 'LinLab' difere do numero de linhas da base de dados. Verifique!")
@@ -67,16 +59,16 @@ MDS <- function(Data, Distance = "euclidean", Eixos = "S",
   x <- fit[,1] # valores eixo x
   y <- fit[,2] # valores eixo y
   
-  plot(x,y,  # cria grafico para as coordenadas linhas x e colunas y
-       xlab = LabelX,  # Nomeia Eixo X
-       ylab = LabelY,  # Nomeia Eixo Y
+  plot(x,y, # cria grafico para as coordenadas linhas x e colunas y
+       xlab = LabelX, # Nomeia Eixo X
+       ylab = LabelY, # Nomeia Eixo Y
        main = Title,  # Titulo
-       asp = 1,  # Aspecto do Grafico
-       pch = 19, # Formato dos pontos 
-       cex = 1,  # Tamanho dos pontos
-       xlim=c(min(x)-0.5,max(x)+0.5), # Dimensao para as linhas do grafico
-       ylim=c(min(y)-0.5,max(y)+0.5), # Dimensao para as colunas do grafico
-       col = ifelse(Color=="S","red","black"))  # Cor dos pontos
+       asp  = 1,  # Aspecto do Grafico
+       pch  = 19, # Formato dos pontos 
+       cex  = 1,  # Tamanho dos pontos
+       xlim = c(min(x)-0.5,max(x)+0.5), # Dimensao para as linhas do grafico
+       ylim = c(min(y)-0.5,max(y)+0.5), # Dimensao para as colunas do grafico
+       col  = ifelse(Color,"red","black"))  # Cor dos pontos
   
   if (Eixos) # coloca eixos no grafico
      abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central

@@ -15,7 +15,7 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
    # ScoresObs - Tipo de scores para as observacoes: "Bartlett" (default) ou "Regression"
    # Converg   - Valor limite para convergencia para soma do quadrado dos residuos para metodo de Maxima Verossimilhanca (default = 1e-5)
    # Iteracao  - Numero maximo de iteracoes para metodo de Maxima Verossimilhanca (default = 1000)
-   # TestFit   - Testa o ajusto do modelo para o metodo de Maxima Verossimilhanca (default = TRUE)
+   # TestFit   - Testa o ajuste do modelo para o metodo de Maxima Verossimilhanca (default = TRUE)
   
    # Saida:
    # MatrixMC      - Matriz de Correlacao/Covariancia
@@ -36,53 +36,54 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
    if (!is.data.frame(Data)) 
       stop("Entrada 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!")
   
-   if (Method!="PC" && Method!="PF" && Method!="ML") 
+   if (!(Method %in% c("PC", "PF", "ML"))) 
       stop("Entrada 'Method' esta incorreta, deve ser 'PC', 'PF' ou 'ML'. Verifique!")
   
-   if (Type!=1 && Type!=2) 
+   if (Type != 1 && Type != 2) 
       stop("Entrada para 'Type' esta incorreta, deve ser numerica, sendo 1 ou 2. Verifique!")
   
    if (!is.numeric(NFactor)) 
       stop("Entrada para 'NFactor' esta incorreta, deve ser numerica. Verifique!")
 
-   if (NFactor>ncol(Data)) 
-      stop("Entrada para 'NFactor' esta incorreta, deve ser igual ou inferior ao numero de variaveis de 'Data'. Verifique!")
+   if (NFactor > ncol(Data)) 
+      stop("Entrada para 'NFactor' esta incorreta, deve ser igual ou inferior ao numero de variaveis em 'Data'. Verifique!")
  
-   if (NFactor<=0) 
+   if (NFactor <= 0) 
       stop("Entrada para 'NFactor' esta incorreta, deve ser numero inteiro maior ou igual a 1. Verifique!")
  
-   if (Rotation!="None" && Rotation!="Varimax" && Rotation!="Quartimax") 
-      stop("Entrada para 'Rotation' esta incorreta, deve ser 'None', 'Varimax', 'Quartimax' ou ?????. Verifique!")
+   Rotation <- toupper(Rotation) # transforma em maiusculo
+   
+   if (!(Rotation %in% c("NONE","VARIMAX")))
+      stop("Entrada para 'Rotation' esta incorreta, deve ser 'None' ou 'Varimax'. Verifique!")
   
-   if (Rotation!="None" && NFactor<2)
+   if (Rotation != "NONE" && NFactor < 2)
       stop("Para a rotacao, he necessario mais do que um fator. Altere o numero de fatores (NFactor) para continuar!")
 
-   if (ScoresObs!="Bartlett" && ScoresObs!="Regression") 
+   ScoresObs <- toupper(ScoresObs) # transforma em maiusculo
+   
+   if (!(ScoresObs %in% c("BARTLETT", "REGRESSION")))
       stop("Entrada para 'ScoresObs' esta incorreta, deve ser 'Bartlett' ou 'Regression'. Verifique!")
    
-   # if (!is.logical(Screeplot))
-   #    stop("Entrada para 'Screeplot' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+   if (!is.logical(TestFit) && Method == "ML")
+      stop("Entrada para 'TestFit' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
        
    if (Type == 1)     # Considera a Matriz de Covariancia para a decomposicao
       MC <- cov(Data) # Matriz de Covariancia
   
    if (Type == 2)     # Considera a Matriz de Correlacao para a decomposicao
       MC <- cor(Data) # Matriz de Correlacao
-  
-   #library("stats")  
-   #library("MASS")
 
-   Rotacao <- function(MData,Type=NULL,Normalise=TRUE) {
+   Rotacao <- function(MData, Type = NULL, Normalise = TRUE) {
    # Funcao que executa as rotacoes
-     if (Type=="Varimax") {
-        Var <- varimax(MData,normalize=Normalise)
+     if (Type == "VARIMAX") {
+        Var <- varimax(MData, normalize = Normalise)
         Res <- Var$loadings[,]
      }
      
      return(Res)
    }
    
-   if (Method=="PC") { # Metodo dos Componentes Principais
+   if (Method == "PC") { # Metodo dos Componentes Principais
       
       # Encontrando a Matriz de Decomposicao Expectral
       MAV <- eigen(MC) # Encontra a matriz de autovalor e autovetor
@@ -90,7 +91,7 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
       MAutoVec <- MAV$vectors # Matriz de Autovetores
   
       Gama = MAutoVec%*%diag(sqrt(abs(MAutoVlr)),nrow(MC),ncol(MC)) # Matriz de Cargas Fatoriais
-      if (Rotation!="None") {
+      if (Rotation != "NONE") {
          Gama <- Rotacao(Gama,Rotation)
          # Gama <- Rotacao(Gama[,1:NFactor],Rotation)
          MAutoVlr <- colSums(Gama^2)
@@ -126,7 +127,7 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
       
    }
     
-   if (Method=="PF") { # Metodo dos Fatores Principais
+   if (Method == "PF") { # Metodo dos Fatores Principais
      
       Psi0 <- (solve(diag(diag(solve(MC))))) # Encontrando a Matriz Psi
 
@@ -138,10 +139,10 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
       MAutoVec <- MAV$vectors # Matriz de Autovetores
 
       Gama = MAutoVec%*%diag(sqrt(abs(MAutoVlr)),nrow(MC),ncol(MC)) # Matriz de Cargas Fatoriais
-      if (Rotation!="None") {
-        Gama <- Rotacao(Gama,Rotation)
-        # Gama <- Rotacao(Gama[,1:NFactor],Rotation)
-        MAutoVlr <- colSums(Gama^2)
+      if (Rotation != "NONE") {
+         Gama <- Rotacao(Gama,Rotation)
+         # Gama <- Rotacao(Gama[,1:NFactor],Rotation)
+         MAutoVlr <- colSums(Gama^2)
       }
       rownames(Gama) <- colnames(Data)
       colnames(Gama) <- paste("Fator",1:ncol(Gama))
@@ -156,10 +157,10 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
       # Soma dos Quadrados dos Residuos
       M = MC - (Gama[,1:NFactor]%*%t(Gama[,1:NFactor]) + diag(Psi))
       SQR = sum(diag(M%*%t(M)))
-      if (Rotation!="None") {
-        Gama <- Rotacao(Gama,Rotation)
-        # Gama <- Rotacao(Gama[,1:NFactor],Rotation)
-        MAutoVlr <- colSums(Gama^2)
+      if (Rotation != "NONE") {
+         Gama <- Rotacao(Gama,Rotation)
+         # Gama <- Rotacao(Gama[,1:NFactor],Rotation)
+         MAutoVlr <- colSums(Gama^2)
       }
       rownames(Gama) <- colnames(Data)
       colnames(Gama) <- paste("Fator",1:ncol(Gama))
@@ -180,7 +181,7 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
       rownames(Result) <- c(colnames(Data),"Variancia","% Variancia")
    }
    
-   if (Method=="ML") { # Metodo de maxima verossimilhanca
+   if (Method == "ML") { # Metodo de maxima verossimilhanca
    
       n <- ncol(Data)*nrow(Data) # numero de elementos amostrais
       MC <- (n-ncol(Data))/n*MC  # Matriz de Covariancia/Correlacao Maximizada para o teste
@@ -231,7 +232,7 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
       
       Gama = Gama_new # Matriz com as cargas fatoriais
   
-      if (Rotation!="None") {
+      if (Rotation != "NONE") {
          Gama <- Rotacao(Gama,Rotation,Normalise=TRUE)
          # Gama <- Rotacao(Gama[,1:NFactor],Rotation,Normalise=TRUE)
       }
@@ -279,10 +280,10 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
          if (gl < 0) 
             cat("Nao foi possivel realizar o teste de ajuste do modelo, pois grau de libertade foi negativo, aconselha-se a mudar os parametros, para processeguir com o teste. Exemplo: numero de fatores ou mesmo 'Type'.\n")
    
-         if (det(MC)<=0) 
+         if (det(MC) <= 0) 
             cat("Nao foi possivel realizar o teste de ajuste do modelo, pois o determinante da matriz de variancia/covariancia deve ser diferente de zero, para processeguir com o teste mude os parametros.\n")
          
-         if (gl>=0 && det(MC)>0) {
+         if (gl >= 0 && det(MC) > 0) {
           
             Ps_i = diag(diag(MC - Gama[,1:NFactor]%*%t(Gama[,1:NFactor])))
           
@@ -305,7 +306,7 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
    }
    
    # ### INICIO - Scree-plot dos fatores ####
-   # if (Screeplot && Rotation=="None")
+   # if (Screeplot && Rotation=="NONE")
    #    plot(1:length(MEigen[,1]), MEigen[,1], type = "b", 
    #         xlab = "Ordem dos fatores", 
    #         ylab = "Variancia dos fatores",
@@ -326,14 +327,14 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
       DataNorm <- sweep(DataNorm, 2, Desvio, FUN = "/")  # Divide pelo desvio padrao
    }
    
-   if (ScoresObs=="Bartlett") { # Metodo Bartlett (minimos quadrados)
+   if (ScoresObs == "BARTLETT") { # Metodo Bartlett (minimos quadrados)
       # foi necessario usar a inversa generalizada pois algumas vezes a matriz he singular, assim nao tem inversa normal
       Scores <- MASS::ginv(t(Gama)%*%solve(diag(Psi))%*%Gama)%*%(t(Gama)%*%solve(diag(Psi)))%*%t(DataNorm) # Matriz com os escores das observacoes
       #Scores <- solve(t(Gama)%*%solve(diag(Psi))%*%Gama)%*%(t(Gama)%*%solve(diag(Psi)))%*%t(DataNorm) # Matriz com os escores das observacoes
       #Scores <- DataNorm%*%solve(MC)%*%Gama # outro modo de encontrar a solucao acima
    }
    
-   if (ScoresObs=="Regression") { # Metodo de Regressao
+   if (ScoresObs == "REGRESSION") { # Metodo de Regressao
       Media <- mean(as.matrix(Data))
       DataNorm <- sweep(as.matrix(Data), 2, Media, FUN = "-") # Centraliza na media geral todos os dados
       I <- diag(rep(ncol(Gama)))

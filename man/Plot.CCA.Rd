@@ -6,14 +6,13 @@
 
 \description{Graficos da analise de correlacao canonica (CCA).}
 
-\usage{Plot.CCA(CCA, Titles = matrix(NA,1,4), Axis = NULL, Color = "s")}
+\usage{Plot.CCA(CCA, Titles = matrix(NA,1,4), Axis = NULL, Color = TRUE)}
 
 \arguments{
 \item{CCA   }{Dados da funcao CCA.}
 \item{Titles}{Titulos para os graficos. Se nao for definido assume texto padrao.}
 \item{Axis}{Titulos para os eixos dos graficos.}
-\item{Color }{"s" para graficos coloridos (default),\cr
-              "n" para graficos em preto e branco.}           
+\item{Color }{Graficos coloridos (default = TRUE).}           
 }
 
 \value{Retorna varios graficos.}
@@ -43,7 +42,7 @@ Titulos = c("Scree-plot","Correlacoes","Scores do grupo X","Scores do grupo Y")
 
 Eixos = c("Eixo X","Eixo Y")
 
-Plot.CCA(Resp, Titulos, Eixos, Color = "S") 
+Plot.CCA(Resp, Titulos, Eixos, Color = TRUE) 
 }
 
 \keyword{Analise de correlacao canonica}

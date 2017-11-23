@@ -8,7 +8,8 @@
 
 \usage{Plot.Regressao(Reg, TypeGraf = "Scatterplot", Title = NULL,
                NameVarY = NULL, NameVarX = NULL, LabelX = NULL, 
-               LabelY = NULL, Color = "s", IntConf = "s", IntPrev = "s")}
+               LabelY = NULL, Color = TRUE, IntConf = TRUE, 
+               IntPrev = TRUE)}
 
 \arguments{
 \item{Reg}{Dados da funcao de regressao.}
@@ -24,14 +25,9 @@
 \item{NameVarX}{Nome da variavel, ou variaveis X, se nulo retorna padrao.}
 \item{LabelX}{Nomeia o eixo X, se nulo retorna padrao.}
 \item{LabelY}{Nomeia o eixo Y, se nulo retorna padrao.}
-\item{Color}{"s" para graficos coloridos (default),\cr
-             "n" para graficos em preto e branco.}
-\item{IntConf}{Caso TypeGraf = "Regression":\cr
-               "s" para graficos com intervalo de confianca (default),\cr
-               "n" para graficos sem intervalo de confianca. }
-\item{IntPrev}{Caso TypeGraf = "Regression":\cr
-               "s" para graficos com intervalo de previsao (default),\cr
-               "n" para graficos sem intervalo de previsao.}
+\item{Color}{Graficos coloridos (default = TRUE).}
+\item{IntConf}{Caso TypeGraf = "Regression". Graficos com intervalo de confianca (default = TRUE). }
+\item{IntPrev}{Caso TypeGraf = "Regression". Graficos com intervalo de previsao (default = TRUE)}
 }
 
 \value{Retorna varios graficos.}
@@ -53,15 +49,15 @@ NomeY <- "Medias notas"
 
 NomeX <- "Cafes Comerciais"
 
-Res <- Regressao(Y, X, NameVarX = NomeX ,Intercepts = "s", SigF = 0.05)
+Res <- Regressao(Y, X, NameVarX = NomeX ,Intercepts = TRUE, SigF = 0.05)
 
 Titulos <- c("Scatterplot")
 Plot.Regressao(Res, TypeGraf = "Scatterplot", Title = Titulos,
-               NameVarY = NomeY, NameVarX = NomeX, Color = "s")
+               NameVarY = NomeY, NameVarX = NomeX, Color = TRUE)
 
 Titulos <- c("Grafico de Dispersao com a \n reta ajustada")
 Plot.Regressao(Res, TypeGraf = "Regression", Title = Titulos, LabelX = NomeX, 
-               LabelY = NomeY, Color = "s", IntConf = "s", IntPrev = "s")
+               LabelY = NomeY, Color = TRUE, IntConf = TRUE, IntPrev = TRUE)
 
 par (mfrow = c (2,2)) 
 

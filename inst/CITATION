@@ -1,0 +1,18 @@
+## -*- R -*-
+citHeader("To cite the R package 'MVar.pt' in publications use:")
+
+if(!exists("meta") || is.null(meta)) meta <- packageDescription("MVar.pt")
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date)
+vers <- paste("R package version", meta$Version)
+
+citEntry(entry	= "Manual",
+	 title	= "Analise multivariada package",
+	 author = personList(as.person("Paulo Cesar Ossani"),
+                       as.person("Marcelo Angelo Cirillo")),
+	 year = year,
+	 note = paste(vers),
+         url = "https://CRAN.R-project.org/package=MVar.pt",
+	 textVersion = paste(
+	 "Ossani, P. C., Cirillo, M. A. (",
+         year, ").  MVar.pt: Analise multivariada. ",
+	 vers, ".", sep=""))

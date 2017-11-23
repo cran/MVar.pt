@@ -1,6 +1,6 @@
 Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
                            NameVarY = NULL, NameVarX = NULL, LabelX = NULL, 
-                           LabelY = NULL, Color = "s", IntConf = "s", IntPrev = "s") {
+                           LabelY = NULL, Color = TRUE, IntConf = TRUE, IntPrev = TRUE) {
   # Esta funcao gera graficos da Analise de Regressao
   # desenvolvida por Paulo Cesar Ossani em 06/2016
     
@@ -18,14 +18,12 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
   # NameVarX - Nome da variavel, ou variaveis X, se nulo retorna padrao.
   # LabelX   - Nomeia o eixo X, se nulo retorna padrao.
   # LabelY   - Nomeia o eixo Y, se nulo retorna padrao.
-  # Color    - "s" para graficos coloridos (default),
-  #            "n" para graficos em preto e branco.
+  # Color    - Graficos coloridos (default = TRUE).
   # IntConf  - Caso TypeGraf = "Regression":
-  #            "s" para graficos com intervalo de confianca (default),
-  #            "n" para graficos sem intervalo de confianca. 
+  #            Graficos com intervalo de confianca (default = TRUE).
   # IntPrev  - Caso TypeGraf = "Regression":
-  #            "s" para graficos com intervalo de previsao (default),
-  #            "n" para graficos sem intervalo de previsao. 
+  #            Graficos com intervalo de previsao (default = TRUE).
+
   
   # Retorna:
   # Varios graficos.
@@ -35,22 +33,16 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
      stop("Entrada para 'TypeGraf' esta incorreta, deve ser: 'Scatterplot', 
           'Regression', 'QQPlot', 'Histogram', 'Fits' ou 'Order'. Verifique!")
 
-  Color <- toupper(Color) # transforma em maiusculo
-  
-  if (Color!="S" && Color!="N")
-     stop("Entrada para 'Color' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
-  
-  IntConf <- toupper(IntConf) # transforma em maiusculo
-  
-  if (IntConf!="S" && IntConf!="N")
-     stop("Entrada para 'IntConf' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
-  
-  IntPrev <- toupper(IntPrev) # transforma em maiusculo
-  
-  if (IntPrev!="S" && IntPrev!="N")
-     stop("Entrada para 'IntPrev' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
+  if (!is.logical(Color))
+     stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+
+  if (!is.logical(IntConf))
+     stop("Entrada para 'IntConf' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+
+  if (!is.logical(IntPrev))
+     stop("Entrada para 'IntPrev' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
  
-  if (Reg$Intercepts=="S") X <- as.matrix(Reg$X[,2:ncol(Reg$X)]) else X <- as.matrix(Reg$X)
+  if (Reg$Intercepts) X <- as.matrix(Reg$X[,2:ncol(Reg$X)]) else X <- as.matrix(Reg$X)
   
   if (is.null(NameVarY))
      NameVarY <- c("Y")
@@ -62,16 +54,16 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
   if (TypeGraf == "Scatterplot") {
     
      if (is.null(Title))
-        Title = c("Grafico de Dispersao 2 a 2")
+        Title = c("Grafico de dispersao 2 a 2")
      
      Dat <- as.data.frame(cbind(Reg$Y,X))
      colnames(Dat) <- c(NameVarY,NameVarX)
-     if (Color=="S") cor <- c(2:(ncol(X)+1)) else cor <- c(rep("black", ncol(X)))
+     if (Color) cor <- c(2:(ncol(X)+1)) else cor <- c(rep("black", ncol(X)))
      pairs(Dat, # Scatterplot
            main = Title, # Titulo
-           pch = 21,     # Formato dos pontos 
-           cex=1,        # Tamanho dos pontos
-           bg = cor)
+           pch  = 21,    # Formato dos pontos 
+           cex  = 1,     # Tamanho dos pontos
+           bg   = cor)
   }
   ## Fim - Scatterplot
   
@@ -93,7 +85,7 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
         
         X <- as.numeric(X)
         
-        if (Reg$Intercepts=="S") Modelo <- lm(Y~X) else Modelo <- lm(Y~-1+X)
+        if (Reg$Intercepts) Modelo <- lm(Y~X) else Modelo <- lm(Y~-1+X)
         
         # Intervalo para abcissa
         Inter <- ifelse(length(Reg$Y)<100,150,length(Reg$Y)*1.5) # intervalo para o eixo X
@@ -109,14 +101,14 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
         Inter.Pred <- predict(Modelo, New.X, level=0.95, interval=c("prediction"))  
         
         plot(X,Reg$Y, # cria grafico
-             xlab = LabelX,  # Nomeia Eixo X
-             ylab = LabelY,  # Nomeia Eixo Y
-             main = Title,   # Titulo
-             pch = 15,       # Formato dos pontos 
-             cex=1,          # Tamanho dos pontos
-             xlim=c(min(X)-0.1,max(X)+0.1), # Dimensao para as linhas do grafico
-             ylim=c(min(cbind(Predicao,Inter.Conf[,2:3],Inter.Pred[,2:3])),max(cbind(Predicao,Inter.Conf[,2:3],Inter.Pred[,2:3]))+0.1), # Dimensao para as colunas do grafico
-             col = ifelse(Color=="S","red","black")) # Cor dos pontos
+             xlab = LabelX, # Nomeia Eixo X
+             ylab = LabelY, # Nomeia Eixo Y
+             main = Title,  # Titulo
+             pch  = 15, # Formato dos pontos 
+             cex  = 1,  # Tamanho dos pontos
+             xlim = c(min(X)-0.1,max(X)+0.1), # Dimensao para as linhas do grafico
+             ylim = c(min(cbind(Predicao,Inter.Conf[,2:3],Inter.Pred[,2:3])),max(cbind(Predicao,Inter.Conf[,2:3],Inter.Pred[,2:3]))+0.1), # Dimensao para as colunas do grafico
+             col  = ifelse(Color,"red","black")) # Cor dos pontos
         
         
         ## Inicio - Acrescenta a reta ajustada
@@ -124,14 +116,14 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
         ## Fim - Acrescenta a reta ajustada
         
         ## Inicio - Acrescenta o Intervalo de Confianca das previsoes
-        if (IntConf == "S") {
+        if (IntConf) {
            lines(cbind(New.X,Inter.Conf[,2]), lty=3) # acrescenta I.C. Lim.Infereior
            lines(cbind(New.X,Inter.Conf[,3]), lty=3) # acrescenta I.C. Lim.Superior
         }
         ## Fim - Acrescenta o Intervalo de Confianca das previsoes
         
         ## Inicio - Acrescenta o Intervalo das previsoes
-        if (IntPrev == "S") {
+        if (IntPrev) {
            lines(cbind(New.X,Inter.Pred[,2]), lty=2) # acrescenta I.P. Lim.Infereior
            lines(cbind(New.X,Inter.Pred[,3]), lty=2) # acrescenta I.P. Lim.Superior
         }
@@ -153,12 +145,12 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
         Title = c("Grafico da probabilidade \n normal do residuo")
      
      qqnorm(Reg$Error,
-            xlab = LabelX,  # Nomeia Eixo X
-            ylab = LabelY,  # Nomeia Eixo Y
-            main = Title,   # Titulo
-            pch = 19,       # Formato dos pontos 
-            cex=1)
-     qqline(Reg$Error, col = ifelse(Color=="S","red","black"))
+            xlab = LabelX, # Nomeia Eixo X
+            ylab = LabelY, # Nomeia Eixo Y
+            main = Title,  # Titulo
+            pch  = 19,     # Formato dos pontos 
+            cex  = 1)
+     qqline(Reg$Error, col = ifelse(Color,"red","black"))
   }
   ## Fim - Grafico da probalidade normal
   
@@ -175,11 +167,11 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
         Title = c("Histograma do residuo")
      
      hist(Reg$Error,
-          xlab = LabelX,  # Nomeia Eixo X
-          ylab = LabelY,  # Nomeia Eixo Y
-          main = Title,   # Titulo
-          pch = 19,       # Formato dos pontos 
-          cex=1)
+          xlab = LabelX, # Nomeia Eixo X
+          ylab = LabelY, # Nomeia Eixo Y
+          main = Title,  # Titulo
+          pch  = 19,     # Formato dos pontos 
+          cex  = 1)
   }
   ## Fim - Grafico da probalidade normal
   
@@ -193,15 +185,15 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
       LabelY = "Residuos"  # Nomeia Eixo Y
     
     if (is.null(Title))
-      Title = c("Valores ajustados vs. Residuos")
+      Title = c("Valores ajustados vs. residuos")
     
     plot(Reg$Prev,Reg$Error, # cria grafico
-         xlab = LabelX,  # Nomeia Eixo X
-         ylab = LabelY,  # Nomeia Eixo Y
-         main = Title,   # Titulo
-         pch = 19,       # Formato dos pontos 
-         cex=1,          # Tamanho dos pontos
-         col = ifelse(Color=="S","red","black"))             # Cor dos pontos
+         xlab = LabelX, # Nomeia Eixo X
+         ylab = LabelY, # Nomeia Eixo Y
+         main = Title,  # Titulo
+         pch  = 19, # Formato dos pontos 
+         cex  = 1,  # Tamanho dos pontos
+         col  = ifelse(Color,"red","black"))  # Cor dos pontos
     
     abline(0,0, lty = 2) # acrescenta a reta do eixo X
   }
@@ -214,19 +206,19 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
        LabelX = "Ordem das observacoes"  # Nomeia Eixo X  
     
     if (is.null(LabelY))
-       LabelY = "Residuos"  # Nomeia Eixo Y
+       LabelY = "Residuos" # Nomeia Eixo Y
     
     if (is.null(Title))
-       Title = c("Ordem das observacoes vs. Residuos")
+       Title = c("Ordem das observacoes vs. residuos")
     
     plot(1:length(Reg$Error),Reg$Error, # cria grafico
-         xlab = LabelX,  # Nomeia Eixo X
-         ylab = LabelY,  # Nomeia Eixo Y
-         main = Title,   # Titulo
-         type = "o",     # linhas com pontos
-         pch = 19,       # Formato dos pontos 
-         cex=1,          # Tamanho dos pontos
-         col = ifelse(Color=="S","blue","black"))  # Cor dos pontos
+         xlab = LabelX, # Nomeia Eixo X
+         ylab = LabelY, # Nomeia Eixo Y
+         main = Title,  # Titulo
+         type = "o", # linhas com pontos
+         pch  = 19,  # Formato dos pontos 
+         cex  = 1,   # Tamanho dos pontos
+         col  = ifelse(Color,"blue","black")) # Cor dos pontos
     
     abline(0,0, lty = 2) # acrescenta a reta do eixo X
   }

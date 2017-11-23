@@ -6,14 +6,13 @@
 
 \description{Realiza a regressao linear em um conjunto de dados.}
 
-\usage{Regressao(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05)}
+\usage{Regressao(Y, X, NameVarX = NULL, Intercepts = TRUE, SigF = 0.05)}
 
 \arguments{
 \item{Y}{Respotas.}
 \item{X}{Variaveis regressoras.}
 \item{NameVarX}{Nome da variavel, ou variaveis X, se omitido retorna padrao.}
-\item{Intercepts}{"s" para considerar o intercepto na regressao (default),\cr
-                  "n" para nao considerar o intercepto na regressao.}
+\item{Intercepts}{Considerar o intercepto na regressao (default = TRUE).}
 \item{SigF}{Nivel de significancia dos testes dos residuos (default = 5\%).}
 }
 
@@ -32,14 +31,13 @@
 \item{IPp}{Intervalo das previsoes.}
 \item{ICp}{Intervalo de confianca das previsoes.}
 \item{Error}{Residuos do ajuste da regressao.}
-\item{Error.Test}{Retorna a 5\% de significancia o teste de independencia, de \cr
-                  normalidade e de homogeneidade da variancia dos residuos.}
+\item{Error.Test}{Retorna a 5\% de significancia o teste de independencia, de   normalidade e de homogeneidade da variancia dos residuos.}
 }
 
 \references{
-CHARNET, R., at al.. \emph{Analise de modelos de regressao lienar,} 2a ed. Campinas: Editora da Unicamp, 2008. 357 p.
+CHARNET, R.; at al.. \emph{Analise de modelos de regressao lienar,} 2a ed. Campinas: Editora da Unicamp, 2008. 357 p.
 
-RENCHER, A.C.; \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
+RENCHER, A. C. \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
 }
 
 \author{
@@ -59,7 +57,7 @@ NomeY <- "Medias notas"
 
 NomeX <- "Cafes Comerciais"
 
-Res <- Regressao(Y, X, NameVarX = NomeX ,Intercepts = "s", SigF = 0.05)
+Res <- Regressao(Y, X, NameVarX = NomeX , Intercepts = TRUE, SigF = 0.05)
 
 print("Coeficientes da Regressao:"); round(Res$Betas,4)
 print("Analise de Variancia"); Res$ANOVA

@@ -4,13 +4,13 @@ MFA <- function(Data, Grupo, TipoGrupo = rep("n",length(Grupo)), NomeGrupos = NU
   # 03/2014
 
   # Entrada:
-  # Data - Dados a serem analisados
+  # Data - Dados a serem analisados.
   # Grupo - Numero de colunas para cada Grupo em 
-  #         ordem seguindo a ordem dos Dados de 'Data'
-  # TipoGrupo - "n" para dados Numericos (default)
-  #             "c" para dados Categoricos
-  #             "f" para dados de Frequencia
-  # NomeGrupos - Nomes para cada Grupo
+  #         ordem seguindo a ordem dos Dados em 'Data'.
+  # TipoGrupo - "n" para dados Numericos (default),
+  #             "c" para dados Categoricos,
+  #             "f" para dados de Frequencia.
+  # NomeGrupos - Nomes para cada Grupo.
   
   # Retorna:
   # MatrixG  - Matriz com os tamanhos de cada grupo
@@ -45,7 +45,7 @@ MFA <- function(Data, Grupo, TipoGrupo = rep("n",length(Grupo)), NomeGrupos = NU
      stop("O numero de componetes da entrada 'TipoGrupo' difere da entrada 'Grupo'. Verifique!")
   
   if (length(NomeGrupos)!=length(Grupo))
-     stop("O numero de componetes da entrada 'NomeGrupos' difere da entrada 'Grupo'. Verifique!")
+     stop("O numero de componentes da entrada 'NomeGrupos' difere da entrada 'Grupo'. Verifique!")
   
   if (is.null(NomeGrupos)) # Cria nomes para as variaveis caso nao exista
      NomeGrupos <- paste("Variavel", 1:length(TipoGrupo), sep = " ")
@@ -53,8 +53,8 @@ MFA <- function(Data, Grupo, TipoGrupo = rep("n",length(Grupo)), NomeGrupos = NU
   TipoGrupo <- toupper(TipoGrupo) # transforma em maiusculo
   
   for (i in 1:length(TipoGrupo)) 
-    if (TipoGrupo[i]!="N" && TipoGrupo[i]!="C" && TipoGrupo[i]!="F")
-      stop("A entrada 'TipoGrupo' esta incorreta, deve ser: n, c, ou f. Verifique!")
+    if (!(TipoGrupo[i] %in% c("N", "C", "F")))
+       stop("A entrada 'TipoGrupo' esta incorreta, deve ser: n, c, ou f. Verifique!")
   
   
   CA_MFA <- function(Data) {

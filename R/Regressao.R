@@ -1,4 +1,4 @@
-Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
+Regressao <- function(Y, X, NameVarX = NULL, Intercepts = TRUE, SigF = 0.05) {
   # Esta funcao executa a Analise de Regressao
   # desenvolvida por Paulo Cesar Ossani em 06/2016
     
@@ -6,8 +6,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
   # Y - Respotas.
   # X - Variaveis regressoras.
   # NameVarX - Nome da variavel, ou variaveis X, se omitido retorna padrao.
-  # Intercepts  - "s" para considerar o intercepto na regressao (default),
-  #               "n" para nao considerar o intercepto na regressao.
+  # Intercepts  - Considerar o intercepto na regressao (default = TRUE).
   # SigF        - Nivel de significancia dos testes dos residuos (default = 5%).
   
   # Retorna:
@@ -40,10 +39,8 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
   if (is.null(NameVarX))
      NameVarX <- c(paste("X",1:ncol(as.matrix(X)),sep=""))
   
-  Intercepts <- toupper(Intercepts) # transforma em maiusculo
-    
-  if (Intercepts!="S" && Intercepts!="N") 
-     stop("Entrada para 'Intercepts' esta incorreta, deve ser do tipo caracter, sendo 's' ou 'n'. Verifique!")
+  if (!is.logical(Intercepts)) 
+     stop("Entrada para 'Intercepts' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
   #### INICIO - Analises #####
   Y <- as.matrix(Y) # variavel resposta
@@ -52,13 +49,13 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
   p <- ncol(X) # numero de variaveis regressoras
 
   ## Inicio - Calculo dos coeficientes 
-  if (Intercepts=="S")
+  if (Intercepts)
      X <- cbind(rep(1,length(Y)),X)
   
-  gl_i <- ifelse(Intercepts=="S", 1, 0) # grau de liberdade o intercepto
+  gl_i <- ifelse(Intercepts, 1, 0) # grau de liberdade o intercepto
   
   B <- solve(t(X)%*%X)%*%t(X)%*%Y # Calculo dos coeficientes
-  V <- ifelse(Intercepts=="S",1,0)
+  V <- ifelse(Intercepts,1,0)
   rownames(B) <- paste("B",(1-V):ifelse(ncol(X)>1,(ncol(X)-V),ncol(X)),sep="") 
   colnames(B) <- c("Coeficientes")
   ## Fim - Calculo dos coeficientes
@@ -89,7 +86,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = "s", SigF = 0.05) {
   
   LinFinal <- ANOVA[2:3,] # linha do Erro + Total
   
-  if (Intercepts=="S") NVaR <- c(2:ncol(X)) else NVaR <- c(1:ncol(X)); # numero das colunas com as variaveis regressoras
+  if (Intercepts) NVaR <- c(2:ncol(X)) else NVaR <- c(1:ncol(X)); # numero das colunas com as variaveis regressoras
   
   ### Inicio - Analise sequencial nas variaveis
   ANOVA_X <- as.data.frame(matrix(NA, nrow=p, ncol=6))

@@ -6,16 +6,14 @@
 
 \description{Realiza o escalonamento multidimensional (MDS) em um conjunto de dados.}
 
-\usage{MDS(Data, Distance = "euclidean", Eixos = "S", LabelX = NULL,
-    LabelY = NULL, Title = NULL, Color = "S", LinLab = NULL)}
+\usage{MDS(Data, Distance = "euclidean", Eixos = TRUE, LabelX = NULL,
+    LabelY = NULL, Title = NULL, Color = TRUE, LinLab = NULL)}
 
 \arguments{
 \item{Data}{Dados a serem a analizados.}
 \item{Distance}{Metrica das distancias: "euclidean" (default), "maximum", "manhattan", "canberra", "binary" ou "minkowski".}
-\item{Color}{"s" para grafico colorido (default),\cr
-             "n" para grafico em preto e branco.}
-\item{Eixos}{"s" coloca eixos no grafico (default),\cr
-             "n" nao coloca eixos no grafico.}
+\item{Color}{Graficos coloridos (default = TRUE).}
+\item{Eixos}{Coloca eixos no grafico (default = TRUE).}
 \item{LabelX}{Nomeia o eixo X, se nulo retorna padrao.}
 \item{LabelY}{Nomeia o eixo Y, se nulo retorna padrao.}
 \item{Title}{Titulo do grafico, se nulo retorna padrao.}
@@ -29,7 +27,7 @@
 \references{
 MINGOTI, S. A. \emph{Analise de dados atraves de metodos de estatistica multivariada:} uma abordagem aplicada. Belo Horizonte: UFMG, 2005. 297 p.
 
-RENCHER, A.C.; \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
+RENCHER, A. C. \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
 }
 
 \author{
@@ -45,8 +43,8 @@ Dat <- DataQuan[,2:8]
 
 rownames(Dat) <- DataQuan[1:nrow(DataQuan),1]
 
-MD <- MDS(Dat, Distance = "euclidean", Eixos = "S", LabelX = NULL,
-          LabelY = NULL, Title = NULL, Color = "s", LinLab = NULL)
+MD <- MDS(Dat, Distance = "euclidean", Eixos = TRUE, LabelX = NULL,
+          LabelY = NULL, Title = NULL, Color = TRUE, LinLab = NULL)
 
 print("Matriz das distancias:"); MD$MatrixD
 }
