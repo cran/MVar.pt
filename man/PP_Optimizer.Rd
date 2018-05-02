@@ -83,7 +83,7 @@ Sphere <- TRUE # Dados esfericos
 Res <- PP_Optimizer(Data = Dat, Class = Class, Findex = FcIndex,
                OptMethod = "GTSA", DimProj = Dim, Sphere = Sphere, 
                Weight = TRUE, Lambda = 0.1, r = 1, Cooling = 0.9, 
-               Eps = 1e-3, Maxiter = 3000, Half = 30)
+               Eps = 1e-3, Maxiter = 1000, Half = 30)
  
 print("Numero de classes:"); Res$Num.Class
 print("Nomes das classes"); Res$Class.Names
@@ -99,7 +99,7 @@ Class <- iris[,5] # classe dos dados
 Res <- PP_Optimizer(Data = Dat, Class = Class, Findex = FcIndex,
                OptMethod = "GTSA", DimProj = Dim, Sphere = Sphere, 
                Weight = TRUE, Lambda = 0.1, r = 1, Cooling = 0.9, 
-               Eps = 1e-3, Maxiter = 3000, Half = 30)
+               Eps = 1e-3, Maxiter = 1000, Half = 30)
 
 print("Numero de classes:"); Res$Num.Class
 print("Nomes das classes"); Res$Class.Names

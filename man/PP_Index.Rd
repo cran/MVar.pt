@@ -115,7 +115,7 @@ Sphere <- TRUE # Dados esfericos
 Res <- PP_Optimizer(Data = Dat, Class = Class, Findex = FcIndex,
                     OptMethod = "SA", DimProj = 2, Sphere = Sphere, 
                     Weight = TRUE, Lambda = 0.1, r = 1, Cooling = 0.9, 
-                    Eps = 1e-3, Maxiter = 3000, Half = 30)
+                    Eps = 1e-3, Maxiter = 1000, Half = 30)
 
 # Comparando o resultado obtido
 if (match(toupper(FcIndex),c("LDA", "PDA", "LR"), nomatch = 0) > 0) {

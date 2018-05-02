@@ -51,11 +51,11 @@ data(DataMix)
 
 Y <- DataMix[,2]
 
-X <- DataMix[,7]
+X <- DataMix[,6:7]
 
 NomeY <- "Medias notas"
 
-NomeX <- "Cafes Comerciais"
+NomeX <- c("Cafes Expeciais", "Cafes Comerciais")
 
 Res <- Regressao(Y, X, NameVarX = NomeX , Intercepts = TRUE, SigF = 0.05)
 

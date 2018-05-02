@@ -55,7 +55,7 @@ Sphere <- TRUE # dados esfericos
 Res <- PP_Optimizer(Data = Dat, Class = Class, Findex = FcIndex,
                OptMethod = "GTSA", DimProj = Dim, Sphere = Sphere, 
                Weight = TRUE, Lambda = 0.1, r = 1, Cooling = 0.9, 
-               Eps = 1e-3, Maxiter = 1000, Half = 30)
+               Eps = 1e-3, Maxiter = 600, Half = 30)
  
 Tit <- NULL # titulos para os graficos
 
@@ -69,7 +69,7 @@ Class <- iris[,5] # classe dos dados
 Res <- PP_Optimizer(Data = Dat, Class = Class, Findex = FcIndex,
                OptMethod = "GTSA", DimProj = Dim, Sphere = Sphere, 
                Weight = TRUE, Lambda = 0.1, r = 1, Cooling = 0.9, 
-               Eps = 1e-3, Maxiter = 1000, Half = 30)
+               Eps = 1e-3, Maxiter = 600, Half = 30)
 
 Tit <- c(NA,"Exemplo de grafico") # titulos para os graficos
 
@@ -82,7 +82,7 @@ Plot.PP(Res, Titles = Tit, PosLeg = 1, BoxLeg = FALSE, Color = TRUE,
 Res <- PP_Optimizer(Data = Dat, Class = NULL, Findex = "Moment",
                OptMethod = "GTSA", DimProj = 2, Sphere = Sphere, 
                Weight = TRUE, Lambda = 0.1, r = 1, Cooling = 0.9, 
-               Eps = 1e-3, Maxiter = 1000, Half = 30)
+               Eps = 1e-3, Maxiter = 600, Half = 30)
 
 Tit <- c(NA,NA) # titulos para os graficos
 
@@ -102,7 +102,7 @@ FcIndex <- "lda" # funcao indice
 Res <- PP_Optimizer(Data = Dat, Class = Class, Findex = FcIndex,
                OptMethod = "GTSA", DimProj = Dim, Sphere = Sphere, 
                Weight = TRUE, Lambda = 0.1, r = 1, Cooling = 0.9, 
-               Eps = 1e-3, Maxiter = 1000, Half = 30)
+               Eps = 1e-3, Maxiter = 600, Half = 30)
 
 Tit <- c("",NA) # titulos para os graficos
 

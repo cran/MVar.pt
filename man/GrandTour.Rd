@@ -68,8 +68,8 @@ Dat <- as.data.frame(NormData(Dat, 2))
 Titulo <- NULL
 
 Res <- GrandTour(Dat, Method = "Interpolation", Title = Titulo, Color = TRUE,
-                 Label = TRUE, LabNames = NULL, AxisVar = TRUE, Axis = TRUE,
-                 NumRot = 5, ChoiceRot = NULL, SavePicure = FALSE)
+                 Label = FALSE, LabNames = NULL, AxisVar = TRUE, Axis = TRUE,
+                 NumRot = 10, ChoiceRot = NULL, SavePicure = FALSE)
 
 print("Dados projetados:"); Res$Proj.Data
 print("Vetores de projecao:"); Res$Vector.Opt

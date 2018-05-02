@@ -1,5 +1,5 @@
-Biplot <- function(Data, alfa = 0.5, Title = NA, Label_x = NA, 
-                   Label_y = NA, Color = TRUE, Observation= TRUE) {
+Biplot <- function(Data, alfa = 0.5, Title = NA, Label_x = NA, Label_y = NA,
+                   Color = TRUE, Obs = TRUE, LinLab = NULL) {
   # Rotina para gerar Biplot desenvolvida 
   # por Paulo Cesar Ossani em 20/06/2015
   
@@ -12,7 +12,9 @@ Biplot <- function(Data, alfa = 0.5, Title = NA, Label_x = NA,
   # Label_x - Rotulo do eixo X. Se nao for definido assume texto padrao.
   # Label_y - Rotulo do eixo Y. Se nao for definido assume texto padrao.
   # Color   - Graficos coloridos (default = TRUE).
-  # Observation - Acrescenta as observacoes ao grafico (default = TRUE).
+  # Obs     - Acrescenta as observacoes ao grafico (default = TRUE).
+  # LinLab  - Vetor com o rotulo para as linhas, se nao
+  #          informado retorna o padrao dos dados.
   
   # Retorna:
   # Grafico Biplot.
@@ -43,10 +45,18 @@ Biplot <- function(Data, alfa = 0.5, Title = NA, Label_x = NA,
   if (!is.logical(Color))
      stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
-  if (!is.logical(Observation)) 
-     stop("Entrada para 'Observation' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  if (!is.logical(Obs)) 
+     stop("Entrada para 'Obs' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  
+  if (!is.null(LinLab) && length(LinLab)!=nrow(Data))
+     stop("O numero elementos do rotulo para linhas 'LinLab' difere do numero de linhas da base de dados. Verifique!")
+  
+  if (is.null(LinLab))
+     LinLab <- rownames(Data)
   
   if (is.na(Title)) Title = "Grafico Biplot" 
+  
+  LinNames <- LinLab # nomes das observacoes
   
   MData = as.matrix(Data) # transforma dados em matriz
   
@@ -105,8 +115,8 @@ Biplot <- function(Data, alfa = 0.5, Title = NA, Label_x = NA,
   
   LocLab(Coor_V[,1:2], NomeVar, col = ifelse(Color,"Blue","Black"))  # Coloca os nomes das variaveis
     
-  if (Observation) {
-     NomeVar <- rownames(MData) # nomes os individuos
+  if (Obs) {
+     NomeVar <- LinNames #rownames(MData) # nomes das observacoes
      LocLab(Coor_I[,1:2], NomeVar, col = "Black") # Coloca os nomes dos individuos
      #for (i in 1:nrow(Coor_I)) 
          #text(Coor_I[i,1], Coor_I[i,2], cex = 1, pos = 3, NomeVar[i], xpd = TRUE)  # Coloca os nomes dos individuos

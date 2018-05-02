@@ -60,7 +60,7 @@ Plot.MFA <- function(MFA, Titles = matrix(NA,1,4), PosLeg = 2, BoxLeg = TRUE,
   if (PosLeg==3) PosLeg = "bottomright"
   if (PosLeg==4) PosLeg = "bottomleft"
   
-  BoxLeg = ifelse(BoxLeg,"o",FALSE) # moldura nas legendas, FALSE sem moldura, "o" com moldura
+  BoxLeg = ifelse(BoxLeg,"o","n") # moldura nas legendas, FALSE sem moldura, "o" com moldura
   
   Color_a = ifelse(Color,"red","black") # cores nos pontos dos graficos
   Color_b = cor # coreas para letras das legendas e suas representacoes no grafico
