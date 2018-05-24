@@ -1,13 +1,16 @@
-Plot.CA <- function(AC, Titles = matrix(NA,1,4), Color = TRUE, LinLab = NULL) {
+Plot.CA <- function(AC, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
+                    Color = TRUE, LinLab = NA) {
   # Rotina para Plotar Graficos do Metodo AC desenvolvida 
   # por Paulo Cesar Ossani em 11/2014
   
   # Entrada:
   # AC     - Dados da funcao CA.
   # Titles - Titulos para os graficos.
+  # xlabel - Nomeia o eixo X, se nao definido retorna padrao.
+  # ylabel - Nomeia o eixo Y, se nao definido retorna padrao.
   # Color  - Graficos coloridos (default = TRUE).
   # LinLab - Vetor com o rotulo para as linhas para dados de frequencia,
-  #          se nao informado retorna o padrao dos dados.
+  #          se nao informado retorna padrao.
   
   # Retorna:
   # Varios graficos
@@ -19,17 +22,27 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,4), Color = TRUE, LinLab = NULL) {
   if (!is.character(Titles[3]) || is.na(Titles[3])) Titles[3] = c("Grafico Correspondente as Colunas(Variaveis)")
   if (!is.character(Titles[4]) || is.na(Titles[4])) Titles[4] = c("Grafico Correspondente as Observacoes e Variaveis")
   
+  if (!is.character(xlabel) && !is.na(xlabel))
+     stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
+  if (!is.character(ylabel) && !is.na(ylabel))
+     stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
   if (!is.logical(Color))
      stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  if (!is.null(LinLab) && length(LinLab)!=nrow(AC$MatrixX) && AC$TypData=="F")
+  if (!is.na(LinLab) && length(LinLab)!=nrow(AC$MatrixX) && AC$TypData=="F")
      stop("O numero elementos do rotulo para linhas 'LinLab' difere do numero de linhas da base de dados. Verifique!")
   
-  if (is.null(LinLab) && AC$TypData=="F")
+  if (is.na(LinLab) && AC$TypData=="F")
      LinLab <- rownames(AC$MatrixX)
   
-  DescEixo1 = paste("Primeira coordenada principal (",round(AC$MatrixAutoVlr[1,2],2),"%)",sep="")
-  DescEixo2 = paste("Segunda coordenada principal (",round(AC$MatrixAutoVlr[2,2],2),"%)",sep="")
+  if (is.na(xlabel))
+     xlabel = paste("Primeira coordenada principal (",round(AC$MatrixAutoVlr[1,2],2),"%)",sep="")
+  
+  if (is.na(ylabel))
+     ylabel = paste("Segunda coordenada principal (",round(AC$MatrixAutoVlr[2,2],2),"%)",sep="")
+  
   #####   FIM - Informacoes usadas nos Graficos  #####
   
   ##### INICIO - Plotagem dos Autovalores #####
@@ -46,8 +59,8 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,4), Color = TRUE, LinLab = NULL) {
   ##### INICIO - Plotagem dos Dados das linhas #####
   if (AC$TypData=="F") { # plota se nao for analise de correspondencia multipla
     plot(AC$MatrixX, # cria grafico para as coordenadas principais das linhas
-         xlab = DescEixo1, # Nomeia Eixo X
-         ylab = DescEixo2, # Nomeia Eixo Y
+         xlab = xlabel, # Nomeia Eixo X
+         ylab = ylabel, # Nomeia Eixo Y
          main = Titles[2], # Titulo
          asp  = 1,  # Aspecto do Grafico
          pch  = 17, # Formato dos pontos 
@@ -65,8 +78,8 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,4), Color = TRUE, LinLab = NULL) {
   
   ##### INICIO - Plotagem Dados das colunas #####
   plot(AC$MatrixY, # cria grafico para as coordenadas principais das linhas
-       xlab = DescEixo1, # Nomeia Eixo X
-       ylab = DescEixo2, # Nomeia Eixo Y
+       xlab = xlabel, # Nomeia Eixo X
+       ylab = ylabel, # Nomeia Eixo Y
        main = Titles[3], # Titulo
        asp  = 1,   # Aspecto do Grafico
        pch  = ifelse(AC$TypData=="C",17,16), # Formato dos pontos 
@@ -84,8 +97,8 @@ Plot.CA <- function(AC, Titles = matrix(NA,1,4), Color = TRUE, LinLab = NULL) {
   ##### INICIO - Plotagem dos Dados das linhas e colunas conjuntamente #####
   if (AC$TypData=="F") { # plota se nao for analise de correspondencia multipla
      plot(AC$MatrixX,    # cria grafico para as coordenadas principais das linhas
-          xlab = DescEixo1, # Nomeia Eixo X
-          ylab = DescEixo2, # Nomeia Eixo Y
+          xlab = xlabel, # Nomeia Eixo X
+          ylab = ylabel, # Nomeia Eixo Y
           main = Titles[4], # Titulo
           asp  = 1,  # Aspecto do Grafico
           pch  = 17, # Formato dos pontos 

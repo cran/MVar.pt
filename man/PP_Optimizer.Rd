@@ -6,7 +6,7 @@
 
 \description{Funcao de otimizacao dos indices da projection pursuit (busca de projecao).}
 
-\usage{PP_Optimizer(Data, Class = NULL, Findex = "HOLES",   
+\usage{PP_Optimizer(Data, Class = NA, Findex = "HOLES",   
              DimProj = 2, Sphere = TRUE, OptMethod = "GTSA",   
              Weight = TRUE, Lambda = 0.1, r = 1, Cooling = 0.9,  
              Eps = 1e-3, Maxiter = 3000, Half = 30)}
@@ -72,7 +72,7 @@ data(iris) # conjunto de dados
 # Exemplo 1 - Sem as classes nos dados
 Dat <- iris[,1:4]
 
-Class <- NULL # classe dos dados
+Class <- NA # classe dos dados
 
 FcIndex <- "kurtosismax" # funcao indice
 

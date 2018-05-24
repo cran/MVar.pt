@@ -1,11 +1,15 @@
-Plot.MFA <- function(MFA, Titles = matrix(NA,1,4), PosLeg = 2, BoxLeg = TRUE,
-                     Color = TRUE, NamArr = FALSE, RowNames = NULL) {
+Plot.MFA <- function(MFA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
+                     PosLeg = 2, BoxLeg = TRUE, Color = TRUE, NamArr = FALSE, 
+                     LinLab = NA) {
+  
   # Rotina para Plotar Graficos do Metodo MFA desenvolvida 
   # por Paulo Cesar Ossani em 09/2013 a 01/2014
   
   # Entrada:
   # MF - Dados da funcao MFA
   # Titles - Titulos para os graficos. Se nao for definido assume texto padrao.
+  # xlabel - Nomeia o eixo X, se nao definido retorna padrao.
+  # ylabel - Nomeia o eixo Y, se nao definido retorna padrao.
   # PosLeg - 1 para legenda no canto superior esquerdo
   #          2 para legenda no canto superior direito (default)
   #          3 para legenda no canto inferior direito
@@ -15,7 +19,7 @@ Plot.MFA <- function(MFA, Titles = matrix(NA,1,4), PosLeg = 2, BoxLeg = TRUE,
   # NamArr - Colocar nomes pontos na nuvem ao redor do
   #          centroide no Grafico Correspondente a Analise 
   #          Global dos Individuos e Variaveis (default = FALSE).
-  # RowNames - Nomes dos centroides, se omitido retorna os rotulos das linhas.
+  # LinLab - Nomes dos centroides, se omitido retorna os rotulos das linhas.
   
   # Retorna:
   # Varios graficos
@@ -27,33 +31,44 @@ Plot.MFA <- function(MFA, Titles = matrix(NA,1,4), PosLeg = 2, BoxLeg = TRUE,
   if (!is.character(Titles[3]) || is.na(Titles[3])) Titles[3] = c("Grafico correspondente a analise\n global dos individuos e variaveis")
   if (!is.character(Titles[4]) || is.na(Titles[4])) Titles[4] = c("Grafico das inercias dos grupos de variaveis")
   
+  if (!is.character(xlabel) && !is.na(xlabel))
+     stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
+  if (!is.character(ylabel) && !is.na(ylabel))
+     stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
   if (PosLeg < 1 || PosLeg > 4)
-     stop("Entrada para posicao da legenda 'PosLeg' esta incorreta. Verifique!")
-
+    stop("Entrada para posicao da legenda 'PosLeg' esta incorreta. Verifique!")
+  
   if (!is.logical(BoxLeg)) 
-     stop("Entrada para moldura da legenda 'BoxLeg' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+    stop("Entrada para moldura da legenda 'BoxLeg' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
   if (!is.logical(Color))
-     stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
- 
+    stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  
   if (!is.logical(NamArr)) 
-     stop("Entrada para 'NamArr' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+    stop("Entrada para 'NamArr' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
   Grupos     = MFA$MatrixG  # tamanho de cada grupo
   NomeGrupos = MFA$MatrixNG # nomes de cada grupo
   
-  if (!is.null(RowNames)) {
-    if (length(RowNames) != nrow(MFA$MatrixF))
-      stop("Entrada para 'RowNames' esta incorreta, deve ter o mesmo numero de linhas que os dados de entrada em 'MFA'. Verifique!")
-    NomeLinhas = as.matrix(RowNames) # nomes das linhas que formam os dados
+  if (!is.na(LinLab)[1]) {
+    if (length(LinLab) != nrow(MFA$MatrixF))
+      stop("Entrada para 'LinLab' esta incorreta, deve ter o mesmo numero de linhas que os dados de entrada em 'MFA'. Verifique!")
+    NomeLinhas = as.matrix(LinLab) # nomes das linhas que formam os dados
   } else {
     NomeLinhas = rownames(MFA$MatrixF) # nomes das linhas que formam os dados
   }
   
   NumGrupos  = length(NomeGrupos) # Numero de Grupos
-  cor        = 1 # cor inicial
-  DescEixo1  = paste("Primeira coordenada principal (",round(MFA$MatrixA[1,2],2),"%)",sep="")
-  DescEixo2  = paste("Segunda coordenada principal (",round(MFA$MatrixA[2,2],2),"%)",sep="")
+  
+  cor = 1 # cor inicial
+  
+  if (is.na(xlabel))
+    xlabel  = paste("Primeira coordenada principal (",round(MFA$MatrixA[1,2],2),"%)",sep="")
+  
+  if (is.na(ylabel))
+    ylabel  = paste("Segunda coordenada principal (",round(MFA$MatrixA[2,2],2),"%)",sep="")
   
   if (PosLeg==1) PosLeg = "topleft"     # posicao das legendas nos graficos
   if (PosLeg==2) PosLeg = "topright"
@@ -80,8 +95,8 @@ Plot.MFA <- function(MFA, Titles = matrix(NA,1,4), PosLeg = 2, BoxLeg = TRUE,
   
   ##### INICIO - Plotagem da Analise Global #####
   plot(MFA$MatrixF, # cria grafico para as coordenadas principais da Analise Global
-       xlab = DescEixo1, # Nomeia Eixo X
-       ylab = DescEixo2, # Nomeia Eixo Y
+       xlab = xlabel, # Nomeia Eixo X
+       ylab = ylabel, # Nomeia Eixo Y
        main = Titles[2], # Titulo
        asp  = 2,         # Aspecto do Grafico
        pch  = 15,        # Formato dos pontos 
@@ -108,8 +123,8 @@ Plot.MFA <- function(MFA, Titles = matrix(NA,1,4), PosLeg = 2, BoxLeg = TRUE,
   ## FIM - Encontra as dimensoes maximas e minimas para as colunas e linhas ##
   
   plot(MFA$MatrixF, # cria grafico para as coordenadas principais da Analise por Grupo
-       xlab = DescEixo1, # Nomeia Eixo X
-       ylab = DescEixo2, # Nomeia Eixo Y
+       xlab = xlabel, # Nomeia Eixo X
+       ylab = ylabel, # Nomeia Eixo Y
        main = Titles[3], # Titulo
        asp  = 1,         # Aspecto do grafico
        pch  = 15,        # Formato dos pontos 
@@ -142,7 +157,7 @@ Plot.MFA <- function(MFA, Titles = matrix(NA,1,4), PosLeg = 2, BoxLeg = TRUE,
       points(MFA$MatrixEFG[[i]][Observ,1:2], pch = (2 + ifelse(Color,i,0)), cex = 1.2, col = 1 + ifelse(Color,i,0)) # adiciona ao grafico as coordenadas principais dos Grupos
     else
       LocLab(MFA$MatrixEFG[[i]][Observ,1:2],NomeGrupos[i], col = 1 + ifelse(Color,i,0)) # Coloca os nomes dos pontos das coordenadas principais dos Grupos
-      #text(MFA$MatrixEFG[[i]][Observ,1:2], pos=3, cex=1, NomeGrupos[i], col = 1 + ifelse(Color,i,0),xpd = TRUE) # Coloca os nomes dos pontos das coordenadas principais dos Grupos
+    #text(MFA$MatrixEFG[[i]][Observ,1:2], pos=3, cex=1, NomeGrupos[i], col = 1 + ifelse(Color,i,0),xpd = TRUE) # Coloca os nomes dos pontos das coordenadas principais dos Grupos
   }
   
   ## liga os pontos de cada Analise Global com cada ponto da Analise por Grupo
@@ -156,8 +171,8 @@ Plot.MFA <- function(MFA, Titles = matrix(NA,1,4), PosLeg = 2, BoxLeg = TRUE,
   
   ##### INICIO - Plotagem das Correlacoes dos Componentes Principais com as Variaveis Originais #####
   plot(0,0, # cria grafico para as coordenadas das Correlacoes dos Componentes Principais com as Variaveis Originais
-       xlab = DescEixo1, # Nomeia Eixo X
-       ylab = DescEixo2, # Nomeia Eixo Y
+       xlab = xlabel, # Nomeia Eixo X
+       ylab = ylabel, # Nomeia Eixo Y
        main = "Circulo de Correlacao", # Titulo
        asp  = 1,         # Aspecto do grafico
        cex  = 0,         # Tamanho dos pontos
@@ -174,7 +189,7 @@ Plot.MFA <- function(MFA, Titles = matrix(NA,1,4), PosLeg = 2, BoxLeg = TRUE,
     
     arrows(0,0,MFA$MatrixCCP[1,j:k],MFA$MatrixCCP[2,j:k], lty=i, code = 2, angle = 10, col = ifelse(Color,cor + i,cor)) # cria a seta apontando para cada coordenada principal
     
-    if (is.null(colnames(MFA$MatrixCCP[,j:k])))
+    if (is.na(colnames(MFA$MatrixCCP[,j:k]))[1])
       NomeVar<- paste("Comp.", 1:Grupos[i], sep = "") # Nomeia as colunas
     else
       NomeVar<- colnames(MFA$MatrixCCP[,j:k])
@@ -198,8 +213,8 @@ Plot.MFA <- function(MFA, Titles = matrix(NA,1,4), PosLeg = 2, BoxLeg = TRUE,
   VlrMaxX = 1.01 # Valor maximo para a linha X
   VlrMaxY = 1.01 # Valor maximo para a linha Y
   plot(MFA$MatrixEscVar, # cria grafico para as coordenadas Inercias Parciais/Escores das Variareis
-       xlab = DescEixo1, # Nomeia Eixo X
-       ylab = DescEixo2, # Nomeia Eixo Y
+       xlab = xlabel, # Nomeia Eixo X
+       ylab = ylabel, # Nomeia Eixo Y
        main = Titles[4], # Titulo
        asp  = 1,         # Aspecto do grafico
        pch  = 15,        # Formato dos pontos 

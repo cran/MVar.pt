@@ -1,5 +1,5 @@
-Biplot <- function(Data, alfa = 0.5, Title = NA, Label_x = NA, Label_y = NA,
-                   Color = TRUE, Obs = TRUE, LinLab = NULL) {
+Biplot <- function(Data, alfa = 0.5, Title = NA, xlabel = NA, ylabel = NA,
+                   Color = TRUE, Obs = TRUE, LinLab = NA) {
   # Rotina para gerar Biplot desenvolvida 
   # por Paulo Cesar Ossani em 20/06/2015
   
@@ -9,8 +9,8 @@ Biplot <- function(Data, alfa = 0.5, Title = NA, Label_x = NA, Label_y = NA,
   #         representatividade das variaveis (1-alfa). 
   #         Sendo 0.5 o default.
   # Title  - Titulo para o grafico. Se nao for definido assume texto padrao.
-  # Label_x - Rotulo do eixo X. Se nao for definido assume texto padrao.
-  # Label_y - Rotulo do eixo Y. Se nao for definido assume texto padrao.
+  # xlabel - Nomeia o eixo X, se nao definido retorna padrao.
+  # ylabel - Nomeia o eixo Y, se nao definido retorna padrao.
   # Color   - Graficos coloridos (default = TRUE).
   # Obs     - Acrescenta as observacoes ao grafico (default = TRUE).
   # LinLab  - Vetor com o rotulo para as linhas, se nao
@@ -36,11 +36,11 @@ Biplot <- function(Data, alfa = 0.5, Title = NA, Label_x = NA, Label_y = NA,
   if (!is.character(Title) && !is.na(Title))
      stop("Entrada para 'Title' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
-  if (!is.character(Label_x) && !is.na(Label_x))
-     stop("Entrada para 'Label_x' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  if (!is.character(xlabel) && !is.na(xlabel))
+     stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
-  if (!is.character(Label_y) && !is.na(Label_y))
-     stop("Entrada para 'Label_y' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  if (!is.character(ylabel) && !is.na(ylabel))
+     stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
 
   if (!is.logical(Color))
      stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
@@ -48,11 +48,10 @@ Biplot <- function(Data, alfa = 0.5, Title = NA, Label_x = NA, Label_y = NA,
   if (!is.logical(Obs)) 
      stop("Entrada para 'Obs' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  if (!is.null(LinLab) && length(LinLab)!=nrow(Data))
+  if (!is.na(LinLab) && length(LinLab)!=nrow(Data))
      stop("O numero elementos do rotulo para linhas 'LinLab' difere do numero de linhas da base de dados. Verifique!")
   
-  if (is.null(LinLab))
-     LinLab <- rownames(Data)
+  if (is.na(LinLab[1])) LinLab <- rownames(Data)
   
   if (is.na(Title)) Title = "Grafico Biplot" 
   
@@ -76,11 +75,11 @@ Biplot <- function(Data, alfa = 0.5, Title = NA, Label_x = NA, Label_y = NA,
   
   PVar <- (Md^2/sum(Md^2)) * 100 # Proporcao dos primeiros (dim) componentes principais
   
-  if (is.na(Label_x))
-     Label_x = paste("Primeiro componente (",round(PVar[1],2),"%)",sep="")
+  if (is.na(xlabel))
+     xlabel = paste("Primeiro componente (",round(PVar[1],2),"%)",sep="")
 
-  if (is.na(Label_y))
-     Label_y = paste("Segundo componente (",round(PVar[2],2),"%)",sep="")
+  if (is.na(ylabel))
+     ylabel = paste("Segundo componente (",round(PVar[2],2),"%)",sep="")
   
   MaxX <- max(Coor_I[,1],Coor_V[,1]) + 1 # Dimenssoes maximas das linhas
   MinX <- min(Coor_I[,1],Coor_V[,1]) - 1 # Dimenssoes minimas das linhas
@@ -91,8 +90,8 @@ Biplot <- function(Data, alfa = 0.5, Title = NA, Label_x = NA, Label_y = NA,
   
   ##### INICIO - Grafico Biplot #####  
   plot(0,0, # Plota as variaveis
-       xlab = Label_x,  # Nomeia Eixo X
-       ylab = Label_y,  # Nomeia Eixo Y
+       xlab = xlabel,  # Nomeia Eixo X
+       ylab = ylabel,  # Nomeia Eixo Y
        main = Title,    # Titulo
        asp  = 1,        # Aspecto do grafico
        cex  = 0,        # Tamanho dos pontos

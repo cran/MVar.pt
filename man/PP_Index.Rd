@@ -6,9 +6,9 @@
 
 \description{Funcao usada para encontrar os indices da projection pursuit.}
 
-\usage{PP_Index(Data, Class = NULL, Vector.Proj = NULL, 
+\usage{PP_Index(Data, Class = NA, Vector.Proj = NA, 
          Findex = "HOLES", DimProj = 2, Weight = TRUE, 
-         Lambda = 0.1, r = 1, ck = NULL)}
+         Lambda = 0.1, r = 1, ck = NA)}
 
 \arguments{
 \item{Data}{Conjunto de dados numericos sem informacao de classes.}
@@ -94,7 +94,7 @@ data(iris) # conjunto de dados
 Dat <- iris[,1:4]
 
 # Exemplo 1 - Sem as classes nos dados
-Ind <- PP_Index(Data = Dat, Class = NULL, Vector.Proj = NULL, 
+Ind <- PP_Index(Data = Dat, Class = NA, Vector.Proj = NA, 
           Findex = "moment", DimProj = 2, Weight = TRUE, 
           Lambda = 0.1, r = 1)
 

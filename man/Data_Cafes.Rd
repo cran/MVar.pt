@@ -37,9 +37,11 @@ print(round(MF$MatrixA,2))
 print("Matriz das Inercias Parciais/Escores das Variaveis:")
 print(round(MF$MatrixEscVar,2))
 
-Titulos = c("Scree-plot","Individuos", "Individuos/Tipos Cafes", "Inercias Grupos")
+Tit = c("Scree-plot","Individuos", "Individuos/Tipos Cafes", "Inercias Grupos")
 
-Plot.MFA(MF, Titulos, 2, FALSE, TRUE, FALSE) # Imprime varios graficos da tela
+Plot.MFA(MF, Titles = Tit, xlabel = NA, ylabel = NA,
+         PosLeg = 2, BoxLeg = FALSE, Color = TRUE, 
+         NamArr = FALSE, LinLab = NA) # Imprime varios graficos da tela
 
 }
 

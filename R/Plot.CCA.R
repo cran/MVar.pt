@@ -1,10 +1,12 @@
-Plot.CCA <- function(CCA, Titles = matrix(NA,1,4), Axis = NULL, Color = TRUE) {
+Plot.CCA <- function(CCA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA, 
+                     Color = TRUE) {
   # Rotina para Plotar Graficos do Metodo CCA desenvolvida 
   # por Paulo Cesar Ossani em 09/04/2016
   
   # CCA    - Dados da funcao CCA.
   # Titles - Titulos para os graficos. Se nao for definido assume texto padrao.
-  # Axis   - Titulos para os eixos dos graficos.
+  # xlabel - Nomeia o eixo X, se nao definido retorna padrao.
+  # ylabel - Nomeia o eixo Y, se nao definido retorna padrao.
   # Color  - Graficos coloridos (default = TRUE).
 
   # Retorna:
@@ -18,12 +20,21 @@ Plot.CCA <- function(CCA, Titles = matrix(NA,1,4), Axis = NULL, Color = TRUE) {
   if (!is.character(Titles[4]) || is.na(Titles[4])) Titles[4] = c("Grafico com os scores do grupo Y")
   #####   FIM - Informacoes usadas nos Graficos  #####
   
+  if (!is.character(xlabel) && !is.na(xlabel))
+     stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
+  if (!is.character(ylabel) && !is.na(ylabel))
+     stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
   if (!is.logical(Color))
      stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  DescEixo1 = ifelse(is.null(Axis[1]) || is.na(Axis[1]),"Dimenssao 1",Axis[1])
-  DescEixo2 = ifelse(is.null(Axis[2]) || is.na(Axis[2]),"Dimenssao 2",Axis[2])
-
+  if (is.na(xlabel))
+     xlabel = "Eixo X"
+  
+  if (is.na(ylabel))
+     ylabel = "Eixo Y"
+  
   ##### INICIO - Scree-plot dos fatores #####
   plot(1:length(CCA$Var.UV[,1]), CCA$Var.UV[,1], type = "b", 
        xlab = "Ordem dos pares canonicos", 
@@ -33,8 +44,8 @@ Plot.CCA <- function(CCA, Titles = matrix(NA,1,4), Axis = NULL, Color = TRUE) {
   
   ##### INICIO - Plotagem Correlacoes entre as variaveis canonicas e as variaveis originais #####
   plot(0,0, 
-       xlab = DescEixo1, # Nomeia Eixo X
-       ylab = DescEixo2, # Nomeia Eixo Y
+       xlab = xlabel, # Nomeia Eixo X
+       ylab = ylabel, # Nomeia Eixo Y
        main = Titles[2], # Titulo
        asp  = 1, # Aspecto do grafico
        cex  = 0, # Tamanho dos pontos
@@ -58,8 +69,8 @@ Plot.CCA <- function(CCA, Titles = matrix(NA,1,4), Axis = NULL, Color = TRUE) {
 
   ##### INICIO - Plotagem dos scores dos grupos X e Y #####
   plot(CCA$Score.X, # grafico para os scores do grupo X
-       xlab = DescEixo1, # Nomeia Eixo X
-       ylab = DescEixo2, # Nomeia Eixo Y
+       xlab = xlabel, # Nomeia Eixo X
+       ylab = ylabel, # Nomeia Eixo Y
        main = Titles[3], # Titulo
        asp  = 2,  # Aspecto do Grafico
        pch  = 15, # Formato dos pontos 
@@ -70,16 +81,16 @@ Plot.CCA <- function(CCA, Titles = matrix(NA,1,4), Axis = NULL, Color = TRUE) {
   
   abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
-  if (is.null(rownames(CCA$Score.X))) LineNames <- as.character(1:nrow(CCA$Score.X))
+  if (is.na(rownames(CCA$Score.X)[1])) LineNames <- as.character(1:nrow(CCA$Score.X))
   
-  if (!is.null(rownames(CCA$Score.X))) LineNames <- rownames(CCA$Score.X)
+  if (!is.na(rownames(CCA$Score.X)[1])) LineNames <- rownames(CCA$Score.X)
   
   LocLab(CCA$Score.X, LineNames)  # Coloca os nomes dos pontos das coordenadas principais das linhas
   #text(CCA$Coor.Y,cex=1, rownames(CCA$Coor.Y), pos=3, xpd = TRUE)  # Coloca os nomes dos pontos das coordenadas principais das linhas
   
   plot(CCA$Score.Y, # grafico para os scores do grupo Y
-       xlab = DescEixo1, # Nomeia Eixo X
-       ylab = DescEixo2, # Nomeia Eixo Y
+       xlab = xlabel, # Nomeia Eixo X
+       ylab = ylabel, # Nomeia Eixo Y
        main = Titles[4], # Titulo
        asp  = 2,  # Aspecto do Grafico
        pch  = 15, # Formato dos pontos 
@@ -90,9 +101,9 @@ Plot.CCA <- function(CCA, Titles = matrix(NA,1,4), Axis = NULL, Color = TRUE) {
     
   abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
     
-  if (is.null(rownames(CCA$Score.Y))) LineNames <- as.character(1:nrow(CCA$Score.Y))
+  if (is.na(rownames(CCA$Score.Y)[1])) LineNames <- as.character(1:nrow(CCA$Score.Y))
     
-  if (!is.null(rownames(CCA$Score.Y))) LineNames <- rownames(CCA$Score.Y)
+  if (!is.na(rownames(CCA$Score.Y)[1])) LineNames <- rownames(CCA$Score.Y)
  
   LocLab(CCA$Score.Y, LineNames)  # Coloca os nomes dos pontos das coordenadas principais das linhas
   #text(CCA$Coor.Y,cex=1, rownames(CCA$Coor.Y), pos=3, xpd = TRUE)  # Coloca os nomes dos pontos das coordenadas principais das linhas

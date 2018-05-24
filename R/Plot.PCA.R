@@ -1,13 +1,16 @@
-Plot.PCA <- function(PC, Titles = matrix(NA,1,3), Color = TRUE, LinLab = NULL) {
+Plot.PCA <- function(PC, Titles = matrix(NA,1,3), xlabel = NA, ylabel = NA,
+                     Color = TRUE, LinLab = NA) {
   # Rotina para Plotar Graficos do Metodo PCA desenvolvida 
   # por Paulo Cesar Ossani em 11/2014
   
   # Entrada:
   # PC     - Dados da funcao PCA.
   # Titles - Titulos para os graficos.
+  # xlabel - Nomeia o eixo X, se nao definido retorna padrao.
+  # ylabel - Nomeia o eixo Y, se nao definido retorna padrao.
   # Color  - Graficos coloridos (default = TRUE).
   # LinLab - Vetor com o rotulo para as linhas, se nao
-  #          informado retorna o padrao dos dados.
+  #          informado retorna padrao.
   
   # Retorna:
   # Varios graficos
@@ -18,17 +21,26 @@ Plot.PCA <- function(PC, Titles = matrix(NA,1,3), Color = TRUE, LinLab = NULL) {
   if (!is.character(Titles[2]) || is.na(Titles[2])) Titles[2] = c("Grafico correspondente as linhas (observacoes)")
   if (!is.character(Titles[3]) || is.na(Titles[3])) Titles[3] = c("Grafico correspondente as colunas (variaveis)")
   
+  if (!is.character(xlabel) && !is.na(xlabel))
+     stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
+  if (!is.character(ylabel) && !is.na(ylabel))
+     stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
   if (!is.logical(Color))
      stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  if (!is.null(LinLab) && length(LinLab)!=nrow(PC$MatrixEsc))
+  if (!is.na(LinLab) && length(LinLab)!=nrow(PC$MatrixEsc))
      stop("O numero elementos do rotulo para linhas 'LinLab' difere do numero de linhas da base de dados. Verifique!")
   
-  if (is.null(LinLab))
+  if (is.na(LinLab))
      LinLab <- rownames(PC$MatrixEsc)
   
-  DescEixo1 = paste("Primeira coordenada principal (",round(PC$MatrixAutoVlr[1,2],2),"%)",sep="")
-  DescEixo2 = paste("Segunda coordenada principal (",round(PC$MatrixAutoVlr[2,2],2),"%)",sep="")
+  if (is.na(xlabel))
+     xlabel = paste("Primeira coordenada principal (",round(PC$MatrixAutoVlr[1,2],2),"%)",sep="")
+  
+  if (is.na(ylabel))
+     ylabel = paste("Segunda coordenada principal (",round(PC$MatrixAutoVlr[2,2],2),"%)",sep="")
   #####   FIM - Informacoes usadas nos Graficos  #####
   
   ##### INICIO - Plotagem dos Autovalores #####
@@ -44,8 +56,8 @@ Plot.PCA <- function(PC, Titles = matrix(NA,1,3), Color = TRUE, LinLab = NULL) {
   
   ##### INICIO - Plotagem dos Dados das linhas #####
   plot(PC$MatrixEsc, # cria grafico para as coordenadas principais das linhas
-       xlab = DescEixo1, # Nomeia Eixo X
-       ylab = DescEixo2, # Nomeia Eixo Y
+       xlab = xlabel, # Nomeia Eixo X
+       ylab = ylabel, # Nomeia Eixo Y
        main = Titles[2], # Titulo
        asp  = 1,  # Aspecto do Grafico
        pch  = 15, # Formato dos pontos 
@@ -62,8 +74,8 @@ Plot.PCA <- function(PC, Titles = matrix(NA,1,3), Color = TRUE, LinLab = NULL) {
   
   ##### INICIO - Plotagem das Correlacoes dos Componentes Principais com as Variaveis Originais #####
   plot(0,0, # cria grafico para as coordenadas das Correlacoes dos Componentes Principais com as Variaveis Originais
-       xlab = DescEixo1, # Nomeia Eixo X
-       ylab = DescEixo2, # Nomeia Eixo Y
+       xlab = xlabel, # Nomeia Eixo X
+       ylab = ylabel, # Nomeia Eixo Y
        main = Titles[3], # Titulo
        asp  = 1, # Aspecto do Grafico
        cex  = 0, # Tamanho dos pontos

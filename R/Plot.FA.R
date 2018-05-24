@@ -1,13 +1,16 @@
-Plot.FA <- function(FA, Titles = matrix(NA,1,4), Color = TRUE, LinLab = NULL) {
+Plot.FA <- function(FA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
+                    Color = TRUE, LinLab = NA) {
   # Rotina para Plotar Graficos do Metodo FA desenvolvida 
   # por Paulo Cesar Ossani em 02/2017
   
   # Entrada:
   # FA     - Dados da funcao FA
   # Titles - Titulos para os graficos
+  # xlabel - Nomeia o eixo X, se nao definido retorna padrao.
+  # ylabel - Nomeia o eixo Y, se nao definido retorna padrao.
   # Color  - Graficos coloridos (default = TRUE).
   # LinLab - Vetor com o rotulo para as linhas, se nao
-  #          informado retorna o padrao dos dados.
+  #          informado retorna padrao.
   
   # Retorna:
   # Varios graficos
@@ -19,17 +22,26 @@ Plot.FA <- function(FA, Titles = matrix(NA,1,4), Color = TRUE, LinLab = NULL) {
   if (!is.character(Titles[3]) || is.na(Titles[3])) Titles[3] = c("Cargas fatoriais")
   if (!is.character(Titles[4]) || is.na(Titles[4])) Titles[4] = c("Biplot")
   
+  if (!is.character(xlabel) && !is.na(xlabel))
+     stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
+  if (!is.character(ylabel) && !is.na(ylabel))
+     stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
   if (!is.logical(Color))
      stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  if (!is.null(LinLab) && length(LinLab)!=nrow(FA$MatrixScores))
+  if (!is.na(LinLab) && length(LinLab)!=nrow(FA$MatrixScores))
      stop("O numero elementos do rotulo para linhas 'LinLab' difere do numero de linhas da base de dados. Verifique!")
   
-  if (is.null(LinLab))
-     LinLab <- rownames(FA$MatrixScores)
+  if (is.na(LinLab[1])) LinLab <- rownames(FA$MatrixScores)
   
-  DescEixo1 = "Primeiro fator"
-  DescEixo2 = "Segundo fator"
+  if (is.na(xlabel))
+     xlabel = "Primeiro fator"
+  
+  if (is.na(ylabel))
+     ylabel = "Segundo fator"
+  
   #####   FIM - Informacoes usadas nos Graficos  #####
   
   ##### INICIO - Plotagem dos Autovalores #####
@@ -45,8 +57,8 @@ Plot.FA <- function(FA, Titles = matrix(NA,1,4), Color = TRUE, LinLab = NULL) {
   
   ##### INICIO - Plotagem Escores das observacoes #####
   plot(FA$MatrixScores,  # cria grafico para os Escores das observacoes 
-       xlab = DescEixo1, # Nomeia Eixo X
-       ylab = DescEixo2, # Nomeia Eixo Y
+       xlab = xlabel, # Nomeia Eixo X
+       ylab = ylabel, # Nomeia Eixo Y
        main = Titles[2], # Titulo
        asp  = 1,  # Aspecto do Grafico
        pch  = 15, # Formato dos pontos
@@ -69,8 +81,8 @@ Plot.FA <- function(FA, Titles = matrix(NA,1,4), Color = TRUE, LinLab = NULL) {
   MinY  <- min(HpMat[,2]) - 0.05 # Dimenssoes minimas das colunas
   
   plot(0,0, # Plota as variaveis
-       xlab = DescEixo1, # Nomeia Eixo X
-       ylab = DescEixo2, # Nomeia Eixo Y
+       xlab = xlabel, # Nomeia Eixo X
+       ylab = ylabel, # Nomeia Eixo Y
        main = Titles[3], # Titulo
        asp  = 1, # Aspecto do grafico
        cex  = 0, # Tamanho dos pontos
@@ -100,8 +112,8 @@ Plot.FA <- function(FA, Titles = matrix(NA,1,4), Color = TRUE, LinLab = NULL) {
   # MinY <- min(FA$MatrixCarga[,2],FA$MatrixScores[,2])-0.05 # Dimenssoes minimas das colunas
   
   plot(0,0, # Plota as variaveis
-       xlab = DescEixo1, # Nomeia Eixo X
-       ylab = DescEixo2, # Nomeia Eixo Y
+       xlab = xlabel, # Nomeia Eixo X
+       ylab = ylabel, # Nomeia Eixo Y
        main = Titles[4], # Titulo
        asp  = 1, # Aspecto do grafico
        cex  = 0, # Tamanho dos pontos

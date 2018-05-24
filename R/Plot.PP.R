@@ -1,12 +1,15 @@
-Plot.PP <- function(PP, Titles = NULL, PosLeg = 2, BoxLeg = TRUE, Color = TRUE,
-                    Label = FALSE, LabNames = NULL, AxisVar = TRUE, Axis = TRUE) {
+Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2, 
+                    BoxLeg = TRUE, Color = TRUE, Label = FALSE, LinLab = NA, 
+                    AxisVar = TRUE, Axis = TRUE) {
   
   # Rotina para plotar graficos da Projecao Pursuit desenvolvida 
   # por Paulo Cesar Ossani em 2017/02/27
   
   # Entrada:
   # PP       - Dados da funcao Optimizer.
-  # Titles   - Titulo para o graficos. Se nao for definido assume texto padrao.
+  # Titles   - Titulos para os graficos. Se nao for definido assume texto padrao.
+  # xlabel   - Nomeia o eixo X, se nao definido retorna padrao.
+  # ylabel   - Nomeia o eixo Y, se nao definido retorna padrao.
   # PosLeg   - 0 sem legenda,
   #            1 para legenda no canto superior esquerdo,
   #            2 para legenda no canto superior direito (default),
@@ -15,7 +18,7 @@ Plot.PP <- function(PP, Titles = NULL, PosLeg = 2, BoxLeg = TRUE, Color = TRUE,
   # BoxLeg   - Colocar moldura na legenda (default = TRUE).
   # Color    - Graficos coloridos (default = TRUE).
   # Label    - Coloca os rotulos das observacoes (default = FALSE).
-  # LabNames - Nomes dos rotulos das observacoes, se omitido retorna a numeracao default.
+  # LinLab   - Nomes dos rotulos das observacoes, se omitido retorna a numeracao default.
   # AxisVar  - Coloca eixos de rotacao das variaveis, somente quando DimProj > 1 (default = TRUE).
   # Axis     - Plot os eixos X e Y (default = TRUE).
   
@@ -38,17 +41,31 @@ Plot.PP <- function(PP, Titles = NULL, PosLeg = 2, BoxLeg = TRUE, Color = TRUE,
   if (!is.logical(Axis)) 
      stop("Entrada para 'Axis' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
-  if (!is.null(LabNames) && length(LabNames) != nrow(PP$Proj.Data)) 
-      stop("Entrada para 'LabNames' esta incorreta, deve ter o mesmo numero de linhas que os dados de entrada em 'Data'. Verifique!")
+  if (!is.na(LinLab) && length(LinLab) != nrow(PP$Proj.Data)) 
+      stop("Entrada para 'LinLab' esta incorreta, deve ter o mesmo numero de linhas que os dados de entrada em 'Data'. Verifique!")
 
   if (!is.logical(Label)) 
      stop("Entrada para 'Label' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  if (is.null(PP$Findex)) PP$Findex <- "Not Available"
+  if (is.na(PP$Findex)) PP$Findex <- "Not Available"
+  
+  if (!is.character(xlabel) && !is.na(xlabel))
+     stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
+  if (!is.character(ylabel) && !is.na(ylabel))
+     stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
   ##### INICIO - Informacoes usadas nos Graficos #####
-  DescEixo1 <- ifelse(Axis,"Eixo X","")
-  DescEixo2 <- ifelse(Axis,"Eixo Y","")
+  
+  if (is.na(xlabel) && Axis)
+     xlabel = "Eixo X" 
+
+  if (is.na(ylabel) && Axis)
+     ylabel = "Eixo Y"
+
+  xlabel <- ifelse(Axis, xlabel, "")
+  
+  ylabel <- ifelse(Axis, ylabel, "")
     
   if (PosLeg==1) PosLeg = "topleft"     # posicao das legendas nos graficos
   if (PosLeg==2) PosLeg = "topright"
@@ -57,11 +74,11 @@ Plot.PP <- function(PP, Titles = NULL, PosLeg = 2, BoxLeg = TRUE, Color = TRUE,
   
   BoxLeg = ifelse(BoxLeg,"o","n") # moldura nas legendas, "n" sem moldura, "o" com moldura
   
-  if (!is.null(LabNames)) {
-     Class.Table <- table(LabNames)     # cria tabela com as quantidade dos elementos das classes
+  if (!is.na(LinLab)[1]) {
+     Class.Table <- table(LinLab)     # cria tabela com as quantidade dos elementos das classes
      Class.Names <- names(Class.Table)  # nomes das classses
      Num.Class   <- length(Class.Table) # numero de classes
-     NomeLinhas  <- as.matrix(LabNames)
+     NomeLinhas  <- as.matrix(LinLab)
   } else {
      Class.Names <- ifelse(is.na(PP$Class.Names), "", PP$Class.Names) # nomes das classses
      Num.Class   <- ifelse(is.na(PP$Num.Class), 0, PP$Num.Class) # numero de classes
@@ -74,7 +91,7 @@ Plot.PP <- function(PP, Titles = NULL, PosLeg = 2, BoxLeg = TRUE, Color = TRUE,
   }
   
   if (!is.na(PP$Num.Class)) {
-    Data <- as.matrix(PP$Proj.Data[,1:(ncol(PP$Proj.Data)-1)])
+     Data <- as.matrix(PP$Proj.Data[,1:(ncol(PP$Proj.Data)-1)])
   } else Data <- PP$Proj.Data
   
   cor <- 1 # cor inicial dos pontos e legendas
@@ -123,8 +140,8 @@ Plot.PP <- function(PP, Titles = NULL, PosLeg = 2, BoxLeg = TRUE, Color = TRUE,
      if (Num.Class == 0) {
        
         plot(Data[,1:2], # coordenadas do grafico
-            xlab = DescEixo1, # Nomeia Eixo X
-            ylab = DescEixo2, # Nomeia Eixo Y
+            xlab = xlabel, # Nomeia Eixo X
+            ylab = ylabel, # Nomeia Eixo Y
             main = Titles[2], # Titulo para o grafico
             pch  = 16,  # formato dos pontos
             axes = F,   # elimina os eixos
@@ -135,8 +152,8 @@ Plot.PP <- function(PP, Titles = NULL, PosLeg = 2, BoxLeg = TRUE, Color = TRUE,
      } else {
        
        plot(0,0, # cria grafico para as coordenadas principais das linhas
-            xlab = DescEixo1,  # Nomeia Eixo X
-            ylab = DescEixo2,  # Nomeia Eixo Y
+            xlab = xlabel,  # Nomeia Eixo X
+            ylab = ylabel,  # Nomeia Eixo Y
             main = Titles[2],  # Titulo
             asp = 1,           # Aspecto do Grafico
             cex = 0,           # Tamanho dos pontos
@@ -151,10 +168,10 @@ Plot.PP <- function(PP, Titles = NULL, PosLeg = 2, BoxLeg = TRUE, Color = TRUE,
          
          cor1 <- ifelse(Color, cor + i, "black")
          
-         if (is.null(LabNames)) {
+         if (is.na(LinLab)[1]) {
             Point.Data <- Data[which(PP$Proj.Data[,ncol(PP$Proj.Data)] == Class.Names[i]),]
          } else {
-            Point.Data <- Data[which(LabNames == Class.Names[i]),]
+            Point.Data <- Data[which(LinLab == Class.Names[i]),]
          }                        
          
          points(Point.Data,
@@ -180,8 +197,8 @@ Plot.PP <- function(PP, Titles = NULL, PosLeg = 2, BoxLeg = TRUE, Color = TRUE,
         cor1 <- ifelse(Color, "Blue", "Black")
           
         plot(Data, # coordenadas do grafico
-             xlab = DescEixo1, # Nomeia Eixo X
-             ylab = DescEixo2, # Nomeia Eixo Y
+             xlab = xlabel, # Nomeia Eixo X
+             ylab = ylabel, # Nomeia Eixo Y
              type = "o",
              main = Titles[2], # Titulo para o grafico
              pch  = 16,  # formato dos pontos
@@ -207,8 +224,8 @@ Plot.PP <- function(PP, Titles = NULL, PosLeg = 2, BoxLeg = TRUE, Color = TRUE,
         Point.Data <- cbind((1:nrow(Data)) + minX, Data)   
 
         plot(Point.Data, # cria grafico para as coordenadas principais das linhas
-             xlab = DescEixo1,  # Nomeia Eixo X
-             ylab = DescEixo2,  # Nomeia Eixo Y
+             xlab = xlabel,  # Nomeia Eixo X
+             ylab = ylabel,  # Nomeia Eixo Y
              type = "o", # tipo de grafico
              main = Titles[2], # Titulo
              axes = F,   # Elimina os eixos

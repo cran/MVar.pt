@@ -6,13 +6,16 @@
 
 \description{Graficos da analise de componentes principais (PCA).}
 
-\usage{Plot.PCA(PC, Titles = matrix(NA,1,3), Color = TRUE, LinLab = NULL)}
+\usage{Plot.PCA(PC, Titles = matrix(NA,1,3), xlabel = NA, ylabel = NA,
+         Color = TRUE, LinLab = NA)}
 
 \arguments{
 \item{PC}{Dados da funcao PCA.}
 \item{Titles}{Titulos para os graficos.}
+\item{xlabel}{Nomeia o eixo X, se nao definido retorna padrao.}
+\item{ylabel}{Nomeia o eixo Y, se nao definido retorna padrao.}
 \item{Color}{Graficos coloridos (default = TRUE).}
-\item{LinLab}{Vetor com o rotulo para as linhas, se nao informado retorna o padrao dos dados.}
+\item{LinLab}{Vetor com o rotulo para as linhas, se nao informado retorna padrao.}
 }
 
 \value{Retorna varios graficos.}

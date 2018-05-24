@@ -1,6 +1,6 @@
 MDS <- function(Data, Distance = "euclidean", Eixos = TRUE, 
-                LabelX = NULL, LabelY = NULL, Title = NULL,
-                Color = TRUE, LinLab = NULL) {
+                Title = NA, xlabel = NA, ylabel = NA, 
+                Color = TRUE, LinLab = NA) {
   # Esta funcao executa a Escalonamento Multidimensional
   # desenvolvida por Paulo Cesar Ossani em 07/2016
   
@@ -10,9 +10,9 @@ MDS <- function(Data, Distance = "euclidean", Eixos = TRUE,
   #            "manhattan", "canberra", "binary" ou "minkowski".
   # Color  - Graficos coloridos (default = TRUE).
   # Eixos  - Coloca eixos no grafico (default = TRUE).
-  # LabelX - Nomeia o eixo X, se nulo retorna padrao.
-  # LabelY - Nomeia o eixo Y, se nulo retorna padrao.
   # Title  - Titulo do grafico, se nulo retorna padrao.
+  # xlabel - Nomeia o eixo X, se nulo retorna padrao.
+  # ylabel - Nomeia o eixo Y, se nulo retorna padrao.
   # LinLab - Vetor com o rotulo para as linhas, se nao
   #          informado retorna o padrao dos dados.
   
@@ -30,28 +30,37 @@ MDS <- function(Data, Distance = "euclidean", Eixos = TRUE,
 
   if (!is.logical(Eixos)) 
      stop("Entrada para 'Eixos' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
- 
-  if (is.null(LabelX))
-     LabelX = "Eixo x" # Nomeia Eixo X  
+
+  if (!is.character(Title) && !is.na(Title))
+     stop("Entrada para 'Title' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
-  if (is.null(LabelY))
-     LabelY = "Eixo y" # Nomeia Eixo Y
+  if (!is.character(xlabel) && !is.na(xlabel))
+     stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
-  if (is.null(Title))
-     Title = "Escalonamento multidimensional" # Titulo
+  if (!is.character(ylabel) && !is.na(ylabel))
+     stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
   if (!is.logical(Color))
      stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  if (!is.null(LinLab) && length(LinLab)!=nrow(Data))
+  if (!is.na(LinLab) && length(LinLab)!=nrow(Data))
      stop("O numero elementos do rotulo para linhas 'LinLab' difere do numero de linhas da base de dados. Verifique!")
   
-  if (is.null(LinLab))
+  if (is.na(Title))
+     Title = "Escalonamento multidimensional" # Titulo
+  
+  if (is.na(xlabel))
+     xlabel = "Eixo x" # Nomeia Eixo X  
+  
+  if (is.na(ylabel))
+     ylabel = "Eixo y" # Nomeia Eixo Y  
+  
+  if (is.na(LinLab))
      LinLab <- rownames(Data)
   
-  if (!is.null(LinLab) && !is.character(LinLab))
+  if (!is.na(LinLab) && !is.character(LinLab))
      stop("Entrada para 'LinLab' esta incorreta, deve ser do tipo caracter. Verifique!")
-  
+
   Md <- dist(Data, method = Distance) # matrix das distancias
   
   fit <- cmdscale(Md) # gera dos dados para o grafico
@@ -60,8 +69,8 @@ MDS <- function(Data, Distance = "euclidean", Eixos = TRUE,
   y <- fit[,2] # valores eixo y
   
   plot(x,y, # cria grafico para as coordenadas linhas x e colunas y
-       xlab = LabelX, # Nomeia Eixo X
-       ylab = LabelY, # Nomeia Eixo Y
+       xlab = xlabel, # Nomeia Eixo X
+       ylab = ylabel, # Nomeia Eixo Y
        main = Title,  # Titulo
        asp  = 1,  # Aspecto do Grafico
        pch  = 19, # Formato dos pontos 

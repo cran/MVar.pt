@@ -1,4 +1,4 @@
-PP_Optimizer = function(Data, Class = NULL, Findex = "HOLES", DimProj = 2, Sphere = TRUE, 
+PP_Optimizer = function(Data, Class = NA, Findex = "HOLES", DimProj = 2, Sphere = TRUE, 
                      OptMethod = "GTSA", Weight = TRUE, Lambda = 0.1,  r = 1, 
                      Cooling = 0.9, Eps = 1e-3, Maxiter = 3000, Half = 30) {
 
@@ -50,15 +50,15 @@ PP_Optimizer = function(Data, Class = NULL, Findex = "HOLES", DimProj = 2, Spher
   if (!is.data.frame(Data) && !is.matrix(Data))
      stop("Entrada 'Data' esta incorreta, deve ser do tipo dataframe ou matrix. Verifique!")
 
-  if (!is.null(Class)) {
+  if (!is.na(Class)[1]) {
 
     Class <- as.matrix(Class)
 
     if (nrow(Data) != length(Class))
-       stop("Entrada 'Class' ou 'Data' esta incorreta, devem conter o mesmo numero de linhas. Verifique!")
+       stop("Entrada 'Class' ou 'Data' esta incorreta,AAA devem conter o mesmo numero de linhas. Verifique!")
   }
 
-  if (Findex %in% c("LDA", "PDA", "LR") && is.null(Class))
+  if (Findex %in% c("LDA", "PDA", "LR") && is.na(Class))
       stop("Para os indices 'LDA', 'PDA' e 'LR', necessita-se de entrada em 'Class'. Verifique!")
   
   Findex <- toupper(Findex) # transforma em maiusculo
@@ -280,7 +280,7 @@ PP_Optimizer = function(Data, Class = NULL, Findex = "HOLES", DimProj = 2, Spher
     ck[17:24] <- integrate(fnr, 2*sqrt(2*log(6))/5, 3*sqrt(2*log(6))/5)$value/8
     ck[25:32] <- integrate(fnr, 3*sqrt(2*log(6))/5, 4*sqrt(2*log(6))/5)$value/8
     ck[33:40] <- integrate(fnr, 4*sqrt(2*log(6))/5, 5*sqrt(2*log(6))/5)$value/8
-  } else ck = NULL
+  } else ck = NA
   
   #### END - Useful Functions ####
 
@@ -373,7 +373,7 @@ PP_Optimizer = function(Data, Class = NULL, Findex = "HOLES", DimProj = 2, Spher
 
   rownames(Aa) <- colnames(Data)
 
-  if (!is.null(Class)) {
+  if (!is.na(Class)[1]) {
 
     Proj.Data <- cbind(as.data.frame(Proj.Data), Class)
     colnames(Proj.Data) <- c(paste("Projecao", 1:(ncol(Proj.Data) - 1)),"Classes")
@@ -384,7 +384,7 @@ PP_Optimizer = function(Data, Class = NULL, Findex = "HOLES", DimProj = 2, Spher
  
   if (length(Index) > 1) colnames(Index) <- "Indices"
 
-  if (!is.null(Class)) {
+  if (!is.na(Class)[1]) {
      Class.Table <- table(Class)        # cria tabela com as quantidade dos elementos das classes
      Class.Names <- names(Class.Table)  # nomes das classses
      Num.Class   <- length(Class.Table) # numero de classes

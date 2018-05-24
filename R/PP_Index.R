@@ -1,5 +1,5 @@
-PP_Index <- function (Data, Class = NULL, Vector.Proj = NULL, Findex = "HOLES",
-                      DimProj = 2, Weight = TRUE, Lambda = 0.1, r = 1, ck = NULL) {
+PP_Index <- function (Data, Class = NA, Vector.Proj = NA, Findex = "HOLES",
+                      DimProj = 2, Weight = TRUE, Lambda = 0.1, r = 1, ck = NA) {
                       
   # Funcao usada para encontrar os indices da projection pursuit, desenvolvida
   # por Paulo Cesar Ossani em 2017/03/27.
@@ -41,7 +41,7 @@ PP_Index <- function (Data, Class = NULL, Vector.Proj = NULL, Findex = "HOLES",
   if (!is.data.frame(Data) && !is.matrix(Data))
      stop("Entrada 'Data' esta incorreta, deve ser do tipo dataframe ou matrix. Verifique!")
   
-  if (!is.null(Class)) {
+  if (!is.na(Class)[1]) {
     
     Class <- as.matrix(Class)
     
@@ -49,7 +49,7 @@ PP_Index <- function (Data, Class = NULL, Vector.Proj = NULL, Findex = "HOLES",
        stop("Entrada 'Class' ou 'Data' esta incorreta, devem conter o mesmo numero de linhas. Verifique!")
   }
   
-  if (!is.null(Vector.Proj) && !is.data.frame(Vector.Proj) && !is.matrix(Vector.Proj))
+  if (!is.na(Vector.Proj)[1] && !is.data.frame(Vector.Proj) && !is.matrix(Vector.Proj))
      stop("Entrada 'Vector.Proj' esta incorreta, deve ser do tipo dataframe ou matrix. Verifique!")
   
   Findex <- toupper(Findex) # transforma em maiusculo
@@ -66,7 +66,7 @@ PP_Index <- function (Data, Class = NULL, Vector.Proj = NULL, Findex = "HOLES",
                      "LAGUERREFOURIER", "HERMITE", "NATURALHERMITE")) && DimProj != 2)
      stop("Para os indices 'MOMENT', 'CHI', 'FRIEDMANTUKEY', 'ENTROPY', 'LEGENDRE', 'LAGUERREFOURIER', 'HERMITE' e 'NATURALHERMITE', 'DimProj' deve ser 2 (dois). Verifique!")
   
-  if (Findex %in% c("LDA", "PDA", "LR") && is.null(Class))
+  if (Findex %in% c("LDA", "PDA", "LR") && is.na(Class))
      stop("Para os indices 'LDA', 'PDA' e 'LR', necessita-se de entrada em 'Class'. Verifique!")
   
   if (DimProj > ncol(Data))
@@ -81,7 +81,7 @@ PP_Index <- function (Data, Class = NULL, Vector.Proj = NULL, Findex = "HOLES",
   if (!is.numeric(r) || r <= 0 )
      stop("Entrada para 'r' esta incorreta, deve ser um valor numerico maior que zero. Verifique!")
   
-  if (!is.null(Class)) {
+  if (!is.na(Class)[1]) {
      Class.Table <- table(Class)        # cria tabela com as quantidade dos elementos das classes
      Class.Names <- names(Class.Table)  # nomes das classses
      Num.Class   <- length(Class.Table) # numero de classes
@@ -129,7 +129,7 @@ PP_Index <- function (Data, Class = NULL, Vector.Proj = NULL, Findex = "HOLES",
         i <- i + 1
       }
 
-      if (is.null(Vector.Proj)) {
+      if (is.na(Vector.Proj)[1]) {
          Vector.Base <- eigen(MASS::ginv(B + W) %*% B) # para extrair vetores ortogonais
 
          A <- matrix(as.numeric(Vector.Base$vectors[,1:DimProj]), ncol = DimProj) # vetores de projecao otimos
@@ -177,7 +177,7 @@ PP_Index <- function (Data, Class = NULL, Vector.Proj = NULL, Findex = "HOLES",
 
         Ws <- (1 - Lambda) * W + Lambda * diag(diag(W)) # Penalizando W com Lambda
 
-        if (is.null(Vector.Proj)) {
+        if (is.na(Vector.Proj)[1]) {
             Vector.Base <- eigen(MASS::ginv(B + Ws) %*% B) # para extrair vetores ortogonais
 
             A <- matrix(as.numeric(Vector.Base$vectors[,1:DimProj]), ncol = DimProj) # vetores de projecao otimos
@@ -343,7 +343,7 @@ PP_Index <- function (Data, Class = NULL, Vector.Proj = NULL, Findex = "HOLES",
 
     "CHI" = {
       
-      if (is.null(ck)) {
+      if (is.na(ck)) {
          # Encontrar a probabilidade de normalizacao bivariada normal sobre cada caixa radial
          fnr <- function(x) { x * exp(-0.5 * x^2) } # veja que aqui a funcao normal padrao bivariada esta em Coordenadas Polares
          ck  <- rep(1,40)

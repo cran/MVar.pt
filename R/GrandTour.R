@@ -1,6 +1,6 @@
-GrandTour <- function(Data, Method = "Interpolation", Title = NULL, Color = TRUE,
-                      Label = FALSE, LabNames = NULL, AxisVar = TRUE, Axis = FALSE,
-                      NumRot = 200, ChoiceRot = NULL, SavePicure = FALSE) {
+GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, ylabel = NA,
+                      Color = TRUE, Label = FALSE, LinLab = NA, AxisVar = TRUE, Axis = FALSE,
+                      NumRot = 200, ChoiceRot = NA, SavePicure = FALSE) {
   # Esta funcao executa a rotacao dos dados multivariados em baixa dimensao
   # basea-se nos artigos de: Asimov, D. . The Grand Tour: A Tool for Viewing
   # Multidimensional Data, SIAM Journal of Scientific and Statistical Computing
@@ -18,9 +18,11 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NULL, Color = TRUE
   #          "Torus" - Metodo Torus,
   #          "Pseudo" - Metodo Pseudo Grand Tour.
   # Title  - Titulo para os graficos, se omitido retorna default.
+  # xlabel   - Nomeia o eixo X, se nao definido retorna padrao.
+  # ylabel   - Nomeia o eixo Y, se nao definido retorna padrao.
   # Color  - Graficos coloridos (default = TRUE).
   # Label  - Coloca os rotulos das observacoes (default = FALSE).
-  # LabNames - Nomes dos rotulos das observacoes, se omitido retorna a numeracao default.
+  # LinLab - Nomes dos rotulos das observacoes, se omitido retorna a numeracao default.
   # AxisVar - Coloca eixos de rotacao das variaveis (default = TRUE).
   # Axis    - Plota os eixos X e Y (default = FALSE).
   # NumRot  - Numero de rotacoes (default = 200).
@@ -49,10 +51,10 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NULL, Color = TRUE
   if (!is.logical(Label))
      stop("Entrada para 'Label' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
-  if (!is.null(LabNames)) {
-    if (length(LabNames) != nrow(Data)) 
-      stop("Entrada para 'LabNames' esta incorreta, deve ter o mesmo numero de linhas que os dados de entrada em 'Data'. Verifique!")
-    NomeLinhas = as.matrix(LabNames)
+  if (!is.na(LinLab)) {
+    if (length(LinLab) != nrow(Data)) 
+      stop("Entrada para 'LinLab' esta incorreta, deve ter o mesmo numero de linhas que os dados de entrada em 'Data'. Verifique!")
+    NomeLinhas = as.matrix(LinLab)
   }
   else {
     NomeLinhas = rownames(Data)
@@ -67,7 +69,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NULL, Color = TRUE
   if (!is.numeric(NumRot) || NumRot < 1)
       stop("'NumRot' deve ser um numero inteiro maior que zero. Verifique!")
       
-  if (!is.null(ChoiceRot)) {
+  if (!is.na(ChoiceRot)) {
      if (!is.numeric(ChoiceRot) ||  ChoiceRot < 1)
          stop("'ChoiceRot' deve ser um numero inteiro maior que zero. Verifique!")
     
@@ -78,8 +80,20 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NULL, Color = TRUE
   if (!is.logical(SavePicure))
      stop("Entrada para 'SavePicure' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  DescEixo1 <- ifelse(Axis,"Eixo X","")
-  DescEixo2 <- ifelse(Axis,"Eixo Y","")
+  if (!is.character(xlabel) && !is.na(xlabel))
+     stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
+  if (!is.character(ylabel) && !is.na(ylabel))
+     stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
+  if (is.na(xlabel) && Axis)
+    xlabel = "Eixo X" 
+  
+  if (is.na(ylabel) && Axis)
+    ylabel = "Eixo Y"
+  
+  xlabel <- ifelse(Axis, xlabel, "")
+  ylabel <- ifelse(Axis, ylabel, "")
   
   d <- 2 # dimensao de projecao
   
@@ -107,7 +121,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NULL, Color = TRUE
     
     BasicVector <- diag(1, p, d) # vetor basico para a rotacao
     
-    NumRot <- ifelse(is.null(ChoiceRot), NumRot, ChoiceRot)
+    NumRot <- ifelse(is.na(ChoiceRot), NumRot, ChoiceRot)
     
     if (SavePicure) {
       cat("\014") # limpa a tela
@@ -135,7 +149,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NULL, Color = TRUE
       
       Proj.Data <- as.matrix(Data) %*% A # projecao em direcao a nova base
       
-      if (is.null(ChoiceRot) || ChoiceRot == i) {
+      if (is.na(ChoiceRot) || ChoiceRot == i) {
         
         if (SavePicure) png(filename = paste("Picure ", i," - Metodo", Method,".png",step="")) # salva os graficos em arquivos
         
@@ -144,11 +158,11 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NULL, Color = TRUE
         maxY = max(Proj.Data[, 2], A[,2])
         minY = min(Proj.Data[, 2], A[,2])
         
-        Tit <- ifelse(!is.character(Title) || is.null(Title), paste("Rotacao:", i), Title)
+        Tit <- ifelse(!is.character(Title) || is.na(Title), paste("Rotacao:", i), Title)
         
         plot(Proj.Data, # coordenadas do grafico
-             xlab = DescEixo1, # Nomeia Eixo X
-             ylab = DescEixo2, # Nomeia Eixo Y
+             xlab = xlabel, # Nomeia Eixo X
+             ylab = ylabel, # Nomeia Eixo Y
              main = Tit, # Titulo para o grafico
              pch  = 16,  # formato dos pontos
              axes = F,   # elimina os eixos
@@ -216,7 +230,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NULL, Color = TRUE
       cat("\n\n Salvando graficos em disco. Aguarde o termino!")
     }
     
-    NumRot <- ifelse(is.null(ChoiceRot), NumRot, ChoiceRot)
+    NumRot <- ifelse(is.na(ChoiceRot), NumRot, ChoiceRot)
     
     t <- (1:NumRot) * NumIrr
     
@@ -234,7 +248,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NULL, Color = TRUE
       
       Proj.Data <- as.matrix(Data) %*% A; # projecao
  
-      if (is.null(ChoiceRot) || ChoiceRot == i) {
+      if (is.na(ChoiceRot) || ChoiceRot == i) {
         
         if (SavePicure) png(filename = paste("Picure ", i," - Metodo", Method,".png",step="")) # salva os graficos em arquivos
         
@@ -243,11 +257,11 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NULL, Color = TRUE
         maxY = max(Proj.Data[, 2], A[,2])
         minY = min(Proj.Data[, 2], A[,2])
         
-        Tit <- ifelse(!is.character(Title) || is.null(Title), paste("Rotacao:", i), Title)
+        Tit <- ifelse(!is.character(Title) || is.na(Title), paste("Rotacao:", i), Title)
         
         plot(Proj.Data, # coordenadas do grafico
-             xlab = DescEixo1, # Nomeia Eixo X
-             ylab = DescEixo2, # Nomeia Eixo Y
+             xlab = xlabel, # Nomeia Eixo X
+             ylab = ylabel, # Nomeia Eixo Y
              main = Tit, # Titulo para o grafico
              pch  = 16,  # formato dos pontos
              axes = F,   # elimina os eixos
@@ -329,7 +343,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NULL, Color = TRUE
     
     cp.v <- ncol(Vector1) 
     
-    NumRot <- ifelse(is.null(ChoiceRot), NumRot, ChoiceRot)
+    NumRot <- ifelse(is.na(ChoiceRot), NumRot, ChoiceRot)
       
     if (SavePicure) {
        cat("\014") # limpa a tela 
@@ -342,7 +356,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NULL, Color = TRUE
       if (i > 1) # novas projecoes
          Proj.Data = Vector1 %*% diag(1,cp.v) * cos(theta[i]) + Vector2 %*% diag(1,cp.v) * sin(theta[i])
          
-      if (is.null(ChoiceRot) || ChoiceRot == i) {
+      if (is.na(ChoiceRot) || ChoiceRot == i) {
         
         if (SavePicure) png(filename = paste("Picure ", i," - Metodo", Method,".png",step="")) # salva os graficos em arquivos
         
@@ -351,11 +365,11 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NULL, Color = TRUE
         maxY = max(Proj.Data[, 2])
         minY = min(Proj.Data[, 2])
         
-        Tit <- ifelse(!is.character(Title) || is.null(Title), paste("Angulo de rotacao:", theta[i] / (pi/180),"graus"), Title)
+        Tit <- ifelse(!is.character(Title) || is.na(Title), paste("Angulo de rotacao:", theta[i] / (pi/180),"graus"), Title)
         
         plot(Proj.Data[1:n,1],Proj.Data[1:n,2], # coordenadas do grafico
-             xlab = DescEixo1,  # Nomeia Eixo X
-             ylab = DescEixo2,  # Nomeia Eixo Y
+             xlab = xlabel,  # Nomeia Eixo X
+             ylab = ylabel,  # Nomeia Eixo Y
              main = Tit, # Titulo para o grafico
              pch  = 16,  # formato dos pontos 
              axes = F,   # elimina os eixos

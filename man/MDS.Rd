@@ -6,18 +6,19 @@
 
 \description{Realiza o escalonamento multidimensional (MDS) em um conjunto de dados.}
 
-\usage{MDS(Data, Distance = "euclidean", Eixos = TRUE, LabelX = NULL,
-    LabelY = NULL, Title = NULL, Color = TRUE, LinLab = NULL)}
+\usage{MDS(Data, Distance = "euclidean", Eixos = TRUE, Title = NA,
+    xlabel = NA, ylabel = NA, Color = TRUE, LinLab = NA)}
 
 \arguments{
 \item{Data}{Dados a serem a analizados.}
 \item{Distance}{Metrica das distancias: "euclidean" (default), "maximum", "manhattan", "canberra", "binary" ou "minkowski".}
 \item{Color}{Graficos coloridos (default = TRUE).}
 \item{Eixos}{Coloca eixos no grafico (default = TRUE).}
-\item{LabelX}{Nomeia o eixo X, se nulo retorna padrao.}
-\item{LabelY}{Nomeia o eixo Y, se nulo retorna padrao.}
 \item{Title}{Titulo do grafico, se nulo retorna padrao.}
-\item{LinLab}{Vetor com o rotulo para as linhas, se nao informado retorna o padrao dos dados.}
+\item{xlabel}{Nomeia o eixo X, se nulo retorna padrao.}
+\item{ylabel}{Nomeia o eixo Y, se nulo retorna padrao.}
+
+\item{LinLab}{Vetor com o rotulo para as linhas, se nao informado retorna padrao.}
 }
 
 \value{{Grafico de escalonamento multidimensional.}
@@ -43,8 +44,7 @@ Dat <- DataQuan[,2:8]
 
 rownames(Dat) <- DataQuan[1:nrow(DataQuan),1]
 
-MD <- MDS(Dat, Distance = "euclidean", Eixos = TRUE, LabelX = NULL,
-          LabelY = NULL, Title = NULL, Color = TRUE, LinLab = NULL)
+MD <- MDS(Dat, Distance = "euclidean")
 
 print("Matriz das distancias:"); MD$MatrixD
 }

@@ -1,6 +1,6 @@
-Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
-                           NameVarY = NULL, NameVarX = NULL, LabelX = NULL, 
-                           LabelY = NULL, Color = TRUE, IntConf = TRUE, IntPrev = TRUE) {
+Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = NA, 
+                           ylabel = NA, NameVarY = NA, NameVarX = NA, Color = TRUE, 
+                           IntConf = TRUE, IntPrev = TRUE) {
   # Esta funcao gera graficos da Analise de Regressao
   # desenvolvida por Paulo Cesar Ossani em 06/2016
     
@@ -14,17 +14,16 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
   #            "Fits"        - Grafico dos valores ajustados versus os residuos,
   #            "Order"       - Grafico da ordem das observacoes versus os residuos.
   # Title    - Titulos para os graficos, se nulo retorna padrao.
+  # xlabel   - Nomeia o eixo X, se nulo retorna padrao.
+  # ylabel   - Nomeia o eixo Y, se nulo retorna padrao.
   # NameVarY - Nome da variavel Y, se nulo retorna padrao.
   # NameVarX - Nome da variavel, ou variaveis X, se nulo retorna padrao.
-  # LabelX   - Nomeia o eixo X, se nulo retorna padrao.
-  # LabelY   - Nomeia o eixo Y, se nulo retorna padrao.
   # Color    - Graficos coloridos (default = TRUE).
   # IntConf  - Caso TypeGraf = "Regression":
   #            Graficos com intervalo de confianca (default = TRUE).
   # IntPrev  - Caso TypeGraf = "Regression":
   #            Graficos com intervalo de previsao (default = TRUE).
 
-  
   # Retorna:
   # Varios graficos.
 
@@ -44,16 +43,22 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
  
   if (Reg$Intercepts) X <- as.matrix(Reg$X[,2:ncol(Reg$X)]) else X <- as.matrix(Reg$X)
   
-  if (is.null(NameVarY))
+  if (is.na(NameVarY))
      NameVarY <- c("Y")
   
-  if (is.null(NameVarX))
+  if (is.na(NameVarX))
      NameVarX <- c(paste("X",1:ncol(X),sep=""))
+  
+  if (!is.character(xlabel) && !is.na(xlabel))
+     stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
+  if (!is.character(ylabel) && !is.na(ylabel))
+     stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
   ## Inicio - Scatterplot
   if (TypeGraf == "Scatterplot") {
     
-     if (is.null(Title))
+     if (is.na(Title))
         Title = c("Grafico de dispersao 2 a 2")
      
      Dat <- as.data.frame(cbind(Reg$Y,X))
@@ -74,13 +79,13 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
     
      if (ncol(X)==1) { # para calculos de regressao simples
         
-        if (is.null(LabelX))
-           LabelX = "Eixo x"  # Nomeia Eixo X  
+        if (is.na(xlabel))
+           xlabel = "Eixo x"  # Nomeia Eixo X  
        
-        if (is.null(LabelY))
-           LabelY = "Eixo y"  # Nomeia Eixo Y
+        if (is.na(ylabel))
+           ylabel = "Eixo y"  # Nomeia Eixo Y
         
-        if (is.null(Title))
+        if (is.na(Title))
            Title = c("Grafico da regressao linear")
         
         X <- as.numeric(X)
@@ -101,8 +106,8 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
         Inter.Pred <- predict(Modelo, New.X, level=0.95, interval=c("prediction"))  
         
         plot(X,Reg$Y, # cria grafico
-             xlab = LabelX, # Nomeia Eixo X
-             ylab = LabelY, # Nomeia Eixo Y
+             xlab = xlabel, # Nomeia Eixo X
+             ylab = ylabel, # Nomeia Eixo Y
              main = Title,  # Titulo
              pch  = 15, # Formato dos pontos 
              cex  = 1,  # Tamanho dos pontos
@@ -135,18 +140,18 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
   ## Inicio - Grafico da probalidade normal
   if (TypeGraf == "QQPlot") {
     
-     if (is.null(LabelX))
-        LabelX = "Quantis"  # Nomeia Eixo X  
+     if (is.na(xlabel))
+        xlabel = "Quantis"  # Nomeia Eixo X  
     
-     if (is.null(LabelY))
-        LabelY = "Amostra nos quantis"  # Nomeia Eixo Y
+     if (is.na(ylabel))
+        ylabel = "Amostra nos quantis"  # Nomeia Eixo Y
 
-     if (is.null(Title))
+     if (is.na(Title))
         Title = c("Grafico da probabilidade \n normal do residuo")
      
      qqnorm(Reg$Error,
-            xlab = LabelX, # Nomeia Eixo X
-            ylab = LabelY, # Nomeia Eixo Y
+            xlab = xlabel, # Nomeia Eixo X
+            ylab = ylabel, # Nomeia Eixo Y
             main = Title,  # Titulo
             pch  = 19,     # Formato dos pontos 
             cex  = 1)
@@ -157,18 +162,18 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
   ## Inicio - Grafico da probalidade normal
   if (TypeGraf == "Histogram") {
     
-     if (is.null(LabelX))
-        LabelX = "Residuo"  # Nomeia Eixo X  
+     if (is.na(xlabel))
+        xlabel = "Residuo"  # Nomeia Eixo X  
     
-     if (is.null(LabelY))
-        LabelY = "Frequencia"  # Nomeia Eixo Y
+     if (is.na(ylabel))
+        ylabel = "Frequencia"  # Nomeia Eixo Y
     
-     if (is.null(Title))
+     if (is.na(Title))
         Title = c("Histograma do residuo")
      
      hist(Reg$Error,
-          xlab = LabelX, # Nomeia Eixo X
-          ylab = LabelY, # Nomeia Eixo Y
+          xlab = xlabel, # Nomeia Eixo X
+          ylab = ylabel, # Nomeia Eixo Y
           main = Title,  # Titulo
           pch  = 19,     # Formato dos pontos 
           cex  = 1)
@@ -178,18 +183,18 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
   ## Inicio - Grafico dos valores ajustados com os residuos
   if (TypeGraf == "Fits") {
     
-    if (is.null(LabelX))
-      LabelX = "Valores ajustados"  # Nomeia Eixo X  
+    if (is.na(xlabel))
+       xlabel = "Valores ajustados"  # Nomeia Eixo X  
     
-    if (is.null(LabelY))
-      LabelY = "Residuos"  # Nomeia Eixo Y
+    if (is.na(ylabel))
+       ylabel = "Residuos"  # Nomeia Eixo Y
     
-    if (is.null(Title))
-      Title = c("Valores ajustados vs. residuos")
+    if (is.na(Title))
+       Title = c("Valores ajustados vs. residuos")
     
     plot(Reg$Prev,Reg$Error, # cria grafico
-         xlab = LabelX, # Nomeia Eixo X
-         ylab = LabelY, # Nomeia Eixo Y
+         xlab = xlabel, # Nomeia Eixo X
+         ylab = ylabel, # Nomeia Eixo Y
          main = Title,  # Titulo
          pch  = 19, # Formato dos pontos 
          cex  = 1,  # Tamanho dos pontos
@@ -202,18 +207,18 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NULL,
   ## Inicio - Grafico com ordem das observacoes versus os residuos
   if (TypeGraf == "Order") {
     
-    if (is.null(LabelX))
-       LabelX = "Ordem das observacoes"  # Nomeia Eixo X  
+    if (is.na(xlabel))
+       xlabel = "Ordem das observacoes"  # Nomeia Eixo X  
     
-    if (is.null(LabelY))
-       LabelY = "Residuos" # Nomeia Eixo Y
+    if (is.na(ylabel))
+       ylabel = "Residuos" # Nomeia Eixo Y
     
-    if (is.null(Title))
+    if (is.na(Title))
        Title = c("Ordem das observacoes vs. residuos")
     
     plot(1:length(Reg$Error),Reg$Error, # cria grafico
-         xlab = LabelX, # Nomeia Eixo X
-         ylab = LabelY, # Nomeia Eixo Y
+         xlab = xlabel, # Nomeia Eixo X
+         ylab = ylabel, # Nomeia Eixo Y
          main = Title,  # Titulo
          type = "o", # linhas com pontos
          pch  = 19,  # Formato dos pontos 

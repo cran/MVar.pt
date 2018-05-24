@@ -6,10 +6,10 @@
 
 \description{Realiza a exploracao de dados atraves da tecnica de animacao grand tour.}
 
-\usage{GrandTour(Data, Method = "Interpolation", Title = NULL, 
-          Color = TRUE, Label = FALSE, LabNames = NULL, 
-          AxisVar = TRUE, Axis = FALSE, NumRot = 200, 
-          ChoiceRot = NULL, SavePicure = FALSE)}
+\usage{GrandTour(Data, Method = "Interpolation", Title = NA, 
+          xlabel = NA, ylabel = NA, Color = TRUE, Label = FALSE, 
+          LinLab = NA, AxisVar = TRUE, Axis = FALSE,
+          NumRot = 200, ChoiceRot = NA, SavePicure = FALSE)}
 
 \arguments{
 \item{Data    }{Conjunto de dados numericos.}
@@ -17,10 +17,12 @@
                 "Interpolation" - Metodo Interpolation (default),\cr
                 "Torus" - Metodo Torus,\cr
                 "Pseudo" - Metodo Pseudo Grand Tour.}
-\item{Title   }{Titulo para os graficos, se omitido retorna default.}
-\item{Color   }{Graficos coloridos (default = TRUE).}
-\item{Label   }{Coloca os rotulos das observacoes (default = FALSE).}
-\item{LabNames}{Nomes dos rotulos das observacoes, se omitido retorna a numeracao default.}
+\item{Title }{Titulo para os graficos, se omitido retorna default.}
+\item{xlabel}{Nomeia o eixo X, se nao definido retorna padrao.}
+\item{ylabel}{Nomeia o eixo Y, se nao definido retorna padrao.}
+\item{Color }{Graficos coloridos (default = TRUE).}
+\item{Label }{Coloca os rotulos das observacoes (default = FALSE).}
+\item{LinLab}{Nomes dos rotulos das observacoes, se omitido retorna a numeracao default.}
 \item{AxisVar }{Coloca eixos de rotacao das variaveis (default = TRUE).}
 \item{Axis    }{Plota os eixos X e Y (default = FALSE).}
 \item{NumRot  }{Numero de rotacoes (default = 200). Se Method = "Interpolation", NumRot representara o angulo de rotacao.}
@@ -65,11 +67,11 @@ Dat <- iris[,1:4]
 
 Dat <- as.data.frame(NormData(Dat, 2))
 
-Titulo <- NULL
+Titulo <- NA
 
 Res <- GrandTour(Dat, Method = "Interpolation", Title = Titulo, Color = TRUE,
-                 Label = FALSE, LabNames = NULL, AxisVar = TRUE, Axis = TRUE,
-                 NumRot = 10, ChoiceRot = NULL, SavePicure = FALSE)
+                 Label = FALSE, LinLab = NA, AxisVar = TRUE, Axis = TRUE,
+                 NumRot = 10, ChoiceRot = NA, SavePicure = FALSE)
 
 print("Dados projetados:"); Res$Proj.Data
 print("Vetores de projecao:"); Res$Vector.Opt

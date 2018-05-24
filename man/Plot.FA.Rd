@@ -6,14 +6,17 @@
 
 \description{Graficos da analise fatorial (FA).}
 
-\usage{Plot.FA(FA, Titles = matrix(NA,1,4), Color = TRUE, LinLab = NULL)}
+\usage{Plot.FA(FA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
+        Color = TRUE, LinLab = NA)}
 
 \arguments{
 \item{FA}{Dados da funcao FA.}
 \item{Titles}{Titulos para os graficos.}
+\item{xlabel}{Nomeia o eixo X, se nao definido retorna padrao.}
+\item{ylabel}{Nomeia o eixo Y, se nao definido retorna padrao.}
 \item{Color}{Graficos coloridos (default = TRUE).}
 \item{LinLab}{Vetor com o rotulo para as linhas, se nao
-              informado retorna o padrao dos dados.}
+              informado retorna padrao.}
 }
 
 \value{Retorna varios graficos.}

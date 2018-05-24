@@ -6,8 +6,8 @@
 
 \description{Realiza o grafico Biplot.}
 
-\usage{Biplot(Data, alfa = 0.5, Title = NA, Label_x = NA, Label_y = NA,
-       Color = TRUE, Obs = TRUE, LinLab = NULL)}
+\usage{Biplot(Data, alfa = 0.5, Title = NA, xlabel = NA, ylabel = NA,
+       Color = TRUE, Obs = TRUE, LinLab = NA)}
 
 \arguments{
 \item{Data}{Dados para plotagem.}
@@ -15,8 +15,8 @@
             representatividade das variaveis (1 - alfa).
             Sendo 0.5 o default.}
 \item{Title}{Titulo para o grafico. Se nao for definido assume texto padrao.}
-\item{Label_x}{Rotulo do eixo X. Se nao for definido assume texto padrao.}
-\item{Label_y}{Rotulo do eixo Y. Se nao for definido assume texto padrao.}
+\item{xlabel}{Nomeia o eixo X, se nao definido retorna padrao.}
+\item{ylabel}{Nomeia o eixo Y, se nao definido retorna padrao.}
 \item{Color}{Graficos coloridos (default = TRUE).}
 \item{Obs}{Acrescenta as observacoes ao grafico (default = TRUE).}
 \item{LinLab}{Vetor com o rotulo para as observacoes, se nao
@@ -53,11 +53,11 @@ Biplot(Dat)
 
 LinNames <- paste("C",1:nrow(Dat))
 Biplot(Dat, alfa = 0.6, Title = "Biplot dos Dados\n valorizando os individuos",
-       Label_x = "Eixo X", Label_y = "Eixo Y", Color = TRUE, Obs = TRUE, 
+       xlabel = "Eixo X", ylabel = "Eixo Y", Color = TRUE, Obs = TRUE, 
        LinLab = LinNames)
        
 Biplot(Dat, alfa = 0.4, Title = "Grafico valorizando as variaveis",
-       Label_x = "", Label_y = "", Color = FALSE, Obs = FALSE)
+       xlabel = "", ylabel = "", Color = FALSE, Obs = FALSE)
 }
 
 \keyword{Biplot}

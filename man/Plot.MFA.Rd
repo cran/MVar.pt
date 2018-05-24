@@ -6,12 +6,15 @@
 
 \description{Graficos da nalise de multiplos fatores (MFA).}
 
-\usage{Plot.MFA(MFA, Titles = matrix(NA,1,4), PosLeg = 2, BoxLeg = TRUE,
-         Color = TRUE, NamArr = FALSE, RowNames = NULL)}
+\usage{Plot.MFA(MFA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
+         PosLeg = 2, BoxLeg = TRUE, Color = TRUE, NamArr = FALSE, 
+         LinLab = NA)}
  
 \arguments{
   \item{MFA}{Dados da funcao MFA.}
   \item{Titles}{Titulos para os graficos. Se nao for definido assume texto padrao.}
+  \item{xlabel}{Nomeia o eixo X, se nao definido retorna padrao.}
+  \item{ylabel}{Nomeia o eixo Y, se nao definido retorna padrao.}
   \item{PosLeg}{1 para legenda no canto superior esquerdo,\cr
                 2 para legenda no canto superior direito (default),\cr
                 3 para legenda no canto inferior direito,\cr
@@ -19,7 +22,7 @@
   \item{BoxLeg}{Colocar moldura na legenda (default = TRUE).}
   \item{Color}{Graficos coloridos (default = TRUE).}
   \item{NamArr}{Colocar nomes pontos na nuvem ao redor do centroide no Grafico Correspondente a Analise Global dos Individuos e Variaveis (default = FALSE).}
-  \item{RowNames}{Nomes dos centroides, se omitido retorna os rotulos das linhas.}
+  \item{LinLab}{Nomes dos centroides, se omitido retorna os rotulos das linhas.}
 }
 
 \value{Retorna varios graficos.}
@@ -43,11 +46,15 @@ GroupNames = c("Notas Cafes/Trabalho", "Formacao/Dedicacao", "Cafes")
            
 MF <- MFA(Dat, c(2,2,2), TipoGrupo = c("n","c","f"), GroupNames) # realiza MFA
 
-Titulos = c("Scree-plot","Observacoes","Observacoes/Variaveis","Inercias Grupos Variaveis")
+Tit = c("Scree-plot","Observacoes","Observacoes/Variaveis","Inercias Grupos Variaveis")
 
-Plot.MFA(MF, Titulos, 2, FALSE, TRUE, FALSE) # Imprime varios graficos da tela
+Plot.MFA(MF, Titles = Tit, xlabel = NA, ylabel = NA,
+         PosLeg = 2, BoxLeg = FALSE, Color = TRUE, 
+         NamArr = FALSE, LinLab = NA) # Imprime varios graficos da tela
 
-Plot.MFA(MF, Titulos, 2, FALSE, TRUE, FALSE, rep("A?",10)) # Imprime varios graficos da tela
+Plot.MFA(MF, Titles = Tit, xlabel = NA, ylabel = NA,
+         PosLeg = 2, BoxLeg = FALSE, Color = TRUE, 
+         NamArr = FALSE, LinLab = rep("A?",10)) # Imprime varios graficos da tela
 }
 
 \keyword{Analise de multiplos fatores}
