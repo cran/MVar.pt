@@ -1,6 +1,6 @@
 Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2, 
                     BoxLeg = TRUE, Color = TRUE, Label = FALSE, LinLab = NA, 
-                    AxisVar = TRUE, Axis = TRUE) {
+                    AxisVar = TRUE, Axis = TRUE, Casc = TRUE) {
   
   # Rotina para plotar graficos da Projecao Pursuit desenvolvida 
   # por Paulo Cesar Ossani em 2017/02/27
@@ -21,10 +21,17 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
   # LinLab   - Nomes dos rotulos das observacoes, se omitido retorna a numeracao default.
   # AxisVar  - Coloca eixos de rotacao das variaveis, somente quando DimProj > 1 (default = TRUE).
   # Axis     - Plot os eixos X e Y (default = TRUE).
+  # Casc    - Efeito cascata na apresentacao dos graficos (default = TRUE).
   
   # Retorna:
   # Grafico da evolucao dos indices, e graficos cujos dados 
   # foram reduzidos em duas dimensoes.
+  
+  if (!is.character(xlabel) && !is.na(xlabel))
+     stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
+  if (!is.character(ylabel) && !is.na(ylabel))
+     stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
   if (!is.numeric(PosLeg) || PosLeg < 0 || PosLeg > 4 || (floor(PosLeg)-PosLeg) != 0)
      stop("Entrada para posicao da legenda 'PosLeg' esta incorreta, deve ser um numero inteiro entre [0,4]. Verifique!")
@@ -49,11 +56,8 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
   
   if (is.na(PP$Findex)) PP$Findex <- "Not Available"
   
-  if (!is.character(xlabel) && !is.na(xlabel))
-     stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
-  
-  if (!is.character(ylabel) && !is.na(ylabel))
-     stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  if (!is.logical(Casc))
+     stop("Entrada para 'Casc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
   ##### INICIO - Informacoes usadas nos Graficos #####
   
@@ -75,7 +79,7 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
   BoxLeg = ifelse(BoxLeg,"o","n") # moldura nas legendas, "n" sem moldura, "o" com moldura
   
   if (!is.na(LinLab)[1]) {
-     Class.Table <- table(LinLab)     # cria tabela com as quantidade dos elementos das classes
+     Class.Table <- table(LinLab)       # cria tabela com as quantidade dos elementos das classes
      Class.Names <- names(Class.Table)  # nomes das classses
      Num.Class   <- length(Class.Table) # numero de classes
      NomeLinhas  <- as.matrix(LinLab)
@@ -107,6 +111,8 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
   
   Cood.xy = round(PP$Index,4)
   
+  if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
+  
   plot(Cood.xy,
        xlab = "Simulacao",
        ylab = "Valor do Indice",
@@ -137,6 +143,8 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
      maxY = max(Data[, 2], PP$Vector.Opt[,2])
      minY = min(Data[, 2], PP$Vector.Opt[,2])
     
+     if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
+     
      if (Num.Class == 0) {
        
         plot(Data[,1:2], # coordenadas do grafico
@@ -191,6 +199,8 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
   
   #### Plotas as projecoes 1D
   if (ncol(Data) == 1) {  
+    
+     if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
     
      if (Num.Class == 0) {
        

@@ -2,14 +2,14 @@
 
 \alias{GrandTour}
 
-\title{Tecnica de animacao grand tour.}
+\title{Tecnica de animacao Grand Tour.}
 
-\description{Realiza a exploracao de dados atraves da tecnica de animacao grand tour.}
+\description{Realiza a exploracao dos dados atraves da tecnica de animacao Grand Tour.}
 
 \usage{GrandTour(Data, Method = "Interpolation", Title = NA, 
           xlabel = NA, ylabel = NA, Color = TRUE, Label = FALSE, 
           LinLab = NA, AxisVar = TRUE, Axis = FALSE,
-          NumRot = 200, ChoiceRot = NA, SavePicure = FALSE)}
+          NumRot = 200, ChoiceRot = NA, SavePicture = FALSE)}
 
 \arguments{
 \item{Data    }{Conjunto de dados numericos.}
@@ -17,17 +17,17 @@
                 "Interpolation" - Metodo Interpolation (default),\cr
                 "Torus" - Metodo Torus,\cr
                 "Pseudo" - Metodo Pseudo Grand Tour.}
-\item{Title }{Titulo para os graficos, se omitido retorna default.}
-\item{xlabel}{Nomeia o eixo X, se nao definido retorna padrao.}
-\item{ylabel}{Nomeia o eixo Y, se nao definido retorna padrao.}
+\item{Title }{Titulo para os graficos, se nao for definido assume texto padrao.}
+\item{xlabel}{Nomeia o eixo X, se nao for definido assume texto padrao.}
+\item{ylabel}{Nomeia o eixo Y, se nao for definido assume texto padrao.}
 \item{Color }{Graficos coloridos (default = TRUE).}
 \item{Label }{Coloca os rotulos das observacoes (default = FALSE).}
-\item{LinLab}{Nomes dos rotulos das observacoes, se omitido retorna a numeracao default.}
+\item{LinLab}{Vetor com os rotulos para as observacoes, se nao for definido assume texto padrao.}
 \item{AxisVar }{Coloca eixos de rotacao das variaveis (default = TRUE).}
 \item{Axis    }{Plota os eixos X e Y (default = FALSE).}
 \item{NumRot  }{Numero de rotacoes (default = 200). Se Method = "Interpolation", NumRot representara o angulo de rotacao.}
-\item{ChoiceRot }{Escolhe rotacao especifica e apresenta na tela, ou salva a imagem se SavePicure = TRUE.}
-\item{SavePicure}{Salva as imagens dos graficos em arquivos (default = FALSE).}          
+\item{ChoiceRot }{Escolhe rotacao especifica e apresenta na tela, ou salva a imagem se SavePicture = TRUE.}
+\item{SavePicture}{Salva as imagens dos graficos em arquivos (default = FALSE).}          
 }
 
 \value{{Graficos com as rotacoes.}
@@ -67,11 +67,9 @@ Dat <- iris[,1:4]
 
 Dat <- as.data.frame(NormData(Dat, 2))
 
-Titulo <- NA
-
-Res <- GrandTour(Dat, Method = "Interpolation", Title = Titulo, Color = TRUE,
+Res <- GrandTour(Dat, Method = "Interpolation", Title = NA, Color = TRUE,
                  Label = FALSE, LinLab = NA, AxisVar = TRUE, Axis = TRUE,
-                 NumRot = 10, ChoiceRot = NA, SavePicure = FALSE)
+                 NumRot = 10, ChoiceRot = NA, SavePicture = FALSE)
 
 print("Dados projetados:"); Res$Proj.Data
 print("Vetores de projecao:"); Res$Vector.Opt

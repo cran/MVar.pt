@@ -55,7 +55,7 @@ PP_Optimizer = function(Data, Class = NA, Findex = "HOLES", DimProj = 2, Sphere 
     Class <- as.matrix(Class)
 
     if (nrow(Data) != length(Class))
-       stop("Entrada 'Class' ou 'Data' esta incorreta,AAA devem conter o mesmo numero de linhas. Verifique!")
+       stop("Entrada 'Class' ou 'Data' esta incorreta, devem conter o mesmo numero de linhas. Verifique!")
   }
 
   if (Findex %in% c("LDA", "PDA", "LR") && is.na(Class))

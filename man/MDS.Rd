@@ -6,19 +6,19 @@
 
 \description{Realiza o escalonamento multidimensional (MDS) em um conjunto de dados.}
 
-\usage{MDS(Data, Distance = "euclidean", Eixos = TRUE, Title = NA,
+\usage{MDS(Data, Distance = "euclidean", Axis = TRUE, Title = NA,
     xlabel = NA, ylabel = NA, Color = TRUE, LinLab = NA)}
 
 \arguments{
-\item{Data}{Dados a serem a analizados.}
+\item{Data}{Dados a serem analizados.}
 \item{Distance}{Metrica das distancias: "euclidean" (default), "maximum", "manhattan", "canberra", "binary" ou "minkowski".}
 \item{Color}{Graficos coloridos (default = TRUE).}
-\item{Eixos}{Coloca eixos no grafico (default = TRUE).}
-\item{Title}{Titulo do grafico, se nulo retorna padrao.}
-\item{xlabel}{Nomeia o eixo X, se nulo retorna padrao.}
-\item{ylabel}{Nomeia o eixo Y, se nulo retorna padrao.}
+\item{Axis}{Coloca eixos nos graficos (default = TRUE).}
+\item{Title}{Titulo do grafico, se nao for definido assume texto padrao.}
+\item{xlabel}{Nomeia o eixo X, se nao for definido assume texto padrao.}
+\item{ylabel}{Nomeia o eixo Y, se nao for definido assume texto padrao.}
 
-\item{LinLab}{Vetor com o rotulo para as linhas, se nao informado retorna padrao.}
+\item{LinLab}{Vetor com os rotulos para as observacoes, se nao for definido assume texto padrao.}
 }
 
 \value{{Grafico de escalonamento multidimensional.}
@@ -44,7 +44,8 @@ Dat <- DataQuan[,2:8]
 
 rownames(Dat) <- DataQuan[1:nrow(DataQuan),1]
 
-MD <- MDS(Dat, Distance = "euclidean")
+MD <- MDS(Dat, Distance = "euclidean", Axis = TRUE, Title = NA,
+          xlabel = NA, ylabel = NA, Color = TRUE, LinLab = NA)
 
 print("Matriz das distancias:"); MD$MatrixD
 }

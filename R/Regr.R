@@ -1,4 +1,4 @@
-Regressao <- function(Y, X, NameVarX = NULL, Intercepts = TRUE, SigF = 0.05) {
+Regr <- function(Y, X, NameVarX = NULL, Intercepts = TRUE, SigF = 0.05) {
   # Esta funcao executa a Analise de Regressao
   # desenvolvida por Paulo Cesar Ossani em 06/2016
     
@@ -75,12 +75,12 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = TRUE, SigF = 0.05) {
   
   ANOVA <- as.data.frame(matrix(NA, nrow=3, ncol=6))
   rownames(ANOVA) <- c("Regressao", "Erro","Total")
-  colnames(ANOVA) <- c("G.L.", "Soma Quadrados","Quadrados Medios", "F.Calc.","F.Tab.","Valor-p")
+  colnames(ANOVA) <- c("G.L.", "Soma Quadrados","Quadrados Medios", "f calc.","f tab.","Valor-p")
   ANOVA[,"G.L."]             <- c(p,(n-p-gl_i), n-gl_i)
   ANOVA[,"Soma Quadrados"]   <- c(round(SQR,2),round(SQE,2),round(SQT,2))
   ANOVA[,"Quadrados Medios"] <- c(round(QMR,4),round(QME,4), "-")
-  ANOVA[,"F.Calc."]          <- c(round(FCal,3),"-","-")
-  ANOVA[,"F.Tab."]           <- c(round(FTab,3),"-","-")
+  ANOVA[,"f calc."]          <- c(round(FCal,3),"-","-")
+  ANOVA[,"f tab."]           <- c(round(FTab,3),"-","-")
   ANOVA[,"Valor-p"]          <- c(round(VlrP,4),"-","-")
   ## Fim - Tabela de Analise de Variancia (ANOVA) parcial
   
@@ -92,7 +92,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = TRUE, SigF = 0.05) {
   ANOVA_X <- as.data.frame(matrix(NA, nrow=p, ncol=6))
   if (p > 1) { # caso a regressao seja apenas para mais uma variavel regressora
      rownames(ANOVA_X) <- NameVarX  # nomes das variaveis de acordo com a coluna dos dados
-     colnames(ANOVA_X) <- c("G.L.", "Soma Quadrados","Quadrados Medios", "F.Calc.","F.Tab.","Valor-p")
+     colnames(ANOVA_X) <- c("G.L.", "Soma Quadrados","Quadrados Medios", "f calc.","f tab.","Valor-p")
      ANOVA_X[,"G.L."]  <- c(rep(1,p))
      for (i in 1:p) {
        Xn <- X[,-(i + gl_i)]
@@ -104,8 +104,8 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = TRUE, SigF = 0.05) {
        VlrPX <- pf(FCalX,1,(n-p-gl_i),lower.tail = FALSE) # Valor-p
        ANOVA_X[i,"Soma Quadrados"]   <- round(QMRx,2)
        ANOVA_X[i,"Quadrados Medios"] <- round(QMRx,4)
-       ANOVA_X[i,"F.Calc."]          <- round(FCalX,3)
-       ANOVA_X[i,"F.Tab."]           <- round(FTabX,3)
+       ANOVA_X[i,"f calc."]          <- round(FCalX,3)
+       ANOVA_X[i,"f tab."]           <- round(FTabX,3)
        ANOVA_X[i,"Valor-p"]          <- round(VlrPX,4)
      }
   }
@@ -170,12 +170,12 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = TRUE, SigF = 0.05) {
     
     ANOVAjuste <- as.data.frame(matrix(NA, nrow=3, ncol=6))
     rownames(ANOVAjuste) <- c("Falta de Ajuste", "Erro Puro","Total")
-    colnames(ANOVAjuste) <- c("G.L.", "Soma Quadrados","Quadrados Medios", "F.Calc.","F.Tab.","Valor-p")
+    colnames(ANOVAjuste) <- c("G.L.", "Soma Quadrados","Quadrados Medios", "f calc.","f tab.","Valor-p")
     ANOVAjuste[,"G.L."]             <- c(GLfa,GLep, n-gl_i)
     ANOVAjuste[,"Soma Quadrados"]   <- c(round(SQFa,2),round(SQRp,2),round(SQT,2))
     ANOVAjuste[,"Quadrados Medios"] <- c(round(QMFa,4),round(QMRp,2), "-")
-    ANOVAjuste[,"F.Calc."]          <- c(round(FCalFa,3),"-","-")
-    ANOVAjuste[,"F.Tab."]           <- c(round(FTabFa,3),"-","-")
+    ANOVAjuste[,"f calc."]          <- c(round(FCalFa,3),"-","-")
+    ANOVAjuste[,"f tab."]           <- c(round(FTabFa,3),"-","-")
     ANOVAjuste[,"Valor-p"]          <- c(round(VlrPFa,4),"-","-")
     ANOVA <- rbind(ANOVA[1:(nrow(ANOVA)-1),],ANOVAjuste) # Acrescenta na ANOVA anterior
   }
@@ -212,7 +212,7 @@ Regressao <- function(Y, X, NameVarX = NULL, Intercepts = TRUE, SigF = 0.05) {
     Hip.Test[i,4] <- 2*pt(abs(tCalc),(n - p - gl_i),lower.tail = FALSE) # Valor-p
   }
   Hip.Test <- cbind(B,Hip.Test)
-  colnames(Hip.Test) <- c("Coeficientes","Erro Padrao","T.Calc.","T.Tab.","Valor-p")
+  colnames(Hip.Test) <- c("Coeficientes","Erro Padrao","t calc.","t tab.","Valor-p")
   rownames(Hip.Test) <- rownames(B)
   ## Fim - Teste de Hipoteses para os coeficientes de regressao
   

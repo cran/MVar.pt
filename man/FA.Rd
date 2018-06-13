@@ -13,7 +13,7 @@
 
 \arguments{
 \item{Data}{Dados a serem analisados.}
-\item{Method}{Tipo de analises:\cr
+\item{Method}{Metodo de analise:\cr
               "PC" - Componentes Principais (default),\cr
               "PF" - Fator Principal,\cr
               "ML" - Maxima Verossimilhanca.}
@@ -36,10 +36,10 @@
 \item{MatrixVarEsp}{Matriz das variancias especificas.}
 \item{MatrixComuna}{Matriz das comunalidades.}
 \item{MatrixResiduo}{Matriz dos residuos.}
-\item{VlrSQRS}{Valor limite superior para a soma do quadrados dos residuos.}
+\item{VlrSQRS}{Valor limite superior para a soma dos quadrados dos residuos.}
 \item{VlrSQR}{Soma dos quadrados dos residuos.}
 \item{MatrixResult}{Matriz com todos os resultados associados.}
-\item{MatrixScores}{Matriz com os escores das observarcoes.}
+\item{MatrixScores}{Matriz com os escores das observacoes.}
 \item{CoefScores}{Matriz com os escores dos coeficientes dos fatores.}
 }
 
@@ -68,11 +68,13 @@ Dat <- DataQuan[,2:ncol(DataQuan)]
 
 rownames(Dat) <- DataQuan[,1]
 
-Resp <- FA(Dat, Method = "PC", Type = 2, NFactor = 3)
+Resp <- FA(Dat, Method = "PC", Type = 2, NFactor = 3, Rotation = "None",
+           ScoresObs = "Bartlett", Converg = 1e-5, Iteracao = 1000, 
+           TestFit = TRUE) 
 
-print("Matriz com todos os resultados associados"); round(Resp$MatrixResult,3)
+print("Matriz com todos os resultados associados:"); round(Resp$MatrixResult,3)
 
-print("Soma dos Quadrados dos Residuos"); round(Resp$VlrSQR,3)
+print("Soma dos Quadrados dos Residuos:"); round(Resp$VlrSQR,3)
 
 print("Matriz das Cargas Fatoriais:"); round(Resp$MatrixCarga,3)
 

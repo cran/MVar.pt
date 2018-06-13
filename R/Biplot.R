@@ -1,12 +1,12 @@
-Biplot <- function(Data, alfa = 0.5, Title = NA, xlabel = NA, ylabel = NA,
+Biplot <- function(Data, alpha = 0.5, Title = NA, xlabel = NA, ylabel = NA,
                    Color = TRUE, Obs = TRUE, LinLab = NA) {
   # Rotina para gerar Biplot desenvolvida 
   # por Paulo Cesar Ossani em 20/06/2015
   
   # Entrada:
   # Data  - Dados para plotagem.
-  # alfa  - Representatividade dos individuos (alfa), 
-  #         representatividade das variaveis (1-alfa). 
+  # alpha  - Representatividade dos individuos (alpha), 
+  #         representatividade das variaveis (1-alpha). 
   #         Sendo 0.5 o default.
   # Title  - Titulo para o grafico. Se nao for definido assume texto padrao.
   # xlabel - Nomeia o eixo X, se nao definido retorna padrao.
@@ -30,8 +30,8 @@ Biplot <- function(Data, alfa = 0.5, Title = NA, xlabel = NA, ylabel = NA,
   if (!is.data.frame(Data)) 
      stop("Entrada para 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!")
   
-  if (!is.numeric(alfa) || alfa < 0 || alfa > 1)
-     stop("Entrada para 'alfa' esta incorreta, deve ser numerica, com valor entre 0 e 1. Verifique!")
+  if (!is.numeric(alpha) || alpha < 0 || alpha > 1)
+     stop("Entrada para 'alpha' esta incorreta, deve ser numerica, com valor entre 0 e 1. Verifique!")
   
   if (!is.character(Title) && !is.na(Title))
      stop("Entrada para 'Title' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
@@ -70,16 +70,16 @@ Biplot <- function(Data, alfa = 0.5, Title = NA, xlabel = NA, ylabel = NA,
   Mu = Mdvs$u # Matriz U (autovetores)
   Mv = Mdvs$v # Matriz V (autovetores)
   
-  Coor_I <- Mu[,1:dim]%*%diag(Md[1:dim])^alfa     # coordenadas individuos
-  Coor_V <- Mv[,1:dim]%*%diag(Md[1:dim])^(1-alfa) # coordenadas variaveis
+  Coor_I <- Mu[,1:dim]%*%diag(Md[1:dim])^alpha     # coordenadas individuos
+  Coor_V <- Mv[,1:dim]%*%diag(Md[1:dim])^(1-alpha) # coordenadas variaveis
   
   PVar <- (Md^2/sum(Md^2)) * 100 # Proporcao dos primeiros (dim) componentes principais
   
   if (is.na(xlabel))
-     xlabel = paste("Primeiro componente (",round(PVar[1],2),"%)",sep="")
+     xlabel = paste("Primeira coordenada (",round(PVar[1],2),"%)",sep="")
 
   if (is.na(ylabel))
-     ylabel = paste("Segundo componente (",round(PVar[2],2),"%)",sep="")
+     ylabel = paste("Segunda coordenada (",round(PVar[2],2),"%)",sep="")
   
   MaxX <- max(Coor_I[,1],Coor_V[,1]) + 1 # Dimenssoes maximas das linhas
   MinX <- min(Coor_I[,1],Coor_V[,1]) - 1 # Dimenssoes minimas das linhas

@@ -6,17 +6,17 @@
 
 \description{Graficos da analise fatorial (FA).}
 
-\usage{Plot.FA(FA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
-        Color = TRUE, LinLab = NA)}
+\usage{Plot.FA(FA, Titles = NA, xlabel = NA, ylabel = NA,
+        Color = TRUE, LinLab = NA, Casc = TRUE)}
 
 \arguments{
 \item{FA}{Dados da funcao FA.}
-\item{Titles}{Titulos para os graficos.}
-\item{xlabel}{Nomeia o eixo X, se nao definido retorna padrao.}
-\item{ylabel}{Nomeia o eixo Y, se nao definido retorna padrao.}
+\item{Titles}{Titulos para os graficos, se nao for definido assume texto padrao.}
+\item{xlabel}{Nomeia o eixo X, se nao for definido assume texto padrao.}
+\item{ylabel}{Nomeia o eixo Y, se nao for definido assume texto padrao.}
 \item{Color}{Graficos coloridos (default = TRUE).}
-\item{LinLab}{Vetor com o rotulo para as linhas, se nao
-              informado retorna padrao.}
+\item{LinLab}{Vetor com os rotulos para as observacoes, se nao for definido assume texto padrao.}
+\item{Casc}{Efeito cascata na apresentacao dos graficos (default = TRUE).}
 }
 
 \value{Retorna varios graficos.}
@@ -38,9 +38,11 @@ rownames(Dat) <- DataQuan[,1]
 
 Resp <- FA(Dat, Method = "PC", Type = 2, NFactor = 3)
 
-Titles = c("Scree-plot","Scores das observacoes","Cargas Fatoriais","Biplot")
+Tit = c("Scree-plot","Scores das observacoes","Cargas Fatoriais","Biplot")
 
-Plot.FA(Resp, Titles, Color = TRUE, LinLab = rep("", nrow(Dat)))
+Plot.FA(Resp, Titles = Tit, xlabel = NA, ylabel = NA,
+        Color = TRUE, LinLab = rep("", nrow(Dat)),
+        Casc = TRUE)
 
 }
 

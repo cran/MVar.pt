@@ -4,9 +4,7 @@
 
 \title{Funcao para melhor posicao dos rotulos nos graficos.}
 
-\description{
-Funcao para melhor posicao dos rotulos nos graficos.
-}
+\description{Funcao para melhor posicao dos rotulos nos graficos.}
 
 \usage{
 LocLab(x, y = NULL, labels = seq(along = x), cex = 1,

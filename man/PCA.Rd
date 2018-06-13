@@ -9,7 +9,7 @@
 \usage{PCA(Data, Type = 1)}
 
 \arguments{
-\item{Data}{Dados a serem a analizados.}
+\item{Data}{Dados a serem analizados.}
 \item{Type}{1 para analise utilizando a matriz de covariancia (default),\cr
             2 para analise utilizando a matriz de correlacao.}
 }
@@ -48,19 +48,19 @@ Dat <- DataQuan[,2:8]
 
 rownames(Dat) <- DataQuan[1:nrow(DataQuan),1]
 
-PC <- PCA(Dat, 2) # Executa o PCA
+PC <- PCA(Dat, 2) # executa o PCA
 
 print("Matriz de Covariancia/Correlacao:"); round(PC$MatrixMC,2)
 
 print("Componentes Principais:"); round(PC$MatrixAutoVec,2)
 
-print("Variancias dos Componentes Principais"); round(PC$MatrixAutoVlr,2)
+print("Variancias dos Componentes Principais:"); round(PC$MatrixAutoVlr,2)
 
-print("Covariancia dos Componentes Principais"); round(PC$MatrixVCP,2)
+print("Covariancia dos Componentes Principais:"); round(PC$MatrixVCP,2)
 
-print("Correlacao dos Componentes Principais"); round(PC$MatrixCCP,2)
+print("Correlacao dos Componentes Principais:"); round(PC$MatrixCCP,2)
 
-print("Escores dos Componentes Principais"); round(PC$MatrixEsc,2)
+print("Escores dos Componentes Principais:"); round(PC$MatrixEsc,2)
 }
 
 \keyword{Analise de componentes principais}

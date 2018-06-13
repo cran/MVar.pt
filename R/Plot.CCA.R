@@ -1,5 +1,5 @@
-Plot.CCA <- function(CCA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA, 
-                     Color = TRUE) {
+Plot.CCA <- function(CCA, Titles = NA, xlabel = NA, ylabel = NA, 
+                     Color = TRUE, Casc = TRUE) {
   # Rotina para Plotar Graficos do Metodo CCA desenvolvida 
   # por Paulo Cesar Ossani em 09/04/2016
   
@@ -8,6 +8,7 @@ Plot.CCA <- function(CCA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
   # xlabel - Nomeia o eixo X, se nao definido retorna padrao.
   # ylabel - Nomeia o eixo Y, se nao definido retorna padrao.
   # Color  - Graficos coloridos (default = TRUE).
+  # Casc    - Efeito cascata na apresentacao dos graficos (default = TRUE).
 
   # Retorna:
   # Varios graficos
@@ -29,11 +30,16 @@ Plot.CCA <- function(CCA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
   if (!is.logical(Color))
      stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
+  if (!is.logical(Casc))
+     stop("Entrada para 'Casc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  
   if (is.na(xlabel))
      xlabel = "Eixo X"
   
   if (is.na(ylabel))
      ylabel = "Eixo Y"
+  
+  if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Scree-plot dos fatores #####
   plot(1:length(CCA$Var.UV[,1]), CCA$Var.UV[,1], type = "b", 
@@ -41,6 +47,8 @@ Plot.CCA <- function(CCA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
        ylab = "Variancias dos pares canonicos",
        main = Titles[1])
   ##### FIM - Scree-plot dos fatores #####
+  
+  if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem Correlacoes entre as variaveis canonicas e as variaveis originais #####
   plot(0,0, 
@@ -67,6 +75,8 @@ Plot.CCA <- function(CCA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
   #text(CCA$Coor.Y,cex=1, rownames(CCA$Coor.Y), pos=3, xpd = TRUE)  # Coloca os nomes dos pontos das coordenadas principais das linhas
   ##### FIM - Plotagem Correlacoes entre as variaveis canonicas e as variaveis originais #####
 
+  if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
+  
   ##### INICIO - Plotagem dos scores dos grupos X e Y #####
   plot(CCA$Score.X, # grafico para os scores do grupo X
        xlab = xlabel, # Nomeia Eixo X
@@ -87,6 +97,8 @@ Plot.CCA <- function(CCA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
   
   LocLab(CCA$Score.X, LineNames)  # Coloca os nomes dos pontos das coordenadas principais das linhas
   #text(CCA$Coor.Y,cex=1, rownames(CCA$Coor.Y), pos=3, xpd = TRUE)  # Coloca os nomes dos pontos das coordenadas principais das linhas
+  
+  if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
   
   plot(CCA$Score.Y, # grafico para os scores do grupo Y
        xlab = xlabel, # Nomeia Eixo X

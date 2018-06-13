@@ -4,13 +4,13 @@
 
 \docType{data}
 
-\title{Conjunto simulado de dados qualitativos.}
+\title{Conjunto de dados qualitativos.}
 
-\description{Conjunto de dados qualitativos, sobre consumo de cafes.}
+\description{Conjunto simulado de dados qualitativos, sobre consumo de cafes.}
 
 \usage{data(DataQuali)}
 
-\format{Conjunto de dados com 12 linhas e 6 colunas. Sendo 12 observacoes descritas  por 6 variaveis: Sexo,  Idade,	Fumante,	Estado Civil,	Esportista,	Estuda.}
+\format{Conjunto simulado de dados com 12 linhas e 6 colunas. Sendo 12 observacoes descritas  por 6 variaveis: Sexo,  Idade,	Fumante,	Estado Civil,	Esportista,	Estuda.}
 
 \author{
 Paulo Cesar Ossani

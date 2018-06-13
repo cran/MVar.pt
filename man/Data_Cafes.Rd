@@ -21,7 +21,7 @@ OSSANI, P. C. \emph{Qualidade de cafes especiais e nao especiais por meio da ana
 
 
 \examples{
-data(Data_Cafes) # conjundo de dados categorizados
+data(Data_Cafes) # conjunto de dados categorizados
 
 Matriz = Data_Cafes[,2:ncol(Data_Cafes)] 
 
@@ -31,17 +31,15 @@ GroupNames = c("Cafe A", "Cafe B", "Cafe C", "Cafe D")
 
 MF <- MFA(Matriz, c(16,16,16,16), c(rep("f",4)), GroupNames) 
 
-print("Variancias dos Componentes Principais:")
-print(round(MF$MatrixA,2))
+print("Variancias dos Componentes Principais:"); round(MF$MatrixA,2)
 
-print("Matriz das Inercias Parciais/Escores das Variaveis:")
-print(round(MF$MatrixEscVar,2))
+print("Matriz das Inercias Parciais/Escores das Variaveis:"); round(MF$MatrixEscVar,2)
 
 Tit = c("Scree-plot","Individuos", "Individuos/Tipos Cafes", "Inercias Grupos")
 
 Plot.MFA(MF, Titles = Tit, xlabel = NA, ylabel = NA,
          PosLeg = 2, BoxLeg = FALSE, Color = TRUE, 
-         NamArr = FALSE, LinLab = NA) # Imprime varios graficos da tela
+         NamArr = FALSE, LinLab = NA, Casc = FALSE) # Imprime varios graficos da tela
 
 }
 

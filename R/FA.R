@@ -1,4 +1,6 @@
-FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", ScoresObs = "Bartlett", Converg = 1e-5, Iteracao = 1000, TestFit = TRUE) {
+FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, 
+               Rotation = "None", ScoresObs = "Bartlett", 
+               Converg = 1e-5, Iteracao = 1000, TestFit = TRUE) {
    # Funcao executa a Analise Fatorial.
    # Desenvolvida por Paulo Cesar Ossani em 22/06/2013 e adapitada em 25/03/2016
    
@@ -57,7 +59,7 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
       stop("Entrada para 'Rotation' esta incorreta, deve ser 'None' ou 'Varimax'. Verifique!")
   
    if (Rotation != "NONE" && NFactor < 2)
-      stop("Para a rotacao, he necessario mais do que um fator. Altere o numero de fatores (NFactor) para continuar!")
+      stop("Para a rotacao, he necessario mais do que um fator. Altere o numero de fatores (NFactor) para continuar.")
 
    ScoresObs <- toupper(ScoresObs) # transforma em maiusculo
    
@@ -273,7 +275,7 @@ FA <- function(Data, Method = "PC", Type = 2, NFactor = 1, Rotation = "None", Sc
       
          gl <- ((p - NFactor)^2 - NFactor - p)/2 # grau de liberdade
     
-         cat("### TESTE DO AJUSTO DO MODELO ###\n")
+         cat("### TESTE DO AJUSTE DO MODELO ###\n")
       
          cat(paste("Grau de liberdade observado:", round(gl,5)),"\n")
         

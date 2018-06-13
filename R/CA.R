@@ -33,12 +33,12 @@ CA <- function(Data, TypData = "f", TypMatrix = "I") {
   TypData   <- toupper(TypData)   # transforma em maiusculo
   
   if (TypData!="F" && TypData!="C" || !is.character(TypData))
-     stop("Entrada para o tipo de dados 'TypData' esta incorreta, deve ser do tipo caracter, sendo 'f' ou 'c'. Verifique!")
+     stop("Entrada para 'TypData' esta incorreta, deve ser do tipo caracter, sendo 'f' ou 'c'. Verifique!")
   
   TypMatrix <- toupper(TypMatrix) # transforma em maiusculo
   
   if (TypMatrix!="I" && TypMatrix!="B" || !is.character(TypMatrix))
-     stop("Entrada para o tipo matriz 'TypMatrix' esta incorreta, deve ser do tipo caracter, sendo 'i' ou 'b'. Verifique!")
+     stop("Entrada para 'TypMatrix' esta incorreta, deve ser do tipo caracter, sendo 'i' ou 'b'. Verifique!")
 
   # verifica se os dados sao oriundos de contagem
   if (TypData=="F")  # para dados numericos

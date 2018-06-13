@@ -2,21 +2,18 @@
 
 \alias{MVar.pt}
 
-\alias{MVar.pt}
-
 \docType{package}
 
 \title{Analise multivariada (brazilian portuguese).}
 
-\description{Pacote para analise multivariada, que possui funcoes que executam analise de correspondencia simples (CA) e multipla (MCA), analise de componentes principais (PCA), analise de correlacao canonica (CCA), analise fatorial (FA), escalonamento multidimensional (MDS), analise de cluster hierarquico e nao hierarquico, regressao linear, analise de multiplos fatores (MFA) para dados quantitativos, qualitativos, de frequencia (MFACT) e dados mistos, projection pursuit (PP), grant tour e outras funcoes uteis para a analise multivariada.
-}
+\description{Pacote para analise multivariada, tendo funcoes que executam analise de correspondencia simples (CA) e multipla (MCA), analise de componentes principais (PCA), analise de correlacao canonica (CCA), analise fatorial (FA), escalonamento multidimensional (MDS), analise de cluster hierarquico e nao hierarquico, regressao linear, analise de multiplos fatores (MFA) para dados quantitativos, qualitativos, de frequencia (MFACT) e dados mistos, projection pursuit (PP), grant tour e outras funcoes uteis para a analise multivariada.}
 
 \details{
 \tabular{ll}{
 Package: \tab MVar.pt\cr
 Type: \tab Package\cr
-Version: \tab 2.0.1\cr
-Date: \tab 2018-05-25\cr
+Version: \tab 2.0.2\cr
+Date: \tab 2018-06-14\cr
 License: \tab GPL(>= 2)\cr
 LazyLoad: \tab yes\cr
 }

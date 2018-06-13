@@ -1,5 +1,5 @@
-Plot.PCA <- function(PC, Titles = matrix(NA,1,3), xlabel = NA, ylabel = NA,
-                     Color = TRUE, LinLab = NA) {
+Plot.PCA <- function(PC, Titles = NA, xlabel = NA, ylabel = NA,
+                     Color = TRUE, LinLab = NA, Casc = TRUE) {
   # Rotina para Plotar Graficos do Metodo PCA desenvolvida 
   # por Paulo Cesar Ossani em 11/2014
   
@@ -11,6 +11,7 @@ Plot.PCA <- function(PC, Titles = matrix(NA,1,3), xlabel = NA, ylabel = NA,
   # Color  - Graficos coloridos (default = TRUE).
   # LinLab - Vetor com o rotulo para as linhas, se nao
   #          informado retorna padrao.
+  # Casc    - Efeito cascata na apresentacao dos graficos (default = TRUE).
   
   # Retorna:
   # Varios graficos
@@ -33,19 +34,26 @@ Plot.PCA <- function(PC, Titles = matrix(NA,1,3), xlabel = NA, ylabel = NA,
   if (!is.na(LinLab) && length(LinLab)!=nrow(PC$MatrixEsc))
      stop("O numero elementos do rotulo para linhas 'LinLab' difere do numero de linhas da base de dados. Verifique!")
   
+  if (!is.logical(Casc))
+     stop("Entrada para 'Casc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  
   if (is.na(LinLab))
      LinLab <- rownames(PC$MatrixEsc)
   
   if (is.na(xlabel))
-     xlabel = paste("Primeira coordenada principal (",round(PC$MatrixAutoVlr[1,2],2),"%)",sep="")
+     xlabel = paste("Primeira coordenada (",round(PC$MatrixAutoVlr[1,2],2),"%)",sep="")
   
   if (is.na(ylabel))
-     ylabel = paste("Segunda coordenada principal (",round(PC$MatrixAutoVlr[2,2],2),"%)",sep="")
+     ylabel = paste("Segunda coordenada (",round(PC$MatrixAutoVlr[2,2],2),"%)",sep="")
   #####   FIM - Informacoes usadas nos Graficos  #####
+  
+  if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem dos Autovalores #####
   mp <- barplot(PC$MatrixAutoVlr[,1],names.arg=paste(round(PC$MatrixAutoVlr[,2],2),"%",sep=""),main = "Variancias dos componentes")
   ##### FIM - Plotagem dos Autovalores #####
+  
+  if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Scree-plot dos componentes #####
   plot(1:length(PC$MatrixAutoVlr[,1]), PC$MatrixAutoVlr[,1], type = "b", 
@@ -53,6 +61,8 @@ Plot.PCA <- function(PC, Titles = matrix(NA,1,3), xlabel = NA, ylabel = NA,
        ylab = "Variancia",
        main = Titles[1])
   ##### FIM - Scree-plot dos componentes #####
+  
+  if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem dos Dados das linhas #####
   plot(PC$MatrixEsc, # cria grafico para as coordenadas principais das linhas
@@ -71,6 +81,8 @@ Plot.PCA <- function(PC, Titles = matrix(NA,1,3), xlabel = NA, ylabel = NA,
   #text(PC$MatrixEsc, cex = 1, pos = 3, LinLab)  # Coloca os nomes dos pontos das coordenadas principais das linhas
   LocLab(PC$MatrixEsc, cex = 1, LinLab)
   ##### FIM - Plotagem dos Dados das linhas #####
+  
+  if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem das Correlacoes dos Componentes Principais com as Variaveis Originais #####
   plot(0,0, # cria grafico para as coordenadas das Correlacoes dos Componentes Principais com as Variaveis Originais

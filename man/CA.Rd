@@ -9,10 +9,10 @@
 \usage{CA(Data, TypData = "f", TypMatrix = "I")}
 
 \arguments{
-\item{Data}{Dados a serem analisados, isto e, tabela de contingencia.}
+\item{Data}{Dados a serem analisados (tabela de contingencia).}
 \item{TypData}{"f" para dados de frequencia (default),\cr
                "c" para dados qualitativos.}
-\item{TypMatrix}{Matriz usada para calculos quanto TypData = "c".\cr
+\item{TypMatrix}{Matriz usada para calculos quando TypData = "c".\cr
                  "I" para matriz indicadora (default),\cr
                  "B" para matriz de Burt.}
 }
@@ -58,9 +58,9 @@ rownames(Dat) <- as.character(t(DataFreq[1:nrow(DataFreq),1]))
 
 Resp <- CA(Dat, "f") # realiza CA
 
-print("Existe dependencia entre as linhas e as colunas?"); print(Resp$DepData)
+print("Existe dependencia entre as linhas e as colunas?"); Resp$DepData
 
-print("Numero de coordenadas principais:"); print(Resp$NumCood)
+print("Numero de coordenadas principais:"); Resp$NumCood
 
 print("Coordenadas principais das Linhas:"); round(Resp$MatrixX,2)
 

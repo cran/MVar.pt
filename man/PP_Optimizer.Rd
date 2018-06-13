@@ -12,44 +12,44 @@
              Eps = 1e-3, Maxiter = 3000, Half = 30)}
 
 \arguments{
-\item{Data}{Conjunto de dados numericos sem informacao de classes.}
-\item{Class}{Vetor com os nomes das classes dos dados.}
-\item{Findex}{Funcao indice de projecao a ser usada:\cr
-              "lda" - Indice LDA,\cr
-              "pda" - Indice PDA,\cr
-              "lr" - Indice Lr,\cr
-              "holes" - Indice holes (default),\cr
-              "cm" - Indice massa central,\cr
-              "pca" - Indice PCA,\cr
-              "friedmantukey" - Indice Friedman Tukey,\cr
-              "entropy" - Indice entropia,\cr
-              "legendre" - Indice Legendre,\cr
-              "laguerrefourier" - Indice Laguerre Fourier,\cr
-              "hermite" - Indice Hermite,\cr
-              "naturalhermite" - Indice Hermite natural,\cr
-              "kurtosismax" - Indice curtose maxima,\cr
-              "kurtosismin" - Indice curtose minima,\cr
-              "moment" - Indice momento,\cr
-              "chi" - Indice qui-quadrado.}
-\item{DimProj}{Dimensao para a projecao dos dados (default = 2).}
-\item{Sphere}{Dados esfericos (default = TRUE).}
-\item{OptMethod}{Metodo de otmizacao GTSA - Grand Tour Simulated Annealing ou SA - Simulated Annealing (default = "GTSA").}
-\item{Weight}{Usado nos indice LDA, PDA e Lr, para ponderar os calculos pelo numero de elementos em cada classe (default = TRUE).}
-\item{Lambda}{Usado no indice PDA (default = 0.1).}
-\item{r}{Usado no indice Lr (default = 1).}
-\item{Cooling}{Taxa de arrefecimento (default = 0.9).}
-\item{Eps}{Precisao de aproximacao para Cooling (default = 1e-3).}
-\item{Maxiter}{Numero maximo de iteracoes do algoritimo (default = 3000).}
-\item{Half}{Numero de etapas sem incremetar o indice, para em seguida diminuir o valor do Cooling (default = 30).}
+  \item{Data}{Conjunto de dados numericos sem a informacao das classes.}
+  \item{Class}{Vetor com os nomes das classes dos dados.}
+  \item{Findex}{Funcao indice de projecao a ser usada:\cr
+                "lda" - Indice LDA,\cr
+                "pda" - Indice PDA,\cr
+                "lr" - Indice Lr,\cr
+                "holes" - Indice holes (default),\cr
+                "cm" - Indice massa central,\cr
+                "pca" - Indice PCA,\cr
+                "friedmantukey" - Indice Friedman Tukey,\cr
+                "entropy" - Indice entropia,\cr
+                "legendre" - Indice Legendre,\cr
+                "laguerrefourier" - Indice Laguerre Fourier,\cr
+                "hermite" - Indice Hermite,\cr
+                "naturalhermite" - Indice Hermite natural,\cr
+                "kurtosismax" - Indice curtose maxima,\cr
+                "kurtosismin" - Indice curtose minima,\cr
+                "moment" - Indice momento,\cr
+                "chi" - Indice qui-quadrado.}
+  \item{DimProj}{Dimensao para a projecao dos dados (default = 2).}
+  \item{Sphere}{Dados esfericos (default = TRUE).}
+  \item{OptMethod}{Metodo de otimizacao GTSA - Grand Tour Simulated Annealing ou SA - Simulated Annealing (default = "GTSA").}
+  \item{Weight}{Usado nos indice LDA, PDA e Lr, para ponderar os calculos pelo numero de elementos em cada classe (default = TRUE).}
+  \item{Lambda}{Usado no indice PDA (default = 0.1).}
+  \item{r}{Usado no indice Lr (default = 1).}
+  \item{Cooling}{Taxa de arrefecimento (default = 0.9).}
+  \item{Eps}{Precisao de aproximacao para Cooling (default = 1e-3).}
+  \item{Maxiter}{Numero maximo de iteracoes do algoritmo (default = 3000).}
+  \item{Half}{Numero de etapas sem incrementar o indice, para em seguida diminuir o valor do Cooling (default = 30).}
 }
 
 \value{
-\item{Num.Class}{Numero de classes.}
-\item{Class.Names}{Nomes das classes.}
-\item{Proj.Data}{Dados projetados.}
-\item{Vector.Opt}{Vetores de projecao encontrados.}
-\item{Index}{Vetor com os indices de projecao encontrados no processo, convergindo para o maximo, ou o minimo.}
-\item{Findex}{Funcao indice de projecao usada.}
+  \item{Num.Class}{Numero de classes.}
+  \item{Class.Names}{Nomes das classes.}
+  \item{Proj.Data}{Dados projetados.}
+  \item{Vector.Opt}{Vetores de projecao encontrados.}
+  \item{Index}{Vetor com os indices de projecao encontrados no processo, convergindo para o maximo, ou o minimo.}
+  \item{Findex}{Funcao indice de projecao usada.}
 }
 
 \references{
@@ -81,12 +81,12 @@ Dim <- 1 # dimensao da projecao dos dados
 Sphere <- TRUE # Dados esfericos
 
 Res <- PP_Optimizer(Data = Dat, Class = Class, Findex = FcIndex,
-               OptMethod = "GTSA", DimProj = Dim, Sphere = Sphere, 
-               Weight = TRUE, Lambda = 0.1, r = 1, Cooling = 0.9, 
-               Eps = 1e-3, Maxiter = 1000, Half = 30)
+                    OptMethod = "GTSA", DimProj = Dim, Sphere = Sphere, 
+                    Weight = TRUE, Lambda = 0.1, r = 1, Cooling = 0.9, 
+                    Eps = 1e-3, Maxiter = 1000, Half = 30)
  
 print("Numero de classes:"); Res$Num.Class
-print("Nomes das classes"); Res$Class.Names
+print("Nomes das classes:"); Res$Class.Names
 print("Funcao indice de projecao:"); Res$Findex
 print("Dados projetados:"); Res$Proj.Data
 print("Vetores de projecao:"); Res$Vector.Opt
@@ -97,12 +97,12 @@ print("Indices de projecao:"); Res$Index
 Class <- iris[,5] # classe dos dados
 
 Res <- PP_Optimizer(Data = Dat, Class = Class, Findex = FcIndex,
-               OptMethod = "GTSA", DimProj = Dim, Sphere = Sphere, 
-               Weight = TRUE, Lambda = 0.1, r = 1, Cooling = 0.9, 
-               Eps = 1e-3, Maxiter = 1000, Half = 30)
+                    OptMethod = "GTSA", DimProj = Dim, Sphere = Sphere, 
+                    Weight = TRUE, Lambda = 0.1, r = 1, Cooling = 0.9, 
+                    Eps = 1e-3, Maxiter = 1000, Half = 30)
 
 print("Numero de classes:"); Res$Num.Class
-print("Nomes das classes"); Res$Class.Names
+print("Nomes das classes:"); Res$Class.Names
 print("Funcao indice de projecao:"); Res$Findex
 print("Dados projetados:"); Res$Proj.Data
 print("Vetores de projecao:"); Res$Vector.Opt

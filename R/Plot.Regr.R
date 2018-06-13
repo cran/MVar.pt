@@ -1,6 +1,6 @@
-Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = NA, 
-                           ylabel = NA, NameVarY = NA, NameVarX = NA, Color = TRUE, 
-                           IntConf = TRUE, IntPrev = TRUE) {
+Plot.Regr <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = NA, 
+                      ylabel = NA, NameVarY = NA, NameVarX = NA, Color = TRUE, 
+                      IntConf = TRUE, IntPrev = TRUE, Casc = TRUE) {
   # Esta funcao gera graficos da Analise de Regressao
   # desenvolvida por Paulo Cesar Ossani em 06/2016
     
@@ -23,6 +23,7 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = N
   #            Graficos com intervalo de confianca (default = TRUE).
   # IntPrev  - Caso TypeGraf = "Regression":
   #            Graficos com intervalo de previsao (default = TRUE).
+  # Casc    - Efeito cascata na apresentacao dos graficos (default = TRUE).
 
   # Retorna:
   # Varios graficos.
@@ -31,7 +32,13 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = N
   if (is.na(pmatch(TypeGraf, Graphic))) 
      stop("Entrada para 'TypeGraf' esta incorreta, deve ser: 'Scatterplot', 
           'Regression', 'QQPlot', 'Histogram', 'Fits' ou 'Order'. Verifique!")
-
+  
+  if (!is.character(xlabel) && !is.na(xlabel))
+     stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
+  if (!is.character(ylabel) && !is.na(ylabel))
+     stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
   if (!is.logical(Color))
      stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
@@ -49,17 +56,16 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = N
   if (is.na(NameVarX))
      NameVarX <- c(paste("X",1:ncol(X),sep=""))
   
-  if (!is.character(xlabel) && !is.na(xlabel))
-     stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
-  
-  if (!is.character(ylabel) && !is.na(ylabel))
-     stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  if (!is.logical(Casc))
+     stop("Entrada para 'Casc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
   ## Inicio - Scatterplot
   if (TypeGraf == "Scatterplot") {
     
      if (is.na(Title))
         Title = c("Grafico de dispersao 2 a 2")
+     
+     if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
      
      Dat <- as.data.frame(cbind(Reg$Y,X))
      colnames(Dat) <- c(NameVarY,NameVarX)
@@ -91,6 +97,8 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = N
         X <- as.numeric(X)
         
         if (Reg$Intercepts) Modelo <- lm(Y~X) else Modelo <- lm(Y~-1+X)
+        
+        if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
         
         # Intervalo para abcissa
         Inter <- ifelse(length(Reg$Y)<100,150,length(Reg$Y)*1.5) # intervalo para o eixo X
@@ -149,6 +157,8 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = N
      if (is.na(Title))
         Title = c("Grafico da probabilidade \n normal do residuo")
      
+     if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
+     
      qqnorm(Reg$Error,
             xlab = xlabel, # Nomeia Eixo X
             ylab = ylabel, # Nomeia Eixo Y
@@ -171,6 +181,8 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = N
      if (is.na(Title))
         Title = c("Histograma do residuo")
      
+     if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
+     
      hist(Reg$Error,
           xlab = xlabel, # Nomeia Eixo X
           ylab = ylabel, # Nomeia Eixo Y
@@ -191,6 +203,8 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = N
     
     if (is.na(Title))
        Title = c("Valores ajustados vs. residuos")
+    
+    if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
     
     plot(Reg$Prev,Reg$Error, # cria grafico
          xlab = xlabel, # Nomeia Eixo X
@@ -215,6 +229,8 @@ Plot.Regressao <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = N
     
     if (is.na(Title))
        Title = c("Ordem das observacoes vs. residuos")
+    
+    if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
     
     plot(1:length(Reg$Error),Reg$Error, # cria grafico
          xlab = xlabel, # Nomeia Eixo X

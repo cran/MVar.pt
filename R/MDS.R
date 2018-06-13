@@ -1,4 +1,4 @@
-MDS <- function(Data, Distance = "euclidean", Eixos = TRUE, 
+MDS <- function(Data, Distance = "euclidean", Axis = TRUE, 
                 Title = NA, xlabel = NA, ylabel = NA, 
                 Color = TRUE, LinLab = NA) {
   # Esta funcao executa a Escalonamento Multidimensional
@@ -9,7 +9,7 @@ MDS <- function(Data, Distance = "euclidean", Eixos = TRUE,
   # Distance - Metrica das distancias: "euclidean" (default), "maximum", 
   #            "manhattan", "canberra", "binary" ou "minkowski".
   # Color  - Graficos coloridos (default = TRUE).
-  # Eixos  - Coloca eixos no grafico (default = TRUE).
+  # Axis  - Coloca eixos no grafico (default = TRUE).
   # Title  - Titulo do grafico, se nulo retorna padrao.
   # xlabel - Nomeia o eixo X, se nulo retorna padrao.
   # ylabel - Nomeia o eixo Y, se nulo retorna padrao.
@@ -23,22 +23,19 @@ MDS <- function(Data, Distance = "euclidean", Eixos = TRUE,
   if (!is.data.frame(Data)) 
      stop("Entrada 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!")
  
+  Distance <- tolower(Distance) # torna minuscula
+  
   DISTANCE <- c("euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski")
-  if (is.na(pmatch(Distance, DISTANCE))) 
-     stop("Entrada para 'Metodo' esta incorreta, deve ser: 'euclidean', 
+  #if (is.na(pmatch(Distance, DISTANCE)))
+  if (!(Distance %in% DISTANCE))
+     stop("Entrada para 'Distance' esta incorreta, deve ser: 'euclidean', 
           'maximum', 'manhattan', 'canberra', 'binary' ou 'minkowski'. Verifique!")
 
-  if (!is.logical(Eixos)) 
-     stop("Entrada para 'Eixos' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  if (!is.logical(Axis)) 
+     stop("Entrada para 'Axis' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
   if (!is.character(Title) && !is.na(Title))
      stop("Entrada para 'Title' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
-  
-  if (!is.character(xlabel) && !is.na(xlabel))
-     stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
-  
-  if (!is.character(ylabel) && !is.na(ylabel))
-     stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
   if (!is.logical(Color))
      stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
@@ -49,17 +46,23 @@ MDS <- function(Data, Distance = "euclidean", Eixos = TRUE,
   if (is.na(Title))
      Title = "Escalonamento multidimensional" # Titulo
   
+  if (!is.character(xlabel) && !is.na(xlabel))
+     stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
+  if (!is.character(ylabel) && !is.na(ylabel))
+     stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
   if (is.na(xlabel))
      xlabel = "Eixo x" # Nomeia Eixo X  
   
   if (is.na(ylabel))
      ylabel = "Eixo y" # Nomeia Eixo Y  
   
-  if (is.na(LinLab))
+  if (is.na(LinLab[1]))
      LinLab <- rownames(Data)
   
   if (!is.na(LinLab) && !is.character(LinLab))
-     stop("Entrada para 'LinLab' esta incorreta, deve ser do tipo caracter. Verifique!")
+     stop("Entrada para 'LinLab' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
 
   Md <- dist(Data, method = Distance) # matrix das distancias
   
@@ -79,7 +82,7 @@ MDS <- function(Data, Distance = "euclidean", Eixos = TRUE,
        ylim = c(min(y)-0.5,max(y)+0.5), # Dimensao para as colunas do grafico
        col  = ifelse(Color,"red","black"))  # Cor dos pontos
   
-  if (Eixos) # coloca eixos no grafico
+  if (Axis) # coloca Axis no grafico
      abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
   
   #text(fit, cex = 1, pos = 3, labels = LinLab)  # Coloca os nomes dos pontos das coordenadas

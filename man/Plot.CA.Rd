@@ -6,16 +6,17 @@
 
 \description{Graficos da analise de correspondencia (CA) simples e multipla.}
 
-\usage{Plot.CA(AC, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
-        Color = TRUE, LinLab = NA)}
+\usage{Plot.CA(CA, Titles = NA, xlabel = NA, ylabel = NA,
+        Color = TRUE, LinLab = NA, Casc = TRUE)}
 
 \arguments{
-\item{AC}{Dados da funcao CA.}
-\item{Titles}{Titulos para os graficos.}
-\item{xlabel}{Nomeia o eixo X, se nao definido retorna padrao.}
-\item{ylabel}{Nomeia o eixo Y, se nao definido retorna padrao.}
+\item{CA}{Dados da funcao CA.}
+\item{Titles}{Titulos para os graficos, se nao for definido assume texto padrao.}
+\item{xlabel}{Nomeia o eixo X, se nao for definido assume texto padrao.}
+\item{ylabel}{Nomeia o eixo Y, se nao for definido assume texto padrao.}
 \item{Color}{Graficos coloridos (default = TRUE).}
-\item{LinLab}{Vetor com o rotulo para as linhas, para dados de frequencia. Se nao informado retorna padrao.}
+\item{LinLab}{Vetor com os rotulos para as observacoes para dados de frequencia, se nao for definido assume texto padrao.}
+\item{Casc}{Efeito cascata na apresentacao dos graficos (default = TRUE).}
 }
 
 \value{Retorna varios graficos.}
@@ -37,20 +38,22 @@ rownames(Dat) <- DataFreq[1:nrow(DataFreq),1]
 
 Resp <- CA(Dat, "f") # realiza CA
 
-Titles = c("Scree-plot","Observacoes", "Variaveis", "Observacoes/Variaveis")
+Tit = c("Scree-plot","Observacoes", "Variaveis", "Observacoes/Variaveis")
 
-Plot.CA(Resp, Titles, Color = TRUE)
+Plot.CA(Resp, Titles = Tit, xlabel = NA, ylabel = NA,
+        Color = TRUE, LinLab = NA, Casc = FALSE)
 
 
-data(DataQuali) # Conjunto de dados qualitativos
+data(DataQuali) # conjunto de dados qualitativos
 
 Dat <- DataQuali[,2:ncol(DataQuali)]
 
 Resp <- CA(Dat, "c", "b") # realiza CA
 
-Titles = c("","","Grafico das Variaveis")
+Tit = c("","","Grafico das Variaveis")
 
-Plot.CA(Resp, Titles, Color = TRUE)
+Plot.CA(Resp, Titles = Tit, xlabel = NA, ylabel = NA,
+        Color = TRUE, LinLab = NA, Casc = FALSE)
 
 }
 

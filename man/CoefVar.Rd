@@ -10,8 +10,8 @@
 
 \arguments{
 \item{Data}{Dados a serem analisados.}
-\item{Type}{1 Coefiente de variacao global (default),\cr
-            2 Coefiente de variacao por coluna.}
+\item{Type}{1 Coeficiente de variacao global (default),\cr
+            2 Coeficiente de variacao por coluna.}
 }
 
 \value{{Coeficiente de variacao, global ou por coluna.}}
@@ -31,10 +31,10 @@ data(DataQuan) # conjunto de dados
 
 Dat <- DataQuan[,2:8]
 
-Resp <- CoefVar(Dat, Type = 1) # Coeficiente de variacao global
+Resp <- CoefVar(Dat, Type = 1) # coeficiente de variacao global
 round(Resp,2)
 
-Resp <- CoefVar(Dat, Type = 2) # Coeficiente de variacao por coluna
+Resp <- CoefVar(Dat, Type = 2) # coeficiente de variacao por coluna
 round(Resp,2)
 }
 

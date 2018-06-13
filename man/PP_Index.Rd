@@ -2,16 +2,16 @@
 
 \alias{PP_Index}
 
-\title{Funcao para encontrar os indices da projection pursuit.}
+\title{Funcao para encontrar os indices da projection pursuit (PP).}
 
-\description{Funcao usada para encontrar os indices da projection pursuit.}
+\description{Funcao usada para encontrar os indices da projection pursuit (PP).}
 
 \usage{PP_Index(Data, Class = NA, Vector.Proj = NA, 
          Findex = "HOLES", DimProj = 2, Weight = TRUE, 
          Lambda = 0.1, r = 1, ck = NA)}
 
 \arguments{
-\item{Data}{Conjunto de dados numericos sem informacao de classes.}
+\item{Data}{Conjunto de dados numericos sem a informacao das classes.}
 \item{Class}{Vetor com os nomes das classes dos dados.}
 \item{Vector.Proj}{Vetor projecao.}
 \item{Findex}{Funcao indice de projecao a ser usada:\cr
@@ -95,8 +95,8 @@ Dat <- iris[,1:4]
 
 # Exemplo 1 - Sem as classes nos dados
 Ind <- PP_Index(Data = Dat, Class = NA, Vector.Proj = NA, 
-          Findex = "moment", DimProj = 2, Weight = TRUE, 
-          Lambda = 0.1, r = 1)
+                Findex = "moment", DimProj = 2, Weight = TRUE, 
+                Lambda = 0.1, r = 1)
 
 print("Numero de classes:"); Ind$Num.Class
 print("Nomes das classes:"); Ind$Class.Names
@@ -125,8 +125,8 @@ if (match(toupper(FcIndex),c("LDA", "PDA", "LR"), nomatch = 0) > 0) {
 } else Data <- as.matrix(Res$Proj.Data[,1:Dim])
 
 Ind <- PP_Index(Data = Data, Class = Class, Vector.Proj = Res$Vector.Opt, 
-         Findex = FcIndex, DimProj = 2, Weight = TRUE, Lambda = 0.1,
-         r = 1)
+                Findex = FcIndex, DimProj = 2, Weight = TRUE, Lambda = 0.1,
+                r = 1)
 
 print("Numero de classes:"); Ind$Num.Class
 print("Nomes das classes:"); Ind$Class.Names

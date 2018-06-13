@@ -1,17 +1,17 @@
-\name{Regressao}
+\name{Regr}
 
-\alias{Regressao}
+\alias{Regr}
 
 \title{Regressao linear.}
 
 \description{Realiza a regressao linear em um conjunto de dados.}
 
-\usage{Regressao(Y, X, NameVarX = NULL, Intercepts = TRUE, SigF = 0.05)}
+\usage{Regr(Y, X, NameVarX = NULL, Intercepts = TRUE, SigF = 0.05)}
 
 \arguments{
-\item{Y}{Respotas.}
+\item{Y}{Variaveis respotas.}
 \item{X}{Variaveis regressoras.}
-\item{NameVarX}{Nome da variavel, ou variaveis X, se omitido retorna padrao.}
+\item{NameVarX}{Nome da variavel, ou variaveis X, se nao for definido assume texto padrao.}
 \item{Intercepts}{Considerar o intercepto na regressao (default = TRUE).}
 \item{SigF}{Nivel de significancia dos testes dos residuos (default = 5\%).}
 }
@@ -44,7 +44,7 @@ RENCHER, A. C. \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wil
 Paulo Cesar Ossani
 }
 
-\seealso{\code{\link{Plot.Regressao}}}
+\seealso{\code{\link{Plot.Regr}}}
 
 \examples{
 data(DataMix)
@@ -55,12 +55,12 @@ X <- DataMix[,6:7]
 
 NomeY <- "Medias notas"
 
-NomeX <- c("Cafes Expeciais", "Cafes Comerciais")
+NomeX <- c("Cafes Expeciais","Cafes Comerciais")
 
-Res <- Regressao(Y, X, NameVarX = NomeX , Intercepts = TRUE, SigF = 0.05)
+Res <- Regr(Y, X, NameVarX = NomeX , Intercepts = TRUE, SigF = 0.05)
 
 print("Coeficientes da Regressao:"); round(Res$Betas,4)
-print("Analise de Variancia"); Res$ANOVA
+print("Analise de Variancia:"); Res$ANOVA
 print("Teste de Hipoteses dos Coeficientes da Regressao:"); round(Res$Hip.Test,4)
 print("Coeficiente de Determinacao:"); round(Res$R,4)
 print("Coeficiente de Determinacao Corrigido:"); round(Res$Rc,4) 

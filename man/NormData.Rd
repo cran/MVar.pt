@@ -8,7 +8,7 @@
 
 \usage{NormData(Data, Type = 1)}
 \arguments{
-  \item{Data}{Dados a serem a normalizados.}
+  \item{Data}{Dados a serem normalizados.}
   \item{Type}{1 normaliza global (default),\cr
               2 normaliza por coluna.}
 }

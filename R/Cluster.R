@@ -1,13 +1,15 @@
-Cluster <- function(Data, Hierarquico = TRUE, Analise = "Obs", CorAbs = FALSE, 
-                    Normaliza = FALSE, Distance = "euclidean", Metodo = "complete", 
-                    Horizontal = FALSE, NumGrupos = 0) {
+Cluster <- function(Data, Titles = NA, Hierarquico = TRUE, Analise = "Obs",  
+                    CorAbs = FALSE, Normaliza = FALSE, Distance = "euclidean",  
+                    Method = "complete", Horizontal = FALSE, NumGrupos = 0,
+                    Casc = TRUE) {
   # Esta funcao executa a Analise de Agrupamentos Hierarquicos e
   # Nao-Hierarquicos, desenvolvida por Paulo Cesar Ossani em 07/2016
   
   # Entrada:
   # Data - Dados a serem a analizados
+  # Titles - Titulos para os graficos.
   # Hierarquico - Agrupamentos hierarquicos (default = TRUE), 
-  #               para agrupamentos nao hierarquicos (metodo K-Means), 
+  #               para agrupamentos nao hierarquicos (Method K-Means), 
   #               somente para caso Analise = "Obs".
   # Analise - "Obs" para analises nas observacoes (default),
   #           "Var" para analises nas variaveis.
@@ -17,11 +19,12 @@ Cluster <- function(Data, Hierarquico = TRUE, Analise = "Obs", CorAbs = FALSE,
   #            "euclidean" (default), "maximum", "manhattan",
   #            "canberra", "binary" ou "minkowski". Caso Analise = "Var" a metrica
   #            sera a matriz de correlacao, conforme CorAbs.
-  # Metodo - Metodo para analises caso agrupamentos hierarquicos:
+  # Method - Metodo para analises caso agrupamentos hierarquicos:
   #          "complete" (default), "ward.D", "ward.D2", "single",
   #          "average", "mcquitty", "median" ou "centroid".
-  # Horizontal - Dendograma na horizontal (default = FALSE).
+  # Horizontal - Dendrograma na horizontal (default = FALSE).
   # NumGrupos - Numero de grupos a formar.
+  # Casc    - Efeito cascata na apresentacao dos graficos (default = TRUE).
   
   # Retorna:
   # Varios graficos.
@@ -48,14 +51,18 @@ Cluster <- function(Data, Hierarquico = TRUE, Analise = "Obs", CorAbs = FALSE,
   if (!is.logical(Normaliza)) 
      stop("Entrada para 'Normaliza' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
+  Distance <- tolower(Distance) # torna minusculo
+  
   DISTANCE <- c("euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski")
-  if (is.na(pmatch(Distance, DISTANCE))) 
+  #if (is.na(pmatch(Distance, DISTANCE)))
+  if (!(Distance %in% DISTANCE))
      stop("Entrada para 'Distance' esta incorreta, deve ser: 'euclidean', 
           'maximum', 'manhattan', 'canberra', 'binary' ou 'minkowski'. Verifique!")
   
   METHODS <- c("complete", "ward.D", "ward.D2", "single", "average", "mcquitty", "median" , "centroid")
-  if (is.na(pmatch(Metodo, METHODS))) 
-     stop("Entrada para 'Metodo' esta incorreta, deve ser: 'complete', 'ward.D', 
+  # if (is.na(pmatch(Method, METHODS)))
+  if (!(Method %in% METHODS)) 
+     stop("Entrada para 'Method' esta incorreta, deve ser: 'complete', 'ward.D', 
           'ward.D2', 'single', 'average', 'mcquitty', 'median' ou 'centroid'. Verifique!")
   
   if (!is.logical(Horizontal)) 
@@ -70,16 +77,24 @@ Cluster <- function(Data, Hierarquico = TRUE, Analise = "Obs", CorAbs = FALSE,
      stop("Entrada para 'NumGrupos' esta incorreta, deve ser numeros inteiros positivos, ou zero. Verifique!")
   
   if (!Hierarquico && Analise == "VAR")
-     stop("O metodo nao hierarquico e valido apenas para as observacoes. Verifique!")
+     stop("O Method nao hierarquico e valido apenas para as observacoes. Verifique!")
   
   if (!Hierarquico && NumGrupos < 2)
-     stop("Para o metodo nao hierarquico se faz necessario NumGrupo > 1. Verifique!")
+     stop("Para o Method nao hierarquico se faz necessario NumGrupo > 1. Verifique!")
 
+  if (!is.logical(Casc))
+     stop("Entrada para 'Casc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  
   DataNew <- Data # dados a serem analizados
   
   if (Normaliza && Analise == "OBS")
      DataNew <- NormData(DataNew, 2) # normaliza por colunas os dados
 
+  # Cria Titulos para os graficos caso nao existam
+  if (!is.character(Titles[1]) || is.na(Titles[1])) Titles[1] = c("Grafico da similaridade\n dentro dos grupos")
+  if (!is.character(Titles[2]) || is.na(Titles[2])) Titles[2] = c("Grafico das distancias\n dentro dos grupos")
+  if (!is.character(Titles[3]) || is.na(Titles[3])) Titles[3] = c("Dendrograma")
+  
   ### INICIO - Agrupamentos hierarquicos ###
   if (Hierarquico) {
      
@@ -94,7 +109,7 @@ Cluster <- function(Data, Hierarquico = TRUE, Analise = "Obs", CorAbs = FALSE,
             Md <- as.dist(1 - cor(Data)) # matrix das distancias
      }
      
-     hc <- hclust(Md, method = Metodo) # procedimento hierarquico
+     hc <- hclust(Md, method = Method) # procedimento hierarquico
      
      Grupos <- 0
      if (NumGrupos!=0) 
@@ -124,36 +139,53 @@ Cluster <- function(Data, Hierarquico = TRUE, Analise = "Obs", CorAbs = FALSE,
      
      ## INICIO - Screen plots ##
      if (Analise == "OBS") {
-        plot(length(Sim):1, 1/Sim, type="b", xlab="Numero de Agrupamentos", ylab="Similaridade dentro dos grupos")
+        
+        if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
+       
+        plot(length(Sim):1, 1/Sim, 
+             type = "b", 
+             xlab = "Numero de agrupamentos", 
+             ylab = "Similaridade dentro dos grupos",
+             main = Titles[1]) # Titulo
+        
         abline(v=NumGrupos, cex = 1.5, lty = 2) # cria o eixo no agrupamento desejado
-         
-        plot(length(Distancia):1, Distancia, type="b", xlab="Numero de agrupamentos", ylab="Distancias dentro dos grupos")
+        
+        if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
+        
+        plot(length(Distancia):1, Distancia, 
+             type ="b", 
+             xlab ="Numero de agrupamentos", 
+             ylab ="Distancias dentro dos grupos",
+             main = Titles[2]) # Titulo
+             
         abline(v=NumGrupos, cex = 1.5, lty = 2) # cria o eixo no agrupamento desejado
      }
      ## FIM - Screen plots ##
  
-     ## INICIO - Plotagem do Dendograma ##
+     if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
+     
+     ## INICIO - Plotagem do Dendrograma ##
      Dendo <- as.dendrogram(hc)
      plot(Dendo, # cordenadas para plotar
           ylab   = "Distancia",  # Nomeia Eixo Y
-          main   = "Dendograma", # Titulo
-          center = TRUE,       # centraliza o grafico
-          horiz  = Horizontal, # posicao do grafico
+          main   = Titles[3],    # Titulo
+          center = TRUE,         # centraliza o grafico
+          horiz  = Horizontal,   # posicao do grafico
           cex    = 1) # Tamanho dos pontos
      
      if (NumGrupos > 1 && !Horizontal) 
         rect.hclust(hc, k = NumGrupos, border = "red") # coloca retangulos nos agrupamentos de acordo com NumGrupos
-     ## FIM - Plotagem do Dendograma ##
+     ## FIM - Plotagem do Dendrograma ##
   }
   ### FIM - Agrupamentos hierarquicos ###
 
-  ### INICIO - Metodo K-Means ###
+  ### INICIO - Method K-Means ###
   if (!Hierarquico && Analise=="OBS") {
     
      set.seed(7) # semente para fixar processo heuristico
       
-     hc <- kmeans(DataNew, NumGrupos, iter.max = 100) # executa o metodo K-Means
-     #,iter.max = 100, nstart = 21, algorithm = c("Hartigan-Wong", "Lloyd", "Forgy","MacQueen")) # cria particoes pelo metodo K-means
+     hc <- kmeans(DataNew, NumGrupos, iter.max = 100) # executa o Method K-Means
+     #,iter.max = 100, nstart = 21, algorithm = c("Hartigan-Wong", "Lloyd", "Forgy","MacQueen")) # cria particoes pelo Method K-means
       
      #fitted(hc, method = c("centers", "classes"))
      Grupos <- hc$cluster
@@ -163,7 +195,7 @@ Cluster <- function(Data, Hierarquico = TRUE, Analise = "Obs", CorAbs = FALSE,
      Tab <- NA # tabelas com as similiridades e distancias
      Md  <- NA # matrix das distancias
   }
-  ### FIM - Metodo K-Means ###
+  ### FIM - Method K-Means ###
   
   ### INICIO - Analises dos grupos ###
   Sqt <- NA # soma do quadrado total 

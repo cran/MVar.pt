@@ -1,5 +1,5 @@
-Plot.FA <- function(FA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
-                    Color = TRUE, LinLab = NA) {
+Plot.FA <- function(FA, Titles = NA, xlabel = NA, ylabel = NA,
+                    Color = TRUE, LinLab = NA, Casc = TRUE) {
   # Rotina para Plotar Graficos do Metodo FA desenvolvida 
   # por Paulo Cesar Ossani em 02/2017
   
@@ -11,6 +11,7 @@ Plot.FA <- function(FA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
   # Color  - Graficos coloridos (default = TRUE).
   # LinLab - Vetor com o rotulo para as linhas, se nao
   #          informado retorna padrao.
+  # Casc    - Efeito cascata na apresentacao dos graficos (default = TRUE).
   
   # Retorna:
   # Varios graficos
@@ -34,6 +35,9 @@ Plot.FA <- function(FA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
   if (!is.na(LinLab) && length(LinLab)!=nrow(FA$MatrixScores))
      stop("O numero elementos do rotulo para linhas 'LinLab' difere do numero de linhas da base de dados. Verifique!")
   
+  if (!is.logical(Casc))
+     stop("Entrada para 'Casc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  
   if (is.na(LinLab[1])) LinLab <- rownames(FA$MatrixScores)
   
   if (is.na(xlabel))
@@ -44,9 +48,13 @@ Plot.FA <- function(FA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
   
   #####   FIM - Informacoes usadas nos Graficos  #####
   
+  if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
+  
   ##### INICIO - Plotagem dos Autovalores #####
   mp <- barplot(FA$MatrixVar[,1],names.arg=paste(round(FA$MatrixVar[,2],2),"%",sep=""),main = "Variancias dos Fatores")
   ##### FIM - Plotagem dos Autovalores #####
+  
+  if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Scree-plot dos Fatores #####
   plot(1:length(FA$MatrixVar[,1]), FA$MatrixVar[,1], type = "b", 
@@ -54,6 +62,8 @@ Plot.FA <- function(FA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
        ylab = "Variancia",
        main = Titles[1])
   ##### FIM - Scree-plot dos Fatores #####
+  
+  if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem Escores das observacoes #####
   plot(FA$MatrixScores,  # cria grafico para os Escores das observacoes 
@@ -72,6 +82,8 @@ Plot.FA <- function(FA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
   #text(FA$MatrixScores, cex = 1, pos = 3, LinLab)  # Coloca os nomes dos pontos das coordenadas principais das linhas
   LocLab(FA$MatrixScores, cex = 1, LinLab)
   ##### FIM - Plotagem Escores das observacoes #####
+  
+  if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Cargas fatoriais #####
   HpMat <- rbind(c(0,0),FA$MatrixCarga[,1:2])
@@ -99,6 +111,7 @@ Plot.FA <- function(FA, Titles = matrix(NA,1,4), xlabel = NA, ylabel = NA,
   LocLab(FA$MatrixCarga[,1:2], NomeVar, col = ifelse(Color,"Blue","Black"))  # Coloca os nomes das variaveis
   ##### FIM - Cargas fatoriais #####
 
+  if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Biplot ##### 
   HpMat <- rbind(c(0,0),FA$MatrixCarga[,1:2],FA$MatrixScores[,1:2])
