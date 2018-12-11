@@ -6,11 +6,11 @@
 
 \description{Realiza analise de multiplos fatores (MFA) em grupos de variaveis. Os grupos de variaveis podem ser dados quantitativos, qualitativos, de frequencia (MFACT), ou dados mistos.}
 
-\usage{MFA(Data, Grupo, TypeGroups = rep("n", length(Grupo)), NameGroups = NULL)}
+\usage{MFA(Data, Groups, TypeGroups = rep("n", length(Groups)), NameGroups = NULL)}
 
 \arguments{
   \item{Data}{Dados a serem analisados.}
-  \item{Grupo}{Numero de colunas para cada grupo em ordem seguindo a ordem dos dados em 'Data'.}
+  \item{Groups}{Numero de colunas para cada grupo em ordem seguindo a ordem dos dados em 'Data'.}
   \item{TypeGroups}{Tipo de grupo:\cr
                     "n" para dados numericos (default),\cr
                     "c" para dados categoricos,\cr
@@ -83,13 +83,13 @@ Marcelo Angelo Cirillo
 \examples{
 data(DataMix) # conjunto de dados mistos
 
-Dat <- DataMix[,2:ncol(DataMix)] 
+Data <- DataMix[,2:ncol(DataMix)] 
 
-rownames(Dat) <- DataMix[1:nrow(DataMix),1]
+rownames(Data) <- DataMix[1:nrow(DataMix),1]
 
 GroupNames = c("Notas Cafes/Trabalho", "Formacao/Dedicacao", "Cafes")
 
-MF <- MFA(Dat, c(2,2,2), TypeGroups = c("n","c","f"), GroupNames) # realiza MFA
+MF <- MFA(Data, c(2,2,2), TypeGroups = c("n","c","f"), GroupNames) # realiza MFA
 
 print("Variancias dos Componentes Principais:"); round(MF$MatrixA,2)
 

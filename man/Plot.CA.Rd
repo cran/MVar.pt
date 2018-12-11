@@ -32,11 +32,11 @@ Marcelo Angelo Cirillo
 \examples{
 data(DataFreq) # conjunto de dados de frequencia
 
-Dat <- DataFreq[,2:ncol(DataFreq)]
+Data <- DataFreq[,2:ncol(DataFreq)]
 
-rownames(Dat) <- DataFreq[1:nrow(DataFreq),1]
+rownames(Data) <- DataFreq[1:nrow(DataFreq),1]
 
-Resp <- CA(Dat, "f") # realiza CA
+Resp <- CA(Data, "f") # realiza CA
 
 Tit = c("Scree-plot","Observacoes", "Variaveis", "Observacoes/Variaveis")
 
@@ -46,9 +46,9 @@ Plot.CA(Resp, Titles = Tit, xlabel = NA, ylabel = NA,
 
 data(DataQuali) # conjunto de dados qualitativos
 
-Dat <- DataQuali[,2:ncol(DataQuali)]
+Data <- DataQuali[,2:ncol(DataQuali)]
 
-Resp <- CA(Dat, "c", "b") # realiza CA
+Resp <- CA(Data, "c", "b") # realiza CA
 
 Tit = c("","","Grafico das Variaveis")
 

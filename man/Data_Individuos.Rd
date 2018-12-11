@@ -21,13 +21,13 @@ OSSANI, P. C. \emph{Qualidade de cafes especiais e nao especiais por meio da ana
 \examples{
 data(Data_Individuos) # conjundo de dados categorizados
 
-Matriz = Data_Individuos[,2:ncol(Data_Individuos)] 
+Data <- Data_Individuos[,2:ncol(Data_Individuos)]
 
-rownames(Matriz) <- as.character(t(Data_Individuos[1:nrow(Data_Individuos),1]))
+rownames(Data) <- as.character(t(Data_Individuos[1:nrow(Data_Individuos),1]))
 
 GroupNames = c("Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4")
 
-MF <- MFA(Matriz, c(16,16,16,16), c(rep("f",4)), GroupNames) # analise dos dados
+MF <- MFA(Data, c(16,16,16,16), c(rep("f",4)), GroupNames) # analise dos dados
 
 print("Variancias dos Componentes Principais:"); round(MF$MatrixA,2)
 

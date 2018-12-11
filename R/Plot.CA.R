@@ -23,28 +23,28 @@ Plot.CA <- function(CA, Titles = NA, xlabel = NA, ylabel = NA,
   if (!is.character(Titles[3]) || is.na(Titles[3])) Titles[3] = c("Grafico correspondente as Colunas (Variaveis)")
   if (!is.character(Titles[4]) || is.na(Titles[4])) Titles[4] = c("Grafico correspondente as Observacoes e Variaveis")
   
-  if (!is.character(xlabel) && !is.na(xlabel))
+  if (!is.character(xlabel) && !is.na(xlabel[1]))
      stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
-  if (!is.character(ylabel) && !is.na(ylabel))
+  if (!is.character(ylabel) && !is.na(ylabel[1]))
      stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
   if (!is.logical(Color))
      stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  if (!is.na(LinLab) && length(LinLab)!=nrow(CA$MatrixX) && CA$TypData=="F")
+  if (!is.na(LinLab[1]) && length(LinLab)!=nrow(CA$MatrixX) && CA$TypData=="F")
      stop("O numero elementos do rotulo para linhas 'LinLab' difere do numero de linhas da base de dados. Verifique!")
   
   if (!is.logical(Casc))
      stop("Entrada para 'Casc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  if (is.na(LinLab) && CA$TypData=="F")
+  if (is.na(LinLab[1]) && CA$TypData=="F")
      LinLab <- rownames(CA$MatrixX)
   
-  if (is.na(xlabel))
+  if (is.na(xlabel[1]))
      xlabel = paste("Primeira coordenada (",round(CA$MatrixAutoVlr[1,2],2),"%)",sep="")
   
-  if (is.na(ylabel))
+  if (is.na(ylabel[1]))
      ylabel = paste("Segunda coordenada (",round(CA$MatrixAutoVlr[2,2],2),"%)",sep="")
   
   #####   FIM - Informacoes usadas nos Graficos  #####

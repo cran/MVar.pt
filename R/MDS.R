@@ -34,34 +34,34 @@ MDS <- function(Data, Distance = "euclidean", Axis = TRUE,
   if (!is.logical(Axis)) 
      stop("Entrada para 'Axis' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
-  if (!is.character(Title) && !is.na(Title))
+  if (!is.character(Title) && !is.na(Title[1]))
      stop("Entrada para 'Title' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
   if (!is.logical(Color))
      stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  if (!is.na(LinLab) && length(LinLab)!=nrow(Data))
+  if (!is.na(LinLab[1]) && length(LinLab)!=nrow(Data))
      stop("O numero elementos do rotulo para linhas 'LinLab' difere do numero de linhas da base de dados. Verifique!")
   
-  if (is.na(Title))
+  if (is.na(Title[1]))
      Title = "Escalonamento multidimensional" # Titulo
   
-  if (!is.character(xlabel) && !is.na(xlabel))
+  if (!is.character(xlabel) && !is.na(xlabel[1]))
      stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
-  if (!is.character(ylabel) && !is.na(ylabel))
+  if (!is.character(ylabel) && !is.na(ylabel[1]))
      stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
-  if (is.na(xlabel))
+  if (is.na(xlabel[1]))
      xlabel = "Eixo x" # Nomeia Eixo X  
   
-  if (is.na(ylabel))
+  if (is.na(ylabel[1]))
      ylabel = "Eixo y" # Nomeia Eixo Y  
   
   if (is.na(LinLab[1]))
      LinLab <- rownames(Data)
   
-  if (!is.na(LinLab) && !is.character(LinLab))
+  if (!is.na(LinLab[1]) && !is.character(LinLab))
      stop("Entrada para 'LinLab' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
 
   Md <- dist(Data, method = Distance) # matrix das distancias

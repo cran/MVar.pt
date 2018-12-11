@@ -50,11 +50,11 @@ Marcelo Angelo Cirillo
 \examples{
 data(DataQuan) # conjunto de dados quantitativos
 
-Dat <- DataQuan[,2:8]
+Data <- DataQuan[,2:8]
 
-rownames(Dat) <- DataQuan[1:nrow(DataQuan),1]
+rownames(Data) <- DataQuan[1:nrow(DataQuan),1]
 
-Res <- Cluster(Dat, Hierarquico = TRUE, Analise = "Obs", CorAbs = FALSE, 
+Res <- Cluster(Data, Hierarquico = TRUE, Analise = "Obs", CorAbs = FALSE, 
        Normaliza = FALSE, Distance = "euclidean", Method = "ward.D", 
        Horizontal = FALSE, NumGrupos = 2)
 

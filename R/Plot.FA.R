@@ -23,16 +23,16 @@ Plot.FA <- function(FA, Titles = NA, xlabel = NA, ylabel = NA,
   if (!is.character(Titles[3]) || is.na(Titles[3])) Titles[3] = c("Cargas fatoriais")
   if (!is.character(Titles[4]) || is.na(Titles[4])) Titles[4] = c("Biplot")
   
-  if (!is.character(xlabel) && !is.na(xlabel))
+  if (!is.character(xlabel) && !is.na(xlabel[1]))
      stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
-  if (!is.character(ylabel) && !is.na(ylabel))
+  if (!is.character(ylabel) && !is.na(ylabel[1]))
      stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
   if (!is.logical(Color))
      stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  if (!is.na(LinLab) && length(LinLab)!=nrow(FA$MatrixScores))
+  if (!is.na(LinLab[1]) && length(LinLab)!=nrow(FA$MatrixScores))
      stop("O numero elementos do rotulo para linhas 'LinLab' difere do numero de linhas da base de dados. Verifique!")
   
   if (!is.logical(Casc))
@@ -40,10 +40,10 @@ Plot.FA <- function(FA, Titles = NA, xlabel = NA, ylabel = NA,
   
   if (is.na(LinLab[1])) LinLab <- rownames(FA$MatrixScores)
   
-  if (is.na(xlabel))
+  if (is.na(xlabel[1]))
      xlabel = "Primeiro fator"
   
-  if (is.na(ylabel))
+  if (is.na(ylabel[1]))
      ylabel = "Segundo fator"
   
   #####   FIM - Informacoes usadas nos Graficos  #####

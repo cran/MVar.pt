@@ -45,7 +45,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
   if (!(Method %in% c("TORUS", "INTERPOLATION", "PSEUDO")))
      stop("Entrada para 'Method' esta incorreta, deve ser: 'Interpolation', 'Torus' or 'Pseudo'. Verifique!")
   
-  if (!is.character(Title) && !is.na(Title))
+  if (!is.character(Title) && !is.na(Title[1]))
      stop("Entrada para 'Title' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
 
   if (!is.logical(Color))
@@ -54,7 +54,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
   if (!is.logical(Label))
      stop("Entrada para 'Label' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
-  if (!is.na(LinLab)) {
+  if (!is.na(LinLab[1])) {
     if (length(LinLab) != nrow(Data)) 
       stop("Entrada para 'LinLab' esta incorreta, deve ter o mesmo numero de linhas que os dados de entrada em 'Data'. Verifique!")
     NomeLinhas = as.matrix(LinLab)
@@ -72,7 +72,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
   if (!is.numeric(NumRot) || NumRot < 1)
       stop("'NumRot' deve ser um numero inteiro maior que zero. Verifique!")
       
-  if (!is.na(ChoiceRot)) {
+  if (!is.na(ChoiceRot[1])) {
      if (!is.numeric(ChoiceRot) ||  ChoiceRot < 1)
          stop("'ChoiceRot' deve ser um numero inteiro maior que zero. Verifique!")
     
@@ -83,16 +83,16 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
   if (!is.logical(SavePicture))
      stop("Entrada para 'SavePicture' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  if (!is.character(xlabel) && !is.na(xlabel))
+  if (!is.character(xlabel) && !is.na(xlabel[1]))
      stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
-  if (!is.character(ylabel) && !is.na(ylabel))
+  if (!is.character(ylabel) && !is.na(ylabel[1]))
      stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
-  if (is.na(xlabel) && Axis)
+  if (is.na(xlabel[1]) && Axis)
     xlabel = "Eixo X" 
   
-  if (is.na(ylabel) && Axis)
+  if (is.na(ylabel[1]) && Axis)
     ylabel = "Eixo Y"
   
   xlabel <- ifelse(Axis, xlabel, "")
@@ -124,7 +124,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
     
     BasicVector <- diag(1, p, d) # vetor basico para a rotacao
     
-    NumRot <- ifelse(is.na(ChoiceRot), NumRot, ChoiceRot)
+    NumRot <- ifelse(is.na(ChoiceRot[1]), NumRot, ChoiceRot)
     
     if (SavePicture) {
       cat("\014") # limpa a tela
@@ -152,7 +152,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
       
       Proj.Data <- as.matrix(Data) %*% A # projecao em direcao a nova base
       
-      if (is.na(ChoiceRot) || ChoiceRot == i) {
+      if (is.na(ChoiceRot[1]) || ChoiceRot == i) {
         
         if (SavePicture) png(filename = paste("Picture ", i," - Metodo", Method,".png",step="")) # salva os graficos em arquivos
         
@@ -161,7 +161,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
         maxY = max(Proj.Data[, 2], A[,2])
         minY = min(Proj.Data[, 2], A[,2])
         
-        Tit <- ifelse(!is.character(Title) || is.na(Title), paste("Rotacao:", i), Title)
+        Tit <- ifelse(!is.character(Title) || is.na(Title[1]), paste("Rotacao:", i), Title)
         
         plot(Proj.Data, # coordenadas do grafico
              xlab = xlabel, # Nomeia Eixo X
@@ -233,7 +233,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
       cat("\n\n Salvando graficos em disco. Aguarde o termino!")
     }
     
-    NumRot <- ifelse(is.na(ChoiceRot), NumRot, ChoiceRot)
+    NumRot <- ifelse(is.na(ChoiceRot[1]), NumRot, ChoiceRot)
     
     t <- (1:NumRot) * NumIrr
     
@@ -251,7 +251,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
       
       Proj.Data <- as.matrix(Data) %*% A; # projecao
  
-      if (is.na(ChoiceRot) || ChoiceRot == i) {
+      if (is.na(ChoiceRot[1]) || ChoiceRot == i) {
         
         if (SavePicture) png(filename = paste("Picture ", i," - Metodo", Method,".png",step="")) # salva os graficos em arquivos
         
@@ -260,7 +260,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
         maxY = max(Proj.Data[, 2], A[,2])
         minY = min(Proj.Data[, 2], A[,2])
         
-        Tit <- ifelse(!is.character(Title) || is.na(Title), paste("Rotacao:", i), Title)
+        Tit <- ifelse(!is.character(Title) || is.na(Title[1]), paste("Rotacao:", i), Title)
         
         plot(Proj.Data, # coordenadas do grafico
              xlab = xlabel, # Nomeia Eixo X
@@ -346,7 +346,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
     
     cp.v <- ncol(Vector1) 
     
-    NumRot <- ifelse(is.na(ChoiceRot), NumRot, ChoiceRot)
+    NumRot <- ifelse(is.na(ChoiceRot[1]), NumRot, ChoiceRot)
       
     if (SavePicture) {
        cat("\014") # limpa a tela 
@@ -359,7 +359,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
       if (i > 1) # novas projecoes
          Proj.Data = Vector1 %*% diag(1,cp.v) * cos(theta[i]) + Vector2 %*% diag(1,cp.v) * sin(theta[i])
          
-      if (is.na(ChoiceRot) || ChoiceRot == i) {
+      if (is.na(ChoiceRot[1]) || ChoiceRot == i) {
         
         if (SavePicture) png(filename = paste("Picture ", i," - Metodo", Method,".png",step="")) # salva os graficos em arquivos
         
@@ -368,7 +368,7 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
         maxY = max(Proj.Data[, 2])
         minY = min(Proj.Data[, 2])
         
-        Tit <- ifelse(!is.character(Title) || is.na(Title), paste("Angulo de rotacao:", theta[i] / (pi/180),"graus"), Title)
+        Tit <- ifelse(!is.character(Title) || is.na(Title[1]), paste("Angulo de rotacao:", theta[i] / (pi/180),"graus"), Title)
         
         plot(Proj.Data[1:n,1],Proj.Data[1:n,2], # coordenadas do grafico
              xlab = xlabel,  # Nomeia Eixo X

@@ -39,13 +39,13 @@ Marcelo Angelo Cirillo
 \examples{
 data(DataMix) # conjunto de dados mistos
 
-Dat <- DataMix[,2:ncol(DataMix)] 
+Data <- DataMix[,2:ncol(DataMix)] 
 
-rownames(Dat) <- DataMix[1:nrow(DataMix),1]
+rownames(Data) <- DataMix[1:nrow(DataMix),1]
 
 GroupNames = c("Notas Cafes/Trabalho", "Formacao/Dedicacao", "Cafes")
            
-MF <- MFA(Dat, c(2,2,2), TypeGroups = c("n","c","f"), GroupNames) # realiza MFA
+MF <- MFA(Data, c(2,2,2), TypeGroups = c("n","c","f"), GroupNames) # realiza MFA
 
 Tit = c("Scree-plot","Observacoes","Observacoes/Variaveis","Inercias dos Grupos Variaveis")
 

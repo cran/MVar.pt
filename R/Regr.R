@@ -1,4 +1,4 @@
-Regr <- function(Y, X, NameVarX = NULL, Intercepts = TRUE, SigF = 0.05) {
+Regr <- function(Y, X, NameVarX = NA, Intercepts = TRUE, SigF = 0.05) {
   # Esta funcao executa a Analise de Regressao
   # desenvolvida por Paulo Cesar Ossani em 06/2016
     
@@ -33,10 +33,10 @@ Regr <- function(Y, X, NameVarX = NULL, Intercepts = TRUE, SigF = 0.05) {
   if (!is.vector(X) && !is.data.frame(X)) 
      stop("Entrada 'X' esta incorreta, deve ser do tipo vector ou data.frame. Verifique!")
   
-  if (!is.null(NameVarX) && ncol(as.matrix(X))!=length(NameVarX))
+  if (!is.na(NameVarX[1]) && ncol(as.matrix(X))!=length(NameVarX))
      stop("Numero de elementos em NameVarx difere do numero de colunas de X. Verifique!")
   
-  if (is.null(NameVarX))
+  if (is.na(NameVarX[1]))
      NameVarX <- c(paste("X",1:ncol(as.matrix(X)),sep=""))
   
   if (!is.logical(Intercepts)) 

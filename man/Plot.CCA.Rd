@@ -31,13 +31,13 @@ Marcelo Angelo Cirillo
 \examples{
 data(DataMix) # conjunto de dados
 
-Dat <- DataMix[,2:ncol(DataMix)]
+Data <- DataMix[,2:ncol(DataMix)]
 
-rownames(Dat) <- DataMix[,1]
+rownames(Data) <- DataMix[,1]
 
-X <- as.data.frame(NormData(Dat[,1:2],2))
+X <- as.data.frame(NormData(Data[,1:2],2))
 
-Y <- as.data.frame(NormData(Dat[,5:6],2))
+Y <- as.data.frame(NormData(Data[,5:6],2))
 
 Resp <- CCA(X, Y, Type = 1, Test = "Bartlett", Sign = 0.05) # Analise de correlacao canonica
 

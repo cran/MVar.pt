@@ -52,11 +52,11 @@ Marcelo Angelo Cirillo
 \examples{
 data(DataFreq) # conjunto de dados de frequencia
 
-Dat <- DataFreq[,2:ncol(DataFreq)]
+Data <- DataFreq[,2:ncol(DataFreq)]
 
-rownames(Dat) <- as.character(t(DataFreq[1:nrow(DataFreq),1]))
+rownames(Data) <- as.character(t(DataFreq[1:nrow(DataFreq),1]))
 
-Resp <- CA(Dat, "f") # realiza CA
+Resp <- CA(Data, "f") # realiza CA
 
 print("Existe dependencia entre as linhas e as colunas?"); Resp$DepData
 

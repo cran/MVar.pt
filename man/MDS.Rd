@@ -40,11 +40,11 @@ Marcelo Angelo Cirillo
 \examples{
 data(DataQuan) # conjunto de dados quantitativos
 
-Dat <- DataQuan[,2:8]
+Data <- DataQuan[,2:8]
 
-rownames(Dat) <- DataQuan[1:nrow(DataQuan),1]
+rownames(Data) <- DataQuan[1:nrow(DataQuan),1]
 
-MD <- MDS(Dat, Distance = "euclidean", Axis = TRUE, Title = NA,
+MD <- MDS(Data, Distance = "euclidean", Axis = TRUE, Title = NA,
           xlabel = NA, ylabel = NA, Color = TRUE, LinLab = NA)
 
 print("Matriz das distancias:"); MD$MatrixD

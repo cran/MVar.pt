@@ -27,10 +27,10 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
   # Grafico da evolucao dos indices, e graficos cujos dados 
   # foram reduzidos em duas dimensoes.
   
-  if (!is.character(xlabel) && !is.na(xlabel))
+  if (!is.character(xlabel) && !is.na(xlabel[1]))
      stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
-  if (!is.character(ylabel) && !is.na(ylabel))
+  if (!is.character(ylabel) && !is.na(ylabel[1]))
      stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
   if (!is.numeric(PosLeg) || PosLeg < 0 || PosLeg > 4 || (floor(PosLeg)-PosLeg) != 0)
@@ -48,23 +48,23 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
   if (!is.logical(Axis)) 
      stop("Entrada para 'Axis' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
-  if (!is.na(LinLab) && length(LinLab) != nrow(PP$Proj.Data)) 
+  if (!is.na(LinLab[1]) && length(LinLab) != nrow(PP$Proj.Data)) 
       stop("Entrada para 'LinLab' esta incorreta, deve ter o mesmo numero de linhas que os dados de entrada em 'Data'. Verifique!")
 
   if (!is.logical(Label)) 
      stop("Entrada para 'Label' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  if (is.na(PP$Findex)) PP$Findex <- "Not Available"
+  if (is.na(PP$Findex[1])) PP$Findex <- "Not Available"
   
   if (!is.logical(Casc))
      stop("Entrada para 'Casc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
   ##### INICIO - Informacoes usadas nos Graficos #####
   
-  if (is.na(xlabel) && Axis)
+  if (is.na(xlabel[1]) && Axis)
      xlabel = "Eixo X" 
 
-  if (is.na(ylabel) && Axis)
+  if (is.na(ylabel[1]) && Axis)
      ylabel = "Eixo Y"
 
   xlabel <- ifelse(Axis, xlabel, "")
@@ -78,14 +78,14 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
   
   BoxLeg = ifelse(BoxLeg,"o","n") # moldura nas legendas, "n" sem moldura, "o" com moldura
   
-  if (!is.na(LinLab)[1]) {
+  if (!is.na(LinLab[1])) {
      Class.Table <- table(LinLab)       # cria tabela com as quantidade dos elementos das classes
      Class.Names <- names(Class.Table)  # nomes das classses
      Num.Class   <- length(Class.Table) # numero de classes
      NomeLinhas  <- as.matrix(LinLab)
   } else {
-     Class.Names <- ifelse(is.na(PP$Class.Names), "", PP$Class.Names) # nomes das classses
-     Num.Class   <- ifelse(is.na(PP$Num.Class), 0, PP$Num.Class) # numero de classes
+     Class.Names <- ifelse(is.na(PP$Class.Names[1]), "", PP$Class.Names) # nomes das classses
+     Num.Class   <- ifelse(is.na(PP$Num.Class[1]), 0, PP$Num.Class) # numero de classes
      
      if (Num.Class == 0) {
         NomeLinhas = rownames(PP$Proj.Data)
@@ -94,7 +94,7 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
      }
   }
   
-  if (!is.na(PP$Num.Class)) {
+  if (!is.na(PP$Num.Class[1])) {
      Data <- as.matrix(PP$Proj.Data[,1:(ncol(PP$Proj.Data)-1)])
   } else Data <- PP$Proj.Data
   
@@ -176,7 +176,7 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
          
          cor1 <- ifelse(Color, cor + i, "black")
          
-         if (is.na(LinLab)[1]) {
+         if (is.na(LinLab[1])) {
             Point.Data <- Data[which(PP$Proj.Data[,ncol(PP$Proj.Data)] == Class.Names[i]),]
          } else {
             Point.Data <- Data[which(LinLab == Class.Names[i]),]
@@ -249,39 +249,43 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
 
   }
   
-  if (PosLeg != 0 && Num.Class > 0) {
-      
-    Color_b <- cor # colore as letras das legendas e suas representacoes no grafico
-      
-    if (Color) Color_b = cor:(cor + Num.Class)
-      
-    legend(PosLeg, Class.Names, pch = (Init.Form):(Init.Form + Num.Class), col = Color_b,
-           text.col = Color_b, bty = BoxLeg, text.font = 6, y.intersp = 0.8, xpd = TRUE) # cria a legenda
-  }
+  if (ncol(Data) <= 2) {
     
-  if (Color) {
-     cor1 <- c(cor:(cor + Num.Class))[as.factor(NomeLinhas)]
-  } else {
-     cor1 <- c("black")
-  }
+    if (PosLeg != 0 && Num.Class > 0) {
+        
+      Color_b <- cor # colore as letras das legendas e suas representacoes no grafico
+        
+      if (Color) Color_b = cor:(cor + Num.Class)
+        
+      legend(PosLeg, Class.Names, pch = (Init.Form):(Init.Form + Num.Class), col = Color_b,
+             text.col = Color_b, bty = BoxLeg, text.font = 6, y.intersp = 0.8, xpd = TRUE) # cria a legenda
+    }
+      
+    if (Color) {
+       cor1 <- c(cor:(cor + Num.Class))[as.factor(NomeLinhas)]
+    } else {
+       cor1 <- c("black")
+    }
+      
+    if (Label) LocLab(Data, cex = 1, NomeLinhas, col = c(cor1))
     
-  if (Label) LocLab(Data, cex = 1, NomeLinhas, col = c(cor1))
+    if (Axis) abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central 
+   
+    if (AxisVar && ncol(Data) == 2 ) { # plota os eixos das variaveis
+      
+       Ajuste <- c(diff(range(Data[,1])) / 2 + min(Data[,1]),
+                   diff(range(Data[,2])) / 2 + min(Data[,2]))
+      
+       PosVar <- cbind(PP$Vector.Opt[,1] + Ajuste[1], PP$Vector.Opt[,2] + Ajuste[2]) # Posicao para as variaveis no grafico
+      
+       arrows(Ajuste[1], Ajuste[2], PosVar[,1], PosVar[,2],
+              lty = 1, code = 2, length = 0.08, angle = 25,
+              col = ifelse(Color, "Red", "Black"))
+      
+       LocLab(PosVar, cex = 1, rownames(PP$Vector.Opt), xpd = TRUE)
+      
+    }
+    
+  }
   
-  if (Axis) abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central 
- 
-  if (AxisVar && ncol(Data) == 2 ) { # plota os eixos das variaveis
-    
-     Ajuste <- c(diff(range(Data[,1])) / 2 + min(Data[,1]),
-                 diff(range(Data[,2])) / 2 + min(Data[,2]))
-    
-     PosVar <- cbind(PP$Vector.Opt[,1] + Ajuste[1], PP$Vector.Opt[,2] + Ajuste[2]) # Posicao para as variaveis no grafico
-    
-     arrows(Ajuste[1], Ajuste[2], PosVar[,1], PosVar[,2],
-            lty = 1, code = 2, length = 0.08, angle = 25,
-            col = ifelse(Color, "Red", "Black"))
-    
-     LocLab(PosVar, cex = 1, rownames(PP$Vector.Opt), xpd = TRUE)
-    
-  }
-
 }

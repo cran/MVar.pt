@@ -64,11 +64,11 @@ Marcelo Angelo Cirillo
 \examples{
 data(DataQuan) # conjunto de dados
 
-Dat <- DataQuan[,2:ncol(DataQuan)]
+Data <- DataQuan[,2:ncol(DataQuan)]
 
-rownames(Dat) <- DataQuan[,1]
+rownames(Data) <- DataQuan[,1]
 
-Resp <- FA(Dat, Method = "PC", Type = 2, NFactor = 3, Rotation = "None",
+Resp <- FA(Data, Method = "PC", Type = 2, NFactor = 3, Rotation = "None",
            ScoresObs = "Bartlett", Converg = 1e-5, Iteracao = 1000, 
            TestFit = TRUE) 
 

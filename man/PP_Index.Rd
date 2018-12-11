@@ -91,10 +91,10 @@ Marcelo Angelo Cirillo
 \examples{
 data(iris) # conjunto de dados
 
-Dat <- iris[,1:4]
+Data <- iris[,1:4]
 
 # Exemplo 1 - Sem as classes nos dados
-Ind <- PP_Index(Data = Dat, Class = NA, Vector.Proj = NA, 
+Ind <- PP_Index(Data = Data, Class = NA, Vector.Proj = NA, 
                 Findex = "moment", DimProj = 2, Weight = TRUE, 
                 Lambda = 0.1, r = 1)
 
@@ -112,7 +112,7 @@ FcIndex <- "pda" # funcao indice
 
 Sphere <- TRUE # Dados esfericos
 
-Res <- PP_Optimizer(Data = Dat, Class = Class, Findex = FcIndex,
+Res <- PP_Optimizer(Data = Data, Class = Class, Findex = FcIndex,
                     OptMethod = "SA", DimProj = 2, Sphere = Sphere, 
                     Weight = TRUE, Lambda = 0.1, r = 1, Cooling = 0.9, 
                     Eps = 1e-3, Maxiter = 1000, Half = 30)
@@ -120,8 +120,8 @@ Res <- PP_Optimizer(Data = Dat, Class = Class, Findex = FcIndex,
 # Comparando o resultado obtido
 if (match(toupper(FcIndex),c("LDA", "PDA", "LR"), nomatch = 0) > 0) {
   if (Sphere) {
-     Data <- apply(predict(prcomp(Dat)), 2, scale) # dados esfericos
-  } else  Data <- Dat # dados nao esfericos
+     Data <- apply(predict(prcomp(Data)), 2, scale) # dados esfericos
+  }
 } else Data <- as.matrix(Res$Proj.Data[,1:Dim])
 
 Ind <- PP_Index(Data = Data, Class = Class, Vector.Proj = Res$Vector.Opt, 

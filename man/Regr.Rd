@@ -6,7 +6,7 @@
 
 \description{Realiza a regressao linear em um conjunto de dados.}
 
-\usage{Regr(Y, X, NameVarX = NULL, Intercepts = TRUE, SigF = 0.05)}
+\usage{Regr(Y, X, NameVarX = NA, Intercepts = TRUE, SigF = 0.05)}
 
 \arguments{
 \item{Y}{Variaveis respotas.}

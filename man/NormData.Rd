@@ -24,9 +24,9 @@ Marcelo Angelo Cirillo
 \examples{
 data(DataQuan) # conjunto de dados quantitativos
 
-Dat <- DataQuan[,2:8]
+Data <- DataQuan[,2:8]
 
-Resp = NormData(Dat, Type = 1) # normaliza os dados globalmente
+Resp = NormData(Data, Type = 1) # normaliza os dados globalmente
 
 Resp # dados normalizados globalmente
 
@@ -35,7 +35,7 @@ sd(Resp)   # desvio padrao global
 mean(Resp) # media global
 
 
-Resp = NormData(Dat, Type = 2) # normaliza os dados por coluna
+Resp = NormData(Data, Type = 2) # normaliza os dados por coluna
 
 Resp # dados normalizados por coluna
 

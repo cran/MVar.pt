@@ -63,11 +63,9 @@ Marcelo Angelo Cirillo
 \examples{
 data(iris) # conjunto de dados
 
-Dat <- iris[,1:4]
+Data <- as.data.frame(NormData(iris[,1:4], 2))
 
-Dat <- as.data.frame(NormData(Dat, 2))
-
-Res <- GrandTour(Dat, Method = "Interpolation", Title = NA, Color = TRUE,
+Res <- GrandTour(Data, Method = "Interpolation", Title = NA, Color = TRUE,
                  Label = FALSE, LinLab = NA, AxisVar = TRUE, Axis = TRUE,
                  NumRot = 10, ChoiceRot = NA, SavePicture = FALSE)
 

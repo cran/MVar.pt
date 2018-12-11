@@ -1,20 +1,20 @@
-MFA <- function(Data, Grupo, TypeGroups = rep("n",length(Grupo)), NameGroups = NULL) {
+MFA <- function(Data, Groups, TypeGroups = rep("n",length(Groups)), NameGroups = NULL) {
   # Rotina para softwre R para uso do Metodo MFA para dados Quantitativos,
   # Categoricos e de Frequencia desenvolvida por Paulo Cesar Ossani em 
   # 03/2014
 
   # Entrada:
   # Data - Dados a serem analisados.
-  # Grupo - Numero de colunas para cada Grupo em 
+  # Groups - Numero de colunas para cada Groups em 
   #         ordem seguindo a ordem dos Dados em 'Data'.
   # TypeGroups - "n" para dados Numericos (default),
   #              "c" para dados Categoricos,
   #              "f" para dados de Frequencia.
-  # NameGroups - Nomes para cada Grupo.
+  # NameGroups - Nomes para cada Groups.
   
   # Retorna:
-  # VectorG  - Vetor com os tamanhos de cada grupo
-  # VectorNG - Vetor com os nomes de cada grupo
+  # VectorG  - Vetor com os tamanhos de cada Groups
+  # VectorNG - Vetor com os nomes de cada Groups
   # VectorPLin - Vetor com os valores usados para balancear as linhas da Matriz Z
   # VectorPCol - Vetor com os valores usados para balancear as colunas da Matriz Z
   # MatrixZ  - Matriz Concatenada e Balanceada
@@ -22,7 +22,7 @@ MFA <- function(Data, Grupo, TypeGroups = rep("n",length(Grupo)), NameGroups = N
   # MatrixU  - Matriz U da decomposicao singular da Matriz Z
   # MatrixV  - Matriz V da decomposicao singular da Matriz Z
   # MatrixF  - Matriz Global dos Escores dos Fatores
-  # MatrixEFG - Matriz dos Escores dos Fatores por Grupo
+  # MatrixEFG - Matriz dos Escores dos Fatores por Groups
   # MatrixCCP - Matriz com a Correlacao dos Componentes Principais com os Groups
   # MatrixEscVar - Matriz das Inercias Parciais/Escores das Variareis
  
@@ -32,8 +32,8 @@ MFA <- function(Data, Grupo, TypeGroups = rep("n",length(Grupo)), NameGroups = N
   if (is.null(NameGroups)) # Cria nomes para as variaveis caso nao exista
      NameGroups <- paste("Variavel", 1:length(TypeGroups), sep = " ")
   
-  if (!is.numeric(Grupo))
-     stop("A entrada para 'Grupo' esta incorreta, deve ser do tipo numerico. Verifique!")
+  if (!is.numeric(Groups))
+     stop("A entrada para 'Groups' esta incorreta, deve ser do tipo numerico. Verifique!")
   
   if (!is.character(TypeGroups))
      stop("A entrada para 'TypeGroups' esta incorreta, deve ser do tipo caracter. Verifique!")
@@ -41,11 +41,11 @@ MFA <- function(Data, Grupo, TypeGroups = rep("n",length(Grupo)), NameGroups = N
   if (!is.character(NameGroups))
      stop("A entrada para 'NameGroups' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
-  if (length(TypeGroups)!=length(Grupo))
-     stop("O numero de componetes da entrada 'TypeGroups' difere da entrada 'Grupo'. Verifique!")
+  if (length(TypeGroups)!=length(Groups))
+     stop("O numero de componetes da entrada 'TypeGroups' difere da entrada 'Groups'. Verifique!")
   
-  if (length(NameGroups)!=length(Grupo))
-     stop("O numero de componentes da entrada 'NameGroups' difere da entrada 'Grupo'. Verifique!")
+  if (length(NameGroups)!=length(Groups))
+     stop("O numero de componentes da entrada 'NameGroups' difere da entrada 'Groups'. Verifique!")
   
   if (is.null(NameGroups)) # Cria nomes para as variaveis caso nao exista
      NameGroups <- paste("Variavel", 1:length(TypeGroups), sep = " ")
@@ -113,17 +113,17 @@ MFA <- function(Data, Grupo, TypeGroups = rep("n",length(Grupo)), NameGroups = N
     
     cTotal = apply(MFR,2,sum) # Soma Geral das Colunas
     
-    rGrupo <- apply(MFR,1,sum) # Soma das Linhas do Grupo i
+    rGroups <- apply(MFR,1,sum) # Soma das Linhas do Groups i
     
-    cGrupo <- apply(MFR,2,sum) # Soma das Colunas do Grupo i
+    cGroups <- apply(MFR,2,sum) # Soma das Colunas do Groups i
     
-    ICA    <- MFR  # Matriz ICA do Grupo i
+    ICA    <- MFR  # Matriz ICA do Groups i
     
-    P..t   <- sum(ICA) # Soma Total do Grupo i
+    P..t   <- sum(ICA) # Soma Total do Groups i
     
     for (col in 1:ncol(ICA)) {    
       
-      P.jt = cGrupo[col] # Soma Geral da coluna j da Tabela t
+      P.jt = cGroups[col] # Soma Geral da coluna j da Tabela t
       
       for (lin in 1:nrow(ICA)) {
         
@@ -131,9 +131,9 @@ MFA <- function(Data, Grupo, TypeGroups = rep("n",length(Grupo)), NameGroups = N
         
         Pi.. = rTotal[lin]  # Soma Geral da linha i da Tabela Concatenada
         
-        Pi.t = rGrupo[lin]  # Soma geral da linha i da Tabela t
+        Pi.t = rGroups[lin]  # Soma geral da linha i da Tabela t
         
-        ICA[lin,col] =  1 / Pi.. * ( Pijt / P.jt - Pi.t / P..t) # Matriz ICA do Grupo i
+        ICA[lin,col] =  1 / Pi.. * ( Pijt / P.jt - Pi.t / P..t) # Matriz ICA do Groups i
       }      
     }
     
@@ -162,7 +162,7 @@ MFA <- function(Data, Grupo, TypeGroups = rep("n",length(Grupo)), NameGroups = N
     
     ### INICIO - Centraliza na Media e Padroniza os dados por coluna,  ###
     ### assim teremos media zero e soma quadrado igual ao numero de linhas ###
-    MC <- as.matrix(DataQ) # Matriz dados por grupo de variaveis
+    MC <- as.matrix(DataQ) # Matriz dados por Groups de variaveis
     
     if (sum(PondGeral)!=0) # usado para equilibrar os conjuntos quantitativos e categoricos, quando ha tabelas de frequencias 
       Media <- apply(sweep(MC,1,PondGeral,FUN="*"),2,sum) # Matriz com as medias por colunas poderada pelas linhas ponderadas da tabela de frequencia
@@ -292,7 +292,7 @@ MFA <- function(Data, Grupo, TypeGroups = rep("n",length(Grupo)), NameGroups = N
     
     FACI <- ICA(DataF,SumLin) # Retorna dados da funcao ICA - Analise de Correspondencia Interna
     
-    MACI <- FACI$MatrixICA    # Matriz da Analise de Correspondencia Interna do Grupo i
+    MACI <- FACI$MatrixICA    # Matriz da Analise de Correspondencia Interna do Groups i
     
     PCol <- NULL  # Matriz com os pesos das colunas 
     
@@ -302,11 +302,11 @@ MFA <- function(Data, Grupo, TypeGroups = rep("n",length(Grupo)), NameGroups = N
     
     MPVS <- NULL  # Matriz com os primeiros Valores Singulares 
     
-    PVS <- GSVD(MACI, SLin, SCol)$d[1]^2 # Encontra o primeiro Auto Valor do Grupo i
+    PVS <- GSVD(MACI, SLin, SCol)$d[1]^2 # Encontra o primeiro Auto Valor do Groups i
     
     MPVS <- rbind(MPVS,as.matrix(rep(PVS,ncol(MACI)))) # Matriz com os primeiros Valores Singulares 
     
-    PCol <- sweep(SCol,1,MPVS,FUN="/") # Matriz com os Pesos das Colunas - divide cada soma das linhas pelos primeiros Auto Valores de cada grupo
+    PCol <- sweep(SCol,1,MPVS,FUN="/") # Matriz com os Pesos das Colunas - divide cada soma das linhas pelos primeiros Auto Valores de cada Groups
     
     Lista <- list(MZ=MACI, PLin=SLin, PCol=PCol)
     
@@ -314,7 +314,7 @@ MFA <- function(Data, Grupo, TypeGroups = rep("n",length(Grupo)), NameGroups = N
   }
   
   ### Inicio - Balanceia os valores dos Groups de variaveis ###
-  NumGroups = length(Grupo) # numero de Groups formados
+  NumGroups = length(Groups) # numero de Groups formados
 
   MZG   <- NULL  # cria uma matriz Geral Z nula
   
@@ -329,26 +329,26 @@ MFA <- function(Data, Grupo, TypeGroups = rep("n",length(Grupo)), NameGroups = N
     
     SomaLinhas <- 0 # Matriz com a soma geral das linhas dos dados de frequencia
     
-    j  <- 1        # coluna inicial do grupo de variaveis
+    j  <- 1        # coluna inicial do Groups de variaveis
     
-    k  <- Grupo[1] # coluna final do grupo de variaveis
+    k  <- Groups[1] # coluna final do Groups de variaveis
     
     for (i in 1:NumGroups) {
       
       if (TypeGroups[i]=="F") # Dados de Frequencia
          SomaLinhas <- SomaLinhas + apply(Data[,j:k],1,sum) # Matriz com a soma geral das linhas dos dados de frequencia
       
-      j <- j + Grupo[i] # coluna inicial do grupo de variaveis
+      j <- j + Groups[i] # coluna inicial do Groups de variaveis
       
-      k <- k + Grupo[i+ifelse(i!=NumGroups,1,0)]  # coluna final do grupo de variaveis  
+      k <- k + Groups[i+ifelse(i!=NumGroups,1,0)]  # coluna final do Groups de variaveis  
     }
     PondGeral <- SomaLinhas/sum(SomaLinhas) # usado para equilibrar os conjuntos quantitativos e categoricos, quando ha tabelas de frequencias
   } 
   ### Fim - Encontra as somas totais dos dados de frequencia ###
   
-  j  <- 1 # coluna inicial do grupo de variaveis
+  j  <- 1 # coluna inicial do Groups de variaveis
 
-  k  <- Grupo[1] # coluna final do grupo de variaveis
+  k  <- Groups[1] # coluna final do Groups de variaveis
   
   for (i in 1:NumGroups) {
       
@@ -380,12 +380,12 @@ MFA <- function(Data, Grupo, TypeGroups = rep("n",length(Grupo)), NameGroups = N
      
      MZG   <- cbind(MZG,MZ)     # Matriz Geral Balanceada
      
-     j <- j + Grupo[i]    # coluna inicial do grupo de variaveis
+     j <- j + Groups[i]    # coluna inicial do Groups de variaveis
       
-     k <- k + Grupo[i+ifelse(i!=NumGroups,1,0)]  # coluna final do grupo de variaveis  
+     k <- k + Groups[i+ifelse(i!=NumGroups,1,0)]  # coluna final do Groups de variaveis  
      
      if (TypeGroups[i]=="C")  # Dados Categoricos
-        Grupo[i] <- ncol(MZ) # Como houve expansao da matriz de dados recoloca novo valor para o tamanho do Grupo
+        Groups[i] <- ncol(MZ) # Como houve expansao da matriz de dados recoloca novo valor para o tamanho do Groups
 
   }
   
@@ -417,12 +417,12 @@ MFA <- function(Data, Grupo, TypeGroups = rep("n",length(Grupo)), NameGroups = N
   colnames(MF) <- paste("Comp.", 1:ncol(as.matrix(MF)), sep = " ") # Nomeia as colunas
   ### FIM - Matriz Glogal Escore ###
   
-  ### INICIO - Matriz dos Escores dos Fatores por Grupo ###
-  j  <- 1 # coluna inicial do Grupo de variaveis
+  ### INICIO - Matriz dos Escores dos Fatores por Groups ###
+  j  <- 1 # coluna inicial do Groups de variaveis
   
-  k  <- Grupo[1] # coluna final do Grupo de variaveis
+  k  <- Groups[1] # coluna final do Groups de variaveis
   
-  LMFGrupo <- as.list(1:NumGroups) # cria lista vazia para a matriz de escores dos fatores dos Groups
+  LMFGroups <- as.list(1:NumGroups) # cria lista vazia para a matriz de escores dos fatores dos Groups
   
   for (i in 1:NumGroups) {       
     
@@ -430,17 +430,17 @@ MFA <- function(Data, Grupo, TypeGroups = rep("n",length(Grupo)), NameGroups = N
     
     MFG <- sweep(MFG, 2, PColG[j:k], FUN="*")
  
-    LMFGrupo[[i]] <- MFG%*%MAutoVecV[j:k,] # cria Matriz dos Escores dos Fatores por Grupo
+    LMFGroups[[i]] <- MFG%*%MAutoVecV[j:k,] # cria Matriz dos Escores dos Fatores por Groups
     
-    colnames(LMFGrupo[[i]]) <- paste("Comp.", 1:ncol(as.matrix(LMFGrupo[[i]])), sep = " ") # Nomeia as colunas
+    colnames(LMFGroups[[i]]) <- paste("Comp.", 1:ncol(as.matrix(LMFGroups[[i]])), sep = " ") # Nomeia as colunas
  
-    j <- j + Grupo[i]      # coluna inicial do Grupo de variaveis
+    j <- j + Groups[i]      # coluna inicial do Groups de variaveis
     
-    k <- k + Grupo[i+ifelse(i!=NumGroups,1,0)]  # coluna final do Grupo de variaveis  
+    k <- k + Groups[i+ifelse(i!=NumGroups,1,0)]  # coluna final do Groups de variaveis  
   }
   
-  names(LMFGrupo) <- paste("Grupo", 1:NumGroups, sep = "") # nomeia os Groups
-  ### FIM - Matriz dos Escores dos Fatores por Grupo ###
+  names(LMFGroups) <- paste("Groups", 1:NumGroups, sep = "") # nomeia os Groups
+  ### FIM - Matriz dos Escores dos Fatores por Groups ###
   
   ### INICIO -  Correlacao dos Componentes Principais com as Variaveis Originais ###
   CCP <- sweep(as.matrix(MAutoVecV), 2, MAutoVlr, FUN = "*")  
@@ -458,17 +458,17 @@ MFA <- function(Data, Grupo, TypeGroups = rep("n",length(Grupo)), NameGroups = N
   
   ContrGru <- matrix(data = NA, nrow = NumGroups, ncol = NumAutoVlr) # Matriz com Contribuicoes dos Groups
   
-  j  <- 1        # coluna inicial do Grupo de variaveis
+  j  <- 1        # coluna inicial do Groups de variaveis
   
-  k  <- Grupo[1] # coluna final do Grupo de variaveis
+  k  <- Groups[1] # coluna final do Groups de variaveis
  
   for (i in 1:NumGroups) {
     
     ContrGru[i,] <- apply(ContrVar[j:k, ], 2, sum) # Matriz com Contribuicoes dos Groups
     
-    j <- j + Grupo[i]      # coluna inicial do Grupo de variaveis
+    j <- j + Groups[i]      # coluna inicial do Groups de variaveis
     
-    k <- k + Grupo[i+ifelse(i!=NumGroups,1,0)]  # coluna final do Grupo de variaveis  
+    k <- k + Groups[i+ifelse(i!=NumGroups,1,0)]  # coluna final do Groups de variaveis  
     
   }
   
@@ -479,10 +479,10 @@ MFA <- function(Data, Grupo, TypeGroups = rep("n",length(Grupo)), NameGroups = N
   rownames(EscVar) = NameGroups # Nomeias as linhas
   ### FIM - Matriz das Inercias Parciais/Escores das Variareis ###
     
-  Lista <- list(VectorG = Grupo, VectorNG = NameGroups, VectorPLin = PLinG,
+  Lista <- list(VectorG = Groups, VectorNG = NameGroups, VectorPLin = PLinG,
                 VectorPCol = PColG, MatrixZ = MZG, MatrixA = MEigen,
                 MatrixU = MAutoVecU, MatrixV = MAutoVecV, MatrixF = MF, 
-                MatrixEFG = LMFGrupo, MatrixCCP = CCP, MatrixEscVar = EscVar)
+                MatrixEFG = LMFGroups, MatrixCCP = CCP, MatrixEscVar = EscVar)
   
   return(Lista)
 }

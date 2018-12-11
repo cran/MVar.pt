@@ -35,18 +35,18 @@ Marcelo Angelo Cirillo
 }
 
 \examples{
-Dat <- cbind(rnorm(100,2,3), rnorm(100,1,2))
+Data <- cbind(rnorm(100,2,3), rnorm(100,1,2))
 
-NormTest(Dat)
+NormTest(Data)
 
-plot(density(Dat))
+plot(density(Data))
 
 
-Dat <- cbind(rexp(200,3), rexp(200,3))
+Data <- cbind(rexp(200,3), rexp(200,3))
 
-NormTest(Dat, Sign = 0.01)
+NormTest(Data, Sign = 0.01)
 
-plot(density(Dat))
+plot(density(Data))
 }
 
 \keyword{Teste de normalidade dos dados.}

@@ -32,16 +32,16 @@ Marcelo Angelo Cirillo
 \examples{
 data(DataQuan) # conjunto de dados
 
-Dat <- DataQuan[,2:ncol(DataQuan)]
+Data <- DataQuan[,2:ncol(DataQuan)]
 
-rownames(Dat) <- DataQuan[,1]
+rownames(Data) <- DataQuan[,1]
 
-Resp <- FA(Dat, Method = "PC", Type = 2, NFactor = 3)
+Resp <- FA(Data, Method = "PC", Type = 2, NFactor = 3)
 
 Tit = c("Scree-plot","Scores das observacoes","Cargas Fatoriais","Biplot")
 
 Plot.FA(Resp, Titles = Tit, xlabel = NA, ylabel = NA,
-        Color = TRUE, LinLab = rep("", nrow(Dat)),
+        Color = TRUE, LinLab = rep("", nrow(Data)),
         Casc = TRUE)
 
 }

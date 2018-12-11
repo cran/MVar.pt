@@ -33,13 +33,13 @@ Biplot <- function(Data, alpha = 0.5, Title = NA, xlabel = NA, ylabel = NA,
   if (!is.numeric(alpha) || alpha < 0 || alpha > 1)
      stop("Entrada para 'alpha' esta incorreta, deve ser numerica, com valor entre 0 e 1. Verifique!")
   
-  if (!is.character(Title) && !is.na(Title))
+  if (!is.character(Title) && !is.na(Title[1]))
      stop("Entrada para 'Title' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
-  if (!is.character(xlabel) && !is.na(xlabel))
+  if (!is.character(xlabel) && !is.na(xlabel[1]))
      stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
-  if (!is.character(ylabel) && !is.na(ylabel))
+  if (!is.character(ylabel) && !is.na(ylabel[1]))
      stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
 
   if (!is.logical(Color))
@@ -48,12 +48,12 @@ Biplot <- function(Data, alpha = 0.5, Title = NA, xlabel = NA, ylabel = NA,
   if (!is.logical(Obs)) 
      stop("Entrada para 'Obs' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  if (!is.na(LinLab) && length(LinLab)!=nrow(Data))
+  if (!is.na(LinLab[1]) && length(LinLab)!=nrow(Data))
      stop("O numero elementos do rotulo para linhas 'LinLab' difere do numero de linhas da base de dados. Verifique!")
   
   if (is.na(LinLab[1])) LinLab <- rownames(Data)
   
-  if (is.na(Title)) Title = "Grafico Biplot" 
+  if (is.na(Title[1])) Title = "Grafico Biplot" 
   
   LinNames <- LinLab # nomes das observacoes
   
@@ -75,10 +75,10 @@ Biplot <- function(Data, alpha = 0.5, Title = NA, xlabel = NA, ylabel = NA,
   
   PVar <- (Md^2/sum(Md^2)) * 100 # Proporcao dos primeiros (dim) componentes principais
   
-  if (is.na(xlabel))
+  if (is.na(xlabel[1]))
      xlabel = paste("Primeira coordenada (",round(PVar[1],2),"%)",sep="")
 
-  if (is.na(ylabel))
+  if (is.na(ylabel[1]))
      ylabel = paste("Segunda coordenada (",round(PVar[2],2),"%)",sep="")
   
   MaxX <- max(Coor_I[,1],Coor_V[,1]) + 1 # Dimenssoes maximas das linhas
@@ -92,9 +92,9 @@ Biplot <- function(Data, alpha = 0.5, Title = NA, xlabel = NA, ylabel = NA,
   plot(0,0, # Plota as variaveis
        xlab = xlabel,  # Nomeia Eixo X
        ylab = ylabel,  # Nomeia Eixo Y
-       main = Title,    # Titulo
-       asp  = 1,        # Aspecto do grafico
-       cex  = 0,        # Tamanho dos pontos
+       main = Title,   # Titulo
+       asp  = 1,       # Aspecto do grafico
+       cex  = 0,       # Tamanho dos pontos
        xlim = c(MinX,MaxX), # Dimensao para as linhas do grafico
        ylim = c(MinY,MaxY)) # Dimensao para as colunas do grafico
   

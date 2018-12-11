@@ -29,12 +29,12 @@ Marcelo Angelo Cirillo
 \examples{
 data(DataQuan) # conjunto de dados 
 
-Dat <- DataQuan[,2:8]
+Data <- DataQuan[,2:8]
 
-Resp <- CoefVar(Dat, Type = 1) # coeficiente de variacao global
+Resp <- CoefVar(Data, Type = 1) # coeficiente de variacao global
 round(Resp,2)
 
-Resp <- CoefVar(Dat, Type = 2) # coeficiente de variacao por coluna
+Resp <- CoefVar(Data, Type = 2) # coeficiente de variacao por coluna
 round(Resp,2)
 }
 
