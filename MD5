@@ -1,4 +1,4 @@
-3eaea249daf38b799e9d3b5df3ffc2d5 *DESCRIPTION
+ba3551c9f6e6d84dfc7d870a747ec9f1 *DESCRIPTION
 fef4da11c0ab2a91385d6fc13011da84 *NAMESPACE
 c62581ec23121afb42349f588fb19ac2 *R/Biplot.R
 a943d68622136272def7e3bea8554591 *R/CA.R
@@ -22,7 +22,7 @@ e2adcc05dbf64f58bc78f5c2ebf9d639 *R/Plot.CCA.R
 f5695f8257c1e051f946f7b767a1dee9 *R/Plot.FA.R
 367d6f03be25fbefa7a29d9c2c803d7b *R/Plot.MFA.R
 f7762673662e4c204fc23aaa2881e4e4 *R/Plot.PCA.R
-80c89d18384e455d98f7d254dddf1c68 *R/Plot.PP.R
+59a71aacbc3b596a510a8d1fc987f4d3 *R/Plot.PP.R
 ff0753ae432b85c57c397f5a354e4aef *R/Plot.Regr.R
 dbaac92f1427eea4a446ea78fb4f6134 *R/Regr.R
 60ec5791f9ae9ce5bc2b030c02af5499 *data/DataFreq.rda
@@ -50,7 +50,7 @@ d0dfaa3cc2b8f94ed0117cb12be55ef9 *man/Data_Individuos.Rd
 df2f39f09bb589a7058fb9cdc20b0291 *man/LocLab.Rd
 5262913c159a534281c147862752d2e3 *man/MDS.Rd
 6806627eb5cbacc96d56499f745e27ad *man/MFA.Rd
-5a42de6aa68e9a22fd6efb8454bd96bc *man/MVar.pt-package.Rd
+8eb7464a7806343de33acb6cf62f4a64 *man/MVar.pt-package.Rd
 2f1449d79fe000aebbe34efd8de8a1a4 *man/NormData.Rd
 2d531d9a6f4f8e8b72cddaf4a50da779 *man/NormTest.Rd
 2871a11a54fe455ab2bb3c2c0ef3f2fd *man/PCA.Rd
