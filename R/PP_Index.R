@@ -24,6 +24,7 @@ PP_Index <- function (Data, Class = NA, Vector.Proj = NA, Findex = "HOLES",
   #           "KURTOSISMAX" - Indice Curtose maxima,
   #           "KURTOSISMIN" - Indice Curtose minima,
   #           "MOMENT" - Indice Momento,
+  #           "MF"  - Indice MF
   #           "CHI" - Indice Qui-quadrado.
   # DimProj - Dimensao da projecao dos dados (default = 2).
   # Weight  - Usado nos indice LDA, PDA e Lr, para ponderar os calculos
@@ -56,7 +57,7 @@ PP_Index <- function (Data, Class = NA, Vector.Proj = NA, Findex = "HOLES",
   
   if (!(Findex %in% c("LDA", "PDA", "LR", "HOLES", "CM", "PCA", "FRIEDMANTUKEY", "ENTROPY",
                       "LEGENDRE",  "LAGUERREFOURIER", "HERMITE", "NATURALHERMITE",
-                      "KURTOSISMAX", "KURTOSISMIN", "MOMENT", "CHI")))
+                      "KURTOSISMAX", "KURTOSISMIN", "MOMENT", "CHI", "MF")))
      stop(paste("Funcao indice:",Findex, "nao cadastrada. Verifique!"))
   
   if ((Findex %in% c("PCA","KURTOSISMAX", "KURTOSISMIN"))  && DimProj != 1)
@@ -828,7 +829,30 @@ PP_Index <- function (Data, Class = NA, Vector.Proj = NA, Findex = "HOLES",
       # 
       # print(Index)
 
-    }
+    },
+   
+   
+    "MF" = {
+     
+     # Centraliza na Media e Padroniza os dados por coluna, assim teremos media zero e norma 1
+     # Media <- apply(Data,2,mean) # vetor com as medias das colunas
+     # Data  <- sweep(Data, 2, Media, FUN = "-") # Centraliza na media
+     
+     MC    <- scale(Data, center = TRUE, scale = FALSE) # Centraliza na media
+     SqSum <- sqrt(colSums(MC^2))
+     Data  <- sweep(MC, 2, SqSum, FUN = "/") # Normaliza os dados ou seja a norma dos vetores he 1
+     Pe    <- svd(Data)$d[1]  # Encontra o primeiro Valor Singular de Data
+     Data  <- Data / Pe # pondera os dados pelo primeiro autovalor
+     
+     Index <- .C("MF", row = as.integer(nrow(Data)),
+                 col = as.integer(ncol(Data)), 
+                 Data = as.matrix(Data), Index = 0)$Index
+     
+     # print(Index)
+     # # Codigo abaixo he em R e faz a mesma coisa do codigo anterior de modo mais lento
+     # Index <- 1/nrow(Data) * sum(Data^2)
+     # print(Index)
+   }
 
   )
 

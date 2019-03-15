@@ -2,6 +2,10 @@
 #include <Rmath.h> // Bibliotecas para integrar com as funcoes matematicas do R
 #include <math.h>  // Biblioteca matematica pardrao do C
 #include <stdio.h>
+//#include <Rinternals.h> 
+//#include <Rembedded.h> 
+//#include <Rinternals.h>
+//#include <R_ext/Parse.h>
 
 #ifndef Number_PI
 #define Number_PI 3.141592653589793238462643383279502884197169399375105820974944592307816406 /* Numero Pi */
@@ -11,7 +15,15 @@
 #define Number_Euler 2.718281828459045235360287471353	/* numero de Euler */
 #endif
 
+//#define true  1
+//#define false 0
+
 #define Length(Vet) (sizeof(Vet)/sizeof((Vet)[0])) /* length vector */
+//#define Nrow(Matrix) (sizeof(Matrix)/sizeof(Matrix[0]));       /* returns the number of rows in the array */
+//#define Ncol(Matrix) (sizeof(Matrix[0])/sizeof(Matrix[0][0])); /* returns the number of cols in the array */
+
+//double *RowSum(int *row, int *col, double Data[*col][*row]); // Funcao que retorna a soma das linhas de uma matriz
+//double *ColSum(int *row, int *col, double Data[*col][*row]); // Funcao que retorna a soma das linhas de uma matriz
 
 
 void NaturalHermite(int *row, int *col, double Data[*col][*row], double *Index);
@@ -25,6 +37,7 @@ void Kurtosi(int *row, int *col, double Data[*col][*row], double *Index);
 void Moment(int *row, int *col, double Data[*col][*row], double *Index);
 void FriedmanTukey(int *row, int *col, double Data[*col][*row], double *Index);
 void IndexPCA(int *row, double *Data, double *Index);
+void MF(int *row, int *col, double Data[*col][*row], double *Index);
 
 double PolyLegendre(int i, double x); /* funcao usada no indice de Legendre par calcular os polinomios de Legendre */
 double PolyLaguerre(int i, double x); /* funcao usada no indice de LaguerreFourier par calcular os polinomios de Laguerre */
@@ -32,6 +45,78 @@ double PolyHermite(int i, double x);  /*  funcao usada no indice de Hermite par 
 double PolyNaturalHermite(int i, double x); /* funcao usada no indice de Natural Hermite par calcular os polinomios de Hermite Natural  */
 unsigned long int Factorial(int n); /* funcao usada no indice de Hermite e Natural Hermite */
 double is_par(int num); /* funcao usada no indice Natural Hermite */
+
+
+//void LDA(int *row, int *col, double VecProj[2][*col], double Data[*col][*row], double *Index) {
+//
+//   Function det=base["det"];
+//   index=1.0-as<double>(det(wrap(Wtt)))/as<double>(det(wrap(WBtt)));
+//   
+//   Environment base("package:base");
+//   Function table=base["table"];
+//   
+//   Function det=base["det"];
+//   printf("%f", det(rho));
+//   
+//    int i, j, k, m, ind, nr = 6, na = 9, n = *row;
+//    double ppi = 0.0, aj[*col], bj[*col], z[2][n], r[n];
+//    double th[n], rd[nr], eta[9], pk[48], angles[na];
+//    double delang = 45 * Number_PI / 180;
+//    double delr = sqrt(2 * log(6))/5;
+//	int i, j, k, jt, n = *row;
+//    
+//    
+//    *Index += sum;
+//}
+
+//void Teste(int *row, int *col, double Data[*col][*row]) {
+//
+//    int i, j;
+//    
+//    //MC    <- scale(Data, center = TRUE, scale = FALSE) // Centraliza na média
+//    //SqSum <- sqrt(colSums(MC^2))
+//    //Data  <- sweep(MC, 2, SqSum, FUN = "/") // Normaliza os dados ou seja a norma dos vetores he 1
+//    //Pe    <- svd(Data)$d[1]  // Encontra o 1º Valor Singular de Data
+//    
+//    // *aa = svd(*Data);
+//    // printf("%f ", aa[1]);
+//    //GetRNGstate();
+//    //aa = colSums(Data);
+//    //printf("%f \n", colSums(Data));
+//    //PutRNGstate();
+//    
+//    double slin[*row];
+//	double scol[*col];
+////    double slin[*row];
+//    
+//	// Soma das linhas
+//    for (i = 0; i < *row; i++ ) {
+//    	slin[i] = 0.0;
+//        for (j = 0; j < *col; j++) {	
+//            slin[i] += Data[j][i];
+//        } 
+//    }
+//    
+//     // Soma das colunas
+//    for (j = 0; j < *col; j++) {
+//    	scol[j] = 0.0;
+//	    for (i = 0; i < *row; i++ ) {
+//            scol[j] += Data[j][i];
+//        } 
+//    }
+//
+//       
+//    for (i = 0; i < *row; i++) {
+//    	printf("%f ", slin[i]);
+//	}
+//	printf("\n");
+//	
+//    for (j = 0; j < *col; j++) {
+//    	printf("%f ", scol[j]);
+//	}
+//	printf("\n");
+//    
+//}
 
 
 /* INICIO - Indices */
@@ -712,7 +797,204 @@ void IndexPCA(int *row, double *Data, double *Index) {
     *Index = *Index / *row;
 }
 
+
+
+
+void MF(int *row, int *col, double Data[*col][*row], double *Index) {
+
+    int i, j;
+///*    int i, j, k, n = *row; 
+//	double MeanCol[*col], SqSum[*col]; 
+//	double MTr[*row][*col], MSim[*col][*col], Sum;
+//	double eps = 0.00001; // aproximacao para o metodo power
+//	double VecIn[*col];   // vetor aproximacao inicial metodo power
+//	double VecY[*row];    // vetor Y = A*x
+//  double AutVec[*row];  // autovetor
+//	double min, er0 = 0.0, er, tol = 1.0; 
+//	double AutVlr, vlr1[*col], vlr2 = 0.0, Pe;
+//	int Iter = 0;
+//	
+//    /* INICIO - Balanceamento dos dados */
+//    /* Calculo das medias das colunas */
+//    for (j = 0; j < *col; j++) {
+//    	MeanCol[j] = 0.0;
+//        for (i = 0; i < *row; i++ ) {
+//		    MeanCol[j] += Data[j][i];	
+//        } 
+//        MeanCol[j] /= n;
+//    }    
+//    
+//    /* Centraliza as colunas nas respectivas medias */
+//    for (j = 0; j < *col; j++){
+//        for (i = 0; i < *row; i++ )  {
+//		    Data[j][i] -=  MeanCol[j];	
+//        } 
+//    }    
+//   
+//    /* Raiz quadrada da soma dos quadrados de elemento da coluna */
+//    for (j = 0; j < *col; j++) {
+//    	SqSum[j] = 0.0;
+//        for (i = 0; i < *row; i++ ) {
+//		    SqSum[j] += pow(Data[j][i], 2.0);	
+//        } 
+//        SqSum[j] = sqrt(SqSum[j]);
+//    } 
+//
+//    /* Normaliza os dados ou seja a norma dos vetores valera 1 */
+//    for (i = 0; i < *row; i++ ) {
+//        for (j = 0; j < *col; j++) {
+//		    Data[j][i] /= SqSum[j];	
+//        } 
+//    }
+//   
+//    /* Calculo matriz transposta usada para encontrar o primeiro autovalor */
+//    for (i = 0; i < *row; i++) {
+//        for (j = 0; j < *col; j++) {
+//		    MTr[i][j] = Data[j][i];	
+//        } 
+//    } 
+//       
+//    /* Encontra matrix simetrica usada para encontrar o primeiro autovalor */
+//    for (k = 0; k < *col; k++) {
+//	    for (i = 0; i < *col; i++) {
+//       		Sum = 0.0;
+//        	for (j = 0; j < *row; j++) {
+//		    	Sum += MTr[j][i] * Data[k][j];	
+//        	}  
+//        	MSim[i][k] = Sum;
+//    	}
+//	}
+//
+//	/* Inicio - Metodo Power para encontrar o primeiro autovalor */
+//	for (j = 0; j < *col; j++) { /* vetor de inicializaco */
+//		VecIn[j] = 1.0;
+//	}
+//	
+//	while (Iter < 1000 && tol > eps) {
+//	   
+//		for (i = 0; i < *col; i++) { /* Encontra Y = A*x */
+//	        for (j = 0; j < *col; j++) {
+//			    VecY[i] += (MSim[j][i] * VecIn[j]);	
+//	        } 
+//	    } 
+//	    
+//	    min = fabs(VecY[0]);
+//	    for (j = 1; j < *col; j++) { /* Encontra o minimo de VecY */
+//	        if (fabs(VecY[j]) < min) min = fabs(VecY[j]);
+//	    }
+//
+//	    for (j = 0; j < *col; j++) { /* Encontra o autovetor */
+//		    AutVec[j] = VecY[j] / min;	
+//	    } 
+//	    
+//	    er  = 0.0;
+//		for (j = 0; j < *col; j++) { /* Encontra o modulo de AutVec */
+//		    er += (AutVec[j] * AutVec[j]);
+//	    } 
+//	    er = sqrt(er);
+//	    
+//	    if (Iter > 0) {
+//		   tol = fabs(er0 - er);
+//		}
+//
+//		er0 = er;
+//		 
+//		for (j = 0; j < *col; j++) { /* Igual os vetores */
+//		    VecIn[j] = AutVec[j];
+//		    VecY[j] = 0.0; /* he necessario zerar para nao acumular valores */
+//	    } 
+//        
+//		Iter++;	
+//    }
+//    
+//    AutVlr = 0.0;
+//    for (i = 0; i < *col; i++) {  Encontra Y = A*x
+//	    for (j = 0; j < *col; j++) {
+//			vlr1[i] += (MSim[j][i] * VecIn[j]);		
+//	    } 
+//		vlr2 += (VecIn[i] * VecIn[i]);
+//	} 
+//	
+//	for (j = 0; j < *col; j++) {
+//		AutVlr += (vlr1[j] * VecIn[j]); /* / (VecIn[j] * VecIn[j]);	*/
+//	} 
+//	
+//	AutVlr = AutVlr / vlr2; /* auto valor encontrado */
+//	
+//    /* Fim - Metodo Power para encontrar o primeiro autovalor */
+//    
+//    Pe = sqrt(AutVlr); /* valor singular */
+//
+//    /* Divide dados pelo primeiro autovalor */
+//    for (j = 0; j < *col; j++) {
+//        for (i = 0; i < *row; i++ ) {
+//		    Data[j][i] = Data[j][i] / Pe;	
+//        } 
+//    }
+//   
+//    /* FIM - Balanceamento dos dados */ */
+      
+    *Index = 0.0; /* acumula valor para o indice */
+
+    for (i = 0; i < *row; i++ ) {    	
+    	for (j = 0; j < *col; j++ ) {
+            *Index += pow(Data[j][i], 2.0);
+        }
+    }
+    
+    *Index = *Index / *row;
+}
 /* FIM - Indices */
 
+
+///* INICIO - Funcoes uteis */
+//double power(double x, double y) { /* Funtion pow for negative number */
+//  double result;
+//  
+////  double t;
+////  t = x;
+//  if (y < 0) {
+//     result = pow (1/x, -y);
+//  } else {
+//     result = pow (x, y);
+//  }
+//  return result;
+//}
+///* FIM - Funcoes uteis */
+//
+//
+///* Funcao que retorna a soma das linhas de uma matriz */
+//double *RowSum(int *row, int *col, double Data[*col][*row]) {
+//	
+//    int i, j;
+//    
+//    double _slin[*row];
+//    
+//    for (i = 0; i < *row; i++ ) {
+//    	_slin[i] = 0.0;
+//        for (j = 0; j < *col; j++) {	
+//            _slin[i] += Data[j][i];
+//        } 
+///*       printf("%f \n", _slin[i]); */
+//    }
+//    
+//	return _slin;
+//}
+//
+///* Funcao que retorna a soma das colunas de uma matriz */
+//double *ColSum(int *row, int *col, double Data[*col][*row]) {
+//	
+//    int i, j;
+//    
+//	double _scol[*col];
+//	
+//    for (j = 0; j < *col; j++) {
+//    	_scol[j] = 0.0;
+//	    for (i = 0; i < *row; i++) {
+//            _scol[j] += Data[j][i];
+//        } 
+//    }
+//	return _scol;
+//}
 
 

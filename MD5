@@ -1,4 +1,4 @@
-ba3551c9f6e6d84dfc7d870a747ec9f1 *DESCRIPTION
+13b7f106c748a287d00c1f33f128c035 *DESCRIPTION
 fef4da11c0ab2a91385d6fc13011da84 *NAMESPACE
 c62581ec23121afb42349f588fb19ac2 *R/Biplot.R
 a943d68622136272def7e3bea8554591 *R/CA.R
@@ -15,8 +15,8 @@ f4a0f6a4d0be85b84b704d793009d205 *R/MFA.R
 e7936d7b695e9777b43e2bd93541b9f4 *R/NormData.R
 ee16e332033e8fded845072eb8effd5b *R/NormTest.R
 072a8ed389443310933b4a13dd92f7d1 *R/PCA.R
-3acbf9312e00d45cd76f702a3d535cd1 *R/PP_Index.R
-59886f7a0f74e207e1265711002b6768 *R/PP_Optimizer.R
+9468b7abf74edb7580993b550896866f *R/PP_Index.R
+f7f89c4564a1fa09c47c34e923c266a0 *R/PP_Optimizer.R
 ab3b9057bdc627da2cc4f520da96ce8a *R/Plot.CA.R
 e2adcc05dbf64f58bc78f5c2ebf9d639 *R/Plot.CCA.R
 f5695f8257c1e051f946f7b767a1dee9 *R/Plot.FA.R
@@ -50,12 +50,12 @@ d0dfaa3cc2b8f94ed0117cb12be55ef9 *man/Data_Individuos.Rd
 df2f39f09bb589a7058fb9cdc20b0291 *man/LocLab.Rd
 5262913c159a534281c147862752d2e3 *man/MDS.Rd
 6806627eb5cbacc96d56499f745e27ad *man/MFA.Rd
-8eb7464a7806343de33acb6cf62f4a64 *man/MVar.pt-package.Rd
+535b8c116184e4036f74c18146ffc053 *man/MVar.pt-package.Rd
 2f1449d79fe000aebbe34efd8de8a1a4 *man/NormData.Rd
 2d531d9a6f4f8e8b72cddaf4a50da779 *man/NormTest.Rd
 2871a11a54fe455ab2bb3c2c0ef3f2fd *man/PCA.Rd
-2c5ba376722222ca70e479ceae53157f *man/PP_Index.Rd
-4ad33138ae0230dfd1744e72a886083b *man/PP_Optimizer.Rd
+bab08e3fd9e5b50df1817c1a44a13768 *man/PP_Index.Rd
+32d541136d41cc75883e660dee20b165 *man/PP_Optimizer.Rd
 2697912e78f80db341ae206c5145ef73 *man/Plot.CA.Rd
 13f4ade6f44a1cfd89553c18ebbe77e7 *man/Plot.CCA.Rd
 0bedb5c7c9e50f8c35f12e07d30fb474 *man/Plot.FA.Rd
@@ -64,5 +64,5 @@ cb77ae6fdfe99d0e8384267890de5efa *man/Plot.PCA.Rd
 2614bd342a0f5a328aa3d99fdda78bf2 *man/Plot.PP.Rd
 fcc8220fa7c02e9d39c01ac8771f9288 *man/Plot.Regr.Rd
 e616ffe360eee31653cd4c71a5520af2 *man/Regr.Rd
-92e7a0baa2faf9e13fd50a241e3588a5 *src/PP_IndexC.c
+95071d6d60242329041d60ed61467b52 *src/PP_IndexC.c
 0faa4bd933adb154d8dcd44ab164576b *src/registerDynamicSymbol.c

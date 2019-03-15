@@ -30,6 +30,7 @@
                 "kurtosismax" - Indice curtose maxima,\cr
                 "kurtosismin" - Indice curtose minima,\cr
                 "moment" - Indice momento,\cr
+                "mf" - Indece MF,\cr
                 "chi" - Indice qui-quadrado.}
   \item{DimProj}{Dimensao para a projecao dos dados (default = 2).}
   \item{Sphere}{Dados esfericos (default = TRUE).}

@@ -30,6 +30,7 @@
               "kurtosismax" - Indice curtose maxima,\cr
               "kurtosismin" - Indice curtose minima,\cr
               "moment" - Indice momento,\cr
+              "mf" - Indece MF,\cr
               "chi" - Indice qui-quadrado.}
 \item{DimProj}{Dimensao da projecao dos dados (default = 2).}
 \item{Weight}{Usado nos indice LDA, PDA e Lr, para ponderar os calculos
