@@ -7,8 +7,8 @@
 \description{Graficos da projection pursuit (PP).}
 
 \usage{Plot.PP(PP, Titles = NA, xlabel = NA, ylabel = NA,
-        PosLeg = 2, BoxLeg = TRUE, Color = TRUE, Label = FALSE,
-        LinLab = NA, AxisVar = TRUE, Axis = TRUE, Casc = TRUE)}
+        PosLeg = 2, BoxLeg = TRUE, Color = TRUE, LinLab = NA, 
+        AxisVar = TRUE, Axis = TRUE, Casc = TRUE)}
  
 \arguments{
   \item{PP}{Dados da funcao PP_Optimizer.}
@@ -22,8 +22,7 @@
                 4 para legenda no canto inferior esquerdo.}
   \item{BoxLeg}{Coloca moldura na legenda (default = TRUE).}
   \item{Color}{Graficos coloridos (default = TRUE).}
-  \item{Label}{Coloca os rotulos das observacoes (default = FALSE).}
-  \item{LinLab}{Vetor com os rotulos para as observacoes, se nao for definido assume texto padrao.}
+  \item{LinLab}{Vetor com os rotulos para as observacoes.}
   \item{AxisVar}{Coloca eixos de rotacao das variaveis, somente quando DimProj > 1 (default = TRUE).}
   \item{Axis}{Plota os eixos X e Y (default = TRUE). }
   \item{Casc}{Efeito cascata na apresentacao dos graficos (default = TRUE).}
@@ -56,10 +55,9 @@ Res <- PP_Optimizer(Data = Data, Class = NA, Findex = FcIndex,
                     OptMethod = "GTSA", DimProj = Dim, Sphere = Sphere, 
                     Weight = TRUE, Lambda = 0.1, r = 1, Cooling = 0.9, 
                     Eps = 1e-3, Maxiter = 500, Half = 30)
- 
+
 Plot.PP(Res, Titles = NA, PosLeg = 1, BoxLeg = FALSE, Color = TRUE,
-        Label = FALSE, LinLab = NA, AxisVar = TRUE, Axis = TRUE, 
-        Casc = FALSE)
+        LinLab = NA, AxisVar = TRUE, Axis = TRUE, Casc = FALSE)
 
 
 # Exemplo 2 - Com as classes nos dados
@@ -73,8 +71,7 @@ Res <- PP_Optimizer(Data = Data, Class = Class, Findex = FcIndex,
 Tit <- c(NA,"Exemplo de grafico") # titulos para os graficos
 
 Plot.PP(Res, Titles = Tit, PosLeg = 1, BoxLeg = FALSE, Color = TRUE,
-        Label = FALSE, LinLab = Class, AxisVar = TRUE, Axis = TRUE,
-        Casc = FALSE)
+        LinLab = NA, AxisVar = TRUE, Axis = TRUE, Casc = FALSE)
 
 
 # Exemplo 3 - Sem as classes nos dados, mas informando 
@@ -84,11 +81,10 @@ Res <- PP_Optimizer(Data = Data, Class = NA, Findex = "Moment",
                     Weight = TRUE, Lambda = 0.1, r = 1, Cooling = 0.9, 
                     Eps = 1e-3, Maxiter = 500, Half = 30)
 
-Class <- c(rep("a",50),rep("b",50),rep("c",50)) # classe dos dados
+Lin <- c(rep("a",50),rep("b",50),rep("c",50)) # classe dos dados
 
 Plot.PP(Res, Titles = NA, PosLeg = 1, BoxLeg = FALSE, Color = TRUE,
-        Label = FALSE, LinLab = Class, AxisVar = TRUE, Axis = TRUE,
-        Casc = FALSE)
+        LinLab = Lin, AxisVar = TRUE, Axis = TRUE, Casc = FALSE)
 
 
 # Exemplo 4 - Com as classes nos dados, mas nao informada na funcao plot
@@ -106,8 +102,7 @@ Res <- PP_Optimizer(Data = Data, Class = Class, Findex = FcIndex,
 Tit <- c("",NA) # titulos para os graficos
 
 Plot.PP(Res, Titles = Tit, PosLeg = 1, BoxLeg = FALSE, Color = TRUE,
-        Label = FALSE, LinLab = NA, AxisVar = TRUE, Axis = TRUE,
-        Casc = FALSE)
+        LinLab = NA, AxisVar = TRUE, Axis = TRUE, Casc = FALSE)
 }
 
 \keyword{Projection pursuit}

@@ -1,6 +1,8 @@
 GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, ylabel = NA,
-                      Color = TRUE, Label = FALSE, LinLab = NA, AxisVar = TRUE, Axis = FALSE,
-                      NumRot = 200, ChoiceRot = NA, SavePicture = FALSE) {
+                      Color = TRUE, LinLab = NA, Class = NA, PosLeg = 2, BoxLeg = TRUE, 
+                      AxisVar = TRUE, Axis = FALSE, NumRot = 200, ChoiceRot = NA,
+                      SavePicture = FALSE) {
+  
   # Esta funcao executa a rotacao dos dados multivariados em baixa dimensao
   # basea-se nos artigos de: Asimov, D. . The Grand Tour: A Tool for Viewing
   # Multidimensional Data, SIAM Journal of Scientific and Statistical Computing
@@ -21,8 +23,14 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
   # xlabel   - Nomeia o eixo X, se nao definido retorna padrao.
   # ylabel   - Nomeia o eixo Y, se nao definido retorna padrao.
   # Color  - Graficos coloridos (default = TRUE).
-  # Label  - Coloca os rotulos das observacoes (default = FALSE).
-  # LinLab - Nomes dos rotulos das observacoes, se omitido retorna a numeracao default.
+  # LinLab - Nomes dos rotulos das observacoes.
+  # Class  - Vetor com os nomes das classes dos dados.
+  # PosLeg - 0 sem legenda,
+  #            1 para legenda no canto superior esquerdo,
+  #            2 para legenda no canto superior direito (default),
+  #            3 para legenda no canto inferior direito,
+  #            4 para legenda no canto inferior esquerdo.  
+  # BoxLeg - Colocar moldura na legenda (default = TRUE).
   # AxisVar - Coloca eixos de rotacao das variaveis (default = TRUE).
   # Axis    - Plota os eixos X e Y (default = FALSE).
   # NumRot  - Numero de rotacoes (default = 200).
@@ -39,7 +47,15 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
 
   if (!is.data.frame(Data))
      stop("Entrada 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!")
-
+  
+  if (!is.na(Class[1])) {
+    
+    Class <- as.matrix(Class)
+    
+    if (nrow(Data) != length(Class))
+       stop("Entrada 'Class' ou 'Data' esta incorreta, devem conter o mesmo numero de linhas. Verifique!")
+  }
+  
   Method <- toupper(Method) # transforma em maiusculo
 
   if (!(Method %in% c("TORUS", "INTERPOLATION", "PSEUDO")))
@@ -48,20 +64,17 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
   if (!is.character(Title) && !is.na(Title[1]))
      stop("Entrada para 'Title' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
 
+  if (!is.numeric(PosLeg) || PosLeg < 0 || PosLeg > 4 || (floor(PosLeg)-PosLeg) != 0)
+     stop("Entrada para posicao da legenda 'PosLeg' esta incorreta, deve ser um numero inteiro entre [0,4]. Verifique!")
+  
   if (!is.logical(Color))
      stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  
+  if (!is.logical(BoxLeg)) 
+     stop("Entrada para moldura da legenda 'BoxLeg' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
-  if (!is.logical(Label))
-     stop("Entrada para 'Label' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
-
-  if (!is.na(LinLab[1])) {
-    if (length(LinLab) != nrow(Data)) 
-      stop("Entrada para 'LinLab' esta incorreta, deve ter o mesmo numero de linhas que os dados de entrada em 'Data'. Verifique!")
-    NomeLinhas = as.matrix(LinLab)
-  }
-  else {
-    NomeLinhas = rownames(Data)
-  }
+  if (!is.na(LinLab[1]) && length(LinLab)!=nrow(Data))
+     stop("Entrada para 'LinLab' esta incorreta, deve ter o mesmo numero de linhas que os dados de entrada em 'Data'. Verifique!")
 
   if (!is.logical(AxisVar))
      stop("Entrada para 'AxisVar' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
@@ -70,11 +83,11 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
      stop("Entrada para 'Axis' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
   if (!is.numeric(NumRot) || NumRot < 1)
-      stop("'NumRot' deve ser um numero inteiro maior que zero. Verifique!")
+     stop("'NumRot' deve ser um numero inteiro maior que zero. Verifique!")
       
   if (!is.na(ChoiceRot[1])) {
      if (!is.numeric(ChoiceRot) ||  ChoiceRot < 1)
-         stop("'ChoiceRot' deve ser um numero inteiro maior que zero. Verifique!")
+        stop("'ChoiceRot' deve ser um numero inteiro maior que zero. Verifique!")
     
      if(NumRot < ChoiceRot)
        stop("NumRot < ChoiceRot, NumRot tem que ser maior ou igual ChoiceRot. Verifique!")
@@ -89,16 +102,28 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
   if (!is.character(ylabel) && !is.na(ylabel[1]))
      stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
-  if (is.na(xlabel[1]) && Axis)
-    xlabel = "Eixo X" 
+  if (is.na(xlabel[1]))
+     xlabel = "Eixo X" 
   
-  if (is.na(ylabel[1]) && Axis)
-    ylabel = "Eixo Y"
+  if (is.na(ylabel[1]))
+     ylabel = "Eixo Y"
+
+  if (PosLeg==1) PosLeg = "topleft"   # posicao das legendas nos graficos
+  if (PosLeg==2) PosLeg = "topright"
+  if (PosLeg==3) PosLeg = "bottomright"
+  if (PosLeg==4) PosLeg = "bottomleft"
   
-  xlabel <- ifelse(Axis, xlabel, "")
-  ylabel <- ifelse(Axis, ylabel, "")
+  BoxLeg = ifelse(BoxLeg,"o","n") # moldura nas legendas, "n" sem moldura, "o" com moldura
   
   d <- 2 # dimensao de projecao
+
+  Num.Class = 0
+  if (!is.na(Class[1])) {
+     Class.Table <- table(Class)       # cria tabela com as quantidade dos elementos das classes
+     Class.Names <- names(Class.Table)  # nomes das classses
+     Num.Class   <- length(Class.Table) # numero de classes
+     NomeLinhas  <- as.matrix(Class)
+  } 
   
   if (Method == "TORUS") {
     
@@ -134,6 +159,8 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
     i <- 1
     while (i <= NumRot) { # Inicializa o Grand Tour
       
+      cor <- 1 # cor inicial dos pontos e legendas
+      
       IndVector <- diag(1, p) # vetor identidade
       
       for (j in 1:N) { # encontra a matriz de rotacao
@@ -163,18 +190,51 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
         
         Tit <- ifelse(!is.character(Title) || is.na(Title[1]), paste("Rotacao:", i), Title)
         
-        plot(Proj.Data, # coordenadas do grafico
-             xlab = xlabel, # Nomeia Eixo X
-             ylab = ylabel, # Nomeia Eixo Y
-             main = Tit, # Titulo para o grafico
-             pch  = 16,  # formato dos pontos
-             axes = F,   # elimina os eixos
-             xlim = c(minX,maxX), # dimensao eixo X
-             ylim = c(minY,maxY), # dimensao eixo Y
-             col = ifelse(Color, "Blue", "Black"))
+        if (Num.Class == 0) {
+          
+           plot(Proj.Data, # coordenadas do grafico
+                xlab = xlabel, # Nomeia Eixo X
+                ylab = ylabel, # Nomeia Eixo Y
+                main = Tit, # Titulo para o grafico
+                asp  = 1,  # Aspecto do Grafico
+                cex  = 1,  # Tamanho dos pontos
+                pch  = 16,  # formato dos pontos
+                axes = F,   # elimina os eixos
+                xlim = c(minX,maxX), # dimensao eixo X
+                ylim = c(minY,maxY), # dimensao eixo Y
+                col = ifelse(Color, "Blue", "Black"))
+          
+        } else {
+          
+           plot(0,0, # cria grafico para as coordenadas linhas x e colunas y
+                xlab = xlabel, # Nomeia Eixo X
+                ylab = ylabel, # Nomeia Eixo Y
+                main = Tit,  # Titulo
+                asp  = 1,  # Aspecto do Grafico
+                cex  = 0,  # Tamanho dos pontos
+                xlim = c(minX,maxX), # dimensao eixo X
+                ylim = c(minY,maxY), # dimensao eixo Y
+                col  = ifelse(Color,"red","black"))  # Cor dos pontos
+ 
+           Init.Form <- 14 # formato inicial dos pontos
+           
+           for (k in 1:Num.Class) {
+             
+             Point.Form <- Init.Form + k # fomato dos pontos de cada classe
+            
+             cor1 <- ifelse(Color, cor + k, "black")
+             
+             Point.Data <- Proj.Data[which(Class == Class.Names[k]),]
+            
+             points(Point.Data,
+                    pch = Point.Form, # Formato dos pontos
+                    cex = 1.2,  # Tamanho dos pontos
+                    col = cor1) # adiciona ao grafico as coordenadas principais das colunas
+           }
+          
+        }  
         
-        if (Label)
-           LocLab(Proj.Data, cex = 1, NomeLinhas)
+        if (!is.na(LinLab[1])) LocLab(Proj.Data, cex = 1, LinLab)
         
         if (Axis) # coloca os eixos
            abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
@@ -192,6 +252,20 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
            
            LocLab(PosVar, cex = 1, colnames(Data), xpd = TRUE)
           
+        }
+        
+        if (PosLeg != 0 && Num.Class > 0) {
+          
+           if (Color) cor <- 2
+          
+           Init.Form <- 15 # codigo formato ponto inicial
+          
+           Color_b <- cor # colore as letras das legendas e suas representacoes no grafico
+          
+           if (Color) Color_b = cor:(cor + Num.Class)
+          
+           legend(PosLeg, Class.Names, pch = (Init.Form):(Init.Form + Num.Class), col = Color_b,
+                  text.col = Color_b, bty = BoxLeg, text.font = 6, y.intersp = 0.8, xpd = TRUE) # cria a legenda
         }
         
         if (SavePicture) dev.off()
@@ -240,6 +314,8 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
     i <- 1
     while (i <= length(t)) { # Inicializa o Grand Tour
 
+      cor <- 1 # cor inicial dos pontos e legendas
+      
       for(j in 1:(p/2)) { # encontra a matriz de rotacao
         a[2*(j-1)+1] = coefic * sin(DivRest[j] * t[i]);
         a[2*j]       = coefic * cos(DivRest[j] * t[i]);
@@ -262,18 +338,51 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
         
         Tit <- ifelse(!is.character(Title) || is.na(Title[1]), paste("Rotacao:", i), Title)
         
-        plot(Proj.Data, # coordenadas do grafico
-             xlab = xlabel, # Nomeia Eixo X
-             ylab = ylabel, # Nomeia Eixo Y
-             main = Tit, # Titulo para o grafico
-             pch  = 16,  # formato dos pontos
-             axes = F,   # elimina os eixos
-             xlim = c(minX,maxX), # dimensao eixo X
-             ylim = c(minY,maxY), # dimensao eixo Y
-             col  = ifelse(Color, "Blue", "Black"))
+        if (Num.Class == 0) {
+          
+           plot(Proj.Data, # coordenadas do grafico
+                xlab = xlabel, # Nomeia Eixo X
+                ylab = ylabel, # Nomeia Eixo Y
+                main = Tit, # Titulo para o grafico
+                asp  = 1,  # Aspecto do Grafico
+                cex  = 1,  # Tamanho dos pontos
+                pch  = 16,  # formato dos pontos
+                axes = F,   # elimina os eixos
+                xlim = c(minX,maxX), # dimensao eixo X
+                ylim = c(minY,maxY), # dimensao eixo Y
+                col = ifelse(Color, "Blue", "Black"))
+          
+        } else {
+          
+           plot(0,0, # cria grafico para as coordenadas linhas x e colunas y
+                xlab = xlabel, # Nomeia Eixo X
+                ylab = ylabel, # Nomeia Eixo Y
+                main = Tit,  # Titulo
+                asp  = 1,  # Aspecto do Grafico
+                cex  = 0,  # Tamanho dos pontos
+                xlim = c(minX,maxX), # dimensao eixo X
+                ylim = c(minY,maxY), # dimensao eixo Y
+                col  = ifelse(Color,"red","black"))  # Cor dos pontos
+           
+           Init.Form <- 14 # formato inicial dos pontos
+           
+           for (k in 1:Num.Class) {
+             
+             Point.Form <- Init.Form + k # fomato dos pontos de cada classe
+            
+             cor1 <- ifelse(Color, cor + k, "black")
+            
+             Point.Data <- Proj.Data[which(Class == Class.Names[k]),]
+            
+             points(Point.Data,
+                    pch = Point.Form, # Formato dos pontos
+                    cex = 1.2,  # Tamanho dos pontos
+                    col = cor1) # adiciona ao grafico as coordenadas principais das colunas
+           }
+          
+        }  
         
-        if (Label)
-           LocLab(Proj.Data, cex = 1, NomeLinhas)
+        if (!is.na(LinLab[1])) LocLab(Proj.Data, cex = 1, LinLab)
         
         if (Axis) # coloca os eixos
            abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
@@ -281,18 +390,32 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
         if (AxisVar) { # plota os eixos das variaveis
           
            Ajuste <- c(diff(range(Proj.Data[,1])) / 2 + min(Proj.Data[,1]),
-                      diff(range(Proj.Data[,2])) / 2 + min(Proj.Data[,2]))
+                       diff(range(Proj.Data[,2])) / 2 + min(Proj.Data[,2]))
           
            PosVar <- cbind(A[,1] + Ajuste[1], A[,2] + Ajuste[2]) # Posicao para as variaveis no grafico
- 
+          
            arrows(Ajuste[1], Ajuste[2], PosVar[,1], PosVar[,2],
                   lty = 1, code = 2, length = 0.08, angle = 25,
                   col = ifelse(Color, "Red", "Black"))
-
+           
            LocLab(PosVar, cex = 1, colnames(Data), xpd = TRUE)
           
         }
         
+        if (PosLeg != 0 && Num.Class > 0) {
+          
+           if (Color) cor <- 2
+          
+           Init.Form <- 15 # codigo formato ponto inicial
+          
+           Color_b <- cor # colore as letras das legendas e suas representacoes no grafico
+          
+           if (Color) Color_b = cor:(cor + Num.Class)
+          
+           legend(PosLeg, Class.Names, pch = (Init.Form):(Init.Form + Num.Class), col = Color_b,
+                  text.col = Color_b, bty = BoxLeg, text.font = 6, y.intersp = 0.8, xpd = TRUE) # cria a legenda
+        }
+
         if (SavePicture) dev.off()
         
         Sys.sleep(0.05) # tempo entre as plotagens dos graficos
@@ -356,6 +479,8 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
     i <- 1  
     while (i <= NumRot) { # Inicializa o Grand Tour
       
+      cor <- 1 # cor inicial dos pontos e legendas
+      
       if (i > 1) # novas projecoes
          Proj.Data = Vector1 %*% diag(1,cp.v) * cos(theta[i]) + Vector2 %*% diag(1,cp.v) * sin(theta[i])
          
@@ -368,36 +493,86 @@ GrandTour <- function(Data, Method = "Interpolation", Title = NA, xlabel = NA, y
         maxY = max(Proj.Data[, 2])
         minY = min(Proj.Data[, 2])
         
-        Tit <- ifelse(!is.character(Title) || is.na(Title[1]), paste("Angulo de rotacao:", theta[i] / (pi/180),"graus"), Title)
+        Tit <- ifelse(!is.character(Title) || is.na(Title[1]), paste("Rotacao:", i), Title)
         
-        plot(Proj.Data[1:n,1],Proj.Data[1:n,2], # coordenadas do grafico
-             xlab = xlabel,  # Nomeia Eixo X
-             ylab = ylabel,  # Nomeia Eixo Y
-             main = Tit, # Titulo para o grafico
-             pch  = 16,  # formato dos pontos 
-             axes = F,   # elimina os eixos
-             xlim = c(minX,maxX), # dimensao eixo X
-             ylim = c(minY,maxY), # dimensao eixo Y
-             col  = ifelse(Color, "Blue", "Black"))
+        if (Num.Class == 0) {
+          
+           plot(Proj.Data, # coordenadas do grafico
+                xlab = xlabel, # Nomeia Eixo X
+                ylab = ylabel, # Nomeia Eixo Y
+                main = Tit, # Titulo para o grafico
+                asp  = 1,  # Aspecto do Grafico
+                cex  = 1,  # Tamanho dos pontos
+                pch  = 16,  # formato dos pontos
+                axes = F,   # elimina os eixos
+                xlim = c(minX,maxX), # dimensao eixo X
+                ylim = c(minY,maxY), # dimensao eixo Y
+                col = ifelse(Color, "Blue", "Black"))
+          
+        } else {
+           
+           plot(0,0, # cria grafico para as coordenadas linhas x e colunas y
+                xlab = xlabel, # Nomeia Eixo X
+                ylab = ylabel, # Nomeia Eixo Y
+                main = Tit,  # Titulo
+                asp  = 1,  # Aspecto do Grafico
+                cex  = 0,  # Tamanho dos pontos
+                xlim = c(minX,maxX), # dimensao eixo X
+                ylim = c(minY,maxY), # dimensao eixo Y
+                col  = ifelse(Color,"red","black"))  # Cor dos pontos
+           
+           Init.Form <- 14 # formato inicial dos pontos
+          
+           for (k in 1:Num.Class) {
+             
+             Point.Form <- Init.Form + k # fomato dos pontos de cada classe
+             
+             cor1 <- ifelse(Color, cor + k, "black")
+             
+             Point.Data <- Proj.Data[which(Class == Class.Names[k]),]
+             
+             points(Point.Data,
+                    pch = Point.Form, # Formato dos pontos
+                    cex = 1.2,  # Tamanho dos pontos
+                    col = cor1) # adiciona ao grafico as coordenadas principais das colunas
+           }
+           
+        }  
         
-        if (Label)
-           LocLab(Proj.Data[1:n,], cex = 1, NomeLinhas)
+        if (!is.na(LinLab[1])) LocLab(Proj.Data, cex = 1, LinLab)
         
         if (Axis) # coloca os eixos
            abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
         
         if (AxisVar) { # plota os eixos das variaveis
-
-           PosVar <- cbind(Proj.Data[(n + 1):(n + p),1],Proj.Data[(n + 1):(n + p),2]) # vetor projecao - coordenadas para os nomes das variaveis
-
-           arrows(0,0, PosVar[,1], PosVar[,2],
+          
+           Ajuste <- c(diff(range(Proj.Data[,1])) / 2 + min(Proj.Data[,1]),
+                       diff(range(Proj.Data[,2])) / 2 + min(Proj.Data[,2]))
+           
+           PosVar <- cbind(A[,1] + Ajuste[1], A[,2] + Ajuste[2]) # Posicao para as variaveis no grafico
+          
+           arrows(Ajuste[1], Ajuste[2], PosVar[,1], PosVar[,2],
                   lty = 1, code = 2, length = 0.08, angle = 25,
                   col = ifelse(Color, "Red", "Black"))
-
+           
            LocLab(PosVar, cex = 1, colnames(Data), xpd = TRUE)
            
         }
-        
+         
+        if (PosLeg != 0 && Num.Class > 0) {
+          
+           if (Color) cor <- 2
+          
+           Init.Form <- 15 # codigo formato ponto inicial
+           
+           Color_b <- cor # colore as letras das legendas e suas representacoes no grafico
+          
+           if (Color) Color_b = cor:(cor + Num.Class)
+          
+           legend(PosLeg, Class.Names, pch = (Init.Form):(Init.Form + Num.Class), col = Color_b,
+                  text.col = Color_b, bty = BoxLeg, text.font = 6, y.intersp = 0.8, xpd = TRUE) # cria a legenda
+        }
+      
         if (SavePicture) dev.off()
         
         Sys.sleep(0.05) # tempo entre as plotagens dos graficos

@@ -1,6 +1,6 @@
 Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2, 
-                    BoxLeg = TRUE, Color = TRUE, Label = FALSE, LinLab = NA, 
-                    AxisVar = TRUE, Axis = TRUE, Casc = TRUE) {
+                    BoxLeg = TRUE, Color = TRUE, LinLab = NA, AxisVar = TRUE,
+                    Axis = TRUE, Casc = TRUE) {
   
   # Rotina para plotar graficos da Projecao Pursuit desenvolvida 
   # por Paulo Cesar Ossani em 2017/02/27
@@ -17,8 +17,7 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
   #            4 para legenda no canto inferior esquerdo.
   # BoxLeg   - Colocar moldura na legenda (default = TRUE).
   # Color    - Graficos coloridos (default = TRUE).
-  # Label    - Coloca os rotulos das observacoes (default = FALSE).
-  # LinLab   - Nomes dos rotulos das observacoes, se omitido retorna a numeracao default.
+  # LinLab   - Nomes para os rotulos das observacoes.
   # AxisVar  - Coloca eixos de rotacao das variaveis, somente quando DimProj > 1 (default = TRUE).
   # Axis     - Plot os eixos X e Y (default = TRUE).
   # Casc    - Efeito cascata na apresentacao dos graficos (default = TRUE).
@@ -51,9 +50,6 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
   if (!is.na(LinLab[1]) && length(LinLab) != nrow(PP$Proj.Data)) 
       stop("Entrada para 'LinLab' esta incorreta, deve ter o mesmo numero de linhas que os dados de entrada em 'Data'. Verifique!")
 
-  if (!is.logical(Label)) 
-     stop("Entrada para 'Label' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
-  
   if (is.na(PP$Findex[1])) PP$Findex <- "Not Available"
   
   if (!is.logical(Casc))
@@ -61,47 +57,35 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
   
   ##### INICIO - Informacoes usadas nos Graficos #####
   
-  if (is.na(xlabel[1]) && Axis)
+  if (is.na(xlabel[1]))
      xlabel = "Eixo X" 
 
-  if (is.na(ylabel[1]) && Axis)
+  if (is.na(ylabel[1]))
      ylabel = "Eixo Y"
 
-  xlabel <- ifelse(Axis, xlabel, "")
-  
-  ylabel <- ifelse(Axis, ylabel, "")
-    
   if (PosLeg==1) PosLeg = "topleft"     # posicao das legendas nos graficos
   if (PosLeg==2) PosLeg = "topright"
   if (PosLeg==3) PosLeg = "bottomright"
   if (PosLeg==4) PosLeg = "bottomleft"
   
   BoxLeg = ifelse(BoxLeg,"o","n") # moldura nas legendas, "n" sem moldura, "o" com moldura
-  
-  if (!is.na(LinLab[1])) {
-     Class.Table <- table(LinLab)       # cria tabela com as quantidade dos elementos das classes
-     Class.Names <- names(Class.Table)  # nomes das classses
-     Num.Class   <- length(Class.Table) # numero de classes
-     NomeLinhas  <- as.matrix(LinLab)
-  } else {
-     Class.Names <- ""
-     if (!is.na(PP$Class.Names[1])) # nomes das classses
-        Class.Names <- PP$Class.Names 
-     
-     Num.Class <- ifelse(is.na(PP$Num.Class[1]), 0, PP$Num.Class) # numero de classes
-     
-     if (Num.Class == 0) {
-        NomeLinhas = rownames(PP$Proj.Data)
-     } else {
-        NomeLinhas <- as.matrix(PP$Proj.Data[,ncol(PP$Proj.Data)])
-     }
-  }
-  Class.Names
-  
+
   if (!is.na(PP$Num.Class[1])) {
      Data <- as.matrix(PP$Proj.Data[,1:(ncol(PP$Proj.Data)-1)])
   } else Data <- PP$Proj.Data
   
+  Num.Class = ifelse(is.na(PP$Num.Class), 0, PP$Num.Class)
+  
+  Class.Names <- PP$Class.Names #names(Class.Table)  # nomes das classses
+  
+  if (Num.Class == 0) {
+     Data <- PP$Proj.Data
+     NomeLinhas = rownames(PP$Proj.Data)
+  } else {
+     Data <- as.matrix(PP$Proj.Data[,1:(ncol(PP$Proj.Data)-1)])
+     NomeLinhas <- as.matrix(PP$Proj.Data[,ncol(PP$Proj.Data)])
+  }
+
   cor <- 1 # cor inicial dos pontos e legendas
   ##### FIM - Informacoes usadas nos Graficos #####
   
@@ -122,10 +106,9 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
        ylab = "Valor do Indice",
        main = Titles[1], # Titulo
        type = "n",   # tipo de grafico (pontos, linhas, ambos)
-       bty = "l",    # tipo de caixa do grafico
-       # asp = 40,   # aspecto do grafico
+       bty  = "l",   # tipo de caixa do grafico
        cex.axis = 1, # tamanho do 'tick' dos eixos
-       cex.lab = 1)  # tamanho dos nomes dos eixos
+       cex.lab  = 1) # tamanho dos nomes dos eixos
   
   args <- append(as.list(par('usr')), c(bg,bg))
   
@@ -142,10 +125,10 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
   #### Plotas as projecoes 2D
   if (ncol(Data) == 2) {
     
-     maxX = max(Data[, 1], PP$Vector.Opt[,1]) 
-     minX = min(Data[, 1], PP$Vector.Opt[,1]) 
-     maxY = max(Data[, 2], PP$Vector.Opt[,2])
-     minY = min(Data[, 2], PP$Vector.Opt[,2])
+     maxX = max(Data[,1], PP$Vector.Opt[,1]) 
+     minX = min(Data[,1], PP$Vector.Opt[,1]) 
+     maxY = max(Data[,2], PP$Vector.Opt[,2])
+     minY = min(Data[,2], PP$Vector.Opt[,2])
     
      if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
      
@@ -180,12 +163,8 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
          
          cor1 <- ifelse(Color, cor + i, "black")
          
-         if (is.na(LinLab[1])) {
-            Point.Data <- Data[which(PP$Proj.Data[,ncol(PP$Proj.Data)] == Class.Names[i]),]
-         } else {
-            Point.Data <- Data[which(LinLab == Class.Names[i]),]
-         }                        
-         
+         Point.Data <- Data[which(PP$Proj.Data[,ncol(PP$Proj.Data)] == Class.Names[i]),]
+
          points(Point.Data,
                 pch = Point.Form, # Formato dos pontos
                 cex = 1.2,  # Tamanho dos pontos
@@ -257,12 +236,12 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
     
     if (PosLeg != 0 && Num.Class > 0) {
         
-      Color_b <- cor # colore as letras das legendas e suas representacoes no grafico
+       Color_b <- cor # colore as letras das legendas e suas representacoes no grafico
         
-      if (Color) Color_b = cor:(cor + Num.Class)
+       if (Color) Color_b = cor:(cor + Num.Class)
         
-      legend(PosLeg, Class.Names, pch = (Init.Form):(Init.Form + Num.Class), col = Color_b,
-             text.col = Color_b, bty = BoxLeg, text.font = 6, y.intersp = 0.8, xpd = TRUE) # cria a legenda
+       legend(PosLeg, Class.Names, pch = (Init.Form):(Init.Form + Num.Class), col = Color_b,
+              text.col = Color_b, bty = BoxLeg, text.font = 6, y.intersp = 0.8, xpd = TRUE) # cria a legenda
     }
       
     if (Color) {
@@ -271,8 +250,8 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
        cor1 <- c("black")
     }
       
-    if (Label) LocLab(Data, cex = 1, NomeLinhas, col = c(cor1))
-    
+    if (!is.na(LinLab[1])) LocLab(Data, cex = 1, LinLab, col = c(cor1))
+
     if (Axis) abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central 
    
     if (AxisVar && ncol(Data) == 2 ) { # plota os eixos das variaveis
@@ -293,4 +272,3 @@ Plot.PP <- function(PP, Titles = NA, xlabel = NA, ylabel = NA, PosLeg = 2,
   }
   
 }
-
