@@ -1,26 +1,26 @@
-IM <- function(Data, Names = TRUE) {
+IM <- function(data, names = TRUE) {
   # Converte para variaveis Dummy para execucao da Analise
   # de Correspondencia Multipla, ou seja, em 0 e 1, caso dados nominais
   # Esta funcao e usada na funcao que balanceia dados Categoricos
   
   # Entrada:
-  # Data  - Dados Categoricos 
-  # Names - Incluir os nomes das variaveis nos niveis da Matriz Indicadora (default = TRUE).
+  # data  - Dados Categoricos 
+  # names - Incluir os nomes das variaveis nos niveis da Matriz Indicadora (default = TRUE).
   
   # Retorna:
-  # Dados - Dados convertidos em Matriz Indicadora
+  # mtxIndc - Dados convertidos em Matriz Indicadora
   
-  if (!is.data.frame(Data)) 
-     Data = as.data.frame(Data)
+  if (!is.data.frame(data)) 
+     data = as.data.frame(data)
   
-  if (!is.logical(Names)) 
-     stop("Entrada para 'Names' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  if (!is.logical(names)) 
+     stop("Entrada para 'names' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  NumLinha  <- nrow(Data)  # Numero de linhas na tabela
+  NumLinha  <- nrow(data)  # Numero de linhas na tabela
   
-  for (k in 1:ncol(Data)) {
+  for (k in 1:ncol(data)) {
     
-    MConver   <- factor(Data[,k]) # Matriz com os dados para a conversao
+    MConver   <- factor(data[,k]) # Matriz com os dados para a conversao
     
     Nivel     <- levels(MConver)  # Nomes dos Niveis
     
@@ -34,10 +34,10 @@ IM <- function(Data, Names = TRUE) {
         
         if (MConver[j]==Nivel[i]) MDummy[j,i] <- 1
     
-    if (Names)
-       colnames(MDummy) <- paste(colnames(Data[k]),Nivel,sep=":") # Nomeia as colunas 
+    if (names)
+       colnames(MDummy) <- paste(colnames(data[k]),Nivel,sep=":") # Nomeia as colunas 
     
-    if (Names=="N")
+    if (names=="N")
        colnames(MDummy) <- Nivel # Nomeia as colunas  
     
     if (k==1) MFinal <- MDummy
@@ -48,5 +48,5 @@ IM <- function(Data, Names = TRUE) {
     
   }
   
-  return(Dados=MFinal)
+  return(mtxIndc=MFinal)
 }

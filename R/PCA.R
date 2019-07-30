@@ -1,31 +1,31 @@
-PCA <- function(Data, Type = 1) {
+PCA <- function(data, type = 1) {
   # Funcao Executa a Analise dos Componentes Principais - PCA 
   # Desenvolvida por Paulo Cesar Ossani em 07/2013
   
   # Entrada:
-  # Data - Dados a serem a analizados
-  # Type - 1 para analise utilizando a matriz de covariancia (default)
+  # data - Dados a serem a analizados
+  # type - 1 para analise utilizando a matriz de covariancia (default)
   #        2 para analise utilizando a matriz de correlacao
   
   # Retorna:
-  # MatrixMC      - Matriz de Covariancia ou de  Correlacao conforme Type
-  # MatrixAutoVlr - Matriz de Autovalores (Variancias) com as proporcoes e proporcoes acumuladas
-  # MatrixAutoVec - Matriz de Autovetores - Componentes Principais
-  # MatrixVCP     - Matriz da Covariancia dos Componentes Principais com as Variaveis Originais
-  # MatrixCCP     - Matriz da Correlacao dos Componentes Principais com as Variaveis Originais
-  # MatrixEsc     - Matriz com os escores dos Componentes Principais
+  # mtxC      - Matriz de Covariancia ou de Correlacao conforme type
+  # mtxAutvlr - Matriz de Autovalores (Variancias) com as proporcoes e proporcoes acumuladas
+  # mtxAutvec - Matriz de Autovetores - Componentes Principais
+  # mtxVCP    - Matriz da Covariancia dos Componentes Principais com as Variaveis Originais
+  # mtxCCP    - Matriz da Correlacao dos Componentes Principais com as Variaveis Originais
+  # mtxscores - Matriz com os escores dos Componentes Principais
   
-  if (!is.data.frame(Data)) 
-     stop("Entrada 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!")
+  if (!is.data.frame(data)) 
+     stop("Entrada 'data' esta incorreta, deve ser do tipo dataframe. Verifique!")
   
-  if (Type!=1 && Type!=2) 
-     stop("Entrada para 'Type' esta incorreta, deve ser numerica, sendo 1 ou 2. Verifique!")
+  if (type!=1 && type!=2) 
+     stop("Entrada para 'type' esta incorreta, deve ser numerica, sendo 1 ou 2. Verifique!")
   
-  if (Type == 1)     # Considera a Matriz de Covariancia para a decomposicao
-     MC <- cov(Data) # Matriz de Covariancia
+  if (type == 1)     # Considera a Matriz de Covariancia para a decomposicao
+     MC <- cov(data) # Matriz de Covariancia
   
-  if (Type == 2)     # Considera a Matriz de Correlacao para a decomposicao
-     MC <- cor(Data) # Matriz de Correlacao
+  if (type == 2)     # Considera a Matriz de Correlacao para a decomposicao
+     MC <- cor(data) # Matriz de Correlacao
   
   ## Encontrando a Matriz de Decomposicao Expectral
   MAV <- eigen(MC) # Encontra a matriz de autovalor e autovetor
@@ -42,7 +42,7 @@ PCA <- function(Data, Type = 1) {
   
   ## Matriz de Autovetores,ou seja, os Componentes Principais
   colnames(MAutoVec) <- paste("Comp.", 1:nrow(MC), sep = " ")
-  rownames(MAutoVec) <- colnames(Data)  
+  rownames(MAutoVec) <- colnames(data)  
   
   ## Covariancia dos Componentes Principais com as Variaveis Originais
   VCP <- diag(MAutoVlr,nrow(MC),ncol(MC))%*%t(MAutoVec)
@@ -50,15 +50,15 @@ PCA <- function(Data, Type = 1) {
   
   ## Correlacao dos Componentes Principais com as Variaveis Originais
   CCP <- diag(sqrt(MAutoVlr),nrow(MC),ncol(MC))%*%t(MAutoVec)%*%diag(1/sqrt(diag(MC)),nrow(MC),ncol(MC))
-  colnames(CCP) <- colnames(Data) # Nomeia as linhas
+  colnames(CCP) <- colnames(data) # Nomeia as linhas
   rownames(CCP) <- paste("Comp", 1:length(MAutoVlr))
   
-  Esc = as.matrix(Data)%*%MAutoVec # Escores do componentes principais
-  rownames(Esc) <- rownames(Data)
+  Esc = as.matrix(data)%*%MAutoVec # Escores do componentes principais
+  rownames(Esc) <- rownames(data)
   
-  Lista <- list(MatrixMC = MC, MatrixAutoVlr = MEigen,
-                MatrixAutoVec = MAutoVec, MatrixVCP = VCP, 
-                MatrixCCP = CCP, MatrixEsc = Esc)
+  Lista <- list(mtxC = MC, mtxAutvlr = MEigen,
+                mtxAutvec = MAutoVec, mtxVCP = VCP, 
+                mtxCCP = CCP, mtxscores = Esc)
   
   return(Lista)
 }

@@ -1,19 +1,22 @@
-Biplot <- function(Data, alpha = 0.5, Title = NA, xlabel = NA, ylabel = NA,
-                   Color = TRUE, Obs = TRUE, LinLab = NA) {
+Biplot <- function(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
+                   size = 1.1, grid = TRUE, color = TRUE, obs = TRUE, 
+                   linlab = NA) {
   # Rotina para gerar Biplot desenvolvida 
   # por Paulo Cesar Ossani em 20/06/2015
   
   # Entrada:
-  # Data  - Dados para plotagem.
+  # data   - Dados para plotagem.
   # alpha  - Representatividade dos individuos (alpha), 
   #         representatividade das variaveis (1-alpha). 
   #         Sendo 0.5 o default.
-  # Title  - Titulo para o grafico. Se nao for definido assume texto padrao.
+  # title  - Titulo para o grafico. Se nao for definido assume texto padrao.
   # xlabel - Nomeia o eixo X, se nao definido retorna padrao.
   # ylabel - Nomeia o eixo Y, se nao definido retorna padrao.
-  # Color   - Graficos coloridos (default = TRUE).
-  # Obs     - Acrescenta as observacoes ao grafico (default = TRUE).
-  # LinLab  - Vetor com o rotulo para as linhas, se nao
+  # size   - Tamanho dos pontos nos graficos.
+  # grid   - Coloca grade nos graficos.
+  # color  - Graficos coloridos (default = TRUE).
+  # obs    - Acrescenta as observacoes ao grafico (default = TRUE).
+  # linlab - Vetor com o rotulo para as linhas, se nao
   #          informado retorna o padrao dos dados.
   
   # Retorna:
@@ -21,116 +24,123 @@ Biplot <- function(Data, alpha = 0.5, Title = NA, xlabel = NA, ylabel = NA,
   # Md - Matriz autovalores.
   # Mu - Matriz U (autovetores).
   # Mv - Matriz V (autovetores).
-  # Coor_I - Coordenadas dos individuos.
-  # Coor_V - Coordenadas das variaveis.
-  # PVar   - Proporcao dos componentes principais.
+  # coorI - Coordenadas dos individuos.
+  # coorV - Coordenadas das variaveis.
+  # pvar   - Proporcao dos componentes principais.
   
   ##### INICIO - Informacoes usadas nos Graficos #####
   
-  if (!is.data.frame(Data)) 
-     stop("Entrada para 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!")
+  if (!is.data.frame(data)) 
+     stop("Entrada para 'data' esta incorreta, deve ser do tipo dataframe. Verifique!")
   
   if (!is.numeric(alpha) || alpha < 0 || alpha > 1)
      stop("Entrada para 'alpha' esta incorreta, deve ser numerica, com valor entre 0 e 1. Verifique!")
   
-  if (!is.character(Title) && !is.na(Title[1]))
-     stop("Entrada para 'Title' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  if (!is.character(title) && !is.na(title[1]))
+     stop("Entrada para 'title' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
   if (!is.character(xlabel) && !is.na(xlabel[1]))
      stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
   if (!is.character(ylabel) && !is.na(ylabel[1]))
      stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
+  
+  if (!is.numeric(size) || size < 0)
+     stop("Entrada para 'size' esta incorreta, deve ser numerica e maior que zero. Verifique!")
+  
+  if (!is.logical(grid))
+     stop("Entrada para 'grid' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  
+  if (!is.logical(color))
+     stop("Entrada para 'color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
-  if (!is.logical(Color))
-     stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
-
-  if (!is.logical(Obs)) 
-     stop("Entrada para 'Obs' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  if (!is.logical(obs)) 
+     stop("Entrada para 'obs' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  if (!is.na(LinLab[1]) && length(LinLab)!=nrow(Data))
-     stop("O numero elementos do rotulo para linhas 'LinLab' difere do numero de linhas da base de dados. Verifique!")
+  if (!is.na(linlab[1]) && length(linlab)!=nrow(data))
+     stop("O numero elementos do rotulo para linhas 'linlab' difere do numero de linhas da base de dados. Verifique!")
   
-  if (is.na(LinLab[1])) LinLab <- rownames(Data)
+  if (is.na(linlab[1])) linlab <- rownames(data)
   
-  if (is.na(Title[1])) Title = "Grafico Biplot" 
+  if (is.na(title[1])) title = "Grafico Biplot" 
   
-  LinNames <- LinLab # nomes das observacoes
+  LinNames <- linlab # nomes das observacoes
   
-  MData = as.matrix(Data) # transforma dados em matriz
+  Mdata = as.matrix(data) # transforma dados em matriz
   
   ### Centraliza os dados na media
-  Media <- apply(MData, 2, mean) # medias por colunas
-  MData <- sweep(MData, 2, Media, FUN = "-") # Centraliza na media
+  Media <- apply(Mdata, 2, mean) # medias por colunas
+  Mdata <- sweep(Mdata, 2, Media, FUN = "-") # Centraliza na media
     
   ### Decompondo Singularmente a Matriz de Dados
   dim  <- 2 # dimenssao 
-  Mdvs <- svd(MData) # Matriz de Decomposicao Valor Singular
+  Mdvs <- svd(Mdata) # Matriz de Decomposicao Valor Singular
   Md = Mdvs$d # Matriz autovalores
   Mu = Mdvs$u # Matriz U (autovetores)
   Mv = Mdvs$v # Matriz V (autovetores)
   
-  Coor_I <- Mu[,1:dim]%*%diag(Md[1:dim])^alpha     # coordenadas individuos
-  Coor_V <- Mv[,1:dim]%*%diag(Md[1:dim])^(1-alpha) # coordenadas variaveis
+  coorI <- Mu[,1:dim]%*%diag(Md[1:dim])^alpha     # coordenadas individuos
+  coorV <- Mv[,1:dim]%*%diag(Md[1:dim])^(1-alpha) # coordenadas variaveis
   
-  PVar <- (Md^2/sum(Md^2)) * 100 # Proporcao dos primeiros (dim) componentes principais
+  pvar <- (Md^2/sum(Md^2)) * 100 # Proporcao dos primeiros (dim) componentes principais
   
   if (is.na(xlabel[1]))
-     xlabel = paste("Primeira coordenada (",round(PVar[1],2),"%)",sep="")
+     xlabel = paste("Primeira coordenada (",round(pvar[1],2),"%)",sep="")
 
   if (is.na(ylabel[1]))
-     ylabel = paste("Segunda coordenada (",round(PVar[2],2),"%)",sep="")
+     ylabel = paste("Segunda coordenada (",round(pvar[2],2),"%)",sep="")
   
-  MaxX <- max(Coor_I[,1],Coor_V[,1]) + 1 # Dimenssoes maximas das linhas
-  MinX <- min(Coor_I[,1],Coor_V[,1]) - 1 # Dimenssoes minimas das linhas
-  MaxY <- max(Coor_I[,2],Coor_V[,2]) + 1 # Dimenssoes maximas das colunas
-  MinY <- min(Coor_I[,2],Coor_V[,2]) - 1 # Dimenssoes minimas das colunas
-  
-  # cor  <- "red" # cor inicial
-  
+  MaxX <- max(coorI[,1],coorV[,1]) + 1 # Dimenssoes maximas das linhas
+  MinX <- min(coorI[,1],coorV[,1]) - 1 # Dimenssoes minimas das linhas
+  MaxY <- max(coorI[,2],coorV[,2]) + 1 # Dimenssoes maximas das colunas
+  MinY <- min(coorI[,2],coorV[,2]) - 1 # Dimenssoes minimas das colunas
+
   ##### INICIO - Grafico Biplot #####  
   plot(0,0, # Plota as variaveis
        xlab = xlabel,  # Nomeia Eixo X
        ylab = ylabel,  # Nomeia Eixo Y
-       main = Title,   # Titulo
+       main = title,   # Titulo
        asp  = 1,       # Aspecto do grafico
-       cex  = 0,       # Tamanho dos pontos
+       type = "n", # nao plota pontos
        xlim = c(MinX,MaxX), # Dimensao para as linhas do grafico
        ylim = c(MinY,MaxY)) # Dimensao para as colunas do grafico
-  
+
+  if (grid) {
+    
+     args <- append(as.list(par('usr')), c('gray95','gray95'))
+    
+     names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
+    
+     do.call(rect, args) # chama a funcao rect com os argumentos (args)
+    
+     grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+    
+  }
+
   abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
-  # NomeVar <- colnames(MData) # nomes das variaveis
-  arrows(0,0,Coor_V[,1],Coor_V[,2], lwd = 1, code = 2, length = 0.08, angle = 25, col = ifelse(Color==TRUE,"Red","Black")) # cria a seta apontando para cada variavel  
+  arrows(0,0,coorV[,1],coorV[,2], lwd = 1, code = 2, length = 0.08, angle = 25, col = ifelse(color==TRUE,"Red","Black")) # cria a seta apontando para cada variavel  
 
-  # NomeVar <- colnames(MData) # nomes das variaveis
-  # for (i in 1:nrow(Coor_V)) {  # foi necessario criar este for para poder colocar cores diferentes para cada variavel
-  #   arrows(0,0,Coor_V[i,1],Coor_V[i,2], lwd = 1, code = 2, length = 0.08, angle = 25, col = ifelse(Color==TRUE, "Red","Black")) # cria a seta apontando para cada variavel  
-  #   #text(Coor_V[i,1], Coor_V[i,2], cex = 1, pos = 4, NomeVar[i], col = ifelse(Color==TRUE, cor + i, 1), xpd = TRUE)  # Coloca os nomes das variaveis
-  # }
-
-  # if (Color==TRUE) cor <- c((cor+1):(length(NomeVar)+1))
-  NomeVar <- colnames(MData) # nomes das variaveis
+  NomeVar <- colnames(Mdata) # nomes das variaveis
   
-  LocLab(Coor_V[,1:2], NomeVar, col = ifelse(Color,"Blue","Black"))  # Coloca os nomes das variaveis
+  LocLab(coorV[,1:2], NomeVar, col = ifelse(color,"Blue","Black"))  # Coloca os nomes das variaveis
     
-  if (Obs) {
-     NomeVar <- LinNames #rownames(MData) # nomes das observacoes
-     LocLab(Coor_I[,1:2], NomeVar, col = "Black") # Coloca os nomes dos individuos
-     #for (i in 1:nrow(Coor_I)) 
-         #text(Coor_I[i,1], Coor_I[i,2], cex = 1, pos = 3, NomeVar[i], xpd = TRUE)  # Coloca os nomes dos individuos
-  
-     points(Coor_I,    # Coloca pontos nas posicoes dos individuos
-            asp = 1,   # Aspecto do grafico
-            pch = 15,  # Formato dos pontos 
-            cex = 1.2, # Tamanho dos pontos         
-            col = ifelse(Color,"Red","Black"))
+  if (obs) {
+     NomeVar <- LinNames #rownames(Mdata) # nomes das observacoes
+     LocLab(coorI[,1:2], NomeVar, col = "Black") # Coloca os nomes dos individuos
+
+     points(coorI,     # Coloca pontos nas posicoes dos individuos
+            asp = 1,    # Aspecto do grafico
+            pch = 15,   # Formato dos pontos 
+            cex = size, # Tamanho dos pontos         
+            col = ifelse(color,"Red","Black"))
+     
   }
  
   ##### FIM - Grafico Biplot #####
   
-  Lista <- list(Md = Md, Mu = Mu, Mv = Mv, Coor_I = Coor_I,
-                Coor_V = Coor_V, PVar = PVar)
+  Lista <- list(Md = Md, Mu = Mu, Mv = Mv, coorI = coorI,
+                coorV = coorV, pvar = pvar)
   
   return (Lista) 
   

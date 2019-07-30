@@ -29,15 +29,15 @@ GroupNames = c("Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4")
 
 MF <- MFA(Data, c(16,16,16,16), c(rep("f",4)), GroupNames) # analise dos dados
 
-print("Variancias dos Componentes Principais:"); round(MF$MatrixA,2)
+print("Variancias dos Componentes Principais:"); round(MF$mtxA,2)
 
-print("Matriz das Inercias Parciais/Escores das Variaveis:"); round(MF$MatrixEscVar,2)
+print("Matriz das Inercias Parciais/Escores das Variaveis:"); round(MF$mtxEV,2)
 
 Tit = c("Scree-plot","Individuos", "Individuos/Grupos Individuos", "Inercias Grupos")
 
-Plot.MFA(MF, Titles = Tit, xlabel = NA, ylabel = NA,
-         PosLeg = 2, BoxLeg = FALSE, Color = TRUE, 
-         NamArr = FALSE, LinLab = NA, Casc = FALSE) # Imprime varios graficos da tela
+Plot.MFA(MF, titles = Tit, xlabel = NA, ylabel = NA,
+         posleg = 2, boxleg = FALSE, color = TRUE, 
+         namarr = FALSE, linlab = NA, casc = FALSE) # Imprime varios graficos da tela
 }
 
 \keyword{Conjunto de dados}

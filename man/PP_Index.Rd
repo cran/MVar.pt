@@ -6,15 +6,15 @@
 
 \description{Funcao usada para encontrar os indices da projection pursuit (PP).}
 
-\usage{PP_Index(Data, Class = NA, Vector.Proj = NA, 
-         Findex = "HOLES", DimProj = 2, Weight = TRUE, 
-         Lambda = 0.1, r = 1, ck = NA)}
+\usage{PP_Index(data, class = NA, vector.proj = NA, 
+         findex = "HOLES", dimproj = 2, weight = TRUE, 
+         lambda = 0.1, r = 1, ck = NA)}
 
 \arguments{
-\item{Data}{Conjunto de dados numericos sem a informacao das classes.}
-\item{Class}{Vetor com os nomes das classes dos dados.}
-\item{Vector.Proj}{Vetor projecao.}
-\item{Findex}{Funcao indice de projecao a ser usada:\cr
+\item{data}{Conjunto de dados numericos sem a informacao das classes.}
+\item{class}{Vetor com os nomes das classes dos dados.}
+\item{vector.proj}{Vetor projecao.}
+\item{findex}{Funcao indice de projecao a ser usada:\cr
               "lda" - Indice LDA,\cr
               "pda" - Indice PDA,\cr
               "lr" - Indice Lr,\cr
@@ -32,20 +32,20 @@
               "moment" - Indice momento,\cr
               "mf" - Indice MF,\cr
               "chi" - Indice qui-quadrado.}
-\item{DimProj}{Dimensao da projecao dos dados (default = 2).}
-\item{Weight}{Usado nos indice LDA, PDA e Lr, para ponderar os calculos
+\item{dimproj}{Dimensao da projecao dos dados (default = 2).}
+\item{weight}{Usado nos indice LDA, PDA e Lr, para ponderar os calculos
             pelo numero de elementos em cada classe (default = TRUE).}
-\item{Lambda}{Usado no indice PDA (default = 0.1).}
+\item{lambda}{Usado no indice PDA (default = 0.1).}
 \item{r}{Usado no indice Lr (default = 1).}
 \item{ck}{Uso interno da funcao indice CHI.}
 }
 
 \value{
-\item{Num.Class}{Numero de classes.}
-\item{Class.Names}{Nomes das classes.}
-\item{Findex}{Funcao indice de projecao usada.}
-\item{Vector.Proj}{Vetores de projecao encontrados.}
-\item{Index}{Indice de projecao encontrado no processo.}
+\item{num.class}{Numero de classes.}
+\item{class.names}{Nomes das classes.}
+\item{findex}{Funcao indice de projecao usada.}
+\item{vector.proj}{Vetores de projecao encontrados.}
+\item{index}{Indice de projecao encontrado no processo.}
 }
 
 \references{
@@ -53,7 +53,7 @@ COOK, D., BUJA, A., CABRERA, J.. Projection pursuit indexes based on orthonormal
 
 COOK, D., BUJA, A., CABRERA, J., HURLEY, C.. Grand tour and projection pursuit, \emph{Journal of Computational and Graphical Statistics}, 4(3), 155-172, 1995.
 
-COOK, D., SWAYNE, D. F.. Interactive and Dynamic Graphics for Data Analysis: With R and GGobi. Springer. 2007.
+COOK, D., SWAYNE, D. F.. Interactive and Dynamic Graphics for data Analysis: With R and GGobi. Springer. 2007.
 
 ESPEZUA, S., VILLANUEVA, E., MACIEL, C.D., CARVALHO, A.. A projection pursuit framework for supervised dimension reduction of high dimensional small sample datasets. \emph{Neurocomputing}, 149, 767-776, 2015.
 
@@ -71,11 +71,11 @@ LEE, E., COOK, D., KLINKE, S., LUMLEY, T.. Projection pursuit for exploratory su
 
 MARTINEZ, W. L., MARTINEZ, A. R.; \emph{Computational Statistics Handbook with MATLAB}, 2th. ed. New York: Chapman & Hall/CRC, 2007. 794 p.
 
-MARTINEZ, W.  L., MARTINEZ, A. R., SOLKA, J.; \emph{Exploratory Data Analysis with MATLAB}, 2th. ed. New York: Chapman & Hall/CRC, 2010. 499 p.
+MARTINEZ, W.  L., MARTINEZ, A. R., SOLKA, J.; \emph{Exploratory data Analysis with MATLAB}, 2th. ed. New York: Chapman & Hall/CRC, 2010. 499 p.
 
 PENA, D., PRIETO, F.. Cluster identification using projections. \emph{Journal of the American Statistical Association}, 96(456):1433-1445, 2001.
 
-POSSE, C.. Projection pursuit exploratory data analysis, \emph{Computational Statistics and Data Analysis}, 29:669-687, 1995a.
+POSSE, C.. Projection pursuit exploratory data analysis, \emph{Computational Statistics and data Analysis}, 29:669-687, 1995a.
 
 POSSE, C.. Tools for two-dimensional exploratory projection pursuit, \emph{Journal of Computational and Graphical Statistics}, 4:83-100, 1995b.
 
@@ -92,49 +92,49 @@ Marcelo Angelo Cirillo
 \examples{
 data(iris) # conjunto de dados
 
-Data <- iris[,1:4]
+data <- iris[,1:4]
 
 # Exemplo 1 - Sem as classes nos dados
-Ind <- PP_Index(Data = Data, Class = NA, Vector.Proj = NA, 
-                Findex = "moment", DimProj = 2, Weight = TRUE, 
-                Lambda = 0.1, r = 1)
+Ind <- PP_Index(data = data, class = NA, vector.proj = NA, 
+                findex = "moment", dimproj = 2, weight = TRUE, 
+                lambda = 0.1, r = 1)
 
-print("Numero de classes:"); Ind$Num.Class
-print("Nomes das classes:"); Ind$Class.Names
-print("Funcao indice de projecao:"); Ind$Findex
-print("Vetores de projecao:"); Ind$Vector.Proj  
-print("Indice de projecao:"); Ind$Index
+print("Numero de classes:"); Ind$num.class
+print("Nomes das classes:"); Ind$class.names
+print("Funcao indice de projecao:"); Ind$findex
+print("Vetores de projecao:"); Ind$vector.proj  
+print("Indice de projecao:"); Ind$index
 
 
 # Exemplo 2 - Com as classes nos dados
-Class <- iris[,5] # classe dos dados
+class <- iris[,5] # classe dos dados
 
-FcIndex <- "pda" # funcao indice
+Fcindex <- "pda" # funcao indice
 
-Sphere <- TRUE # Dados esfericos
+sphere <- TRUE # Dados esfericos
 
-Res <- PP_Optimizer(Data = Data, Class = Class, Findex = FcIndex,
-                    OptMethod = "SA", DimProj = 2, Sphere = Sphere, 
-                    Weight = TRUE, Lambda = 0.1, r = 1, Cooling = 0.9, 
-                    Eps = 1e-3, Maxiter = 1000, Half = 30)
+Res <- PP_Optimizer(data = data, class = class, findex = Fcindex,
+                    optmethod = "SA", dimproj = 2, sphere = sphere, 
+                    weight = TRUE, lambda = 0.1, r = 1, cooling = 0.9, 
+                    eps = 1e-3, maxiter = 1000, half = 30)
 
 # Comparando o resultado obtido
-if (match(toupper(FcIndex),c("LDA", "PDA", "LR"), nomatch = 0) > 0) {
-  if (Sphere) {
-     Data <- apply(predict(prcomp(Data)), 2, scale) # dados esfericos
+if (match(toupper(Fcindex),c("LDA", "PDA", "LR"), nomatch = 0) > 0) {
+  if (sphere) {
+     data <- apply(predict(prcomp(data)), 2, scale) # dados esfericos
   }
-} else Data <- as.matrix(Res$Proj.Data[,1:Dim])
+} else data <- as.matrix(Res$proj.data[,1:Dim])
 
-Ind <- PP_Index(Data = Data, Class = Class, Vector.Proj = Res$Vector.Opt, 
-                Findex = FcIndex, DimProj = 2, Weight = TRUE, Lambda = 0.1,
+Ind <- PP_Index(data = data, class = class, vector.proj = Res$vector.opt, 
+                findex = Fcindex, dimproj = 2, weight = TRUE, lambda = 0.1,
                 r = 1)
 
-print("Numero de classes:"); Ind$Num.Class
-print("Nomes das classes:"); Ind$Class.Names
-print("Funcao indice de projecao:"); Ind$Findex
-print("Vetores de projecao:"); Ind$Vector.Proj  
-print("Indice de projecao:"); Ind$Index
-print("Indice de projecao otimizado:"); Res$Index[length(Res$Index)]
+print("Numero de classes:"); Ind$num.class
+print("Nomes das classes:"); Ind$class.names
+print("Funcao indice de projecao:"); Ind$findex
+print("Vetores de projecao:"); Ind$vector.proj  
+print("Indice de projecao:"); Ind$index
+print("Indice de projecao otimizado:"); Res$index[length(Res$index)]
 }
 
 \keyword{Projection pursuit}

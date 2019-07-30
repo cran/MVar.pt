@@ -2,7 +2,7 @@
 
 \alias{DataQuan}
 
-\docType{data}
+\docType{data} 
 
 \title{Conjunto de dados quantitativos.}
 

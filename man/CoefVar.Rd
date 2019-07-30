@@ -6,11 +6,11 @@
 
 \description{Encontra o coeficiente de variacao dos dados, global ou por coluna.}
 
-\usage{CoefVar(Data, Type = 1)}
+\usage{CoefVar(data, type = 1)}
 
 \arguments{
-\item{Data}{Dados a serem analisados.}
-\item{Type}{1 Coeficiente de variacao global (default),\cr
+\item{data}{Dados a serem analisados.}
+\item{type}{1 Coeficiente de variacao global (default),\cr
             2 Coeficiente de variacao por coluna.}
 }
 
@@ -29,12 +29,12 @@ Marcelo Angelo Cirillo
 \examples{
 data(DataQuan) # conjunto de dados 
 
-Data <- DataQuan[,2:8]
+data <- DataQuan[,2:8]
 
-Resp <- CoefVar(Data, Type = 1) # coeficiente de variacao global
+Resp <- CoefVar(data = data, type = 1) # coeficiente de variacao global
 round(Resp,2)
 
-Resp <- CoefVar(Data, Type = 2) # coeficiente de variacao por coluna
+Resp <- CoefVar(data = data, type = 2) # coeficiente de variacao por coluna
 round(Resp,2)
 }
 

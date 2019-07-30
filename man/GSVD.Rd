@@ -6,14 +6,14 @@
 
 \description{Dada a matriz \eqn{A} de ordem \eqn{nxm}, a decomposicao de valor singular generalizada (GSVD), envolve a utilizacao de dois conjuntos de matrizes quadradas positivas de ordem \eqn{nxn}  e \eqn{mxm}, respectivamente. Estas duas matrizes expressam restricoes impostas, respectivamente, nas linhas e colunas de \eqn{A}.}
 
-\usage{GSVD(Data, PLin = NULL, PCol = NULL)}
+\usage{GSVD(data, plin = NULL, pcol = NULL)}
 \arguments{
-  \item{Data}{Matriz usada para a decomposicao.}
-  \item{PLin}{Peso para as linhas.}
-  \item{PCol}{Peso para as colunas.}
+  \item{data}{Matriz usada para a decomposicao.}
+  \item{plin}{Peso para as linhas.}
+  \item{pcol}{Peso para as colunas.}
 }
 
-\details{Se nao for utilizado PLin ou PCol, sera calculada como a decomposicao em valor singular usual.}
+\details{Se nao for utilizado plin ou pcol, sera calculada como a decomposicao em valor singular usual.}
 
 \value{
  \item{d}{Autovalores, isto e, vector linha com os valores singulares da decomposicao.}
@@ -37,7 +37,7 @@ svd(M)  # decomposicao de valor singular usual
 GSVD(M) # GSVD com os mesmos resultados anteriores
 
 # GSVD com pesos para linhas e colunas
-GSVD(M, PLin = c(0.1,0.5,2,1.5), PCol = c(1.3,2,0.8)) 
+GSVD(M, plin = c(0.1,0.5,2,1.5), pcol = c(1.3,2,0.8)) 
 }
 
 \keyword{Decomposicao de valor singular generalizada}

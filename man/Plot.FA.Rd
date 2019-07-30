@@ -6,17 +6,20 @@
 
 \description{Graficos da analise fatorial (FA).}
 
-\usage{Plot.FA(FA, Titles = NA, xlabel = NA, ylabel = NA,
-        Color = TRUE, LinLab = NA, Casc = TRUE)}
+\usage{Plot.FA(FA, titles = NA, xlabel = NA, ylabel = NA,
+        size = 1.1, grid = TRUE, color = TRUE, linlab = NA,
+        casc = TRUE)}
 
 \arguments{
 \item{FA}{Dados da funcao FA.}
-\item{Titles}{Titulos para os graficos, se nao for definido assume texto padrao.}
+\item{titles}{Titulos para os graficos, se nao for definido assume texto padrao.}
 \item{xlabel}{Nomeia o eixo X, se nao for definido assume texto padrao.}
 \item{ylabel}{Nomeia o eixo Y, se nao for definido assume texto padrao.}
-\item{Color}{Graficos coloridos (default = TRUE).}
-\item{LinLab}{Vetor com os rotulos para as observacoes, se nao for definido assume texto padrao.}
-\item{Casc}{Efeito cascata na apresentacao dos graficos (default = TRUE).}
+\item{size}{Tamanho dos pontos no grafico.}
+\item{grid}{Coloca grade nos graficos (default = TRUE).}
+\item{color}{Graficos coloridos (default = TRUE).}
+\item{linlab}{Vetor com os rotulos para as observacoes.}
+\item{casc}{Efeito cascata na apresentacao dos graficos (default = TRUE).}
 }
 
 \value{Retorna varios graficos.}
@@ -36,13 +39,13 @@ Data <- DataQuan[,2:ncol(DataQuan)]
 
 rownames(Data) <- DataQuan[,1]
 
-Resp <- FA(Data, Method = "PC", Type = 2, NFactor = 3)
+Resp <- FA(Data, method = "PC", type = 2, nfactor = 3)
 
 Tit = c("Scree-plot","Scores das observacoes","Cargas Fatoriais","Biplot")
 
-Plot.FA(Resp, Titles = Tit, xlabel = NA, ylabel = NA,
-        Color = TRUE, LinLab = rep("", nrow(Data)),
-        Casc = TRUE)
+Plot.FA(Resp, titles = Tit, xlabel = NA, ylabel = NA,
+        color = TRUE, linlab = rep("", nrow(Data)),
+        casc = TRUE)
 
 }
 

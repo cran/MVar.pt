@@ -1,36 +1,39 @@
-Plot.Regr <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = NA, 
-                      ylabel = NA, NameVarY = NA, NameVarX = NA, Color = TRUE, 
-                      IntConf = TRUE, IntPrev = TRUE, Casc = TRUE) {
+Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA, 
+                      ylabel = NA, namevary = NA, namevarx = NA, size = 1.1, 
+                      grid = TRUE,  color = TRUE, intconf = TRUE, intprev = TRUE, 
+                      casc = TRUE) {
   # Esta funcao gera graficos da Analise de Regressao
   # desenvolvida por Paulo Cesar Ossani em 06/2016
     
   # Entrada:
   # Reg      - Dados da funcao de regressao.
-  # TypeGraf - Tipo de grafico: 
+  # typegraf - Tipo de grafico: 
   #            "Scatterplot" - Grafico de dispersao 2 a 2,
   #            "Regression"  - Grafico da regressao linear,
   #            "QQPlot"      - Grafico de probabilidade normal dos residuos,
   #            "Histogram"   - Histograma dos residuos,
   #            "Fits"        - Grafico dos valores ajustados versus os residuos,
   #            "Order"       - Grafico da ordem das observacoes versus os residuos.
-  # Title    - Titulos para os graficos, se nulo retorna padrao.
+  # title    - Titulos para os graficos, se nulo retorna padrao.
   # xlabel   - Nomeia o eixo X, se nulo retorna padrao.
   # ylabel   - Nomeia o eixo Y, se nulo retorna padrao.
-  # NameVarY - Nome da variavel Y, se nulo retorna padrao.
-  # NameVarX - Nome da variavel, ou variaveis X, se nulo retorna padrao.
-  # Color    - Graficos coloridos (default = TRUE).
-  # IntConf  - Caso TypeGraf = "Regression":
+  # namevary - Nome da variavel Y, se nulo retorna padrao.
+  # namevarx - Nome da variavel, ou variaveis X, se nulo retorna padrao.
+  # size     - Tamanho dos pontos nos graficos.
+  # grid     - Coloca grade nos graficos.
+  #  color    - Graficos  coloridos (default = TRUE).
+  # intconf  - Caso typegraf = "Regression":
   #            Graficos com intervalo de confianca (default = TRUE).
-  # IntPrev  - Caso TypeGraf = "Regression":
+  # intprev  - Caso typegraf = "Regression":
   #            Graficos com intervalo de previsao (default = TRUE).
-  # Casc    - Efeito cascata na apresentacao dos graficos (default = TRUE).
+  # casc    - Efeito cascata na apresentacao dos graficos (default = TRUE).
 
   # Retorna:
   # Varios graficos.
 
   Graphic <- c("Scatterplot", "Regression", "QQPlot", "Histogram", "Fits", "Order")
-  if (is.na(pmatch(TypeGraf, Graphic))) 
-     stop("Entrada para 'TypeGraf' esta incorreta, deve ser: 'Scatterplot', 
+  if (is.na(pmatch(typegraf, Graphic))) 
+     stop("Entrada para 'typegraf' esta incorreta, deve ser: 'Scatterplot', 
           'Regression', 'QQPlot', 'Histogram', 'Fits' ou 'Order'. Verifique!")
   
   if (!is.character(xlabel) && !is.na(xlabel[1]))
@@ -39,47 +42,53 @@ Plot.Regr <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = NA,
   if (!is.character(ylabel) && !is.na(ylabel[1]))
      stop("Entrada para 'ylabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
   
-  if (!is.logical(Color))
-     stop("Entrada para 'Color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  if (!is.numeric(size) || size < 0)
+     stop("Entrada para 'size' esta incorreta, deve ser numerica e maior que zero. Verifique!")
+  
+  if (!is.logical(grid))
+     stop("Entrada para 'grid' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+   
+  if (!is.logical( color))
+     stop("Entrada para ' color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
-  if (!is.logical(IntConf))
-     stop("Entrada para 'IntConf' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  if (!is.logical(intconf))
+     stop("Entrada para 'intconf' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
-  if (!is.logical(IntPrev))
-     stop("Entrada para 'IntPrev' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  if (!is.logical(intprev))
+     stop("Entrada para 'intprev' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
  
-  if (Reg$Intercepts) X <- as.matrix(Reg$X[,2:ncol(Reg$X)]) else X <- as.matrix(Reg$X)
+  if (Reg$intercepts) X <- as.matrix(Reg$X[,2:ncol(Reg$X)]) else X <- as.matrix(Reg$X)
   
-  if (is.na(NameVarY[1]))
-     NameVarY <- c("Y")
+  if (is.na(namevary[1]))
+     namevary <- c("Y")
   
-  if (is.na(NameVarX[1]))
-     NameVarX <- c(paste("X",1:ncol(X),sep=""))
+  if (is.na(namevarx[1]))
+     namevarx <- c(paste("X",1:ncol(X),sep=""))
   
-  if (!is.logical(Casc))
-     stop("Entrada para 'Casc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
-  
+  if (!is.logical(casc))
+     stop("Entrada para 'casc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+
   ## Inicio - Scatterplot
-  if (TypeGraf == "Scatterplot") {
+  if (typegraf == "Scatterplot") {
     
-     if (is.na(Title[1]))
-        Title = c("Grafico de dispersao 2 a 2")
+     if (is.na(title[1]))
+        title = c("Grafico de dispersao 2 a 2")
      
-     if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
+     if (casc) dev.new() # efeito cascata na apresentacao dos graficos
      
      Dat <- as.data.frame(cbind(Reg$Y,X))
-     colnames(Dat) <- c(NameVarY,NameVarX)
-     if (Color) cor <- c(2:(ncol(X)+1)) else cor <- c(rep("black", ncol(X)))
+     colnames(Dat) <- c(namevary,namevarx)
+     if ( color) cor <- c(2:(ncol(X)+1)) else cor <- c(rep("black", ncol(X)))
      pairs(Dat, # Scatterplot
-           main = Title, # Titulo
+           main = title, # Titulo
            pch  = 21,    # Formato dos pontos 
-           cex  = 1,     # Tamanho dos pontos
+           cex  = size,  # Tamanho dos pontos  
            bg   = cor)
   }
   ## Fim - Scatterplot
   
   ## Inicio - Grafico da regressao
-  if (TypeGraf == "Regression") {
+  if (typegraf == "Regression") {
      if (ncol(X)!=1) 
         print("Atencao! O Grafico da regressao so he possivel apenas para uma variavel regressora.")
     
@@ -91,14 +100,14 @@ Plot.Regr <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = NA,
         if (is.na(ylabel[1]))
            ylabel = "Eixo y"  # Nomeia Eixo Y
         
-        if (is.na(Title[1]))
-           Title = c("Grafico da regressao linear")
+        if (is.na(title[1]))
+           title = c("Grafico da regressao linear")
         
         X <- as.numeric(X)
         
-        if (Reg$Intercepts) Modelo <- lm(Y~X) else Modelo <- lm(Y~-1+X)
+        if (Reg$intercepts) Modelo <- lm(Y~X) else Modelo <- lm(Y~-1+X)
         
-        if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
+        if (casc) dev.new() # efeito cascata na apresentacao dos graficos
         
         # Intervalo para abcissa
         Inter <- ifelse(length(Reg$Y)<100,150,length(Reg$Y)*1.5) # intervalo para o eixo X
@@ -116,27 +125,42 @@ Plot.Regr <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = NA,
         plot(X,Reg$Y, # cria grafico
              xlab = xlabel, # Nomeia Eixo X
              ylab = ylabel, # Nomeia Eixo Y
-             main = Title,  # Titulo
-             pch  = 15, # Formato dos pontos 
-             cex  = 1,  # Tamanho dos pontos
+             type = "n", # nao plota pontos
+             main = title,  # Titulo
              xlim = c(min(X)-0.1,max(X)+0.1), # Dimensao para as linhas do grafico
-             ylim = c(min(cbind(Predicao,Inter.Conf[,2:3],Inter.Pred[,2:3])),max(cbind(Predicao,Inter.Conf[,2:3],Inter.Pred[,2:3]))+0.1), # Dimensao para as colunas do grafico
-             col  = ifelse(Color,"red","black")) # Cor dos pontos
+             ylim = c(min(cbind(Predicao,Inter.Conf[,2:3],Inter.Pred[,2:3])),
+                      max(cbind(Predicao,Inter.Conf[,2:3],Inter.Pred[,2:3]))+0.1)) # Dimensao para as colunas do grafico
+
+        if (grid) {
+          
+           args <- append(as.list(par('usr')), c('gray95','gray95'))
+          
+           names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
+          
+           do.call(rect, args) # chama a funcao rect com os argumentos (args)
+          
+           grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+          
+        }
         
-        
+        points(X,Reg$Y, # cria grafico
+               pch = 15, # Formato dos pontos 
+               cex = size,  # Tamanho dos pontos  
+               col = ifelse( color,"red","black")) # Cor dos pontos
+          
         ## Inicio - Acrescenta a reta ajustada
-        lines(cbind(New.X,Predicao)) # acrescenta a reta ajustada
+        lines(cbind(New.X, Predicao)) # acrescenta a reta ajustada
         ## Fim - Acrescenta a reta ajustada
         
         ## Inicio - Acrescenta o Intervalo de Confianca das previsoes
-        if (IntConf) {
+        if (intconf) {
            lines(cbind(New.X,Inter.Conf[,2]), lty=3) # acrescenta I.C. Lim.Infereior
            lines(cbind(New.X,Inter.Conf[,3]), lty=3) # acrescenta I.C. Lim.Superior
         }
         ## Fim - Acrescenta o Intervalo de Confianca das previsoes
         
         ## Inicio - Acrescenta o Intervalo das previsoes
-        if (IntPrev) {
+        if (intprev) {
            lines(cbind(New.X,Inter.Pred[,2]), lty=2) # acrescenta I.P. Lim.Infereior
            lines(cbind(New.X,Inter.Pred[,3]), lty=2) # acrescenta I.P. Lim.Superior
         }
@@ -146,7 +170,7 @@ Plot.Regr <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = NA,
   ## Fim - Grafico da regressao
   
   ## Inicio - Grafico da probalidade normal
-  if (TypeGraf == "QQPlot") {
+  if (typegraf == "QQPlot") {
     
      if (is.na(xlabel[1]))
         xlabel = "Quantis"  # Nomeia Eixo X  
@@ -154,23 +178,26 @@ Plot.Regr <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = NA,
      if (is.na(ylabel[1]))
         ylabel = "Amostra nos quantis"  # Nomeia Eixo Y
 
-     if (is.na(Title[1]))
-        Title = c("Grafico da probabilidade \n normal do residuo")
+     if (is.na(title[1]))
+        title = c("Grafico da probabilidade \n normal do residuo")
      
-     if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
-     
-     qqnorm(Reg$Error,
+     if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+
+     qqnorm(Reg$error,
             xlab = xlabel, # Nomeia Eixo X
             ylab = ylabel, # Nomeia Eixo Y
-            main = Title,  # Titulo
+            main = title,  # Titulo
             pch  = 19,     # Formato dos pontos 
-            cex  = 1)
-     qqline(Reg$Error, col = ifelse(Color,"red","black"))
+            bty  = ifelse(grid,"l","o"),
+            panel.first = grid(col = ifelse(grid,"gray","white"), lwd = 1, lty = 7, equilogs = T),
+            cex = size)    # Tamanho dos pontos 
+     qqline(Reg$error, col = ifelse( color,"red","black"))
+ 
   }
   ## Fim - Grafico da probalidade normal
   
   ## Inicio - Grafico da probalidade normal
-  if (TypeGraf == "Histogram") {
+  if (typegraf == "Histogram") {
     
      if (is.na(xlabel[1]))
         xlabel = "Residuo"  # Nomeia Eixo X  
@@ -178,22 +205,22 @@ Plot.Regr <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = NA,
      if (is.na(ylabel[1]))
         ylabel = "Frequencia"  # Nomeia Eixo Y
     
-     if (is.na(Title[1]))
-        Title = c("Histograma do residuo")
+     if (is.na(title[1]))
+        title = c("Histograma do residuo")
      
-     if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
+     if (casc) dev.new() # efeito cascata na apresentacao dos graficos
      
-     hist(Reg$Error,
+     hist(Reg$error,
           xlab = xlabel, # Nomeia Eixo X
           ylab = ylabel, # Nomeia Eixo Y
-          main = Title,  # Titulo
+          main = title,  # Titulo
           pch  = 19,     # Formato dos pontos 
-          cex  = 1)
+          cex = size)    # Tamanho dos pontos
   }
   ## Fim - Grafico da probalidade normal
   
   ## Inicio - Grafico dos valores ajustados com os residuos
-  if (TypeGraf == "Fits") {
+  if (typegraf == "Fits") {
     
     if (is.na(xlabel[1]))
        xlabel = "Valores ajustados"  # Nomeia Eixo X  
@@ -201,25 +228,41 @@ Plot.Regr <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = NA,
     if (is.na(ylabel[1]))
        ylabel = "Residuos"  # Nomeia Eixo Y
     
-    if (is.na(Title[1]))
-       Title = c("Valores ajustados vs. residuos")
+    if (is.na(title[1]))
+       title = c("Valores ajustados vs. residuos")
     
-    if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
+    if (casc) dev.new() # efeito cascata na apresentacao dos graficos
     
-    plot(Reg$Prev,Reg$Error, # cria grafico
+    plot(Reg$prev,Reg$error, # cria grafico
          xlab = xlabel, # Nomeia Eixo X
          ylab = ylabel, # Nomeia Eixo Y
-         main = Title,  # Titulo
-         pch  = 19, # Formato dos pontos 
-         cex  = 1,  # Tamanho dos pontos
-         col  = ifelse(Color,"red","black"))  # Cor dos pontos
+         type = "n",    # nao plota pontos
+         main = title)  # Titulo
     
+    if (grid) {
+      
+       args <- append(as.list(par('usr')), c('gray95','gray95'))
+      
+       names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
+      
+       do.call(rect, args) # chama a funcao rect com os argumentos (args)
+      
+       grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+      
+    }
+    
+    points(Reg$prev,Reg$error, # cria grafico
+           pch = 19, # Formato dos pontos 
+           cex = size,  # Tamanho dos pontos 
+           col = ifelse( color,"red","black"))  # Cor dos pontos
+      
     abline(0,0, lty = 2) # acrescenta a reta do eixo X
+    
   }
   ## Fim - Grafico dos valores ajustados com os residuos
   
   ## Inicio - Grafico com ordem das observacoes versus os residuos
-  if (TypeGraf == "Order") {
+  if (typegraf == "Order") {
     
     if (is.na(xlabel[1]))
        xlabel = "Ordem das observacoes"  # Nomeia Eixo X  
@@ -227,21 +270,37 @@ Plot.Regr <- function(Reg, TypeGraf = "Scatterplot", Title = NA, xlabel = NA,
     if (is.na(ylabel[1]))
        ylabel = "Residuos" # Nomeia Eixo Y
     
-    if (is.na(Title[1]))
-       Title = c("Ordem das observacoes vs. residuos")
+    if (is.na(title[1]))
+       title = c("Ordem das observacoes vs. residuos")
     
-    if (Casc) dev.new() # efeito cascata na apresentacao dos graficos
+    if (casc) dev.new() # efeito cascata na apresentacao dos graficos
     
-    plot(1:length(Reg$Error),Reg$Error, # cria grafico
+    plot(1:length(Reg$error),Reg$error, # cria grafico
          xlab = xlabel, # Nomeia Eixo X
          ylab = ylabel, # Nomeia Eixo Y
-         main = Title,  # Titulo
-         type = "o", # linhas com pontos
-         pch  = 19,  # Formato dos pontos 
-         cex  = 1,   # Tamanho dos pontos
-         col  = ifelse(Color,"blue","black")) # Cor dos pontos
+         type = "n",    # nao plota pontos
+         main = title)  # Titulo
+
+    if (grid) {
+      
+       args <- append(as.list(par('usr')), c('gray95','gray95'))
+      
+       names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
+      
+       do.call(rect, args) # chama a funcao rect com os argumentos (args)
+      
+       grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+      
+    }
     
+    points(1:length(Reg$error),Reg$error, # cria grafico
+           type = "o", # linhas com pontos
+           pch  = 19,  # Formato dos pontos 
+           cex  = size,  # Tamanho dos pontos  
+           col  = ifelse( color,"blue","black")) # Cor dos pontos
+      
     abline(0,0, lty = 2) # acrescenta a reta do eixo X
+    
   }
   ## Fim - Grafico com as ordem das observacoes versus os residuos
 

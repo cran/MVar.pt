@@ -1,312 +1,316 @@
-PP_Index <- function (Data, Class = NA, Vector.Proj = NA, Findex = "HOLES",
-                      DimProj = 2, Weight = TRUE, Lambda = 0.1, r = 1, ck = NA) {
+PP_Index <- function (data, class = NA, vector.proj = NA, findex = "HOLES",
+                      dimproj = 2, weight = TRUE, lambda = 0.1, r = 1, ck = NA) {
                       
   # Funcao usada para encontrar os indices da projection pursuit, desenvolvida
   # por Paulo Cesar Ossani em 2017/03/27.
 
   # Entrada:
-  # Data    - Conjunto de dados numericos sem informacao de classes.
-  # Class   - Vetor com os nomes das classes dos dados.
-  # Vector.Proj - Vetor projecao.
-  # Findex  - Funcao indice de projecao a ser usada:
-  #           "LDA" - Indice LDA,
-  #           "PDA" - Indice PDA,
-  #           "LR" - Indice Lr,
-  #           "HOLES" - Indice Holes (default),
-  #           "CM" - Indice Massa Central,
-  #           "PCA" - Indice PCA,
-  #           "FRIEDMANTUKEY" - Indice Friedman Tukey,
-  #           "ENTROPY" - Indice Entropia,
-  #           "LEGENDRE" - Indice Legendre,
-  #           "LAGUERREFOURIER" - Indice Laguerre Fourier,
-  #           "HERMITE" - Indice Hermite,
-  #           "NATURALHERMITE" - Indice Hermite natural
-  #           "KURTOSISMAX" - Indice Curtose maxima,
-  #           "KURTOSISMIN" - Indice Curtose minima,
-  #           "MOMENT" - Indice Momento,
-  #           "MF"  - Indice MF
-  #           "CHI" - Indice Qui-quadrado.
-  # DimProj - Dimensao da projecao dos dados (default = 2).
-  # Weight  - Usado nos indice LDA, PDA e Lr, para ponderar os calculos
+  # data    - Conjunto de dados numericos sem informacao de classes.
+  # class   - Vetor com os nomes das classes dos dados.
+  # vector.proj - Vetor projecao.
+  # findex  - Funcao indice de projecao a ser usada:
+  #           "lda" - Indice LDA,
+  #           "pda" - Indice PDA,
+  #           "lr" - Indice Lr,
+  #           "holes" - Indice holes (default),
+  #           "cm" - Indice massa central, 
+  #           "pca" - Indice PCA,
+  #           "friedmantukey" - Indice Friedman Tukey,
+  #           "entropy" - Indice entropia,
+  #           "legendre" - Indice Legendre,
+  #           "laguerrefourier" - Indice Laguerre Fourier,
+  #           "hermite" - Indice Hermite,
+  #           "naturalhermite" - Indice Hermite natural,
+  #           "kurtosismax" - Indice curtose maxima,
+  #           "kurtosismin" - Indice curtose minima,
+  #           "moment" - Indice momento, 
+  #           "chi" - Indice qui-quadrado,
+  #           "mf"  - Indice MF.
+  # dimproj - Dimensao da projecao dos dados (default = 2).
+  # weight  - Usado nos indice LDA, PDA e Lr, para ponderar os calculos
   #           pelo numero de elementos em cada classe (default = TRUE).
-  # Lambda  - Usado no indice PDA (default = 0.1).
+  # lambda  - Usado no indice PDA (default = 0.1).
   # r       - Usado no indice Lr(default = 1).
   
   # Retorna:
-  # Num.Class   - Numero de classes.
-  # Class.Names - Nomes das classes.
-  # Findex      - Funcao indice de projecao usada.
-  # Vector.Proj - Vetores de projecao encontrados.
-  # Index       - Indice de projecao encontrado no processo.
+  # num.class   - Numero de classes.
+  # class.names - Nomes das classes.
+  # findex      - Funcao indice de projecao usada.
+  # vector.proj - Vetores de projecao encontrados.
+  # index       - Indice de projecao encontrado no processo.
 
-  if (!is.data.frame(Data) && !is.matrix(Data))
-     stop("Entrada 'Data' esta incorreta, deve ser do tipo dataframe ou matrix. Verifique!")
+  if (!is.data.frame(data) && !is.matrix(data))
+     stop("Entrada 'data' esta incorreta, deve ser do tipo dataframe ou matrix. Verifique!")
   
-  if (!is.na(Class[1])) {
+  if (!is.na(class[1])) {
     
-    Class <- as.matrix(Class)
+    class <- as.matrix(class)
     
-    if (nrow(Data) != length(Class))
-       stop("Entrada 'Class' ou 'Data' esta incorreta, devem conter o mesmo numero de linhas. Verifique!")
+    if (nrow(data) != length(class))
+       stop("Entrada 'class' ou 'data' esta incorreta, devem conter o mesmo numero de linhas. Verifique!")
   }
   
-  if (!is.na(Vector.Proj[1]) && !is.data.frame(Vector.Proj) && !is.matrix(Vector.Proj))
-     stop("Entrada 'Vector.Proj' esta incorreta, deve ser do tipo dataframe ou matrix. Verifique!")
+  if (!is.na(vector.proj[1]) && !is.data.frame(vector.proj) && !is.matrix(vector.proj))
+     stop("Entrada 'vector.proj' esta incorreta, deve ser do tipo dataframe ou matrix. Verifique!")
   
-  Findex <- toupper(Findex) # transforma em maiusculo
+  findex <- toupper(findex) # transforma em maiusculo
   
-  if (!(Findex %in% c("LDA", "PDA", "LR", "HOLES", "CM", "PCA", "FRIEDMANTUKEY", "ENTROPY",
+  if (!(findex %in% c("LDA", "PDA", "LR", "HOLES", "CM", "PCA", "FRIEDMANTUKEY", "ENTROPY",
                       "LEGENDRE",  "LAGUERREFOURIER", "HERMITE", "NATURALHERMITE",
                       "KURTOSISMAX", "KURTOSISMIN", "MOMENT", "CHI", "MF")))
-     stop(paste("Funcao indice:",Findex, "nao cadastrada. Verifique!"))
+     # stop(paste("Funcao indice:",findex, "nao cadastrada. Verifique!"))
+     stop("Entrada para 'findex' esta incorreta, deve ser: 'lda', 'pda', 'lr', 
+          'holes', 'cm', 'pca', 'friedmantukey', 'entropy', 'legendre', 
+          'laguerrefourier', 'hermite', 'naturalhermite', 'kurtosismax', 
+          'kurtosismin', 'moment', 'chi' ou 'mf'. Verifique!")
   
-  if ((Findex %in% c("PCA","KURTOSISMAX", "KURTOSISMIN"))  && DimProj != 1)
-     stop("Para os indices 'PCA', 'KURTOSISMAX' e 'KURTOSISMIN', 'DimProj' deve ser 1 (um). Verifique!")
+  if ((findex %in% c("PCA","KURTOSISMAX", "KURTOSISMIN"))  && dimproj != 1)
+     stop("Para os indices 'PCA', 'KURTOSISMAX' e 'KURTOSISMIN', 'dimproj' deve ser 1 (um). Verifique!")
   
-  if ((Findex %in% c("MOMENT", "CHI", "FRIEDMANTUKEY", "ENTROPY", "LEGENDRE",
-                     "LAGUERREFOURIER", "HERMITE", "NATURALHERMITE")) && DimProj != 2)
-     stop("Para os indices 'MOMENT', 'CHI', 'FRIEDMANTUKEY', 'ENTROPY', 'LEGENDRE', 'LAGUERREFOURIER', 'HERMITE' e 'NATURALHERMITE', 'DimProj' deve ser 2 (dois). Verifique!")
+  if ((findex %in% c("MOMENT", "CHI", "FRIEDMANTUKEY", "ENTROPY", "LEGENDRE",
+                     "LAGUERREFOURIER", "HERMITE", "NATURALHERMITE")) && dimproj != 2)
+     stop("Para os indices 'MOMENT', 'CHI', 'FRIEDMANTUKEY', 'ENTROPY', 'LEGENDRE', 'LAGUERREFOURIER', 'HERMITE' e 'NATURALHERMITE', 'dimproj' deve ser 2 (dois). Verifique!")
   
-  if (Findex %in% c("LDA", "PDA", "LR") && is.na(Class[1]))
-     stop("Para os indices 'LDA', 'PDA' e 'LR', necessita-se de entrada em 'Class'. Verifique!")
+  if (findex %in% c("LDA", "PDA", "LR") && is.na(class[1]))
+     stop("Para os indices 'LDA', 'PDA' e 'LR', necessita-se de entrada em 'class'. Verifique!")
   
-  if (DimProj > ncol(Data))
-     stop("DimProj maior que o numero de colunas em Data. Verifique!")
+  if (dimproj > ncol(data))
+     stop("dimproj maior que o numero de colunas em data. Verifique!")
   
-  if (!is.logical(Weight))
-     stop("Entrada para 'Weight' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  if (!is.logical(weight))
+     stop("Entrada para 'weight' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  if (!is.numeric(Lambda) || Lambda < 0 || Lambda >= 1 )
-     stop("Entrada para 'Lambda' esta incorreta, deve ser um valor numerico entre [0,1). Verifique!")
+  if (!is.numeric(lambda) || lambda < 0 || lambda >= 1 )
+     stop("Entrada para 'lambda' esta incorreta, deve ser um valor numerico entre [0,1). Verifique!")
   
   if (!is.numeric(r) || r <= 0 )
      stop("Entrada para 'r' esta incorreta, deve ser um valor numerico maior que zero. Verifique!")
   
-  if (!is.na(Class[1])) {
-     Class.Table <- table(Class)        # cria tabela com as quantidade dos elementos das classes
-     Class.Names <- names(Class.Table)  # nomes das classses
-     Num.Class   <- length(Class.Table) # numero de classes
+  if (!is.na(class[1])) {
+     class.Table <- table(class)        # cria tabela com as quantidade dos elementos das classes
+     class.names <- names(class.Table)  # nomes das classses
+     num.class   <- length(class.Table) # numero de classes
   } else {
-     Class.Names <- NA # nomes das classses
-     Num.Class   <- NA # numero de classes
+     class.names <- NA # nomes das classses
+     num.class   <- NA # numero de classes
   }
   
-  if (Findex == "KURTOSISMAX" || Findex == "KURTOSISMIN") Findex <- "KURTOSI"
+  if (findex == "KURTOSISMAX" || findex == "KURTOSISMIN") findex <- "KURTOSI"
   
-  A <- Vector.Proj
+  A <- vector.proj
 
-  switch(Findex,
+  switch(findex,
     "LDA" = {
       # Method from the article: Lee, EK., Cook, D., Klinke, S., and Lumley, T.(2005),
-      # Projection Pursuit for Exploratory Supervised Classification, Journal of
+      # Projection Pursuit for Exploratory Supervised classification, Journal of
       # Computational and Graphical Statistics, 14(4):831-846.
 
       # Ver livro Mingoti pag. 246 para melhor entendimento sobre funcao discriminante de Fisher
 
-      Num.Col   <- ncol(Data) # numero de variaveis
-      Num.Lin   <- nrow(Data) # numero geral de observacoes
+      Num.Col   <- ncol(data) # numero de variaveis
+      Num.Lin   <- nrow(data) # numero geral de observacoes
 
       # medias de cada variavel em cada classe
-      Mean.Class <- matrix(apply(Data,2, function(x) tapply(x, Class, mean, na.rm=TRUE)), ncol = Num.Col)
+      Mean.class <- matrix(apply(data,2, function(x) tapply(x, class, mean, na.rm=TRUE)), ncol = Num.Col)
 
-      Mean.Var   <- matrix(apply(Data,2,mean), ncol = Num.Col) # medias das variaveis (colunas)
+      Mean.Var   <- matrix(apply(data,2,mean), ncol = Num.Col) # medias das variaveis (colunas)
 
       B <- matrix(0, ncol = Num.Col, nrow = Num.Col) # soma dos quadrados entre os grupos
       W <- matrix(0, ncol = Num.Col, nrow = Num.Col) # soma dos quadrados dentro dos grupos
       i <- 1
-      while (i <= Num.Class) {
+      while (i <= num.class) {
 
-        Choice.Groups <- which(Class == Class.Names[i]) # seleciona os elementos do grupo
+        Choice.Groups <- which(class == class.names[i]) # seleciona os elementos do grupo
 
-        ni <- ifelse(Weight, Class.Table[i], Num.Lin/Num.Class) # peso
+        ni <- ifelse(weight, class.Table[i], Num.Lin/num.class) # peso
 
         ## Calculo matriz B
-        Aux.Calc.B <- Mean.Class[i,] - Mean.Var
+        Aux.Calc.B <- Mean.class[i,] - Mean.Var
         B <- B + ni * t(Aux.Calc.B) %*% Aux.Calc.B
 
         ## Calculo matriz W
-        Aux.Calc.W <- as.matrix(Data[Choice.Groups,] - matrix(1,Class.Table[i],ncol=1) %*% Mean.Class[i,])
+        Aux.Calc.W <- as.matrix(data[Choice.Groups,] - matrix(1,class.Table[i],ncol=1) %*% Mean.class[i,])
         W <- W + ni / length(Choice.Groups) * t(Aux.Calc.W) %*% Aux.Calc.W
         i <- i + 1
       }
 
-      if (is.na(Vector.Proj[1])) {
+      if (is.na(vector.proj[1])) {
          Vector.Base <- eigen(MASS::ginv(B + W) %*% B) # para extrair vetores ortogonais
 
-         A <- matrix(as.numeric(Vector.Base$vectors[,1:DimProj]), ncol = DimProj) # vetores de projecao otimos
+         A <- matrix(as.numeric(Vector.Base$vectors[,1:dimproj]), ncol = dimproj) # vetores de projecao otimos
          # colnames(A) <- paste("Eixo", 1:ncol(A))
 
-      } else A <- Vector.Proj
+      } else A <- vector.proj
 
-      Index <- 1 - det(t(A) %*% W %*% A) %*% det(MASS::ginv(t(A) %*% (W + B) %*% A)) # indice de projecao
-      # print(Index)
+      index <- 1 - det(t(A) %*% W %*% A) %*% det(MASS::ginv(t(A) %*% (W + B) %*% A)) # indice de projecao
+      # print(index)
     },
 
 
     "PDA" = {
         # Method from the article: Lee, EK, Cook, D.(2010), A Projection Pursuit
-        # Index for Large p Small n Data, Statistics and Computing, 20:381-392.
+        # index for Large p Small n data, Statistics and Computing, 20:381-392.
 
         # Ver livro Mingoti pag. 246 para melhor entendimento sobre funcao discriminante de Fisher
 
-        Num.Col   <- ncol(Data) # numero de variaveis
-        Num.Lin   <- nrow(Data) # numero geral de observacoes
+        Num.Col   <- ncol(data) # numero de variaveis
+        Num.Lin   <- nrow(data) # numero geral de observacoes
 
         # medias de cada variavel em cada classe
-        Mean.Class <- matrix(apply(Data,2, function(x) tapply(x, Class, mean, na.rm=TRUE)), ncol = Num.Col)
+        Mean.class <- matrix(apply(data,2, function(x) tapply(x, class, mean, na.rm=TRUE)), ncol = Num.Col)
 
-        Mean.Var   <- matrix(apply(Data,2,mean), ncol = Num.Col) # medias das variaveis (colunas)
+        Mean.Var   <- matrix(apply(data,2,mean), ncol = Num.Col) # medias das variaveis (colunas)
 
         B <- matrix(0, ncol = Num.Col, nrow = Num.Col) # soma dos quadrados entre os grupos
         W <- matrix(0, ncol = Num.Col, nrow = Num.Col) # soma dos quadrados dentro dos grupos
         i <- 1
-        while (i <= Num.Class) {
+        while (i <= num.class) {
 
-          Choice.Groups <- which(Class == Class.Names[i]) # seleciona os elementos do grupo
+          Choice.Groups <- which(class == class.names[i]) # seleciona os elementos do grupo
 
-          ni <- ifelse(Weight, Class.Table[i], Num.Lin/Num.Class) # peso
+          ni <- ifelse(weight, class.Table[i], Num.Lin/num.class) # peso
 
           ## Calculo matriz B
-          Aux.Calc.B <- Mean.Class[i,] - Mean.Var
+          Aux.Calc.B <- Mean.class[i,] - Mean.Var
           B <- B + ni * t(Aux.Calc.B) %*% Aux.Calc.B
 
           ## Calculo matriz W
-          Aux.Calc.W <- as.matrix(Data[Choice.Groups,] - matrix(1,Class.Table[i],ncol=1) %*% Mean.Class[i,])
+          Aux.Calc.W <- as.matrix(data[Choice.Groups,] - matrix(1,class.Table[i],ncol=1) %*% Mean.class[i,])
           W <- W + ni / length(Choice.Groups) * t(Aux.Calc.W) %*% Aux.Calc.W
           i <- i + 1
         }
 
-        Ws <- (1 - Lambda) * W + Lambda * diag(diag(W)) # Penalizando W com Lambda
+        Ws <- (1 - lambda) * W + lambda * diag(diag(W)) # Penalizando W com lambda
 
-        if (is.na(Vector.Proj[1])) {
+        if (is.na(vector.proj[1])) {
             Vector.Base <- eigen(MASS::ginv(B + Ws) %*% B) # para extrair vetores ortogonais
 
-            A <- matrix(as.numeric(Vector.Base$vectors[,1:DimProj]), ncol = DimProj) # vetores de projecao otimos
+            A <- matrix(as.numeric(Vector.Base$vectors[,1:dimproj]), ncol = dimproj) # vetores de projecao otimos
 
-        } else A <- Vector.Proj
+        } else A <- vector.proj
 
-        NLamb <- Num.Lin*Num.Col * Lambda * diag(1,ncol(B))
+        NLamb <- Num.Lin*Num.Col * lambda * diag(1,ncol(B))
         
-        Index <- 1 - det(t(A) %*% ((1 - Lambda) * W + NLamb) %*% A) %*%
-                     det(MASS::ginv(t(A) %*% ((1 - Lambda) * (W + B) + NLamb) %*% A))
-        # Index <- 1 - det(t(A) %*% W %*% A) %*% det(MASS::ginv(t(A) %*% (W + B) %*% A))
+        index <- 1 - det(t(A) %*% ((1 - lambda) * W + NLamb) %*% A) %*%
+                     det(MASS::ginv(t(A) %*% ((1 - lambda) * (W + B) + NLamb) %*% A))
+        # index <- 1 - det(t(A) %*% W %*% A) %*% det(MASS::ginv(t(A) %*% (W + B) %*% A))
     },
     
       
     "LR" = {
       # Method from the article: Lee, EK., Cook, D., Klinke, S., and Lumley, T.(2005),
-      # Projection Pursuit for Exploratory Supervised Classification, Journal of
+      # Projection Pursuit for Exploratory Supervised classification, Journal of
       # Computational and Graphical Statistics, 14(4):831-846.
 
       # Ver livro Mingoti pag. 246 para melhor entendimento sobre funcao discriminante de Fisher
 
-      Num.Col   <- ncol(Data) # numero de variaveis
-      Num.Lin   <- nrow(Data) # numero geral de observacoes
+      Num.Col   <- ncol(data) # numero de variaveis
+      Num.Lin   <- nrow(data) # numero geral de observacoes
 
       # medias de cada variavel em cada classe
-      Mean.Class <- matrix(apply(Data,2, function(x) tapply(x, Class, mean, na.rm=TRUE)), ncol = Num.Col)
+      Mean.class <- matrix(apply(data,2, function(x) tapply(x, class, mean, na.rm=TRUE)), ncol = Num.Col)
 
-      Mean.Var <- matrix(apply(Data,2,mean), ncol = Num.Col) # medias das variaveis (colunas)
+      Mean.Var <- matrix(apply(data,2,mean), ncol = Num.Col) # medias das variaveis (colunas)
 
       B <- 0 # soma dos quadrados entre os grupos
       W <- 0 # soma dos quadrados dentro dos grupos
       i <- 1
-      while (i <= Num.Class) {
+      while (i <= num.class) {
 
-        Choice.Groups <- which(Class == Class.Names[i]) # seleciona os elementos do grupo
+        Choice.Groups <- which(class == class.names[i]) # seleciona os elementos do grupo
 
-        ni <- ifelse(Weight, Class.Table[i], Num.Lin/Num.Class) # peso
+        ni <- ifelse(weight, class.Table[i], Num.Lin/num.class) # peso
 
         ## Calculo matriz B
-        Aux.Calc.B <- Mean.Class[i,] - Mean.Var
+        Aux.Calc.B <- Mean.class[i,] - Mean.Var
         # B <- B +  ni * sum(abs(Aux.Calc.B)^r)
         B <- B + sum(abs(Aux.Calc.B)^r)
 
         ## Calculo matriz W
-        Aux.Calc.W <- as.matrix(Data[Choice.Groups,] - matrix(1,Class.Table[i],ncol=1) %*% Mean.Class[i,])
+        Aux.Calc.W <- as.matrix(data[Choice.Groups,] - matrix(1,class.Table[i],ncol=1) %*% Mean.class[i,])
         W <- W + ni / length(Choice.Groups) * sum(abs(Aux.Calc.W)^r)
         
         i <- i + 1
       }
 
-      Index <- (B/W)^(1/r) # 1 - (W/(W+B))^(1/r)
+      index <- (B/W)^(1/r) # 1 - (W/(W+B))^(1/r)
     },
 
 
     "HOLES" = {
 
-      Index <- .C("Holes", row = as.integer(nrow(Data)), 
-                  col = as.integer(ncol(Data)), 
-                  Data = as.matrix(Data), Index = 0)$Index
+      index <- .C("Holes", row = as.integer(nrow(data)), 
+                  col = as.integer(ncol(data)), 
+                  data = as.matrix(data), index = 0)$index
 
-      # print(Index)
+      # print(index)
       # # Codigo abaixo he em R e faz a mesma coisa do codigo anterior de modo mais lento
-      # n <- nrow(Data)
-      # d <- ncol(Data)
-      # Index <- (1 - 1/n * sum(exp(-0.5 * rowSums(Data^2)))) / (1 - exp(-d/2))
-      # print(Index)
+      # n <- nrow(data)
+      # d <- ncol(data)
+      # index <- (1 - 1/n * sum(exp(-0.5 * rowSums(data^2)))) / (1 - exp(-d/2))
+      # print(index)
     },
 
 
     "CM" = {
 
-      Index <- 1 - .C("Holes", row = as.integer(nrow(Data)), 
-                      col = as.integer(ncol(Data)), 
-                      Data = as.matrix(Data), Index = 0)$Index
+      index <- 1 - .C("Holes", row = as.integer(nrow(data)), 
+                      col = as.integer(ncol(data)), 
+                      data = as.matrix(data), index = 0)$index
 
-      # print(Index)
+      # print(index)
       # # Codigo abaixo he em R e faz a mesma coisa do codigo anterior de modo mais lento
-      # n <- nrow(Data)
-      # d <- ncol(Data)
-      # Index <- 1 - (1 - 1/n * sum(exp(-0.5 * rowSums(Data^2)))) / (1 - exp(-d/2))
-      # print(Index)
+      # n <- nrow(data)
+      # d <- ncol(data)
+      # index <- 1 - (1 - 1/n * sum(exp(-0.5 * rowSums(data^2)))) / (1 - exp(-d/2))
+      # print(index)
     },
 
 
    "PCA" = {
 
-     Index <- .C("IndexPCA", row = as.integer(length(Data)),
-                 Data = as.matrix(Data), Index = 0)$Index
+     index <- .C("IndexPCA", row = as.integer(length(data)),
+                 data = as.matrix(data), index = 0)$index
 
-     # print(Index)
+     # print(index)
      # # Codigo abaixo he em R e faz a mesma coisa do codigo anterior de modo mais lento
-     # Index <-  1/length(Data) * sum(Data^2)
-     # print(Index)
+     # index <-  1/length(data) * sum(data^2)
+     # print(index)
     },
 
 
     "KURTOSI" = {
 
-      Index <- .C("Kurtosi", row = as.integer(nrow(Data)), 
-                  col = as.integer(ncol(Data)), 
-                  Data = as.matrix(Data), Index = 0)$Index
+      index <- .C("Kurtosi", row = as.integer(nrow(data)), 
+                  col = as.integer(ncol(data)), 
+                  data = as.matrix(data), index = 0)$index
 
-      # print(Index)
+      # print(index)
       # # Codigo abaixo he em R e faz a mesma coisa do codigo anterior de modo mais lento
-      # n <- nrow(Data)
+      # n <- nrow(data)
       # 
-      # Data <- Data - mean(Data) # centraliza na media
+      # data <- data - mean(data) # centraliza na media
       # 
-      # M4 <- sum(Data^4) # quarto momento
-      # M2 <- sum(Data^2) # segundo momento
+      # M4 <- sum(data^4) # quarto momento
+      # M2 <- sum(data^2) # segundo momento
       # 
-      # Index <- (n - 1)^2 * M4 / (n * (M2)^2)
-      # print(Index)
+      # index <- (n - 1)^2 * M4 / (n * (M2)^2)
+      # print(index)
     },
 
 
     "MOMENT" = { # indice dos momentos
 
-      Index <- .C("Moment", row = as.integer(nrow(Data)),
-                  col = as.integer(ncol(Data)), 
-                  Data = as.matrix(Data), Index = 0)$Index
+      index <- .C("Moment", row = as.integer(nrow(data)),
+                  col = as.integer(ncol(data)), 
+                  data = as.matrix(data), index = 0)$index
 
-      # print(Index)
+      # print(index)
       # # Codigo abaixo he em R e faz a mesma coisa do codigo anterior de modo mais lento
-      # n <- nrow(Data)
+      # n <- nrow(data)
       # 
-      # Zalpha <- Data[,1]
-      # Zbeta  <- Data[,2]
+      # Zalpha <- data[,1]
+      # Zbeta  <- data[,2]
       # 
       # # Encontra as potencias necessarias
       # Za2 <- Zalpha^2
@@ -337,8 +341,8 @@ PP_Index <- function (Data, Class = NA, Vector.Proj = NA, Findex = "HOLES",
       # t1 <- k30^2 +3 * k21^2 + 3 * k12^2 + k03^2
       # t2 <- k40^2 + 4 * k31^2 + 6 * k22^2 + 4 * k13^2 + k04^2
       # 
-      # Index <- (t1 + t2/4)/12
-      # print(Index)
+      # index <- (t1 + t2/4)/12
+      # print(index)
     },
 
 
@@ -355,19 +359,19 @@ PP_Index <- function (Data, Class = NA, Vector.Proj = NA, Findex = "HOLES",
          ck[33:40] <- integrate(fnr, 4*sqrt(2*log(6))/5, 5*sqrt(2*log(6))/5)$value/8
       }
 
-      Index <- .C("chi", row = as.integer(nrow(Data)), 
-                  col = as.integer(ncol(Data)), 
-                  VecProj = as.matrix(Vector.Proj),
+      index <- .C("chi", row = as.integer(nrow(data)), 
+                  col = as.integer(ncol(data)), 
+                  VecProj = as.matrix(vector.proj),
                   ck = as.double(ck),
-                  Data = as.matrix(Data), Index = 0)$Index
+                  data = as.matrix(data), index = 0)$index
       
-      # print(Index)
+      # print(index)
       # # Codigo abaixo he em R e faz a mesma coisa do codigo anterior de modo mais lento
-      # x <- as.matrix(Data)
-      # a <- as.matrix(Vector.Proj[,1])
-      # b <- as.matrix(Vector.Proj[,2])
+      # x <- as.matrix(data)
+      # a <- as.matrix(vector.proj[,1])
+      # b <- as.matrix(vector.proj[,2])
       # 
-      # n <- nrow(Data)
+      # n <- nrow(data)
       # z   <- matrix(0, nrow = n, ncol = 2)
       # ppi <- 0
       # pk  <- rep(0,48)
@@ -421,58 +425,58 @@ PP_Index <- function (Data, Class = NA, Vector.Proj = NA, Findex = "HOLES",
       #   j <- j + 1
       # }
       # 
-      # Index <- ppi / 9
-      # print(Index)
+      # index <- ppi / 9
+      # print(index)
       
     },
 
 
     "FRIEDMANTUKEY" = {
 
-      Index <- .C("FriedmanTukey", row = as.integer(nrow(Data)), 
-                  col = as.integer(ncol(Data)), 
-                  Data = as.matrix(Data), Index = 0)$Index
+      index <- .C("FriedmanTukey", row = as.integer(nrow(data)), 
+                  col = as.integer(ncol(data)), 
+                  data = as.matrix(data), index = 0)$index
 
-      # print(Index)
+      # print(index)
       ## Codigo abaixo he em R e faz a mesma coisa do codigo anterior de modo mais lento
-      # n <- nrow(Data)
+      # n <- nrow(data)
       # 
       # R <- 2.29 * n^(-1/5)
       # 
-      # Index <- 0
+      # index <- 0
       # 
       # i <- 1
       # while (i <= n) {
       #   j <- 1
       #   while (j <= n) {
-      #     rij <- (Data[i,1] - Data[j,1])^2 + (Data[i,2] - Data[j,2])^2
+      #     rij <- (data[i,1] - data[j,1])^2 + (data[i,2] - data[j,2])^2
       # 
       #     Farg <- (R^2 - rij)
       # 
       #     x <- ifelse( Farg > 0, 1, 0)
       # 
-      #     Index <- Index + Farg^3 * x * Farg
+      #     index <- index + Farg^3 * x * Farg
       # 
       #     j <- j + 1
       #   }
       #   i <- i + 1
       # }
-      # print(Index)
+      # print(index)
     },
 
 
     "ENTROPY" = {
       
-      Index <- .C("Entropy", row = as.integer(nrow(Data)),
-                  col = as.integer(ncol(Data)),
-                  Data = as.matrix(Data), Index = 0)$Index
+      index <- .C("Entropy", row = as.integer(nrow(data)),
+                  col = as.integer(ncol(data)),
+                  data = as.matrix(data), index = 0)$index
       
-      # print(Index)
+      # print(index)
       # # Codigo abaixo he em R e faz a mesma coisa do codigo anterior de modo mais lento
-      # n <- nrow(Data)
+      # n <- nrow(data)
       # 
-      # x <- Data[,1]
-      # y <- Data[,2]
+      # x <- data[,1]
+      # y <- data[,2]
       # 
       # rho <- cor(x,y)
       # 
@@ -508,24 +512,24 @@ PP_Index <- function (Data, Class = NA, Vector.Proj = NA, Findex = "HOLES",
       # 
       # j <- 1
       # while (j <= n) {
-      #   Sa <- Sa + log(cte * sum(fnb((Data[,1] - Data[j,1]) / ha, (Data[,2] - Data[j,2]) / hb)))
+      #   Sa <- Sa + log(cte * sum(fnb((data[,1] - data[j,1]) / ha, (data[,2] - data[j,2]) / hb)))
       #   j <- j + 1
       # }
       # 
-      # Index <- Sa / n + log(2 * pi * exp(1))
-      # print(Index)
+      # index <- Sa / n + log(2 * pi * exp(1))
+      # print(index)
     },
 
 
     "LEGENDRE" = {
       
-      Index <- .C("Legendre", row = as.integer(nrow(Data)),
-                  col = as.integer(ncol(Data)),
-                  Data = as.matrix(Data), Index = 0)$Index
+      index <- .C("Legendre", row = as.integer(nrow(data)),
+                  col = as.integer(ncol(data)),
+                  data = as.matrix(data), index = 0)$index
       
-      # print(Index)
+      # print(index)
       # # Codigo abaixo he em R e faz a mesma coisa do codigo anterior de modo mais lento
-      # n <- nrow(Data)
+      # n <- nrow(data)
       # 
       # fn <- function(x) { # Funcao Normal
       # 
@@ -537,8 +541,8 @@ PP_Index <- function (Data, Class = NA, Vector.Proj = NA, Findex = "HOLES",
       # 
       # }
       # 
-      # ya <- 2 * fn(Data[,1]) - 1
-      # yb <- 2 * fn(Data[,2]) - 1
+      # ya <- 2 * fn(data[,1]) - 1
+      # yb <- 2 * fn(data[,2]) - 1
       # 
       # PLeg <- function(n, x) { # Polononios de Legrendre ate a ordem 21
       # switch(n + 1
@@ -588,24 +592,24 @@ PP_Index <- function (Data, Class = NA, Vector.Proj = NA, Findex = "HOLES",
       #   j <- j + 1
       # }
       # 
-      # Index <- 1 / 4 * (Term1 + Term2 + Term3)
-      # print(Index)
+      # index <- 1 / 4 * (Term1 + Term2 + Term3)
+      # print(index)
     },
 
 
     "LAGUERREFOURIER" = {
       
-      Index <- .C("LaguerreFourier", row = as.integer(nrow(Data)),
-                  col = as.integer(ncol(Data)),
-                  Data = as.matrix(Data), Index = 0)$Index
+      index <- .C("LaguerreFourier", row = as.integer(nrow(data)),
+                  col = as.integer(ncol(data)),
+                  data = as.matrix(data), index = 0)$index
       
-      # print(Index)
+      # print(index)
       # # Codigo abaixo he em R e faz a mesma coisa do codigo anterior de modo mais lento
-      # n <- nrow(Data)
+      # n <- nrow(data)
       # 
-      # rho <- Data[,1]^2 + Data[,2]^2
+      # rho <- data[,1]^2 + data[,2]^2
       # 
-      # phi <- atan(Data[,2]/Data[,1])
+      # phi <- atan(data[,2]/data[,1])
       # 
       # PLag <- function(n, x) { # Polononios de Laguerre
       # switch(n + 1
@@ -660,22 +664,22 @@ PP_Index <- function (Data, Class = NA, Vector.Proj = NA, Findex = "HOLES",
       # 
       # Term3 <- - 1/(2 * pi * n) * sum(exp(-rho/2)) + 1/(8 * pi)
       # 
-      # Index <- Term1 + Term2 + Term3
+      # index <- Term1 + Term2 + Term3
       # 
-      # print(Index)
+      # print(index)
       
     },
 
 
     "HERMITE" = {
       
-      Index <- .C("Hermite", row = as.integer(nrow(Data)),
-                  col = as.integer(ncol(Data)),
-                  Data = as.matrix(Data), Index = 0)$Index
+      index <- .C("Hermite", row = as.integer(nrow(data)),
+                  col = as.integer(ncol(data)),
+                  data = as.matrix(data), index = 0)$index
       
-      # print(Index)
+      # print(index)
       # # Codigo abaixo he em R e faz a mesma coisa do codigo anterior de modo mais lento
-      # n <- nrow(Data)
+      # n <- nrow(data)
       # 
       # fn <- function(x) { # Funcao Normal
       # 
@@ -723,8 +727,8 @@ PP_Index <- function (Data, Class = NA, Vector.Proj = NA, Findex = "HOLES",
       #   k <- 0
       #   while (k <= (Ht-j)) {
       #     Sum1 <- Sum1 + (2^-(j + k))/(cte * factorial(k)) *
-      #                    (1/n * sum(PHer(j,Data[,1]) * fn(Data[,1])))^2 *
-      #                    (1/n * sum(PHer(k,Data[,2]) * fn(Data[,2])))^2
+      #                    (1/n * sum(PHer(j,data[,1]) * fn(data[,1])))^2 *
+      #                    (1/n * sum(PHer(k,data[,2]) * fn(data[,2])))^2
       #     k <- k + 1
       #   }
       #   
@@ -732,28 +736,28 @@ PP_Index <- function (Data, Class = NA, Vector.Proj = NA, Findex = "HOLES",
       #   j <- j + 1
       # }
       # 
-      # Term2 <- - 1/n^2 * sum(fn(Data[,1])) * sum(fn(Data[,2])) + 1/(4 * pi)
+      # Term2 <- - 1/n^2 * sum(fn(data[,1])) * sum(fn(data[,2])) + 1/(4 * pi)
       # 
-      # Index <- Term1 + Term2
+      # index <- Term1 + Term2
       # 
-      # print(Index)
+      # print(index)
 
     },
 
    
     "NATURALHERMITE" = {
       
-      Index <- .C("NaturalHermite", row = as.integer(nrow(Data)),
-                  col = as.integer(ncol(Data)),
-                  Data = as.matrix(Data), Index = 0)$Index
+      index <- .C("NaturalHermite", row = as.integer(nrow(data)),
+                  col = as.integer(ncol(data)),
+                  data = as.matrix(data), index = 0)$index
       
-      # print(Index)
+      # print(index)
       # # Codigo abaixo he em R e faz a mesma coisa do codigo anterior de modo mais lento
-      # n <- nrow(Data)
+      # n <- nrow(data)
       # 
       # ### INICIO - Funcao Normal Bivariada ###
-      # x <- Data[,1]
-      # y <- Data[,2]
+      # x <- data[,1]
+      # y <- data[,2]
       # rho <- cor(x,y)
       # 
       # # medias de x e y
@@ -810,7 +814,7 @@ PP_Index <- function (Data, Class = NA, Vector.Proj = NA, Findex = "HOLES",
       #   } else 0 # se x for impar
       # }
       # 
-      # Index <- 0
+      # index <- 0
       # j <- 0
       # while (j <= Ht) {
       #   Sum1 <- 0
@@ -818,16 +822,16 @@ PP_Index <- function (Data, Class = NA, Vector.Proj = NA, Findex = "HOLES",
       #   k <- 0
       #   while (k <= (Ht-j)) {
       #     Sum1 <- Sum1 + (1/n * sum(1/sqrt(cte * factorial(k)) *
-      #                    PNat(j,Data[,1]) *  PNat(k,Data[,2]) *
-      #                    fnb(Data[,1],Data[,2]) - f.b(j) * f.b(k)))^2
+      #                    PNat(j,data[,1]) *  PNat(k,data[,2]) *
+      #                    fnb(data[,1],data[,2]) - f.b(j) * f.b(k)))^2
       #     k <- k + 1
       #   }
       # 
-      #   Index <- Index + Sum1
+      #   index <- index + Sum1
       #   j <- j + 1
       # }
       # 
-      # print(Index)
+      # print(index)
 
     },
    
@@ -835,29 +839,29 @@ PP_Index <- function (Data, Class = NA, Vector.Proj = NA, Findex = "HOLES",
     "MF" = {
      
      # Centraliza na Media e Padroniza os dados por coluna, assim teremos media zero e norma 1
-     # Media <- apply(Data,2,mean) # vetor com as medias das colunas
-     # Data  <- sweep(Data, 2, Media, FUN = "-") # Centraliza na media
+     # Media <- apply(data,2,mean) # vetor com as medias das colunas
+     # data  <- sweep(data, 2, Media, FUN = "-") # Centraliza na media
      
-     MC    <- scale(Data, center = TRUE, scale = FALSE) # Centraliza na media
+     MC    <- scale(data, center = TRUE, scale = FALSE) # Centraliza na media
      SqSum <- sqrt(colSums(MC^2))
-     Data  <- sweep(MC, 2, SqSum, FUN = "/") # Normaliza os dados ou seja a norma dos vetores he 1
-     Pe    <- svd(Data)$d[1]  # Encontra o primeiro Valor Singular de Data
-     Data  <- Data / Pe # pondera os dados pelo primeiro autovalor
+     data  <- sweep(MC, 2, SqSum, FUN = "/") # Normaliza os dados ou seja a norma dos vetores he 1
+     Pe    <- svd(data)$d[1]  # Encontra o primeiro Valor Singular de data
+     data  <- data / Pe # pondera os dados pelo primeiro autovalor
      
-     Index <- .C("MF", row = as.integer(nrow(Data)),
-                 col = as.integer(ncol(Data)), 
-                 Data = as.matrix(Data), Index = 0)$Index
+     index <- .C("MF", row = as.integer(nrow(data)),
+                 col = as.integer(ncol(data)), 
+                 data = as.matrix(data), index = 0)$index
      
-     # print(Index)
+     # print(index)
      # # Codigo abaixo he em R e faz a mesma coisa do codigo anterior de modo mais lento
-     # Index <- 1/nrow(Data) * sum(Data^2)
-     # print(Index)
+     # index <- 1/nrow(data) * sum(data^2)
+     # print(index)
    }
 
   )
 
-  Lista <- list(Num.Class = Num.Class, Class.Names = Class.Names,
-                Findex = Findex, Index = Index, Vector.Proj = A)
+  Lista <- list(num.class = num.class, class.names = class.names,
+                findex = findex, index = index, vector.proj = A)
       
   return(Lista)
 

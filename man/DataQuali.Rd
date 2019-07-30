@@ -17,7 +17,7 @@ Paulo Cesar Ossani
 
 Marcelo Angelo Cirillo
 }
-
+ 
 \examples{
 data(DataQuali)
 DataQuali

@@ -1,64 +1,64 @@
-CA <- function(Data, TypData = "f", TypMatrix = "I") {
+CA <- function(data, typdata = "f", typmatrix = "I") {
   # Funcao Executa a Analise de Correspondencia - CA
   # Desenvolvida por Paulo Cesar Ossani em 06/2013
   
   # Entrada:
-  # Data    - Dados a serem a analizados
-  # TypData - "f" for frequency data (default)
+  # data    - Dados a serem a analizados
+  # typdata - "f" for frequency data (default)
   #           "c" for qualitative data
-  # TypMatrix - Usado quando TypData = c;
+  # typmatrix - Usado quando typdata = c;
   #             I Matriz Indicadora (default)
   #             B Matriz de Burt
   
   # Retorna:
-  # DepData       - Verifica se as linhas e colunas sao dependentes ou independentes pelo teste Qui-quadrado, a nivel 5% de significancia
-  # TypData       - Tipo de dados: "F" frequencia ou "C" qualitativo
-  # NumCood       - Numero de coordenadas principais
-  # MatrixP       - Matriz da frequencia relativa
-  # VectorR       - Vetor com as somas das linhas
-  # VectorC       - Vetor com as somas das colunas
-  # MatrixPR      - Matriz com perfil das linhas
-  # MatrixPC      - Matriz com perfil das colunas
-  # MatrixZ       - Matriz Z
-  # MatrixU       - Matriz com os autovetores U
-  # MatrixV       - Matriz com os autovetores V
-  # MatrixL       - Matriz com os autovalores 
-  # MatrixX       - Matriz com as coordenadas principais das linhas 
-  # MatrixY       - Matriz com as coordenadas principais das colunas
-  # MatrixAutoVlr - Matriz das inercias (Variancias), com as proporcoes e proporcoes acumuladas
+  # depdata   - Verifica se as linhas e colunas sao dependentes ou independentes pelo teste Qui-quadrado, a nivel 5% de significancia
+  # typdata   - Tipo de dados: "F" frequencia ou "C" qualitativo
+  # numcood   - Numero de coordenadas principais
+  # mtxP      - Matriz da frequencia relativa
+  # vtrR      - Vetor com as somas das linhas
+  # vtrC      - Vetor com as somas das colunas
+  # mtxPR     - Matriz com perfil das linhas
+  # mtxPC     - Matriz com perfil das colunas
+  # mtxZ      - Matriz Z
+  # mtxU      - Matriz com os autovetores U
+  # mtxV      - Matriz com os autovetores V
+  # mtxL      - Matriz com os Eigenvaluees 
+  # mtxX      - Matriz com as coordenadas principais das linhas 
+  # mtxY      - Matriz com as coordenadas principais das colunas
+  # mtxAutvlr - Matriz das inercias (Variancias), com as proporcoes e proporcoes acumuladas
   
-  if (!is.data.frame(Data)) 
-     stop("Entrada 'Data' esta incorreta, deve ser do tipo dataframe. Verifique!")
+  if (!is.data.frame(data)) 
+     stop("Entrada 'data' esta incorreta, deve ser do tipo dataframe. Verifique!")
 
-  TypData   <- toupper(TypData)   # transforma em maiusculo
+  typdata   <- toupper(typdata)   # transforma em maiusculo
   
-  if (TypData!="F" && TypData!="C" || !is.character(TypData))
-     stop("Entrada para 'TypData' esta incorreta, deve ser do tipo caracter, sendo 'f' ou 'c'. Verifique!")
+  if (typdata!="F" && typdata!="C" || !is.character(typdata))
+     stop("Entrada para 'typdata' esta incorreta, deve ser do tipo caracter, sendo 'f' ou 'c'. Verifique!")
   
-  TypMatrix <- toupper(TypMatrix) # transforma em maiusculo
+  typmatrix <- toupper(typmatrix) # transforma em maiusculo
   
-  if (TypMatrix!="I" && TypMatrix!="B" || !is.character(TypMatrix))
-     stop("Entrada para 'TypMatrix' esta incorreta, deve ser do tipo caracter, sendo 'i' ou 'b'. Verifique!")
+  if (typmatrix!="I" && typmatrix!="B" || !is.character(typmatrix))
+     stop("Entrada para 'typmatrix' esta incorreta, deve ser do tipo caracter, sendo 'i' ou 'b'. Verifique!")
 
   # verifica se os dados sao oriundos de contagem
-  if (TypData=="F")  # para dados numericos
-    if (sum(Data)!=round(sum(abs(Data)),0))
+  if (typdata=="F")  # para dados numericos
+    if (sum(data)!=round(sum(abs(data)),0))
        stop("Os dados devem ser de numeros inteiros positivos oriundos de contagem. Verifique!")
   
-  Nc = min(nrow(Data) - 1, ncol(Data) - 1) # numero de coordenadas principais
+  Nc = min(nrow(data) - 1, ncol(data) - 1) # numero de coordenadas principais
   
-  if (TypData == "C") {  
+  if (typdata == "C") {  
     # Converte para variaveis Dummy para execucao analise
     # de Correspondencia Multipla, ou seja, em 0 e 1, caso dados nominais
-    NumLinha  <- nrow(Data)  # Numero de linhas na tabela
+    NumLinha  <- nrow(data)  # Numero de linhas na tabela
     
-    for (k in 1:ncol(Data)) {
+    for (k in 1:ncol(data)) {
       
-      MConver   <- as.factor(Data[,k]) # Matriz com os dados para a conversao
+      MConver   <- as.factor(data[,k]) # Matriz com os dados para a conversao
       Nivel     <- levels(MConver)     # Nomes dos Niveis
       Qtd_Nivel <- nlevels(MConver)    # Quantidade de Niveis
       MDummy = matrix(0,NumLinha,Qtd_Nivel) # Cria Matriz Vazia com elementos zero
-      colnames(MDummy) <- paste(colnames(Data)[k],Nivel,sep=":")      # Nomeia as colunas
+      colnames(MDummy) <- paste(colnames(data)[k],Nivel,sep=":")      # Nomeia as colunas
       # colnames(MDummy) <- (Nivel)      # Nomeia as colunas
  
       for (i in 1:Qtd_Nivel)
@@ -70,18 +70,18 @@ CA <- function(Data, TypData = "f", TypMatrix = "I") {
         MFinal <- cbind(MFinal,MDummy)
     }
     
-    Data = MFinal 
+    data = MFinal 
     
-    if (TypMatrix == "B") { # Matriz de Burt
-      Data <- as.matrix(Data)
-      Data <- t(Data)%*%Data
+    if (typmatrix == "B") { # Matriz de Burt
+      data <- as.matrix(data)
+      data <- t(data)%*%data
     }
     
   } 
   
-  SDados <- sum(Data) # Soma Total dos Dados
+  SDados <- sum(data) # Soma Total dos Dados
   
-  MP <- as.matrix(Data/SDados) # Matriz P
+  MP <- as.matrix(data/SDados) # Matriz P
   
   r = apply(MP,1,sum) # Soma das Linhas
   
@@ -97,7 +97,7 @@ CA <- function(Data, TypData = "f", TypMatrix = "I") {
   
   #### INICIO - Teste Qui-quadrado para independencia/dependencia entre as linhas e colunas #####
   Chi.Quad.Observado <- SDados*sum(diag(solve(Dr)%*%(MP-r%*%t(c))%*%solve(Dc)%*%t(MP-r%*%t(c))))
-  gl = (ncol(Data) - 1)*(nrow(Data) - 1) # grau de liberdade
+  gl = (ncol(data) - 1)*(nrow(data) - 1) # grau de liberdade
   qt = qchisq(0.95,gl,ncp=0) # teste a nivel de 5% de significancia
 
   Texto1 <- c("### Teste Qui-quadrado para dependencia entre linhas e colunas ###")
@@ -114,9 +114,9 @@ CA <- function(Data, TypData = "f", TypMatrix = "I") {
   
   Texto6 <- paste("Valor-p:", round(pchisq(Chi.Quad.Observado,gl,ncp=0, lower.tail = F),5))
     
-  DData <- rbind(Texto1,Texto2,Texto3,Texto4,Texto5, Texto6)
+  Ddata <- rbind(Texto1,Texto2,Texto3,Texto4,Texto5, Texto6)
   
-  rownames(DData) <- NULL 
+  rownames(Ddata) <- NULL 
   #### FIM - Teste Qui-quadrado para independencia/dependencia entre as linhas e colunas #####
   
   ##### INICIO Calculo das Coordenadas principais das Linhas e Colunas #####
@@ -131,11 +131,11 @@ CA <- function(Data, TypData = "f", TypMatrix = "I") {
   MB = sqrt(Dc)%*%Mv # Matriz B
   
   X = solve(Dr)%*%MA%*%Md # Coordenadas principais das Linhas
-  rownames(X) <- rownames(Data)
+  rownames(X) <- rownames(data)
   colnames(X) <- paste("Coord.", 1:ncol(X))
   
   Y = solve(Dc)%*%MB%*%Md # Coordenadas principais das Colunas
-  rownames(Y) <- colnames(Data)
+  rownames(Y) <- colnames(data)
   colnames(Y) <- paste("Coord.", 1:ncol(Y))
   ##### FIM Calculo das Coordenadas principais das Linhas e Colunas #####
   
@@ -149,10 +149,10 @@ CA <- function(Data, TypData = "f", TypMatrix = "I") {
   MEigen[, "% acumulada da variancia"] <- cumsum(MEigen[,"% da variancia"])
   ##### FIM - Calculo das Inercia Total #####
   
-  Lista <- list(DepData = as.character(DData), TypData = TypData, NumCood = Nc,
-                MatrixP = MP, VectorR = r, VectorC = c, MatrixPR = PR, 
-                MatrixPC = PC, MatrixZ = MZ, MatrixU = Mu, MatrixV = Mv, 
-                MatrixL = Md, MatrixX = X[,1:Nc], MatrixY= Y[,1:Nc], MatrixAutoVlr = MEigen)
+  Lista <- list(depdata = as.character(Ddata), typdata = typdata, numcood = Nc,
+                mtxP = MP, vtrR = r, vtrC = c, mtxPR = PR, 
+                mtxPC = PC, mtxZ = MZ, mtxU = Mu, mtxV= Mv, 
+                mtxL = Md, mtxX = X[,1:Nc], mtxY= Y[,1:Nc], mtxAutvlr = MEigen)
   
   return(Lista)
 }

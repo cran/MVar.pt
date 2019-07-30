@@ -13,7 +13,7 @@
 \format{Conjunto de dados com 6 linhas e 9 colunas. Sendo 6 observacoes descritas por 9 variaveis: Grupo por sexo e idade, Sao Paulo - Cafe Bourbon, Londres - Cafe Bourbon, Atenas - Cafe Bourbon, Londres - Cafe Acaia, Atenas - Cafe Acaia, Sao Paulo - Cafe Catuai, Londres - Cafe Catuai, Atenas - Cafe Catuai.
 
 }
-
+ 
 \author{
 Paulo Cesar Ossani
 

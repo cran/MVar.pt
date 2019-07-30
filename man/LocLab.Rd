@@ -1,7 +1,7 @@
 \name{LocLab}
 
 \alias{LocLab}
-
+ 
 \title{Funcao para melhor posicao dos rotulos nos graficos.}
 
 \description{Funcao para melhor posicao dos rotulos nos graficos.}

@@ -6,31 +6,31 @@
 
 \description{Realiza analise de multiplos fatores (MFA) em grupos de variaveis. Os grupos de variaveis podem ser dados quantitativos, qualitativos, de frequencia (MFACT), ou dados mistos.}
 
-\usage{MFA(Data, Groups, TypeGroups = rep("n", length(Groups)), NameGroups = NULL)}
+\usage{MFA(data, groups, typegroups = rep("n", length(groups)), namegroups = NULL)}
 
 \arguments{
-  \item{Data}{Dados a serem analisados.}
-  \item{Groups}{Numero de colunas para cada grupo em ordem seguindo a ordem dos dados em 'Data'.}
-  \item{TypeGroups}{Tipo de grupo:\cr
+  \item{data}{Dados a serem analisados.}
+  \item{groups}{Numero de colunas para cada grupo em ordem seguindo a ordem dos dados em 'data'.}
+  \item{typegroups}{Tipo de grupo:\cr
                     "n" para dados numericos (default),\cr
                     "c" para dados categoricos,\cr
                     "f" para dados de frequencia.}
-  \item{NameGroups}{Nomes para cada grupo.}
+  \item{namegroups}{Nomes para cada grupo.}
 }
 
 \value{
-\item{VectorG}{Vetor com os tamanhos de cada grupo.}
-\item{VectorNG}{Vetor com os nomes de cada grupo.}
-\item{VectorPLin}{Vetor com os valores usados para balancear as linhas da matriz Z.}
-\item{VectorPCol}{Vetor com os valores usados para balancear as colunas da matriz Z.}
-\item{MatrixZ}{Matriz concatenada e balanceada.}
-\item{MatrixA}{Matriz de autovalores (variancias) com as proporcoes e proporcoes acumuladas.}
-\item{MatrixU}{Matriz U da decomposicao singular da matriz Z.}
-\item{MatrixV}{Matriz V da decomposicao singular da matriz Z.}
-\item{MatrixF}{Matriz global dos escores dos fatores onde as linhas sao as observacoes e as colunas os componentes.}
-\item{MatrixEFG}{Matriz dos escores dos fatores por grupo.}
-\item{MatrixCCP}{Matriz de correlacao dos componentes principais com as variaveis originais.}
-\item{MatrixEscVar}{Matriz das inercias parciais/escores das variaveis.}
+\item{vtrG}{Vetor com os tamanhos de cada grupo.}
+\item{vtrNG}{Vetor com os nomes de cada grupo.}
+\item{vtrplin}{Vetor com os valores usados para balancear as linhas da matriz Z.}
+\item{vtrpcol}{Vetor com os valores usados para balancear as colunas da matriz Z.}
+\item{mtxZ}{Matriz concatenada e balanceada.}
+\item{mtxA}{Matriz de autovalores (variancias) com as proporcoes e proporcoes acumuladas.}
+\item{mtxU}{Matriz U da decomposicao singular da matriz Z.}
+\item{mtxV}{Matriz V da decomposicao singular da matriz Z.}
+\item{mtxF}{Matriz global dos escores dos fatores onde as linhas sao as observacoes e as colunas os componentes.}
+\item{mtxEFG}{Matriz dos escores dos fatores por grupo.}
+\item{mtxCCP}{Matriz de correlacao dos componentes principais com as variaveis originais.}
+\item{mtxEV}{Matriz das inercias parciais/escores das variaveis.}
 }
 
 \references{
@@ -44,9 +44,9 @@ ABDI, H.; WILLIAMS, L. Principal component analysis. \emph{WIREs Computational S
 
 ABDI, H.; WILLIAMS, L.; VALENTIN, D. Multiple factor analysis: principal component analysis for multitable and multiblock data sets. \emph{WIREs Computational Statatistics}, New York, v. 5, n. 2, p. 149-179, Feb. 2013.
 
-BECUE-BERTAUT, M.; PAGES, J. A principal axes method for comparing contingency tables: MFACT. \emph{Computational Statistics & Data Analysis}, New York, v. 45, n. 3, p. 481-503, Feb. 2004
+BECUE-BERTAUT, M.; PAGES, J. A principal axes method for comparing contingency tables: MFACT. \emph{Computational Statistics & data Analysis}, New York, v. 45, n. 3, p. 481-503, Feb. 2004
 
-BECUE-BERTAUT, M.; PAGES, J. Multiple factor analysis and clustering of a mixture of quantitative, categorical and frequency data. \emph{Computational Statistics & Data Analysis}, New York, v. 52, n. 6, p. 3255-3268, Feb. 2008.
+BECUE-BERTAUT, M.; PAGES, J. Multiple factor analysis and clustering of a mixture of quantitative, categorical and frequency data. \emph{Computational Statistics & data Analysis}, New York, v. 52, n. 6, p. 3255-3268, Feb. 2008.
 
 BENZECRI, J. Analyse de l'inertie intraclasse par l'analyse d'un tableau de contingence: intra-classinertia analysis through the analysis of a contingency table. \emph{Les Cahiers de l'Analyse des Donnees}, Paris, v. 8, n. 3, p. 351-358, 1983.
 
@@ -60,7 +60,7 @@ ESCOFIER, B.; PAGES, J. \emph{Analyses factorielles simples et multiples:} objec
 
 ESCOFIER, B.; PAGES, J. \emph{Comparaison de groupes de variables definies sur le meme ensemble d'individus:} un exemple d'applications. Le Chesnay: Institut National de Recherche en Informatique et en Automatique, 1982. 121 p.
 
-ESCOFIER, B.; PAGES, J. Multiple factor analysis (AFUMULT package). \emph{Computational Statistics & Data Analysis}, New York, v. 18, n. 1, p. 121-140, Aug. 1994
+ESCOFIER, B.; PAGES, J. Multiple factor analysis (AFUMULT package). \emph{Computational Statistics & data Analysis}, New York, v. 18, n. 1, p. 121-140, Aug. 1994
 
 GREENACRE, M.; BLASIUS, J. \emph{Multiple correspondence analysis and related methods.} New York: Taylor and Francis, 2006. 607 p.
 
@@ -83,17 +83,17 @@ Marcelo Angelo Cirillo
 \examples{
 data(DataMix) # conjunto de dados mistos
 
-Data <- DataMix[,2:ncol(DataMix)] 
+data <- DataMix[,2:ncol(DataMix)] 
 
-rownames(Data) <- DataMix[1:nrow(DataMix),1]
+rownames(data) <- DataMix[1:nrow(DataMix),1]
 
 GroupNames = c("Notas Cafes/Trabalho", "Formacao/Dedicacao", "Cafes")
 
-MF <- MFA(Data, c(2,2,2), TypeGroups = c("n","c","f"), GroupNames) # realiza MFA
+MF <- MFA(data = data, c(2,2,2), typegroups = c("n","c","f"), GroupNames) # realiza MFA
 
-print("Variancias dos Componentes Principais:"); round(MF$MatrixA,2)
+print("Variancias dos Componentes Principais:"); round(MF$mtxA,2)
 
-print("Matriz das Inercias Parciais/Escores das Variaveis:"); round(MF$MatrixEscVar,2)
+print("Matriz das Inercias Parciais/Escores das Variaveis:"); round(MF$mtxEV,2)
 }
 
 \keyword{Analise de multiplos fatores}

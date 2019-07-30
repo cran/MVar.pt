@@ -6,16 +6,16 @@
 
 \description{Realiza analise de correlacao canonica (CCA) em um conjunto de dados.}
 
-\usage{CCA(X = NULL, Y = NULL, Type = 1, Test = "Bartlett", Sign = 0.05)}
+\usage{CCA(X = NULL, Y = NULL, type = 1, test = "Bartlett", sign = 0.05)}
 
 \arguments{
   \item{X}{Primeiro grupo de variaveis de um conjunto de dados.}
   \item{Y}{Segundo grupo de variaveis de um conjunto de dados.}
-  \item{Type}{1 para analise utilizando a matriz de covariancia (default),\cr
+  \item{type}{1 para analise utilizando a matriz de covariancia (default),\cr
               2 para analise utilizando a matriz de correlacao.}
-  \item{Test}{Teste de significancia da relacao entre o grupo X e Y:\cr
+  \item{test}{teste de significancia da relacao entre o grupo X e Y:\cr
               "Bartlett" (default) ou "Rao".}
-  \item{Sign}{Grau de significancia do teste (default 5\%).}           
+  \item{sign}{Grau de significancia do teste (default 5\%).}           
 }
 
 \value{
@@ -23,15 +23,15 @@
   \item{Cyy    }{Matriz de Covariancia ou Correlacao Cyy.}
   \item{Cxy    }{Matriz de Covariancia ou Correlacao Cxy.}
   \item{Cyx    }{Matriz de Covariancia ou Correlacao Cyx.}
-  \item{Var.UV }{Matriz com autovalores (variancias) dos pares cononicos U e V.}
-  \item{Corr.UV}{Matriz de Correlacao dos pares cononicos U e V.}
-  \item{Coef.X }{Matriz dos Coeficientes canonicos do grupo X.}
-  \item{Coef.Y }{Matriz dos Coeficientes canonicos do grupo Y.}
-  \item{Coor.X }{Matriz das Correlacoes entre as variaveis canonicas e as variaveis originais do grupo X.}
-  \item{Coor.Y }{Matriz das Correlacoes entre as variaveis canonicas e as variaveis originais do grupo Y.}
-  \item{Score.X}{Matriz com os scores do grupo X.}
-  \item{Score.Y}{Matriz com os scores do grupo Y.}
-  \item{SigTest}{Retorna o teste de significancia da relacao entre o grupo X e Y: "Bartlett" (default) ou "Rao".}
+  \item{var.UV }{Matriz com autovalores (variancias) dos pares cononicos U e V.}
+  \item{corr.UV}{Matriz de Correlacao dos pares cononicos U e V.}
+  \item{coef.X }{Matriz dos Coeficientes canonicos do grupo X.}
+  \item{coef.Y }{Matriz dos Coeficientes canonicos do grupo Y.}
+  \item{corr.X }{Matriz das Correlacoes entre as variaveis canonicas e as variaveis originais do grupo X.}
+  \item{corr.Y }{Matriz das Correlacoes entre as variaveis canonicas e as variaveis originais do grupo Y.}
+  \item{score.X}{Matriz com os scores do grupo X.}
+  \item{score.Y}{Matriz com os scores do grupo Y.}
+  \item{sigtest}{Retorna o teste de significancia da relacao entre o grupo X e Y: "Bartlett" (default) ou "Rao".}
 }
 
 \references{
@@ -39,7 +39,7 @@ MINGOTI, S. A. \emph{Analise de dados atraves de metodos de estatistica multivar
 
 FERREIRA, D. F. \emph{Estatistica Multivariada.} 2a ed. revisada e ampliada. Lavras: Editora UFLA, 2011. 676 p.
 
-RENCHER, A. C. \emph{Methods of Multivariate Analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
+RENCHER, A. C. \emph{Methods of multivariate analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
 
 LATTIN, J.; CARROL, J. D.; GREEN, P. E. \emph{Analise de dados multivariados.} 1th. ed. Sao Paulo: Cengage Learning, 2011. 455 p.
 }
@@ -55,36 +55,36 @@ Marcelo Angelo Cirillo
 \examples{
 data(DataMix) # conjunto de dados
 
-Data <- DataMix[,2:ncol(DataMix)]
+data <- DataMix[,2:ncol(DataMix)]
 
-rownames(Data) <- DataMix[,1]
+rownames(data) <- DataMix[,1]
 
-X <- as.data.frame(NormData(Data[,1:2],2))
+X <- as.data.frame(NormData(data[,1:2],2))
 
-Y <- as.data.frame(NormData(Data[,5:6],2))
+Y <- as.data.frame(NormData(data[,5:6],2))
 
-Resp <- CCA(X, Y, Type = 1, Test = "Bartlett", Sign = 0.05)
+Resp <- CCA(X, Y, type = 1, test = "Bartlett", sign = 0.05)
 
 print("Matriz com autovalores (variancias) dos pares cononicos U e V:");
-round(Resp$Var.UV,3)
+round(Resp$var.UV,3)
 
-print("Matriz de correlacao dos pares cononicos U e V:"); round(Resp$Corr.UV,3)
+print("Matriz de correlacao dos pares cononicos U e V:"); round(Resp$corr.UV,3)
 
-print("Matriz dos coeficientes canonicos do grupo X:"); round(Resp$Coef.X,3)
+print("Matriz dos coeficientes canonicos do grupo X:"); round(Resp$coef.X,3)
 
-print("Matriz dos coeficientes canonicos do grupo Y:"); round(Resp$Coef.Y,3)
-
-print("Matriz das correlacoes entre as variaveis canonicas
-       e as variaveis originais do grupo X:"); round(Resp$Coor.X,3)
+print("Matriz dos coeficientes canonicos do grupo Y:"); round(Resp$coef.Y,3)
 
 print("Matriz das correlacoes entre as variaveis canonicas
-       e as variaveis originais do grupo Y:"); round(Resp$Coor.Y,3)
+       e as variaveis originais do grupo X:"); round(Resp$corr.X,3)
 
-print("Matriz com os scores do grupo X:"); round(Resp$Score.X,3)
+print("Matriz das correlacoes entre as variaveis canonicas
+       e as variaveis originais do grupo Y:"); round(Resp$corr.Y,3)
 
-print("Matriz com os scores do grupo Y:"); round(Resp$Score.Y,3)
+print("Matriz com os scores do grupo X:"); round(Resp$score.X,3)
 
-print("Teste de significancia dos pares canonicos:"); Resp$SigTest
+print("Matriz com os scores do grupo Y:"); round(Resp$score.Y,3)
+
+print("teste de significancia dos pares canonicos:"); Resp$sigtest
 }
 
 \keyword{Analise de correlacao canonica}

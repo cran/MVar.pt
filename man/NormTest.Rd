@@ -6,18 +6,18 @@
 
 \description{Verificar a normalidade dos dados, baseado no teste de coeficiente de assimetria.}
 
-\usage{NormTest(Data, Sign = 0.05)}
+\usage{NormTest(data, sign = 0.05)}
 
 \arguments{
-\item{Data}{Dados a serem analisados.}
-\item{Sign}{Grau de significancia do teste (default 5\%).}
+\item{data}{Dados a serem analisados.}
+\item{sign}{Grau de significancia do teste (default 5\%).}
 }
 
 \value{
-\item{Statistic  }{Valor Chi-quadrado observado, ou seja, a estatistica do teste.}
-\item{ChiQuadrado}{Valor Chi-quadrado calculado.}
-\item{GL         }{Grau de liberdade.}
-\item{p.Value    }{Valor p.}
+\item{statistic}{Valor Chi-quadrado observado, ou seja, a estatistica do teste.}
+\item{chisquare}{Valor Chi-quadrado calculado.}
+\item{gl       }{Grau de liberdade.}
+\item{p.value  }{Valor p.}
 }
 
 \references{
@@ -35,18 +35,18 @@ Marcelo Angelo Cirillo
 }
 
 \examples{
-Data <- cbind(rnorm(100,2,3), rnorm(100,1,2))
+data <- cbind(rnorm(100,2,3), rnorm(100,1,2))
 
-NormTest(Data)
+NormTest(data)
 
-plot(density(Data))
+plot(density(data))
 
 
-Data <- cbind(rexp(200,3), rexp(200,3))
+data <- cbind(rexp(200,3), rexp(200,3))
 
-NormTest(Data, Sign = 0.01)
+NormTest(data, sign = 0.01)
 
-plot(density(Data))
+plot(density(data))
 }
 
 \keyword{Teste de normalidade dos dados.}

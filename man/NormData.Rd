@@ -6,14 +6,14 @@
 
 \description{Funcao que normaliza os dados globalmente, ou por coluna.}
 
-\usage{NormData(Data, Type = 1)}
+\usage{NormData(data, type = 1)}
 \arguments{
-  \item{Data}{Dados a serem normalizados.}
-  \item{Type}{1 normaliza global (default),\cr
+  \item{data}{Dados a serem normalizados.}
+  \item{type}{1 normaliza global (default),\cr
               2 normaliza por coluna.}
 }
 
-\value{\item{DataNorm}{Dados normalizados.}}
+\value{\item{dataNorm}{Dados normalizados.}}
 
 \author{
 Paulo Cesar Ossani
@@ -24,9 +24,9 @@ Marcelo Angelo Cirillo
 \examples{
 data(DataQuan) # conjunto de dados quantitativos
 
-Data <- DataQuan[,2:8]
+data <- DataQuan[,2:8]
 
-Resp = NormData(Data, Type = 1) # normaliza os dados globalmente
+Resp = NormData(data, type = 1) # normaliza os dados globalmente
 
 Resp # dados normalizados globalmente
 
@@ -35,7 +35,7 @@ sd(Resp)   # desvio padrao global
 mean(Resp) # media global
 
 
-Resp = NormData(Data, Type = 2) # normaliza os dados por coluna
+Resp = NormData(data, type = 2) # normaliza os dados por coluna
 
 Resp # dados normalizados por coluna
 
