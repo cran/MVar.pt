@@ -72,13 +72,13 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
 
   if (grid) {
     
-     args <- append(as.list(par('usr')), c('gray95','gray95'))
+     args <- append(as.list(par('usr')), c('gray93','gray93'))
     
      names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
     
      do.call(rect, args) # chama a funcao rect com os argumentos (args)
     
-     grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+     grid(col = "white", lwd = 2, lty = 7, equilogs = T)
     
   }
   
@@ -94,20 +94,20 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
          xlab = xlabel, # Nomeia Eixo X
          ylab = ylabel, # Nomeia Eixo Y
          main = titles[2], # Titulo
-         asp  = 1,  # Aspecto do Grafico
+         # asp  = 1,  # Aspecto do Grafico
          type = "n", # nao plota pontos 
          xlim = c(min(CA$mtxX[,1])-0.1,max(CA$mtxX[,1])+0.1), # Dimensao para as linhas do grafico
          ylim = c(min(CA$mtxX[,2]-0.1),max(CA$mtxX[,2])+0.1)) # Dimensao para as colunas do grafico
 
     if (grid) {
       
-       args <- append(as.list(par('usr')), c('gray95','gray95'))
+       args <- append(as.list(par('usr')), c('gray93','gray93'))
       
        names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
       
        do.call(rect, args) # chama a funcao rect com os argumentos (args)
       
-       grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+       grid(col = "white", lwd = 2, lty = 7, equilogs = T)
       
     }
     
@@ -129,19 +129,19 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
        xlab = xlabel, # Nomeia Eixo X
        ylab = ylabel, # Nomeia Eixo Y
        main = titles[3], # Titulo
-       asp  = 1, # Aspecto do Grafico
+       # asp  = 1, # Aspecto do Grafico
        xlim = c(min(CA$mtxY[,1])-0.1,max(CA$mtxY[,1])+0.1), # Dimensao para as linhas do grafico
        ylim = c(min(CA$mtxY[,2]-0.1),max(CA$mtxY[,2])+0.1)) # Dimensao para as colunas do grafico
 
   if (grid) {
     
-     args <- append(as.list(par('usr')), c('gray95','gray95'))
+     args <- append(as.list(par('usr')), c('gray93','gray93'))
     
      names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
     
      do.call(rect, args) # chama a funcao rect com os argumentos (args)
     
-     grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+     grid(col = "white", lwd = 2, lty = 7, equilogs = T)
     
   }
   
@@ -164,19 +164,19 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
           xlab = xlabel, # Nomeia Eixo X
           ylab = ylabel, # Nomeia Eixo Y
           main = titles[4], # Titulo
-          asp  = 1,  # Aspecto do Grafico
+          # asp  = 1,  # Aspecto do Grafico
           xlim = c(min(CA$mtxX[,1],CA$mtxY)-0.1,max(CA$mtxX[,1],CA$mtxY)+0.1), # Dimensao para as linhas do grafico
           ylim = c(min(CA$mtxX[,2],CA$mtxY)-0.1,max(CA$mtxX[,2],CA$mtxY)+0.1)) # Dimensao para as colunas do grafico
 
      if (grid) {
        
-        args <- append(as.list(par('usr')), c('gray95','gray95'))
+        args <- append(as.list(par('usr')), c('gray93','gray93'))
        
         names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
        
         do.call(rect, args) # chama a funcao rect com os argumentos (args)
        
-        grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+        grid(col = "white", lwd = 2, lty = 7, equilogs = T)
        
      }
      

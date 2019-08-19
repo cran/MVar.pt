@@ -100,20 +100,20 @@ Biplot <- function(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
        xlab = xlabel,  # Nomeia Eixo X
        ylab = ylabel,  # Nomeia Eixo Y
        main = title,   # Titulo
-       asp  = 1,       # Aspecto do grafico
+       # asp  = 2,       # Aspecto do grafico
        type = "n", # nao plota pontos
        xlim = c(MinX,MaxX), # Dimensao para as linhas do grafico
        ylim = c(MinY,MaxY)) # Dimensao para as colunas do grafico
 
   if (grid) {
     
-     args <- append(as.list(par('usr')), c('gray95','gray95'))
+     args <- append(as.list(par('usr')), c('gray93','gray93'))
     
      names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
     
      do.call(rect, args) # chama a funcao rect com os argumentos (args)
     
-     grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+     grid(col = "white", lwd = 2, lty = 7, equilogs = T)
     
   }
 

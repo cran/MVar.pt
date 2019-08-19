@@ -69,13 +69,13 @@ Plot.PCA <- function(PC, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   
   if (grid) {
     
-     args <- append(as.list(par('usr')), c('gray95','gray95'))
+     args <- append(as.list(par('usr')), c('gray93','gray93'))
     
      names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
     
      do.call(rect, args) # chama a funcao rect com os argumentos (args)
     
-     grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+     grid(col = "white", lwd = 2, lty = 7, equilogs = T)
     
   }
   
@@ -90,19 +90,19 @@ Plot.PCA <- function(PC, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
        ylab = ylabel, # Nomeia Eixo Y
        type = "n", # nao plota pontos
        main = titles[2], # Titulo
-       asp  = 1,  # Aspecto do Grafico
+       # asp  = 1,  # Aspecto do Grafico
        xlim = c(min(PC$mtxscores[,1])-0.05,max(PC$mtxscores[,1])+0.05), # Dimensao para as linhas do grafico
        ylim = c(min(PC$mtxscores[,2])-0.05,max(PC$mtxscores[,2])+0.05)) # Dimensao para as colunas do grafico
 
   if (grid) {
     
-     args <- append(as.list(par('usr')), c('gray95','gray95'))
+     args <- append(as.list(par('usr')), c('gray93','gray93'))
     
      names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
     
      do.call(rect, args) # chama a funcao rect com os argumentos (args)
     
-     grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+     grid(col = "white", lwd = 2, lty = 7, equilogs = T)
     
   }
 
@@ -124,25 +124,26 @@ Plot.PCA <- function(PC, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
        ylab = ylabel, # Nomeia Eixo Y
        main = titles[3], # Titulo
        asp  = 1, # Aspecto do Grafico
+       axes = F,
        type = "n", # nao plota pontos
        xlim = c(-1.1,1.1), # Dimensao para as linhas do grafico
        ylim = c(-1.1,1.1)) # Dimensao para as colunas do grafico
 
   if (grid) {
     
-     args <- append(as.list(par('usr')), c('gray95','gray95'))
+     args <- append(as.list(par('usr')), c('gray93','gray93'))
     
      names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
     
      do.call(rect, args) # chama a funcao rect com os argumentos (args)
     
-     grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+     grid(col = "white", lwd = 2, lty = 7, equilogs = T)
     
   }
   
   symbols(0, 0, circles = 1, inches = FALSE, fg = 1, add = TRUE) # cria um circulo
   
-  abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
+  abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
   arrows(0,0,PC$mtxCCP[1,],PC$mtxCCP[2,], lty=1, code = 2, length = 0.08, angle = 25, col = ifelse(color,"Red","Black")) # cria a seta apontando para cada coordenada principal
   

@@ -112,13 +112,13 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   
   if (grid) {
     
-     args <- append(as.list(par('usr')), c('gray95','gray95'))
+     args <- append(as.list(par('usr')), c('gray93','gray93'))
     
      names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
     
      do.call(rect, args) # chama a funcao rect com os argumentos (args)
     
-     grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+     grid(col = "white", lwd = 2, lty = 7, equilogs = T)
     
   }
   
@@ -133,19 +133,19 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
        ylab = ylabel, # Nomeia Eixo Y
        type = "n",   # nao plota pontos
        main = titles[2], # Titulo
-       asp  = 2,     # Aspecto do Grafico
+       # asp  = 2,     # Aspecto do Grafico
        xlim = c(min(MFA$mtxF[,1])-0.1,max(MFA$mtxF[,1])+0.1), # Dimensao para as linhas do grafico
        ylim = c(min(MFA$mtxF[,2]-0.1),max(MFA$mtxF[,2])+0.1)) # Dimensao para as colunas do grafico
 
   if (grid) {
     
-     args <- append(as.list(par('usr')), c('gray95','gray95'))
+     args <- append(as.list(par('usr')), c('gray93','gray93'))
     
      names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
     
      do.call(rect, args) # chama a funcao rect com os argumentos (args)
     
-     grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+     grid(col = "white", lwd = 2, lty = 7, equilogs = T)
     
   }
   
@@ -177,19 +177,19 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
        ylab = ylabel, # Nomeia Eixo Y
        type = "n",    # nao plota pontos
        main = titles[3], # Titulo
-       asp  = 1,         # Aspecto do grafico
+       # asp  = 1,         # Aspecto do grafico
        xlim = c(minX,maxX), # Dimensao para as linhas do grafico
        ylim = c(minY,maxY)) # Dimensao para as colunas do grafico
 
   if (grid) {
     
-     args <- append(as.list(par('usr')), c('gray95','gray95'))
+     args <- append(as.list(par('usr')), c('gray93','gray93'))
     
      names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
     
      do.call(rect, args) # chama a funcao rect com os argumentos (args)
     
-     grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+     grid(col = "white", lwd = 2, lty = 7, equilogs = T)
     
   }
   
@@ -240,19 +240,20 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
        ylab = ylabel, # Nomeia Eixo Y
        main = "Circulo de Correlacao", # Titulo
        asp  = 1,   # Aspecto do grafico
+       axes = F,
        type = "n", # nao plota pontos
        xlim = c(-1.1,1.1), # Dimensao para as linhas do grafico
        ylim = c(-1.1,1.1)) # Dimensao para as colunas do grafico
 
   if (grid) {
     
-     args <- append(as.list(par('usr')), c('gray95','gray95'))
+     args <- append(as.list(par('usr')), c('gray93','gray93'))
     
      names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
     
      do.call(rect, args) # chama a funcao rect com os argumentos (args)
     
-     grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+     grid(col = "white", lwd = 2, lty = 7, equilogs = T)
     
   }
   
@@ -296,19 +297,19 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
        ylab = ylabel, # Nomeia Eixo Y
        type = "n",    # nao plota pontos
        main = titles[4], # Titulo
-       asp  = 1,         # Aspecto do grafico
+       # asp  = 1,         # Aspecto do grafico
        xlim = c(VlrMinX,VlrMaxX), # Dimensao para as linhas do grafico
        ylim = c(VlrMinY,VlrMaxY)) # Dimensao para as colunas do grafico
 
   if (grid) {
     
-     args <- append(as.list(par('usr')), c('gray95','gray95'))
+     args <- append(as.list(par('usr')), c('gray93','gray93'))
     
      names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
     
      do.call(rect, args) # chama a funcao rect com os argumentos (args)
     
-     grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+     grid(col = "white", lwd = 2, lty = 7, equilogs = T)
     
   }
   

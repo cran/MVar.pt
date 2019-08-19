@@ -205,20 +205,20 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
                 ylab = ylabel, # Nomeia Eixo Y
                 type = "n", # nao plota pontos
                 main = Tit, # Titulo para o grafico
-                asp  = 1,   # Aspecto do Grafico
+                # asp  = 1,   # Aspecto do Grafico
                 # axes = F,   # elimina os eixos
                 xlim = c(minX,maxX), # dimensao eixo X
                 ylim = c(minY,maxY)) # dimensao eixo Y
 
            if (grid) {
             
-              args <- append(as.list(par('usr')), c('gray95','gray95'))
-            
+              args <- append(as.list(par('usr')), c('gray93','gray93'))
+              
               names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
-            
+             
               do.call(rect, args) # chama a funcao rect com os argumentos (args)
-            
-              grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+             
+              grid(col = "white", lwd = 2, lty = 7, equilogs = T)
             
            }
           
@@ -232,7 +232,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
                 xlab = xlabel, # Nomeia Eixo X
                 ylab = ylabel, # Nomeia Eixo Y
                 main = Tit, # Titulo
-                asp  = 1,   # Aspecto do Grafico
+                # asp  = 1,   # Aspecto do Grafico
                 type = "n", # nao plota pontos
                 xlim = c(minX,maxX), # dimensao eixo X
                 ylim = c(minY,maxY), # dimensao eixo Y
@@ -240,13 +240,13 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
 
            if (grid) {
             
-              args <- append(as.list(par('usr')), c('gray95','gray95'))
-            
+              args <- append(as.list(par('usr')), c('gray93','gray93'))
+             
               names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
-            
+             
               do.call(rect, args) # chama a funcao rect com os argumentos (args)
-            
-              grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+             
+              grid(col = "white", lwd = 2, lty = 7, equilogs = T)
             
            } 
           
@@ -379,20 +379,20 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
                 ylab = ylabel, # Nomeia Eixo Y
                 type = "n", # nao plota pontos
                 main = Tit, # Titulo para o grafico
-                asp  = 1,   # Aspecto do Grafico
+                # asp  = 1,   # Aspecto do Grafico
                 # axes = F,   # elimina os eixos
                 xlim = c(minX,maxX), # dimensao eixo X
                 ylim = c(minY,maxY)) # dimensao eixo Y
           
            if (grid) {
             
-              args <- append(as.list(par('usr')), c('gray95','gray95'))
-            
+              args <- append(as.list(par('usr')), c('gray93','gray93'))
+             
               names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
-            
+             
               do.call(rect, args) # chama a funcao rect com os argumentos (args)
-            
-              grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+             
+              grid(col = "white", lwd = 2, lty = 7, equilogs = T)
             
            }
           
@@ -406,7 +406,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
                 xlab = xlabel, # Nomeia Eixo X
                 ylab = ylabel, # Nomeia Eixo Y
                 main = Tit,  # Titulo
-                asp  = 1,  # Aspecto do Grafico
+                # asp  = 1,  # Aspecto do Grafico
                 type = "n", # nao plota pontos
                 xlim = c(minX,maxX), # dimensao eixo X
                 ylim = c(minY,maxY), # dimensao eixo Y
@@ -414,13 +414,13 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
           
            if (grid) {
             
-              args <- append(as.list(par('usr')), c('gray95','gray95'))
-            
+              args <- append(as.list(par('usr')), c('gray93','gray93'))
+             
               names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
-            
+             
               do.call(rect, args) # chama a funcao rect com os argumentos (args)
-            
-              grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+             
+              grid(col = "white", lwd = 2, lty = 7, equilogs = T)
             
            } 
           
@@ -562,20 +562,20 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
                 ylab = ylabel, # Nomeia Eixo Y
                 type = "n", # nao plota pontos
                 main = Tit, # Titulo para o grafico
-                asp  = 1,   # Aspecto do Grafico
+                # asp  = 1,   # Aspecto do Grafico
                 # axes = F,   # elimina os eixos
                 xlim = c(minX,maxX), # dimensao eixo X
                 ylim = c(minY,maxY)) # dimensao eixo Y
           
            if (grid) {
             
-              args <- append(as.list(par('usr')), c('gray95','gray95'))
-            
+              args <- append(as.list(par('usr')), c('gray93','gray93'))
+             
               names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
-            
+             
               do.call(rect, args) # chama a funcao rect com os argumentos (args)
-            
-              grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+             
+              grid(col = "white", lwd = 2, lty = 7, equilogs = T)
             
            }
           
@@ -589,7 +589,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
                 xlab = xlabel, # Nomeia Eixo X
                 ylab = ylabel, # Nomeia Eixo Y
                 main = Tit, # Titulo
-                asp  = 1,   # Aspecto do Grafico
+                # asp  = 1,   # Aspecto do Grafico
                 type = "n", # nao plota pontos
                 xlim = c(minX,maxX), # dimensao eixo X
                 ylim = c(minY,maxY), # dimensao eixo Y
@@ -597,13 +597,13 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
           
            if (grid) {
             
-              args <- append(as.list(par('usr')), c('gray95','gray95'))
-            
+              args <- append(as.list(par('usr')), c('gray93','gray93'))
+             
               names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
-            
+             
               do.call(rect, args) # chama a funcao rect com os argumentos (args)
-            
-              grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+             
+              grid(col = "white", lwd = 2, lty = 7, equilogs = T)
             
            } 
           

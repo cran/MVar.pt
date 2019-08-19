@@ -133,13 +133,13 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
 
         if (grid) {
           
-           args <- append(as.list(par('usr')), c('gray95','gray95'))
+           args <- append(as.list(par('usr')), c('gray93','gray93'))
           
            names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
           
            do.call(rect, args) # chama a funcao rect com os argumentos (args)
           
-           grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+           grid(col = "white", lwd = 2, lty = 7, equilogs = T)
           
         }
         
@@ -241,13 +241,13 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
     
     if (grid) {
       
-       args <- append(as.list(par('usr')), c('gray95','gray95'))
+       args <- append(as.list(par('usr')), c('gray93','gray93'))
       
        names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
       
        do.call(rect, args) # chama a funcao rect com os argumentos (args)
       
-       grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+       grid(col = "white", lwd = 2, lty = 7, equilogs = T)
       
     }
     
@@ -283,13 +283,13 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
 
     if (grid) {
       
-       args <- append(as.list(par('usr')), c('gray95','gray95'))
+       args <- append(as.list(par('usr')), c('gray93','gray93'))
       
        names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
       
        do.call(rect, args) # chama a funcao rect com os argumentos (args)
       
-       grid(col = "white", lwd = 1, lty = 7, equilogs = T)
+       grid(col = "white", lwd = 2, lty = 7, equilogs = T)
       
     }
     

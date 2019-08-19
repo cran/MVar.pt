@@ -124,19 +124,19 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
          ylab = ylabel, # Nomeia Eixo Y
          type = "n", # tipo de grafico  
          main = title,  # Titulo
-         asp  = 1,  # Aspecto do Grafico
+         # asp  = 1,  # Aspecto do Grafico
          xlim = c(min(x)-0.5,max(x)+0.5), # Dimensao para as linhas do grafico
          ylim = c(min(y)-0.5,max(y)+0.5)) # Dimensao para as colunas do grafico
 
     if (grid) {
       
-       args <- append(as.list(par('usr')), c('gray95','gray95'))
+       args <- append(as.list(par('usr')), c('gray93','gray93'))
       
        names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
       
        do.call(rect, args) # chama a funcao rect com os argumentos (args)
       
-       grid(col = "white", lwd = 1, lty = 7, equilogs = T)#, lty = "dotted", lwd = par("lwd"), equilogs = T)
+       grid(col = "white", lwd = 2, lty = 7, equilogs = T)
       
     }
     
@@ -151,7 +151,7 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
          xlab = xlabel, # Nomeia Eixo X
          ylab = ylabel, # Nomeia Eixo Y
          main = title,  # Titulo
-         asp  = 1,   # Aspecto do Grafico
+         # asp  = 1,   # Aspecto do Grafico
          type = "n", # nao plota pontos
          xlim = c(min(x)-0.5,max(x)+0.5), # Dimensao para as linhas do grafico
          ylim = c(min(y)-0.5,max(y)+0.5), # Dimensao para as colunas do grafico
@@ -159,14 +159,14 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
 
     if (grid) {
       
-       args <- append(as.list(par('usr')), c('gray95','gray95'))
+       args <- append(as.list(par('usr')), c('gray93','gray93'))
       
        names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
       
        do.call(rect, args) # chama a funcao rect com os argumentos (args)
       
-       grid(col = "white", lwd = 1, lty = 7, equilogs = T)#, lty = "dotted", lwd = par("lwd"), equilogs = T)
-      
+       grid(col = "white", lwd = 2, lty = 7, equilogs = T)   
+       
     }
     
     Newdata <- cbind(x,y)
