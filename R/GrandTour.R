@@ -268,7 +268,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
           
         }  
         
-        if (!is.na(linlab[1])) LocLab(proj.data, cex = 1, linlab)
+        if (!is.na(linlab[1])) LocLab(proj.data, cex = size, linlab)
         
         if (axes) # coloca os eixos
            abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
@@ -442,7 +442,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
           
         }
 
-        if (!is.na(linlab[1])) LocLab(proj.data, cex = 1, linlab)
+        if (!is.na(linlab[1])) LocLab(proj.data, cex = size, linlab)
         
         if (axes) # coloca os eixos
            abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
@@ -625,7 +625,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
            
         }
         
-        if (!is.na(linlab[1])) LocLab(proj.data, cex = 1, linlab)
+        if (!is.na(linlab[1])) LocLab(proj.data[1:n,], cex = size, linlab)
         
         if (axes) # coloca os eixos
            abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
