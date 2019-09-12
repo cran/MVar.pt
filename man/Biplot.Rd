@@ -7,7 +7,9 @@
 \description{Realiza o grafico Biplot.}
 
 \usage{Biplot(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
-       size = 1.1, grid = TRUE, color = TRUE, obs = TRUE, linlab = NA)}
+       size = 1.1, grid = TRUE, color = TRUE, var = TRUE,
+       obs = TRUE, linlab = NA, class = NA, posleg = 2,
+       boxleg = TRUE, axes = TRUE)}
 
 \arguments{
 \item{data}{Dados para plotagem.}
@@ -20,8 +22,17 @@
 \item{size}{Tamanho dos pontos no grafico.}
 \item{grid}{Coloca grade nos graficos (default = TRUE).}
 \item{color}{Graficos coloridos (default = TRUE).}
+\item{var}{Acrescenta as projecoes das variaveis ao grafico (default = TRUE).}
 \item{obs}{Acrescenta as observacoes ao grafico (default = TRUE).}
 \item{linlab}{Vetor com os rotulos para as observacoes, se nao for definido assume texto padrao.}
+\item{class}{Vetor com os nomes das classes dos dados.}
+\item{posleg}{0 sem legenda,\cr
+              1 para legenda no canto superior esquerdo,\cr
+              2 para legenda no canto superior direito (default),\cr
+              3 para legenda no canto inferior direito,\cr
+              4 para legenda no canto inferior esquerdo.}
+\item{boxleg}{Coloca moldura na legenda (default = TRUE).}
+\item{axes    }{Plota os eixos X e Y (default = TRUE).}
 }
 
 \value{
@@ -45,20 +56,24 @@ Marcelo Angelo Cirillo
 }
 
 \examples{
-data(DataQuan) # conjunto de dados quantitativos
+data(iris) # conjunto de dados
 
-data <- DataQuan[,2:ncol(DataQuan)]
-rownames(data) <- DataQuan[,1]
+data <- iris[,1:4]
 
-Biplot(data)
+cls <- iris[,5]
+LinNames <- rep("",nrow(iris))
+res <- Biplot(data, alpha = 0.6, title = "Biplot dos Dados\n valorizando os individuos",
+              class = cls, posleg = 2, boxleg = FALSE, 
+              linlab = LinNames, axes = TRUE)
+print(res$pvar)
+
 
 LinNames <- paste("C",1:nrow(data), sep="")
-Biplot(data, alpha = 0.6, title = "Biplot dos Dados\n valorizando os individuos",
-       xlabel = "Eixo X", ylabel = "Eixo Y", color = TRUE, obs = TRUE, 
-       linlab = LinNames)
+res <- Biplot(data, alpha = 0.4, title = "Grafico valorizando as variaveis",
+              xlabel = "", ylabel = "", color = FALSE, obs = FALSE, 
+              linlab = LinNames) 
+print(res$pvar)       
        
-Biplot(data, alpha = 0.4, title = "Grafico valorizando as variaveis",
-       xlabel = "", ylabel = "", color = FALSE, obs = FALSE)
 }
 
 \keyword{Biplot}

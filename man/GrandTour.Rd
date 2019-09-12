@@ -8,7 +8,7 @@
 
 \usage{GrandTour(data, method = "Interpolation", title = NA, xlabel = NA, 
           ylabel = NA, size = 1.1, grid = TRUE, color = TRUE, linlab = NA, 
-          class = NA, posleg = 2, boxleg = TRUE, axesvar = TRUE, axes = FALSE, 
+          class = NA, posleg = 2, boxleg = TRUE, axesvar = TRUE, axes = TRUE, 
           numrot = 200, choicerot = NA, savepicture = FALSE)}
 
 \arguments{
@@ -32,7 +32,7 @@
               4 para legenda no canto inferior esquerdo.}
 \item{boxleg}{Coloca moldura na legenda (default = TRUE).}
 \item{axesvar }{Coloca eixos de rotacao das variaveis (default = TRUE).}
-\item{axes    }{Plota os eixos X e Y (default = FALSE).}
+\item{axes    }{Plota os eixos X e Y (default = TRUE).}
 \item{numrot  }{Numero de rotacoes (default = 200). Se method = "Interpolation", numrot representara o angulo de rotacao.}
 \item{choicerot }{Escolhe rotacao especifica e apresenta na tela, ou salva a imagem se savepicture = TRUE.}
 \item{savepicture}{Salva as imagens dos graficos em arquivos (default = FALSE).}          

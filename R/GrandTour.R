@@ -1,6 +1,6 @@
 GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, ylabel = NA,
                       size = 1.1, grid = TRUE, color = TRUE, linlab = NA, class = NA, 
-                      posleg = 2, boxleg = TRUE, axesvar = TRUE, axes = FALSE, numrot = 200, 
+                      posleg = 2, boxleg = TRUE, axesvar = TRUE, axes = TRUE, numrot = 200, 
                       choicerot = NA, savepicture = FALSE) {
   
   # Esta funcao executa a rotacao dos dados multivariados em baixa dimensao

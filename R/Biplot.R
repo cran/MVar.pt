@@ -1,6 +1,8 @@
 Biplot <- function(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
-                   size = 1.1, grid = TRUE, color = TRUE, obs = TRUE, 
-                   linlab = NA) {
+                   size = 1.1, grid = TRUE, color = TRUE, var = TRUE,
+                   obs = TRUE, linlab = NA, class = NA, posleg = 2,
+                   boxleg = TRUE, axes = TRUE) {
+  
   # Rotina para gerar Biplot desenvolvida 
   # por Paulo Cesar Ossani em 20/06/2015
   
@@ -15,9 +17,19 @@ Biplot <- function(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
   # size   - Tamanho dos pontos nos graficos.
   # grid   - Coloca grade nos graficos.
   # color  - Graficos coloridos (default = TRUE).
+  # var    - Acrescenta as projecoes das variaveis ao grafico (default = TRUE).
   # obs    - Acrescenta as observacoes ao grafico (default = TRUE).
   # linlab - Vetor com o rotulo para as linhas, se nao
   #          informado retorna o padrao dos dados.
+  # class   - Vetor com os nomes das classes dos dados.
+  # posleg  - 0 sem legenda,
+  #           1 para legenda no canto superior esquerdo,
+  #           2 para legenda no canto superior direito (default),
+  #           3 para legenda no canto inferior direito,
+  #           4 para legenda no canto inferior esquerdo.  
+  # boxleg  - Colocar moldura na legenda (default = TRUE).
+  # axes    - Plota os eixos X e Y (default = TRUE).
+  
   
   # Retorna:
   # Grafico Biplot.
@@ -32,6 +44,14 @@ Biplot <- function(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
   
   if (!is.data.frame(data)) 
      stop("Entrada para 'data' esta incorreta, deve ser do tipo dataframe. Verifique!")
+  
+  if (!is.na(class[1])) {
+    
+    class <- as.matrix(class)
+    
+    if (nrow(data) != length(class))
+      stop("Entrada 'class' ou 'data' esta incorreta, devem conter o mesmo numero de linhas. Verifique!")
+  }
   
   if (!is.numeric(alpha) || alpha < 0 || alpha > 1)
      stop("Entrada para 'alpha' esta incorreta, deve ser numerica, com valor entre 0 e 1. Verifique!")
@@ -54,11 +74,26 @@ Biplot <- function(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
   if (!is.logical(color))
      stop("Entrada para 'color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
+  if (!is.logical(var)) 
+     stop("Entrada para 'var' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  
   if (!is.logical(obs)) 
      stop("Entrada para 'obs' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
+  if (!var && !obs)
+     stop("Entrada para 'var' ou 'obs' esta incorreta, deve ser TRUE ou FALSE, ambas nao podem ser FALSE. Verifique!")
+
   if (!is.na(linlab[1]) && length(linlab)!=nrow(data))
      stop("O numero elementos do rotulo para linhas 'linlab' difere do numero de linhas da base de dados. Verifique!")
+  
+  if (!is.logical(boxleg)) 
+     stop("Entrada para moldura da legenda 'boxleg' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  
+  if (!is.logical(axes)) 
+     stop("Entrada para 'axes' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  
+  if (!is.numeric(posleg) || posleg < 0 || posleg > 4 || (floor(posleg)-posleg) != 0)
+     stop("Entrada para posicao da legenda 'posleg' esta incorreta, deve ser um numero inteiro entre [0,4]. Verifique!")
   
   if (is.na(linlab[1])) linlab <- rownames(data)
   
@@ -90,6 +125,21 @@ Biplot <- function(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
   if (is.na(ylabel[1]))
      ylabel = paste("Segunda coordenada (",round(pvar[2],2),"%)",sep="")
   
+  if (posleg==1) posleg = "topleft"   # posicao das legendas nos graficos
+  if (posleg==2) posleg = "topright"
+  if (posleg==3) posleg = "bottomright"
+  if (posleg==4) posleg = "bottomleft"
+  
+  boxleg = ifelse(boxleg,"o","n") # moldura nas legendas, "n" sem moldura, "o" com moldura
+  
+  Num.class = 0
+  if (!is.na(class[1])) {
+     class.Table <- table(class)       # cria tabela com as quantidade dos elementos das classes
+     class.Names <- names(class.Table)  # nomes das classses
+     Num.class   <- length(class.Table) # numero de classes
+     NomeLinhas  <- as.matrix(class)
+  } 
+  
   MaxX <- max(coorI[,1],coorV[,1]) + 1 # Dimenssoes maximas das linhas
   MinX <- min(coorI[,1],coorV[,1]) - 1 # Dimenssoes minimas das linhas
   MaxY <- max(coorI[,2],coorV[,2]) + 1 # Dimenssoes maximas das colunas
@@ -100,7 +150,6 @@ Biplot <- function(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
        xlab = xlabel,  # Nomeia Eixo X
        ylab = ylabel,  # Nomeia Eixo Y
        main = title,   # Titulo
-       # asp  = 2,       # Aspecto do grafico
        type = "n", # nao plota pontos
        xlim = c(MinX,MaxX), # Dimensao para as linhas do grafico
        ylim = c(MinY,MaxY)) # Dimensao para as colunas do grafico
@@ -117,23 +166,67 @@ Biplot <- function(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
     
   }
 
-  abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
+  if (axes) # coloca os eixos
+     abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
-  arrows(0,0,coorV[,1],coorV[,2], lwd = 1, code = 2, length = 0.08, angle = 25, col = ifelse(color==TRUE,"Red","Black")) # cria a seta apontando para cada variavel  
+  if (var) {
+     arrows(0,0,coorV[,1],coorV[,2], lwd = 1, code = 2, length = 0.08, angle = 25, col = ifelse(color==TRUE,"Red","Black")) # cria a seta apontando para cada variavel  
 
-  NomeVar <- colnames(Mdata) # nomes das variaveis
+     NomeVar <- colnames(Mdata) # nomes das variaveis
   
-  LocLab(coorV[,1:2], NomeVar, col = ifelse(color,"Blue","Black"))  # Coloca os nomes das variaveis
-    
+     LocLab(coorV[,1:2], NomeVar, col = ifelse(color,"Blue","Black"))  # Coloca os nomes das variaveis
+  }
+  
   if (obs) {
+     
      NomeVar <- LinNames #rownames(Mdata) # nomes das observacoes
-     LocLab(coorI[,1:2], NomeVar, col = "Black") # Coloca os nomes dos individuos
+     if (Num.class == 0) {
+       
+        if (!is.na(NomeVar[1]))
+           LocLab(coorI[,1:2], NomeVar, col = "Black") # Coloca os nomes dos individuos
 
-     points(coorI,     # Coloca pontos nas posicoes dos individuos
-            asp = 1,    # Aspecto do grafico
-            pch = 15,   # Formato dos pontos 
-            cex = size, # Tamanho dos pontos         
-            col = ifelse(color,"Red","Black"))
+           points(coorI,      # Coloca pontos nas posicoes dos individuos
+                  pch = 15,   # Formato dos pontos 
+                  cex = size, # Tamanho dos pontos         
+                  col = ifelse(color,"Red","Black"))
+        } else {
+            
+           cor <- 1 # cor inicial dos pontos e legendas
+          
+           Init.Form <- 14 # formato inicial dos pontos
+          
+           for (k in 1:Num.class) {
+            
+               Point.Form <- Init.Form + k # fomato dos pontos de cada classe
+            
+               cor1 <- ifelse(color, cor + k, "black")
+            
+               Point.data <- coorI[which(class == class.Names[k]),]
+            
+               points(Point.data,
+                      pch = Point.Form, # Formato dos pontos
+                      cex = size,  # Tamanho dos pontos  
+                      col = cor1) # adiciona ao grafico as coordenadas principais das colunas
+           }
+          
+           if (!is.na(NomeVar[1]))
+              LocLab(coorI[,1:2], NomeVar, col = "Black") # Coloca os nomes dos individuos
+           
+        }
+     
+     if (posleg != 0 && Num.class > 0) {
+       
+        if (color) cor <- 2
+       
+        Init.Form <- 15 # codigo formato ponto inicial
+       
+        color_b <- cor # colore as letras das legendas e suas representacoes no grafico
+       
+        if (color) color_b = cor:(cor + Num.class)
+       
+        legend(posleg, class.Names, pch = (Init.Form):(Init.Form + Num.class), col = color_b,
+               text.col = color_b, bty = boxleg, text.font = 6, y.intersp = 0.8, xpd = TRUE) # cria a legenda
+     }
      
   }
  
