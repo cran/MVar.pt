@@ -1,6 +1,6 @@
-670badca6e69ab88e70e9c0bf793af9c *DESCRIPTION
+7229dbbe79a33e9ea2c29caea6a685cd *DESCRIPTION
 e25e479afa1d91c8101c60519e0ab101 *NAMESPACE
-d90a57a1f516ce57db283181e32e60f8 *R/Biplot.R
+ab1ddf2d972cc510e11095d8bf2486b1 *R/Biplot.R
 31251e208f65aa9f42ef50339ed3272d *R/CA.R
 cc628aebb1be549c5e45dc11887a6f38 *R/CCA.R
 c416ef10370b1b90ae0db8f27ffc6e4c *R/Cluster.R
@@ -33,7 +33,7 @@ b70f4060e651b2efd3f75c374419097a *data/DataQuan.rda
 51564e2e15c08768e2d7f8545f4c9881 *data/Data_Cafes.rda
 e4ae4be7f9438a9976692227be79a61e *data/Data_Individuos.rda
 4fafb4b6e02ef03fb455f7fdbf1847d7 *inst/CITATION
-acae4d9783c81ed277635a8bed03aab7 *man/Biplot.Rd
+df4cb613950b61af003d24dd6158bf23 *man/Biplot.Rd
 0321e1893818baccad82b0e13ab3edf8 *man/CA.Rd
 10988f516cb1940663808a6db2388be0 *man/CCA.Rd
 004a88b7a883ba88990e8ffa4dc0c4c1 *man/Cluster.Rd
@@ -52,7 +52,7 @@ d5e3db48cd09dfae98036fa187d52b30 *man/IM.Rd
 91b026a071ad547d6d396d73ce8e90b4 *man/LocLab.Rd
 043fe4bb4764090f5b673bb7b6461676 *man/MDS.Rd
 f89a306e79e43ca0241fd07dc443834e *man/MFA.Rd
-06669191203b6cacf2a9ee4c03eeacec *man/MVar.pt-package.Rd
+26dc6c5cbd147208a925c5468afabebf *man/MVar.pt-package.Rd
 a8ff426a183fd7627b0b4d7c5f06838b *man/NormData.Rd
 7a48f1f5779362862a319c417de17e19 *man/NormTest.Rd
 50c0389901a686658c4367917a4f5ec3 *man/PCA.Rd

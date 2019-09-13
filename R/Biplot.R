@@ -19,8 +19,7 @@ Biplot <- function(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
   # color  - Graficos coloridos (default = TRUE).
   # var    - Acrescenta as projecoes das variaveis ao grafico (default = TRUE).
   # obs    - Acrescenta as observacoes ao grafico (default = TRUE).
-  # linlab - Vetor com o rotulo para as linhas, se nao
-  #          informado retorna o padrao dos dados.
+  # linlab - Vetor com o rotulo para as linhas.
   # class   - Vetor com os nomes das classes dos dados.
   # posleg  - 0 sem legenda,
   #           1 para legenda no canto superior esquerdo,
@@ -95,7 +94,7 @@ Biplot <- function(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
   if (!is.numeric(posleg) || posleg < 0 || posleg > 4 || (floor(posleg)-posleg) != 0)
      stop("Entrada para posicao da legenda 'posleg' esta incorreta, deve ser um numero inteiro entre [0,4]. Verifique!")
   
-  if (is.na(linlab[1])) linlab <- rownames(data)
+  # if (is.na(linlab[1])) linlab <- rownames(data)
   
   if (is.na(title[1])) title = "Grafico Biplot" 
   
@@ -180,40 +179,39 @@ Biplot <- function(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
   if (obs) {
      
      NomeVar <- LinNames #rownames(Mdata) # nomes das observacoes
+     
      if (Num.class == 0) {
        
-        if (!is.na(NomeVar[1]))
-           LocLab(coorI[,1:2], NomeVar, col = "Black") # Coloca os nomes dos individuos
-
-           points(coorI,      # Coloca pontos nas posicoes dos individuos
-                  pch = 15,   # Formato dos pontos 
-                  cex = size, # Tamanho dos pontos         
-                  col = ifelse(color,"Red","Black"))
-        } else {
+        points(coorI,      # Coloca pontos nas posicoes dos individuos
+               pch = 15,   # Formato dos pontos 
+               cex = size, # Tamanho dos pontos         
+               col = ifelse(color,"Red","Black"))
+       
+     } else {
             
-           cor <- 1 # cor inicial dos pontos e legendas
+        cor <- 1 # cor inicial dos pontos e legendas
           
-           Init.Form <- 14 # formato inicial dos pontos
+        Init.Form <- 14 # formato inicial dos pontos
           
-           for (k in 1:Num.class) {
+        for (k in 1:Num.class) {
+        
+            Point.Form <- Init.Form + k # fomato dos pontos de cada classe
             
-               Point.Form <- Init.Form + k # fomato dos pontos de cada classe
+            cor1 <- ifelse(color, cor + k, "black")
             
-               cor1 <- ifelse(color, cor + k, "black")
+            Point.data <- coorI[which(class == class.Names[k]),]
             
-               Point.data <- coorI[which(class == class.Names[k]),]
-            
-               points(Point.data,
-                      pch = Point.Form, # Formato dos pontos
-                      cex = size,  # Tamanho dos pontos  
-                      col = cor1) # adiciona ao grafico as coordenadas principais das colunas
-           }
-          
-           if (!is.na(NomeVar[1]))
-              LocLab(coorI[,1:2], NomeVar, col = "Black") # Coloca os nomes dos individuos
-           
+            points(Point.data,
+                   pch = Point.Form, # Formato dos pontos
+                   cex = size,  # Tamanho dos pontos  
+                   col = cor1) # adiciona ao grafico as coordenadas principais das colunas
         }
+            
+     }
      
+     if (!is.na(NomeVar[1]))
+        LocLab(coorI[,1:2], NomeVar, col = "Black") # Coloca os nomes dos individuos
+ 
      if (posleg != 0 && Num.class > 0) {
        
         if (color) cor <- 2

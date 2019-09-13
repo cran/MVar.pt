@@ -24,7 +24,7 @@
 \item{color}{Graficos coloridos (default = TRUE).}
 \item{var}{Acrescenta as projecoes das variaveis ao grafico (default = TRUE).}
 \item{obs}{Acrescenta as observacoes ao grafico (default = TRUE).}
-\item{linlab}{Vetor com os rotulos para as observacoes, se nao for definido assume texto padrao.}
+\item{linlab}{Vetor com os rotulos para as observacoes.}
 \item{class}{Vetor com os nomes das classes dos dados.}
 \item{posleg}{0 sem legenda,\cr
               1 para legenda no canto superior esquerdo,\cr
@@ -60,18 +60,17 @@ data(iris) # conjunto de dados
 
 data <- iris[,1:4]
 
+Biplot(data)
+
+
 cls <- iris[,5]
-LinNames <- rep("",nrow(iris))
 res <- Biplot(data, alpha = 0.6, title = "Biplot dos Dados\n valorizando os individuos",
-              class = cls, posleg = 2, boxleg = FALSE, 
-              linlab = LinNames, axes = TRUE)
+              class = cls, posleg = 2, boxleg = FALSE, axes = TRUE)
 print(res$pvar)
 
 
-LinNames <- paste("C",1:nrow(data), sep="")
 res <- Biplot(data, alpha = 0.4, title = "Grafico valorizando as variaveis",
-              xlabel = "", ylabel = "", color = FALSE, obs = FALSE, 
-              linlab = LinNames) 
+              xlabel = "", ylabel = "", color = FALSE, obs = FALSE) 
 print(res$pvar)       
        
 }
