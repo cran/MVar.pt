@@ -6,8 +6,8 @@
 
 \description{Graficos da projection pursuit (PP).}
 
-\usage{Plot.PP(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2, 
-        boxleg = TRUE, size = 1.1, grid = TRUE, color = TRUE, linlab = NA,  
+\usage{Plot.PP(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2, boxleg = TRUE,
+        size = 1.1, grid = TRUE, color = TRUE, classcolor = NA, linlab = NA, 
         axesvar = TRUE, axes = TRUE, casc = TRUE)}
  
 \arguments{
@@ -24,6 +24,7 @@
   \item{size}{Tamanho dos pontos no grafico.}
   \item{grid}{Coloca grade nos graficos (default = TRUE).}
   \item{color}{Graficos coloridos (default = TRUE).}
+  \item{classcolor}{Vetor com as cores das classes.}
   \item{linlab}{Vetor com os rotulos para as observacoes.}
   \item{axesvar}{Coloca eixos de rotacao das variaveis, somente quando dimproj > 1 (default = TRUE).}
   \item{axes}{Plota os eixos X e Y (default = TRUE). }
@@ -72,8 +73,9 @@ Res <- PP_Optimizer(data = data, class = class, findex = Fcindex,
 
 Tit <- c(NA,"Exemplo de grafico") # titulos para os graficos
 
-Plot.PP(Res, titles = Tit, posleg = 1, boxleg = FALSE, color = TRUE,
-        linlab = NA, axesvar = TRUE, axes = TRUE, casc = FALSE)
+Plot.PP(Res, titles = Tit, posleg = 1, boxleg = FALSE, color = TRUE, 
+        classcolor = c("blue3","red","goldenrod3"), linlab = NA, 
+        axesvar = TRUE, axes = TRUE, casc = FALSE)
 
 
 # Exemplo 3 - Sem as classes nos dados, mas informando 

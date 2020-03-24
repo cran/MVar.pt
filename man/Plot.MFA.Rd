@@ -8,8 +8,8 @@
 
 \usage{Plot.MFA(MFA, titles = NA, xlabel = NA, ylabel = NA,
          posleg = 2, boxleg = TRUE, size = 1.1, grid = TRUE, 
-         color = TRUE, namarr = FALSE, linlab = NA, 
-         casc = TRUE)}
+         color = TRUE, groupscolor = NA, namarr = FALSE, 
+         linlab = NA, casc = TRUE)}
  
 \arguments{
   \item{MFA}{Dados da funcao MFA.}
@@ -24,7 +24,8 @@
   \item{size}{Tamanho dos pontos no grafico.}
   \item{grid}{Coloca grade nos graficos (default = TRUE).}
   \item{color}{Graficos coloridos (default = TRUE).}
-  \item{namarr}{Coloca nomes nos pontos na nuvem ao redor do centroide no Grafico Correspondente a Analise Global dos Individuos e Variaveis (default = FALSE).}
+  \item{groupscolor}{Vetor com as cores dos grupos.}
+  \item{namarr}{Coloca nomes nos pontos na nuvem ao redor do centroide no grafico correspondente a analise global dos individuos e variaveis (default = FALSE).}
   \item{linlab}{Vetor com os rotulos para as observacoes, se nao for definido assume texto padrao.}
   \item{casc}{Efeito cascata na apresentacao dos graficos (default = TRUE).}
 }
@@ -54,6 +55,7 @@ Tit = c("Scree-plot","Observacoes","Observacoes/Variaveis","Inercias dos Grupos 
 
 Plot.MFA(MF, titles = Tit, xlabel = NA, ylabel = NA,
          posleg = 2, boxleg = FALSE, color = TRUE, 
+         groupscolor = c("blue3","red","goldenrod3"), 
          namarr = FALSE, linlab = NA, 
          casc = FALSE) # Plota varios graficos da tela
 

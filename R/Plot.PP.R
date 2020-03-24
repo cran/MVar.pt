@@ -1,6 +1,7 @@
 Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2, 
                     boxleg = TRUE, size = 1.1, grid = TRUE, color = TRUE, 
-                    linlab = NA, axesvar = TRUE, axes = TRUE, casc = TRUE) {
+                    classcolor = NA, linlab = NA, axesvar = TRUE, axes = TRUE, 
+                    casc = TRUE) {
   
   # Rotina para plotar graficos da Projecao Pursuit desenvolvida 
   # por Paulo Cesar Ossani em 2017/02/27
@@ -19,6 +20,7 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   # size     - Tamanho dos pontos nos graficos.
   # grid     - Coloca grade nos graficos.
   # color    - Graficos coloridos (default = TRUE).
+  # classcolor - Vetor com as cores das classes.
   # linlab   - Vetor com os rotulos das observacoes.
   # axesvar  - Coloca eixos de rotacao das variaveis, somente quando DimProj > 1 (default = TRUE).
   # axes     - Plot os eixos X e Y (default = TRUE).
@@ -86,6 +88,10 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   
   class.names <- PP$class.names # nomes das classses
   
+  if (num.class != 0 && length(classcolor) != num.class && !is.na(classcolor) ||
+      num.class == 0 && length(classcolor) != 1 && !is.na(classcolor))
+     stop("Entrada para 'classcolor' esta incorreta, deve ser em quantidade igual ao numero de classes em 'class'. Verifique!")
+  
   if (num.class == 0) {
      Data <- PP$proj.data
      NomeLinhas = rownames(PP$proj.data)
@@ -143,7 +149,17 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
     
      if (casc) dev.new() # efeito cascata na apresentacao dos graficos
      
+     if (!is.na(classcolor[1])) {
+        cor.classe <- classcolor
+     }
+     else { cor.classe <- c("red") }
+     
      if (num.class == 0) {
+       
+        if (color && !is.na(classcolor[1])) {
+          cor1 <- classcolor
+        }
+        else { cor1 <- ifelse(color, "blue", "Black") }
        
         plot(Data[,1:2], # coordenadas do grafico
              xlab = xlabel, # Nomeia Eixo X
@@ -169,7 +185,7 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
        points(Data[,1:2], # coordenadas do grafico
               pch  = 16,  # formato dos pontos
               cex  = size,  # Tamanho dos pontos
-              col  = ifelse(color, "Blue", "Black"))
+              col  = cor1)
        
      } else {
        
@@ -177,7 +193,6 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
             xlab = xlabel, # Nomeia Eixo X
             ylab = ylabel, # Nomeia Eixo Y
             main = titles[2], # Titulo
-            # asp  = 1,   # Aspecto do Grafico
             type = "n", # nao plota pontos
             xlim = c(minX, maxX), # Dimensao para as linhas do grafico
             ylim = c(minY, maxY)) # Dimensao para as colunas do grafico
@@ -199,8 +214,11 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
        for (i in 1:num.class) {
          
          Point.Form <- Init.Form + i # fomato dos pontos de cada classe
-         
-         cor1 <- ifelse(color, cor + i, "black")
+
+         if (!is.na(classcolor[1])) {
+           cor1 <- ifelse(color, cor.classe[i], "black")
+         }
+         else { cor1 <- ifelse(color, cor + i, "black") }
          
          Point.Data <- Data[which(PP$proj.data[,ncol(PP$proj.data)] == class.names[i]),]
 
@@ -223,17 +241,21 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   if (ncol(Data) == 1) {  
     
      if (casc) dev.new() # efeito cascata na apresentacao dos graficos
-    
+
      if (num.class == 0) {
-       
-        cor1 <- ifelse(color, "Blue", "Black")
+               
+        if (color && !is.na(classcolor[1])) {
+          cor1 <- classcolor
+        }
+        else { cor1 <- ifelse(color, "blue", "Black") }
+        
         
         plot(Data, # coordenadas do grafico
-             xlab = xlabel,  # Nomeia Eixo X
-             ylab = ylabel,  # Nomeia Eixo Y
-             type = "n", # tipo de grafico
+             xlab = xlabel, # Nomeia Eixo X
+             ylab = ylabel, # Nomeia Eixo Y
+             type = "n",    # tipo de grafico
              main = titles[2], # Titulo
-             axes = F)   # Elimina os eixos
+             axes = F)      # Elimina os eixos
              
         if (grid) {
           
@@ -262,20 +284,22 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
         
         Init.Form <- 15 # formato inicial dos pontos
         
-        if (color) {
-           cor1 <- c(cor:(cor + num.class))[as.factor(NomeLinhas)]
-        } else {
-           cor1 <- c("black")
+        if (color && !is.na(classcolor[1])) {
+           cor1 <- c(classcolor)[as.factor(NomeLinhas)]
         }
-        
+        else { 
+           if (color) { cor1 <- c(cor:(cor + num.class))[as.factor(NomeLinhas)]
+          } else { cor1 <- c("black") }
+        }
+
         Point.Data <- cbind((1:nrow(Data)) + minX, Data)   
 
         plot(Point.Data, # cria grafico para as coordenadas principais das linhas
-             xlab = xlabel,  # Nomeia Eixo X
-             ylab = ylabel,  # Nomeia Eixo Y
-             type = "n", # tipo de grafico
+             xlab = xlabel, # Nomeia Eixo X
+             ylab = ylabel, # Nomeia Eixo Y
+             type = "n",    # tipo de grafico
              main = titles[2], # Titulo
-             axes = F,   # Elimina os eixos
+             axes = F,      # Elimina os eixos  
              xlim = c(minX, maxX), # Dimensao para as linhas do grafico
              ylim = c(minY, maxY)) # Dimensao para as colunas do grafico
 
@@ -291,11 +315,12 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
           
         }
         
-        lines(Point.Data, # cria grafico para as coordenadas principais das linhas
-              type = "o", # tipo de grafico
-              cex  = size,  # Tamanho dos pontos  
+        lines(Point.Data,  # cria grafico para as coordenadas principais das linhas
+              type = "o",  # tipo de grafico
+              cex  = size, # Tamanho dos pontos
               pch  = c((Init.Form):(Init.Form + num.class))[as.factor(NomeLinhas)], # Formato dos pontos
-              col  = c(cor1))
+              col  = cor1)
+        
      }
 
   }
@@ -303,19 +328,25 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   if (ncol(Data) <= 2) {
     
     if (posleg != 0 && num.class > 0) {
-        
-       color_b <- cor # colore as letras das legendas e suas representacoes no grafico
-        
-       if (color) color_b = cor:(cor + num.class)
+
+       if (color && !is.na(classcolor[1])) {
+         color_b <- classcolor
+       }
+       else { 
+         if (color) { color_b <- cor:(cor + num.class)
+         } else { color_b <- c("black") }
+       }
         
        legend(posleg, class.names, pch = (Init.Form):(Init.Form + num.class), col = color_b,
               text.col = color_b, bty = boxleg, text.font = 6, y.intersp = 0.8, xpd = TRUE) # cria a legenda
     }
       
-    if (color) {
-       cor1 <- c(cor:(cor + num.class))[as.factor(NomeLinhas)]
-    } else {
-       cor1 <- c("black")
+    if (color && !is.na(classcolor[1])) {
+       cor1 <- c(classcolor)[as.factor(NomeLinhas)]
+    }
+    else { 
+      if (color) { cor1 <- c(cor:(cor + num.class))[as.factor(NomeLinhas)]
+      } else { cor1 <- c("black") }
     }
       
     if (!is.na(linlab[1])) LocLab(Data, cex = 1, linlab, col = c(cor1))

@@ -1,6 +1,6 @@
 Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2, 
                      boxleg = TRUE, size = 1.1, grid = TRUE, color = TRUE, 
-                     namarr = FALSE, linlab = NA, casc = TRUE) {
+                     groupscolor = NA, namarr = FALSE, linlab = NA, casc = TRUE) {
   
   # Rotina para Plotar Graficos do Metodo MFA desenvolvida 
   # por Paulo Cesar Ossani em 09/2013 a 01/2014
@@ -18,6 +18,7 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   # size     - Tamanho dos pontos nos graficos.
   # grid     - Coloca grade nos graficos.
   # color  - Graficos coloridos (default = TRUE).
+  # groupscolor - Vetor com as cores das classes.
   # namarr - Colocar nomes nos pontos na nuvem ao redor do
   #          centroide no Grafico Correspondente a Analise 
   #          Global dos Individuos e Variaveis (default = FALSE).
@@ -72,9 +73,13 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
     NomeLinhas = rownames(MFA$mtxF) # nomes das linhas que formam os dados
   }
   
-  NumGroups  = length(NameGroups) # Numero de Grupos
+  NumGroups <- length(NameGroups) # Numero de Grupos
   
-  cor = 1 # cor inicial
+  if (NumGroups != 0 && length(groupscolor) != NumGroups && !is.na(groupscolor) ||
+      NumGroups == 0 && length(groupscolor) != 1 && !is.na(groupscolor))
+     stop("Entrada para 'groupscolor' esta incorreta, deve ser em quantidade igual ao numero de grupos em 'groups'. Verifique!")
+  
+  cor <- 1 # cor inicial
   
   if (is.na(xlabel[1]))
      xlabel  = paste("Primeira coordenada (",round(MFA$mtxA[1,2],2),"%)",sep="")
@@ -90,8 +95,6 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   boxleg = ifelse(boxleg,"o","n") # moldura nas legendas, FALSE sem moldura, "o" com moldura
   
   color_a = ifelse(color,"red","black") # cores nos pontos dos graficos
-  color_b = cor # coreas para letras das legendas e suas representacoes no grafico
-  if (color) color_b = (cor+1):(cor+NumGroups)
   #####   FIM - Informacoes usadas nos Graficos  #####
   
   if (casc) dev.new() # efeito cascata na apresentacao dos graficos
@@ -131,9 +134,8 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   plot(MFA$mtxF, # cria grafico para as coordenadas principais da Analise Global
        xlab = xlabel, # Nomeia Eixo X
        ylab = ylabel, # Nomeia Eixo Y
-       type = "n",   # nao plota pontos
+       type = "n",    # nao plota pontos
        main = titles[2], # Titulo
-       # asp  = 2,     # Aspecto do Grafico
        xlim = c(min(MFA$mtxF[,1])-0.1,max(MFA$mtxF[,1])+0.1), # Dimensao para as linhas do grafico
        ylim = c(min(MFA$mtxF[,2]-0.1),max(MFA$mtxF[,2])+0.1)) # Dimensao para as colunas do grafico
 
@@ -149,12 +151,12 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
     
   }
   
-  points(MFA$mtxF, # cria grafico para as coordenadas principais da Analise Global
-         pch = 15,    # Formato dos pontos 
-         cex = size,  # Tamanho dos pontos   
+  points(MFA$mtxF,   # cria grafico para as coordenadas principais da Analise Global
+         pch = 15,   # Formato dos pontos 
+         cex = size, # Tamanho dos pontos   
          col = ifelse(color,"red","black")) # Cor dos pontos 
     
-  abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
+  abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
   LocLab(MFA$mtxF[,1:2], NomeLinhas)  # Coloca os nomes dos pontos das coordenadas principais das linhas
   ##### FIM - Plotagem da Analise Global #####
@@ -177,7 +179,6 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
        ylab = ylabel, # Nomeia Eixo Y
        type = "n",    # nao plota pontos
        main = titles[3], # Titulo
-       # asp  = 1,         # Aspecto do grafico
        xlim = c(minX,maxX), # Dimensao para as linhas do grafico
        ylim = c(minY,maxY)) # Dimensao para as colunas do grafico
 
@@ -198,7 +199,7 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
          cex = size,    # Tamanho dos pontos  
          col = color_a) # Cor dos pontos
     
-  abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
+  abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
   LocLab(MFA$mtxF[,1:2], NomeLinhas)  # Coloca os nomes dos pontos das coordenadas principais da analise global
   ## Acrescenta no grafico da Analise Global as coordenadas principais da Analise por Grupo
@@ -210,26 +211,45 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
     for (i in 1:(length(Observ)-2)) {
       Observ[i+1] = Position*i
     }     
-    Observ[length(Observ)]=NumLinhas # nomes dos centroides
+    Observ[length(Observ)] = NumLinhas # nomes dos centroides
   }
   
-  if (NumObserv>=NumLinhas)
+  if (NumObserv >= NumLinhas)
      Observ = 1:NumLinhas  # nomes dos centroides
   
+  if (!is.na(groupscolor[1])) {
+    cor.classe <- groupscolor
+  }
+  else { cor.classe <- c("red") }
+  
   for (i in 1:length(MFA$mtxEFG)) {
+    
+    if (!is.na(groupscolor[1])) {
+      cor1 <- ifelse(color, cor.classe[i], "black")
+    }
+    else { cor1 <- ifelse(color, cor + i - 1, "black") }
+    
     if (namarr==FALSE) 
-       points(MFA$mtxEFG[[i]][Observ,1:2], pch = (2 + ifelse(color,i,0)), cex = 1.2, col = 1 + ifelse(color,i,0)) # adiciona ao grafico as coordenadas principais dos Grupos
+       points(MFA$mtxEFG[[i]][Observ,1:2], pch = (2 + ifelse(color,i,0)), cex = 1.2, col = cor1, lwd = size) # adiciona ao grafico as coordenadas principais dos Grupos
     else
-      LocLab(MFA$mtxEFG[[i]][Observ,1:2],NameGroups[i], col = 1 + ifelse(color,i,0)) # Coloca os nomes dos pontos das coordenadas principais dos Grupos
+       LocLab(MFA$mtxEFG[[i]][Observ,1:2], NameGroups[i], col = cor1, lwd = size) # Coloca os nomes dos pontos das coordenadas principais dos Grupos
+    
+    segments(MFA$mtxF[Observ,1], MFA$mtxF[Observ,2], MFA$mtxEFG[[i]][Observ,1], MFA$mtxEFG[[i]][Observ,2], 
+             lty = i, col = cor1, lwd = size)
   }
   
-  ## liga os pontos de cada Analise Global com cada ponto da Analise por Grupo
-  for (j in 1:length(MFA$mtxEFG)) 
-     segments(MFA$mtxF[Observ,1], MFA$mtxF[Observ,2], MFA$mtxEFG[[j]][Observ,1], MFA$mtxEFG[[j]][Observ,2], lty = cor + j, col = ifelse(color,cor + j,cor), lwd=1.5)
+  if (color) {
+     if (!is.na(groupscolor[1])) {
+        color_b <- groupscolor
+     }
+     else { color_b <- cor:(cor + NumGroups) }
+   }
+   else { color_b <- cor }
   
   if (namarr==FALSE)
-     legend(posleg, NameGroups, lty = (cor+1):(cor+NumGroups), col = color_b, text.col = color_b,
+     legend(posleg, NameGroups, lty = cor:(cor+NumGroups), col = color_b, text.col = color_b,
             bty=boxleg, text.font = 6, y.intersp = 0.9, xpd = TRUE) # cria a legenda
+  
   ##### FIM - Plotagem de Analise por Grupo Juntamento com a Analise Global #####
   
   if (casc) dev.new() # efeito cascata na apresentacao dos graficos
@@ -259,29 +279,34 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   
   symbols(0, 0, circles = 1, inches = FALSE, fg = 1, add = TRUE) # cria um circulo
   
-  abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
+  abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
   j <- 1         # coluna inicial do Grupo de variaveis
   k <- Groups[1] # coluna final do Grupo de variaveis
   for (i in 1:NumGroups) {  # foi necessario criar este for para poder colocar cores diferentes para cada Grupo de variaveis
     
-    arrows(0,0,MFA$mtxCCP[1,j:k],MFA$mtxCCP[2,j:k], lty=i, code = 2, angle = 10, col = ifelse(color,cor + i,cor)) # cria a seta apontando para cada coordenada principal
+    if (!is.na(groupscolor[1])) {
+       cor1 <- ifelse(color, cor.classe[i], "black")
+    }
+    else { cor1 <- ifelse(color, cor + i - 1, "black") }
+    
+    arrows(0,0,MFA$mtxCCP[1,j:k],MFA$mtxCCP[2,j:k], lty = i, code = 2, angle = 10, col = cor1, lwd = size) # cria a seta apontando para cada coordenada principal
     
     if (is.na(colnames(MFA$mtxCCP[,j:k]))[1])
       NomeVar<- paste("Comp.", 1:Groups[i], sep = "") # Nomeia as colunas
     else
       NomeVar<- colnames(MFA$mtxCCP[,j:k])
     
-    LocLab(t(MFA$mtxCCP[,j:k]), NomeVar, col = ifelse(color,cor + i,cor)) # Coloca os nomes dos pontos das coordenadas principais
+    LocLab(t(MFA$mtxCCP[,j:k]), NomeVar, col = cor1) # Coloca os nomes dos pontos das coordenadas principais
  
     j <- j + Groups[i]  # coluna inicial do Grupo de variaveis
     
-    k <- k + Groups[i+ifelse(i!=NumGroups,1,0)]  # coluna final do Grupo de variaveis  
+    k <- k + Groups[i + ifelse(i != NumGroups,1,0)]  # coluna final do Grupo de variaveis  
     
   }
   
   legend(posleg, NameGroups, lty = cor:(cor+NumGroups), col = color_b, text.col = color_b,
-         bty=boxleg, text.font = 6, y.intersp = 0.9, xpd = TRUE) # cria a legenda
+         bty = boxleg, text.font = 6, y.intersp = 0.9, xpd = TRUE) # cria a legenda
   ##### FIM - Plotagem das Correlacoes dos Componentes Principais com as Variaveis Originais #####
   
   if (casc) dev.new() # efeito cascata na apresentacao dos graficos
@@ -297,7 +322,6 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
        ylab = ylabel, # Nomeia Eixo Y
        type = "n",    # nao plota pontos
        main = titles[4], # Titulo
-       # asp  = 1,         # Aspecto do grafico
        xlim = c(VlrMinX,VlrMaxX), # Dimensao para as linhas do grafico
        ylim = c(VlrMinY,VlrMaxY)) # Dimensao para as colunas do grafico
 
@@ -318,7 +342,7 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
          cex = size,    # Tamanho dos pontos  
          col = color_a) # Cor dos pontos
     
-  abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
+  abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
   LocLab(MFA$mtxEV[,1:2],rownames(MFA$mtxEV))  # Coloca os nomes dos pontos das coordenadas principais das linhas
   ##### FIM - Plotagem das Inercias Parciais/Escores das Variareis #####

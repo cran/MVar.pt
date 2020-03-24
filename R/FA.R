@@ -89,8 +89,12 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
       
       # Encontrando a Matriz de Decomposicao Expectral
       MAV <- eigen(MC) # Encontra a matriz de autovalor e autovetor
-      MAutoVlr <- MAV$values  # Matriz de Autovalores 
+      MAutoVlr <- MAV$values  # Matriz de Autovalores
       MAutoVec <- MAV$vectors # Matriz de Autovetores
+      
+      # MAV <- svd(MC) # Encontra a matriz de autovalor e autovetor
+      # MAutoVlr <- MAV$d # Matriz de Autovalores
+      # MAutoVec <- MAV$v # Matriz de Autovetores
   
       Gama = MAutoVec%*%diag(sqrt(abs(MAutoVlr)),nrow(MC),ncol(MC)) # Matriz de Cargas Fatoriais
       if (rotation != "NONE") {
@@ -122,7 +126,7 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
       # Matriz com todos os resultados associados
       Result <- as.matrix(cbind(Gama[,1:nfactor],Comun,Psi))
       Result <- rbind(Result,t(rbind(as.matrix(MEigen[1:nfactor,1]),sum(Comun),NA)))
-      Result <- rbind(Result,t(rbind(as.matrix(MEigen[1:nfactor,2]/100),MEigen[nfactor,3]/100,NA)))
+      Result <- rbind(Result,t(rbind(as.matrix(MEigen[1:nfactor,2]),MEigen[nfactor,3],NA)))
       colnames(Result) <- c(paste("Carga Fator",1:nfactor),"Comunalidade","Variancias especificas")
       rownames(Result) <- c(colnames(data),"Variancia","% Variancia")
       
@@ -133,12 +137,16 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
       Psi0 <- (solve(diag(diag(solve(MC))))) # Encontrando a Matriz Psi
 
       Sr <- MC - Psi0 # Encontrando a Matriz Sr
-
+      
       # Encontrando a Matriz de Decomposicao Expectral
-      MAV <- eigen(Sr) # Encontra a matriz de autovalor e autovetor
-      MAutoVlr <- MAV$values  # Matriz de Autovalores 
-      MAutoVec <- MAV$vectors # Matriz de Autovetores
+      # MAV <- eigen(Sr) # Encontra a matriz de autovalor e autovetor
+      # MAutoVlr <- MAV$values  # Matriz de Autovalores 
+      # MAutoVec <- MAV$vectors # Matriz de Autovetores
 
+      MAV <- svd(Sr) # Encontra a matriz de autovalor e autovetor
+      MAutoVlr <- MAV$d  # Matriz de Autovalores 
+      MAutoVec <- MAV$v # Matriz de Autovetores
+      
       Gama = MAutoVec%*%diag(sqrt(abs(MAutoVlr)),nrow(MC),ncol(MC)) # Matriz de Cargas Fatoriais
       if (rotation != "NONE") {
          Gama <- Rotacao(Gama,rotation)
@@ -174,10 +182,16 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
       MEigen[, "% da variancia"] <- (MAutoVlr/sum(MAutoVlr)) * 100
       MEigen[, "% acumulada da variancia"] <- cumsum(MEigen[,"% da variancia"])
       
-      # Matriz com todos os resultados associados
+      # # Matriz com todos os resultados associados
+      # Result <- as.matrix(cbind(Gama[,1:nfactor],Comun,Psi))
+      # Result <- rbind(Result,t(rbind(as.matrix(MEigen[1:nfactor,1]),sum(Comun),NA)))
+      # Result <- rbind(Result,t(rbind(as.matrix(MEigen[1:nfactor,2]),MEigen[nfactor,3],NA)))
+      # colnames(Result) <- c(paste("Carga Fator",1:nfactor),"Comunalidade","Variancias especificas")
+      # rownames(Result) <- c(colnames(data),"Variancia","% Variancia")
+      
       Result <- as.matrix(cbind(Gama[,1:nfactor],Comun,Psi))
       Result <- rbind(Result,t(rbind(as.matrix(MEigen[1:nfactor,1]),sum(Comun),NA)))
-      Result <- rbind(Result,t(rbind(as.matrix(MEigen[1:nfactor,2]/100),MEigen[nfactor,3]/100,NA)))
+      Result <- rbind(Result,t(rbind(as.matrix(MEigen[1:nfactor,2]),MEigen[nfactor,3],NA)))
       colnames(Result) <- c(paste("Carga Fator",1:nfactor),"Comunalidade","Variancias especificas")
       rownames(Result) <- c(colnames(data),"Variancia","% Variancia")
    }
@@ -188,9 +202,13 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
       MC <- (n-ncol(data))/n*MC  # Matriz de Covariancia/Correlacao Maximizada para o teste
       
       # Encontrando a Matriz de Decomposicao Expectral
-      MAV <- eigen(MC) # Encontra a matriz de autovalor e autovetor
-      MAutoVlr <- MAV$values  # Matriz de Autovalores 
-      MAutoVec <- MAV$vectors # Matriz de Autovetores
+      # MAV <- eigen(MC) # Encontra a matriz de autovalor e autovetor
+      # MAutoVlr <- MAV$values  # Matriz de Autovalores 
+      # MAutoVec <- MAV$vectors # Matriz de Autovetores
+
+      MAV <- svd(MC) # Encontra a matriz de autovalor e autovetor
+      MAutoVlr <- MAV$d  # Matriz de Autovalores 
+      MAutoVec <- MAV$v # Matriz de Autovetores
 
       Gama = MAutoVec%*%diag(sqrt(abs(MAutoVlr)),nrow(MC),ncol(MC)) # Matriz de Cargas Fatoriais para Inicializacao da iteracao
 
@@ -264,7 +282,7 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
       # Matriz com todos os resultados associados
       Result <- as.matrix(cbind(Gama[,1:nfactor],Comun,Psi))
       Result <- rbind(Result,t(rbind(as.matrix(MEigen[1:nfactor,1]),sum(Comun),NA)))
-      Result <- rbind(Result,t(rbind(as.matrix(MEigen[1:nfactor,2]/100),MEigen[nfactor,3]/100,NA)))
+      Result <- rbind(Result,t(rbind(as.matrix(MEigen[1:nfactor,2]),MEigen[nfactor,3],NA)))
       colnames(Result) <- c(paste("Carga Fator",1:nfactor),"Comunalidade","Variancias especificas")
       rownames(Result) <- c(colnames(data),"Variancia","% Variancia")  
       
@@ -346,7 +364,7 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
    colnames(Scores) <- colnames(Gama)
    rownames(Scores) <- rownames(data)
    ### FIM - encontrar os scores das observacoes ###  
-   
+ 
    ### INCIO - encontra scores dos coeficientes ###
    CoefScore <- t(MASS::ginv(t(Gama)%*%MASS::ginv(diag(Psi))%*%Gama)%*%t(Gama)%*%MASS::ginv(diag(Psi)))
    colnames(CoefScore) <- paste("Fator", 1:ncol(CoefScore))

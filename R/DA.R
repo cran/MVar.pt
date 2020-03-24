@@ -1,4 +1,4 @@
-DA <- function(data, class = NA, type = "lda", validation = "Learning", 
+DA <- function(data, class = NA, type = "lda", validation = "learning", 
                method = "moment", prior = NA, testing = NA) {
 
   # Esta funcao executa a Analide discriminante linear e quadratica

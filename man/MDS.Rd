@@ -9,7 +9,7 @@
 \usage{MDS(data, distance = "euclidean", title = NA, xlabel = NA,  
     ylabel = NA, posleg = 2, boxleg = TRUE, axes = TRUE, 
     size = 1.1, grid = TRUE, color = TRUE, linlab = NA, 
-    class = NA)}
+    class = NA, classcolor = NA)}
 
 \arguments{
   \item{data}{Dados a serem analizados.}
@@ -29,6 +29,7 @@
   \item{color}{Graficos coloridos (default = TRUE).}
   \item{linlab}{Vetor com os rotulos para as observacoes.}
   \item{class}{Vetor com os nomes das classes dos dados.}
+  \item{classcolor}{Vetor com as cores das classes.}
 }
 
 \value{{Grafico de escalonamento multidimensional.}
@@ -55,8 +56,8 @@ data <- iris[,1:4]
 cls <- iris[,5] # classe dos dados
 
 MD <- MDS(data = data, distance = "euclidean", title = NA, xlabel = NA,  
-          ylabel = NA, posleg = 2, boxleg = TRUE, axes = TRUE, 
-          color = TRUE, linlab = NA, class = cls)
+          ylabel = NA, posleg = 2, boxleg = TRUE, axes = TRUE, color = TRUE,  
+          linlab = NA, class = cls, classcolor = c("goldenrod3","gray53","red"))
 
 print("Matriz das distancias:"); MD$mtxD
 }

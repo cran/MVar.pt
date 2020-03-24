@@ -39,18 +39,19 @@ Plot.FA <- function(FA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   if (!is.logical(color))
      stop("Entrada para 'color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  if (!is.na(linlab[1]) && length(linlab)!=nrow(FA$mtxscores))
+  if (!is.na(linlab[1]) && length(linlab) != nrow(FA$mtxscores))
      stop("O numero elementos do rotulo para linhas 'linlab' difere do numero de linhas da base de dados. Verifique!")
   
   if (!is.logical(casc))
      stop("Entrada para 'casc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
   if (is.na(xlabel[1]))
-     xlabel = "Primeiro fator"
+     xlabel = paste("Primeiro fator (", round(FA$mtxvar[1,2],2),"%)",sep="")
   
   if (is.na(ylabel[1]))
-     ylabel = "Segundo fator"
+     ylabel = paste("Segundo fator (", round(FA$mtxvar[2,2],2),"%)",sep="")
   
+
   #####   FIM - Informacoes usadas nos Graficos  #####
   
   if (casc) dev.new() # efeito cascata na apresentacao dos graficos

@@ -1,7 +1,7 @@
 MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
                 ylabel = NA, posleg = 2, boxleg = TRUE, axes = TRUE, 
                 size = 1.1, grid = TRUE, color = TRUE, linlab = NA, 
-                class = NA) {
+                class = NA, classcolor = NA) {
   
   # Esta funcao executa a Escalonamento Multidimensional
   # desenvolvida por Paulo Cesar Ossani em 07/2016
@@ -25,6 +25,7 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
   # color  - Graficos coloridos (default = TRUE).
   # linlab - Vetor com os rotulos para as observacoes. 
   # class  - Vetor com os nomes das classes dos dados.
+  # classcolor - Vetor com as cores das classes.
   
   # Retorna:
   # Grafico de escalonamento multidimensional.
@@ -107,6 +108,10 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
      NomeLinhas  <- as.matrix(class)
   } 
 
+  if (Num.class != 0 && length(classcolor) != Num.class && !is.na(classcolor) ||
+      Num.class == 0 && length(classcolor) != 1 && !is.na(classcolor))
+     stop("Entrada para 'classcolor' esta incorreta, deve ser em quantidade igual ao numero de classes em 'class'. Verifique!")
+  
   cor <- 1 # cor inicial dos pontos e legendas
   ##### FIM - Informacoes usadas nos Graficos #####
   
@@ -117,14 +122,18 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
   x <- fit[,1] # valores eixo x
   y <- fit[,2] # valores eixo y
   
+  if (!is.na(classcolor[1])) {
+     cor.classe <- classcolor
+  }
+  else { cor.classe <- c("red") }
+  
   if (Num.class == 0) {
     
     plot(x,y, # cria grafico para as coordenadas linhas x e colunas y
          xlab = xlabel, # Nomeia Eixo X
          ylab = ylabel, # Nomeia Eixo Y
-         type = "n", # tipo de grafico  
+         type = "n",    # tipo de grafico  
          main = title,  # Titulo
-         # asp  = 1,  # Aspecto do Grafico
          xlim = c(min(x)-0.5,max(x)+0.5), # Dimensao para as linhas do grafico
          ylim = c(min(y)-0.5,max(y)+0.5)) # Dimensao para as colunas do grafico
 
@@ -141,9 +150,9 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
     }
     
     points(x,y, # cria grafico para as coordenadas linhas x e colunas y
-           pch = 19, # Formato dos pontos 
-           cex = size,  # Tamanho dos pontos  
-           col = ifelse(color,"red","black"))  # Cor dos pontos
+           pch = 19,   # Formato dos pontos 
+           cex = size, # tamanho dos pontos         
+           col = ifelse(color, cor.classe, "Black"))
       
   } else {
     
@@ -151,8 +160,7 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
          xlab = xlabel, # Nomeia Eixo X
          ylab = ylabel, # Nomeia Eixo Y
          main = title,  # Titulo
-         # asp  = 1,   # Aspecto do Grafico
-         type = "n", # nao plota pontos
+         type = "n",    # nao plota pontos
          xlim = c(min(x)-0.5,max(x)+0.5), # Dimensao para as linhas do grafico
          ylim = c(min(y)-0.5,max(y)+0.5), # Dimensao para as colunas do grafico
          col  = ifelse(color,"red","black"))  # Cor dos pontos
@@ -177,7 +185,10 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
       
       Point.Form <- Init.Form + i # fomato dos pontos de cada classe
       
-      cor1 <- ifelse(color, cor + i, "black")
+      if (!is.na(classcolor[1])) {
+         cor1 <- ifelse(color, cor.classe[i], "black")
+      }
+      else { cor1 <- ifelse(color, cor + i, "black") }
  
       Point.data <- Newdata[which(class == class.Names[i]),]
 
@@ -195,9 +206,15 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
     
      Init.Form <- 15
     
-     color_b <- cor # colore as letras das legendas e suas representacoes no grafico
-    
-     if (color) color_b = cor:(cor + Num.class)
+     cor <- ifelse(color, 2, 1)
+     
+     if (color) {
+        if (!is.na(classcolor[1])) {
+          color_b <- classcolor
+        }
+        else { color_b <- cor:(cor + Num.class) }
+     }
+     else { color_b <- cor }
     
      legend(posleg, class.Names, pch = (Init.Form):(Init.Form + Num.class), col = color_b,
             text.col = color_b, bty = boxleg, text.font = 6, y.intersp = 0.8, xpd = TRUE) # cria a legenda

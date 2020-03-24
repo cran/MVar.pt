@@ -8,8 +8,8 @@
 
 \usage{Biplot(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
        size = 1.1, grid = TRUE, color = TRUE, var = TRUE,
-       obs = TRUE, linlab = NA, class = NA, posleg = 2,
-       boxleg = TRUE, axes = TRUE)}
+       obs = TRUE, linlab = NA, class = NA, classcolor = NA,
+       posleg = 2, boxleg = TRUE, axes = TRUE)}
 
 \arguments{
 \item{data}{Dados para plotagem.}
@@ -26,6 +26,7 @@
 \item{obs}{Acrescenta as observacoes ao grafico (default = TRUE).}
 \item{linlab}{Vetor com os rotulos para as observacoes.}
 \item{class}{Vetor com os nomes das classes dos dados.}
+\item{classcolor}{Vetor com as cores das classes.}
 \item{posleg}{0 sem legenda,\cr
               1 para legenda no canto superior esquerdo,\cr
               2 para legenda no canto superior direito (default),\cr
@@ -65,7 +66,8 @@ Biplot(data)
 
 cls <- iris[,5]
 res <- Biplot(data, alpha = 0.6, title = "Biplot dos Dados\n valorizando os individuos",
-              class = cls, posleg = 2, boxleg = FALSE, axes = TRUE)
+              class = cls, classcolor = c("goldenrod3","gray56","red"),
+              posleg = 2, boxleg = FALSE, axes = TRUE)
 print(res$pvar)
 
 

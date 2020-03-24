@@ -8,8 +8,9 @@
 
 \usage{GrandTour(data, method = "Interpolation", title = NA, xlabel = NA, 
           ylabel = NA, size = 1.1, grid = TRUE, color = TRUE, linlab = NA, 
-          class = NA, posleg = 2, boxleg = TRUE, axesvar = TRUE, axes = TRUE, 
-          numrot = 200, choicerot = NA, savepicture = FALSE)}
+          class = NA, classcolor = NA, posleg = 2, boxleg = TRUE,  
+          axesvar = TRUE, axes = TRUE, numrot = 200, choicerot = NA, 
+          savepicture = FALSE)}
 
 \arguments{
 \item{data    }{Conjunto de dados numericos.}
@@ -25,6 +26,7 @@
 \item{color}{Graficos coloridos (default = TRUE).}
 \item{linlab}{Vetor com os rotulos para as observacoes.}
 \item{class}{Vetor com os nomes das classes dos dados.}
+\item{classcolor}{Vetor com as cores das classes.}
 \item{posleg}{0 sem legenda,\cr
               1 para legenda no canto superior esquerdo,\cr
               2 para legenda no canto superior direito (default),\cr
@@ -82,10 +84,10 @@ print("Metodo da projecao Grand Tour:"); Res$method
 
           
 Res <- GrandTour(iris[,1:4], method = "Interpolation", title = NA, xlabel = NA, ylabel = NA,
-                 color = TRUE, linlab = NA, class = iris[,5], posleg = 2, boxleg = FALSE, 
-                 axesvar = FALSE, axes = FALSE, numrot = 10, choicerot = NA,
-                 savepicture = FALSE)
-          
+                 color = TRUE, linlab = NA, posleg = 2, boxleg = FALSE, axesvar = FALSE, 
+                 axes = FALSE, numrot = 10, choicerot = NA, class = iris[,5],
+                 classcolor = c("goldenrod3","gray53","red"), savepicture = FALSE)
+         
 print("Dados projetados:"); Res$proj.data
 print("Vetores de projecao:"); Res$vector.opt
 print("Metodo da projecao Grand Tour:"); Res$method
