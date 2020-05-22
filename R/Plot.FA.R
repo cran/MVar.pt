@@ -51,7 +51,6 @@ Plot.FA <- function(FA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   if (is.na(ylabel[1]))
      ylabel = paste("Segundo fator (", round(FA$mtxvar[2,2],2),"%)",sep="")
   
-
   #####   FIM - Informacoes usadas nos Graficos  #####
   
   if (casc) dev.new() # efeito cascata na apresentacao dos graficos
@@ -68,7 +67,10 @@ Plot.FA <- function(FA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
        type = "n", # nao plota pontos
        xlab = "Ordem dos Fatores", 
        ylab = "Variancia",
-       main = titles[1])  
+       xaxt = "n", # tira o eixo x
+       main = titles[1])
+  
+  axis(1, c(1:length(FA$mtxvar[,1])), c(1:length(FA$mtxvar[,1])))
   
   if (grid) {
     

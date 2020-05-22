@@ -55,7 +55,10 @@ Plot.CCA <- function(CCA, titles = NA, xlabel = NA, ylabel = NA,
        type = "n", # nao plota pontos
        xlab = "Ordem dos pares canonicos", 
        ylab = "Variancias dos pares canonicos",
+       xaxt = "n", # tira o eixo x
        main = titles[1])
+  
+  axis(1, c(1:length(CCA$var.UV[,1])), c(1:length(CCA$var.UV[,1])))
   
   if (grid) {
     

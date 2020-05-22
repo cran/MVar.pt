@@ -68,7 +68,10 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
        type = "n", # nao plota pontos
        xlab = "Ordem dos componentes", 
        ylab = "Variancia",
+       xaxt = "n", # tira o eixo x
        main = titles[1])
+  
+  axis(1, c(1:length(CA$mtxAutvlr[,1])), c(1:length(CA$mtxAutvlr[,1])))
 
   if (grid) {
     

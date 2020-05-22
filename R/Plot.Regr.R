@@ -103,6 +103,8 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
         if (is.na(title[1]))
            title = c("Grafico da regressao linear")
         
+        Y <- Reg$Y
+        
         X <- as.numeric(X)
         
         if (Reg$intercepts) Modelo <- lm(Y~X) else Modelo <- lm(Y~-1+X)

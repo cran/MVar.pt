@@ -111,7 +111,10 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
        type = "n", # nao plota pontos
        xlab = "Ordem dos componentes", 
        ylab = "Variancia",
+       xaxt = "n", # tira o eixo x
        main = titles[1])
+  
+  axis(1, c(1:length(MFA$mtxA[,1])), c(1:length(MFA$mtxA[,1])))
   
   if (grid) {
     

@@ -277,10 +277,10 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
        
      } else {
        
-        maxX = length(Data[,1])
         minX = 5
-        maxY = max(Data[, 1])
-        minY = min(Data[, 1])
+        maxX = length(Data[,1]) + minX
+        maxY = max(Data[, 1]) 
+        minY = min(Data[, 1]) 
         
         Init.Form <- 15 # formato inicial dos pontos
         
