@@ -10,7 +10,8 @@
           ylabel = NA, size = 1.1, grid = TRUE, color = TRUE, linlab = NA, 
           class = NA, classcolor = NA, posleg = 2, boxleg = TRUE,  
           axesvar = TRUE, axes = TRUE, numrot = 200, choicerot = NA, 
-          savepicture = FALSE)}
+          savptc = FALSE, width = 3236, height = 2000, res = 300)}
+
 
 \arguments{
 \item{data    }{Conjunto de dados numericos.}
@@ -36,8 +37,11 @@
 \item{axesvar }{Coloca eixos de rotacao das variaveis (default = TRUE).}
 \item{axes    }{Plota os eixos X e Y (default = TRUE).}
 \item{numrot  }{Numero de rotacoes (default = 200). Se method = "Interpolation", numrot representara o angulo de rotacao.}
-\item{choicerot }{Escolhe rotacao especifica e apresenta na tela, ou salva a imagem se savepicture = TRUE.}
-\item{savepicture}{Salva as imagens dos graficos em arquivos (default = FALSE).}          
+\item{choicerot }{Escolhe rotacao especifica e apresenta na tela, ou salva a imagem se savptc = TRUE.}
+\item{savptc}{Salva as imagens dos graficos em arquivos (default = FALSE).}   
+\item{width}{Largura do grafico quanto savptc = TRUE (defaul = 3236).}
+\item{height}{Altura do grafico quanto savptc = TRUE (default = 2000).}
+\item{res}{Resolucao nominal em ppi do grafico quanto savptc = TRUE (default = 300).}
 }
 
 \value{{Graficos com as rotacoes.}
@@ -73,24 +77,25 @@ Marcelo Angelo Cirillo
 \examples{
 data(iris) # conjunto de dados
 
-Res <- GrandTour(iris[,1:4], method = "Torus", title = NA, xlabel = NA, ylabel = NA,
+res <- GrandTour(iris[,1:4], method = "Torus", title = NA, xlabel = NA, ylabel = NA,
                  color = TRUE, linlab = NA, class = NA, posleg = 2, boxleg = TRUE, 
                  axesvar = TRUE, axes = FALSE, numrot = 10, choicerot = NA,
-                 savepicture = FALSE)
+                 savptc = FALSE, width = 3236, height = 2000, res = 300)
 
-print("Dados projetados:"); Res$proj.data
-print("Vetores de projecao:"); Res$vector.opt
-print("Metodo da projecao Grand Tour:"); Res$method
+print("Dados projetados:"); res$proj.data
+print("Vetores de projecao:"); res$vector.opt
+print("Metodo da projecao Grand Tour:"); res$method
 
           
-Res <- GrandTour(iris[,1:4], method = "Interpolation", title = NA, xlabel = NA, ylabel = NA,
+res <- GrandTour(iris[,1:4], method = "Interpolation", title = NA, xlabel = NA, ylabel = NA,
                  color = TRUE, linlab = NA, posleg = 2, boxleg = FALSE, axesvar = FALSE, 
                  axes = FALSE, numrot = 10, choicerot = NA, class = iris[,5],
-                 classcolor = c("goldenrod3","gray53","red"), savepicture = FALSE)
+                 classcolor = c("goldenrod3","gray53","red"), savptc = FALSE, 
+                 width = 3236, height = 2000, res = 300)
          
-print("Dados projetados:"); Res$proj.data
-print("Vetores de projecao:"); Res$vector.opt
-print("Metodo da projecao Grand Tour:"); Res$method
+print("Dados projetados:"); res$proj.data
+print("Vetores de projecao:"); res$vector.opt
+print("Metodo da projecao Grand Tour:"); res$method
 
 }
 

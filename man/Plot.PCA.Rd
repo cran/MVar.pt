@@ -8,6 +8,7 @@
 
 \usage{Plot.PCA(PC, titles = NA, xlabel = NA, ylabel = NA,
          size = 1.1, grid = TRUE, color = TRUE, linlab = NA, 
+         savptc = FALSE, width = 3236, height = 2000, res = 300,
          casc = TRUE)}
 
 \arguments{
@@ -19,6 +20,10 @@
 \item{grid}{Coloca grade nos graficos (default = TRUE).}
 \item{color}{Graficos coloridos (default = TRUE).}
 \item{linlab}{Vetor com os rotulos para as observacoes.}
+\item{savptc}{Salva as imagens dos graficos em arquivos (default = FALSE).}   
+\item{width}{Largura do grafico quanto savptc = TRUE (defaul = 3236).}
+\item{height}{Altura do grafico quanto savptc = TRUE (default = 2000).}
+\item{res}{Resolucao nominal em ppi do grafico quanto savptc = TRUE (default = 300).}
 \item{casc}{Efeito cascata na apresentacao dos graficos (default = TRUE).}
 }
 
@@ -35,16 +40,18 @@ Marcelo Angelo Cirillo
 \examples{
 data(DataQuan) # conjunto de dados quantitativos
 
-Data <- DataQuan[,2:8]
+data <- DataQuan[,2:8]
 
-rownames(Data) <- DataQuan[1:nrow(DataQuan),1]
+rownames(data) <- DataQuan[1:nrow(DataQuan),1]
 
-PC <- PCA(Data, 2) # executa o PCA
+pc <- PCA(data, 2) # executa o PCA
 
-Tit = c("Scree-plot","Grafico das Observacoes","Circulo de Correlacoes")
+tit <- c("Scree-plot","Grafico das Observacoes","Circulo de Correlacoes")
 
-Plot.PCA(PC, titles = Tit, xlabel = NA, ylabel = NA,
-         color = TRUE, linlab = NA, casc = TRUE)
+Plot.PCA(PC = pc, titles = tit, xlabel = NA, ylabel = NA,
+         color = TRUE, linlab = NA, savptc = FALSE, 
+         width = 3236, height = 2000, res = 300, 
+         casc = TRUE)
 }
 
 \keyword{Analise de componentes principais}

@@ -8,7 +8,8 @@
 
 \usage{Plot.CA(CA, titles = NA, xlabel = NA, ylabel = NA,
         size = 1.1, grid = TRUE, color = TRUE, linlab = NA, 
-        casc = TRUE)}
+        savptc = FALSE, width = 3236, height = 2000, 
+        res = 300, casc = TRUE)}
 
 \arguments{
 \item{CA}{Dados da funcao CA.}
@@ -19,6 +20,10 @@
 \item{grid}{Coloca grade nos graficos (default = TRUE).}
 \item{color}{Graficos coloridos (default = TRUE).}
 \item{linlab}{Vetor com os rotulos para as observacoes.}
+\item{savptc}{Salva as imagens dos graficos em arquivos (default = FALSE).}   
+\item{width}{Largura do grafico quanto savptc = TRUE (defaul = 3236).}
+\item{height}{Altura do grafico quanto savptc = TRUE (default = 2000).}
+\item{res}{Resolucaoo nominal em ppi do grafico quanto savptc = TRUE (default = 300).}
 \item{casc}{Efeito cascata na apresentacao dos graficos (default = TRUE).}
 }
 
@@ -35,28 +40,31 @@ Marcelo Angelo Cirillo
 \examples{
 data(DataFreq) # conjunto de dados de frequencia
 
-Data <- DataFreq[,2:ncol(DataFreq)]
+data <- DataFreq[,2:ncol(DataFreq)]
 
-rownames(Data) <- DataFreq[1:nrow(DataFreq),1]
+rownames(data) <- DataFreq[1:nrow(DataFreq),1]
 
-Resp <- CA(Data, "f") # realiza CA
+res <- CA(data, "f") # realiza CA
 
-Tit = c("Scree-plot","Observacoes", "Variaveis", "Observacoes/Variaveis")
+tit <- c("Scree-plot","Observacoes", "Variaveis", "Observacoes/Variaveis")
 
-Plot.CA(Resp, titles = Tit, xlabel = NA, ylabel = NA,
-        color = TRUE, linlab = rownames(Data), casc = FALSE)
+Plot.CA(res, titles = tit, xlabel = NA, ylabel = NA,
+        color = TRUE, linlab = rownames(data), savptc = FALSE,
+        width = 3236, height = 2000, res = 300, casc = FALSE)
 
 
 data(DataQuali) # conjunto de dados qualitativos
 
-Data <- DataQuali[,2:ncol(DataQuali)]
+data <- DataQuali[,2:ncol(DataQuali)]
 
-Resp <- CA(Data, "c", "b") # realiza CA
+res <- CA(data, "c", "b") # realiza CA
 
-Tit = c("","","Grafico das Variaveis")
+tit <- c("","","Grafico das Variaveis")
 
-Plot.CA(Resp, titles = Tit, xlabel = NA, ylabel = NA,
-        color = TRUE, linlab = NA, casc = FALSE)
+Plot.CA(res, titles = tit, xlabel = NA, ylabel = NA,
+        color = TRUE, linlab = NA, savptc = FALSE, 
+        width = 3236, height = 2000, res = 300,
+        casc = FALSE)
 
 }
 

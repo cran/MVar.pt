@@ -1,6 +1,7 @@
 Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2, 
                     boxleg = TRUE, size = 1.1, grid = TRUE, color = TRUE, 
-                    classcolor = NA, linlab = NA, axesvar = TRUE, axes = TRUE, 
+                    classcolor = NA, linlab = NA, axesvar = TRUE, axes = TRUE,
+                    savptc = FALSE, width = 3236, height = 2000, res = 300, 
                     casc = TRUE) {
   
   # Rotina para plotar graficos da Projecao Pursuit desenvolvida 
@@ -24,6 +25,10 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   # linlab   - Vetor com os rotulos das observacoes.
   # axesvar  - Coloca eixos de rotacao das variaveis, somente quando DimProj > 1 (default = TRUE).
   # axes     - Plot os eixos X e Y (default = TRUE).
+  # savptc   - Salva as imagens dos graficos em arquivos (default = FALSE).
+  # width    - Largura do grafico quanto savptc = TRUE (defaul = 3236).
+  # height   - Altura do grafico quanto savptc = TRUE (default = 2000).
+  # res      - Resolucao nominal em ppi do grafico quanto savptc = TRUE (default = 300).
   # casc     - Efeito cascata na apresentacao dos graficos (default = TRUE).
   
   # Retorna:
@@ -62,10 +67,27 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
 
   if (is.na(PP$findex[1])) PP$findex <- "Not Available"
   
-  if (!is.logical(casc))
+  if (!is.logical(savptc))
+     stop("Entrada para 'savptc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  
+  if (!is.numeric(width) || width <= 0)
+     stop("Entrada para 'width' esta incorreta, deve ser numerica e maior que zero. Verifique!")
+  
+  if (!is.numeric(height) || height <= 0)
+     stop("Entrada para 'height' esta incorreta, deve ser numerica e maior que zero. Verifique!")
+  
+  if (!is.numeric(res) || res <= 0)
+     stop("Entrada para 'res' esta incorreta, deve ser numerica e maior que zero. Verifique!")
+  
+  if (!is.logical(casc && !savptc))
      stop("Entrada para 'casc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
   ##### INICIO - Informacoes usadas nos Graficos #####
+  
+  if (savptc) {
+     cat("\014") # limpa a tela
+     cat("\n\n Salvando graficos em disco. Aguarde o termino!")
+  }
   
   if (is.na(xlabel[1]))
      xlabel = "Eixo X" 
@@ -107,12 +129,13 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   if (!is.character(titles[2]) || is.na(titles[2])) titles[2] = paste("Funcao indice:", PP$findex)
 
   #### INICIO - Plota os indices das projecoes ####
+  if (savptc) png(filename = paste("Figure PP Index -",PP$findex[1],".png"), width = width, height = height, res = res) # salva os graficos em arquivo
   
   linCol <- c('blue') # cor da funcao plotada
   
   Cood.xy = round(PP$index,4)
   
-  if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+  if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   plot(Cood.xy,
        xlab = "Simulacao",
@@ -136,9 +159,12 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   }
   
   lines(Cood.xy, col = linCol)
+  
+  if (savptc) { box(col = 'white'); dev.off() }
   #### FIM - Plota os indices das projecoes ####
-
-
+  
+  if (savptc) png(filename = paste("Figure PP Projetions -",PP$findex[1],".png"), width = width, height = height, res = res) # salva os graficos em arquivo
+  
   #### Plotas as projecoes 2D
   if (ncol(Data) == 2) {
     
@@ -147,7 +173,7 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
      maxY = max(Data[,2], PP$vector.opt[,2])
      minY = min(Data[,2], PP$vector.opt[,2])
     
-     if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+     if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
      
      if (!is.na(classcolor[1])) {
         cor.classe <- classcolor
@@ -233,14 +259,14 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
        Init.Form <- 15
 
      }
-     
+
   }
   
   
   #### Plotas as projecoes 1D
   if (ncol(Data) == 1) {  
     
-     if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+     if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
 
      if (num.class == 0) {
                
@@ -370,4 +396,10 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
     
   }
   
+  if (savptc) { 
+     box(col = 'white')
+     dev.off() 
+     cat("\n \n Fim!")
+  }
+
 }

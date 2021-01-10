@@ -9,7 +9,8 @@
 \usage{Biplot(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
        size = 1.1, grid = TRUE, color = TRUE, var = TRUE,
        obs = TRUE, linlab = NA, class = NA, classcolor = NA,
-       posleg = 2, boxleg = TRUE, axes = TRUE)}
+       posleg = 2, boxleg = TRUE, axes = TRUE, savptc = FALSE, 
+       width = 3236, height = 2000, res = 300)}
 
 \arguments{
 \item{data}{Dados para plotagem.}
@@ -34,6 +35,10 @@
               4 para legenda no canto inferior esquerdo.}
 \item{boxleg}{Coloca moldura na legenda (default = TRUE).}
 \item{axes    }{Plota os eixos X e Y (default = TRUE).}
+\item{savptc}{Salva as imagens dos graficos em arquivos (default = FALSE).}   
+\item{width}{Largura do grafico quanto savptc = TRUE (defaul = 3236).}
+\item{height}{Altura do grafico quanto savptc = TRUE (default = 2000).}
+\item{res}{Resolucao nominal em ppi do grafico quanto savptc = TRUE (default = 300).}
 }
 
 \value{
@@ -63,16 +68,18 @@ data <- iris[,1:4]
 
 Biplot(data)
 
-
 cls <- iris[,5]
+
 res <- Biplot(data, alpha = 0.6, title = "Biplot dos Dados\n valorizando os individuos",
               class = cls, classcolor = c("goldenrod3","gray56","red"),
-              posleg = 2, boxleg = FALSE, axes = TRUE)
+              posleg = 2, boxleg = FALSE, axes = TRUE, savptc = FALSE, 
+              width = 3236, height = 2000, res = 300)
 print(res$pvar)
 
 
 res <- Biplot(data, alpha = 0.4, title = "Grafico valorizando as variaveis",
-              xlabel = "", ylabel = "", color = FALSE, obs = FALSE) 
+              xlabel = "", ylabel = "", color = FALSE, obs = FALSE, 
+              savptc = FALSE, width = 3236, height = 2000, res = 300) 
 print(res$pvar)       
        
 }

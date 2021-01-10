@@ -8,7 +8,8 @@
 
 \usage{Plot.PP(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2, boxleg = TRUE,
         size = 1.1, grid = TRUE, color = TRUE, classcolor = NA, linlab = NA, 
-        axesvar = TRUE, axes = TRUE, casc = TRUE)}
+        axesvar = TRUE, axes = TRUE, savptc = FALSE, width = 3236, height = 2000, 
+        res = 300, casc = TRUE)}
  
 \arguments{
   \item{PP}{Dados da funcao PP_Optimizer.}
@@ -27,7 +28,11 @@
   \item{classcolor}{Vetor com as cores das classes.}
   \item{linlab}{Vetor com os rotulos para as observacoes.}
   \item{axesvar}{Coloca eixos de rotacao das variaveis, somente quando dimproj > 1 (default = TRUE).}
-  \item{axes}{Plota os eixos X e Y (default = TRUE). }
+  \item{axes}{Plota os eixos X e Y (default = TRUE).}
+  \item{savptc}{Salva as imagens dos graficos em arquivos (default = FALSE).}   
+  \item{width}{Largura do grafico quanto savptc = TRUE (defaul = 3236).}
+  \item{height}{Altura do grafico quanto savptc = TRUE (default = 2000).}
+  \item{res}{Resolucao nominal em ppi do grafico quanto savptc = TRUE (default = 300).}
   \item{casc}{Efeito cascata na apresentacao dos graficos (default = TRUE).}
 
 }
@@ -48,65 +53,69 @@ data(iris) # conjunto de dados
 # Exemplo 1 - Sem as classes nos dados
 data <- iris[,1:4]
 
-Fcindex <- "kurtosismax" # funcao indice
+findex <- "kurtosismax" # funcao indice
 
-Dim <- 1 # dimensao da projecao dos dados
+dim <- 1 # dimensao da projecao dos dados
 
 sphere <- TRUE # dados esfericos
 
-Res <- PP_Optimizer(data = data, class = NA, findex = Fcindex,
-                    optmethod = "GTSA", dimproj = Dim, sphere = sphere, 
+res <- PP_Optimizer(data = data, class = NA, findex = findex,
+                    optmethod = "GTSA", dimproj = dim, sphere = sphere, 
                     weight = TRUE, lambda = 0.1, r = 1, cooling = 0.9, 
                     eps = 1e-3, maxiter = 500, half = 30)
 
-Plot.PP(Res, titles = NA, posleg = 1, boxleg = FALSE, color = TRUE,
-        linlab = NA, axesvar = TRUE, axes = TRUE, casc = FALSE)
+Plot.PP(res, titles = NA, posleg = 1, boxleg = FALSE, color = TRUE,
+        linlab = NA, axesvar = TRUE, axes = TRUE, savptc = FALSE, 
+        width = 3236, height = 2000, res = 300, casc = FALSE)
 
 
 # Exemplo 2 - Com as classes nos dados
 class <- iris[,5] # classe dos dados
 
-Res <- PP_Optimizer(data = data, class = class, findex = Fcindex,
-                    optmethod = "GTSA", dimproj = Dim, sphere = sphere, 
+res <- PP_Optimizer(data = data, class = class, findex = findex,
+                    optmethod = "GTSA", dimproj = dim, sphere = sphere, 
                     weight = TRUE, lambda = 0.1, r = 1, cooling = 0.9, 
                     eps = 1e-3, maxiter = 500, half = 30)
 
-Tit <- c(NA,"Exemplo de grafico") # titulos para os graficos
+tit <- c(NA,"Exemplo de grafico") # titulos para os graficos
 
-Plot.PP(Res, titles = Tit, posleg = 1, boxleg = FALSE, color = TRUE, 
+Plot.PP(res, titles = tit, posleg = 1, boxleg = FALSE, color = TRUE, 
         classcolor = c("blue3","red","goldenrod3"), linlab = NA, 
-        axesvar = TRUE, axes = TRUE, casc = FALSE)
+        axesvar = TRUE, axes = TRUE, savptc = FALSE, width = 3236, 
+        height = 2000, res = 300, casc = FALSE)
 
 
 # Exemplo 3 - Sem as classes nos dados, mas informando 
 #             as classes na funcao plot
-Res <- PP_Optimizer(data = data, class = NA, findex = "Moment",
+res <- PP_Optimizer(data = data, class = NA, findex = "Moment",
                     optmethod = "GTSA", dimproj = 2, sphere = sphere, 
                     weight = TRUE, lambda = 0.1, r = 1, cooling = 0.9, 
                     eps = 1e-3, maxiter = 500, half = 30)
 
-Lin <- c(rep("a",50),rep("b",50),rep("c",50)) # classe dos dados
+lin <- c(rep("a",50),rep("b",50),rep("c",50)) # classe dos dados
 
-Plot.PP(Res, titles = NA, posleg = 1, boxleg = FALSE, color = TRUE,
-        linlab = Lin, axesvar = TRUE, axes = TRUE, casc = FALSE)
+Plot.PP(res, titles = NA, posleg = 1, boxleg = FALSE, color = TRUE,
+        linlab = lin, axesvar = TRUE, axes = TRUE, savptc = FALSE, 
+        width = 3236, height = 2000, res = 300, casc = FALSE)
 
 
 # Exemplo 4 - Com as classes nos dados, mas nao informada na funcao plot
 class <- iris[,5] # classe dos dados
 
-Dim <- 2 # dimensao da projecao dos dados
+dim <- 2 # dimensao da projecao dos dados
 
-Fcindex <- "lda" # funcao indice
+findex <- "lda" # funcao indice
 
-Res <- PP_Optimizer(data = data, class = class, findex = Fcindex,
-                    optmethod = "GTSA", dimproj = Dim, sphere = sphere, 
+res <- PP_Optimizer(data = data, class = class, findex = findex,
+                    optmethod = "GTSA", dimproj = dim, sphere = sphere, 
                     weight = TRUE, lambda = 0.1, r = 1, cooling = 0.9, 
                     eps = 1e-3, maxiter = 500, half = 30)
 
-Tit <- c("",NA) # titulos para os graficos
+tit <- c("",NA) # titulos para os graficos
 
-Plot.PP(Res, titles = Tit, posleg = 1, boxleg = FALSE, color = TRUE,
-        linlab = NA, axesvar = TRUE, axes = TRUE, casc = FALSE)
+Plot.PP(res, titles = tit, posleg = 1, boxleg = FALSE, color = TRUE,
+        linlab = NA, axesvar = TRUE, axes = TRUE, savptc = FALSE, 
+        width = 3236, height = 2000, res = 300, casc = FALSE)
 }
 
 \keyword{Projection pursuit}

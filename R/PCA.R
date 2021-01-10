@@ -15,17 +15,15 @@ PCA <- function(data, type = 1) {
   # mtxCCP    - Matriz da Correlacao dos Componentes Principais com as Variaveis Originais
   # mtxscores - Matriz com os escores dos Componentes Principais
   
-  if (!is.data.frame(data)) 
-     stop("Entrada 'data' esta incorreta, deve ser do tipo dataframe. Verifique!")
+  if (!is.data.frame(data) && !is.matrix(data)) 
+     stop("Entrada 'data' esta incorreta, deve ser do tipo dataframe ou matriz. Verifique!")
   
   if (type!=1 && type!=2) 
      stop("Entrada para 'type' esta incorreta, deve ser numerica, sendo 1 ou 2. Verifique!")
+
+  if (type == 2) data <- scale(data) # normaliza os dados
   
-  if (type == 1)     # Considera a Matriz de Covariancia para a decomposicao
-     MC <- cov(data) # Matriz de Covariancia
-  
-  if (type == 2)     # Considera a Matriz de Correlacao para a decomposicao
-     MC <- cor(data) # Matriz de Correlacao
+  MC <- cov(data) # Matriz de Covariancia
   
   ## Encontrando a Matriz de Decomposicao Expectral
   MAV <- eigen(MC) # Encontra a matriz de autovalor e autovetor

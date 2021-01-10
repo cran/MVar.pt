@@ -9,6 +9,7 @@
 \usage{Plot.Regr(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA, 
           ylabel = NA, namevary = NA, namevarx = NA, size = 1.1, 
           grid = TRUE, color = TRUE, intconf = TRUE, intprev = TRUE, 
+          savptc = FALSE, width = 3236, height = 2000, res = 300,
           casc = TRUE)}
 
 \arguments{
@@ -28,8 +29,12 @@
 \item{size}{Tamanho dos pontos no grafico.}
 \item{grid}{Coloca grade nos graficos (default = TRUE).}
 \item{color}{Graficos coloridos (default = TRUE).}
-\item{intconf}{Caso typegraf = "Regression". Graficos com intervalo de confianca (default = TRUE). }
+\item{intconf}{Caso typegraf = "Regression". Graficos com intervalo de confianca (default = TRUE).}
 \item{intprev}{Caso typegraf = "Regression". Graficos com intervalo de previsao (default = TRUE)}
+\item{savptc}{Salva as imagens dos graficos em arquivos (default = FALSE).}   
+\item{width}{Largura do grafico quanto savptc = TRUE (defaul = 3236).}
+\item{height}{Altura do grafico quanto savptc = TRUE (default = 2000).}
+\item{res}{Resolucao nominal em ppi do grafico quanto savptc = TRUE (default = 300).}
 \item{casc}{Efeito cascata na apresentacao dos graficos (default = TRUE).}
 }
 
@@ -48,29 +53,31 @@ Y <- DataMix[,2]
 
 X <- DataMix[,7]
 
-NomeY <- "Media das notas"
+name.y <- "Media das notas"
 
-NomeX <- "Cafes comerciais"
+name.x <- "Cafes comerciais"
 
-Res <- Regr(Y, X, namevarx = NomeX ,intercepts = TRUE, sigf = 0.05)
+res <- Regr(Y, X, namevarx = name.x ,intercepts = TRUE, sigf = 0.05)
 
-Tit <- c("Scatterplot")
-Plot.Regr(Res, typegraf = "Scatterplot", title = Tit,
-          namevary = NomeY, namevarx = NomeX, color = TRUE)
+tit <- c("Scatterplot")
+Plot.Regr(res, typegraf = "Scatterplot", title = tit,
+          namevary = name.y, namevarx = name.x, color = TRUE, 
+          savptc = FALSE, width = 3236, height = 2000, res = 300)
 
-Tit <- c("Grafico de Dispersao com a \n reta ajustada")
-Plot.Regr(Res, typegraf = "Regression", title = Tit, 
-          xlabel = NomeX, ylabel = NomeY, color = TRUE,
-          intconf = TRUE, intprev = TRUE)
+tit <- c("Grafico de Dispersao com a \n reta ajustada")
+Plot.Regr(res, typegraf = "Regression", title = tit, 
+          xlabel = name.x, ylabel = name.y, color = TRUE,
+          intconf = TRUE, intprev = TRUE, savptc = FALSE, 
+          width = 3236, height = 2000, res = 300)
 
 dev.new() # necessario para nao sobrepor os graficos seguintes ao grafico anterior
 
 par(mfrow = c(2,2)) 
 
-Plot.Regr(Res, typegraf = "QQPlot", casc = FALSE)
-Plot.Regr(Res, typegraf = "Histogram", casc = FALSE)
-Plot.Regr(Res, typegraf = "Fits", casc = FALSE)
-Plot.Regr(Res, typegraf = "Order", casc = FALSE)
+Plot.Regr(res, typegraf = "QQPlot", casc = FALSE)
+Plot.Regr(res, typegraf = "Histogram", casc = FALSE)
+Plot.Regr(res, typegraf = "Fits", casc = FALSE)
+Plot.Regr(res, typegraf = "Order", casc = FALSE)
 }
 
 \keyword{Regressao}

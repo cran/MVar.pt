@@ -1,6 +1,8 @@
 Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2, 
                      boxleg = TRUE, size = 1.1, grid = TRUE, color = TRUE, 
-                     groupscolor = NA, namarr = FALSE, linlab = NA, casc = TRUE) {
+                     groupscolor = NA, namarr = FALSE, linlab = NA, 
+                     savptc = FALSE, width = 3236, height = 2000, res = 300, 
+                     casc = TRUE) {
   
   # Rotina para Plotar Graficos do Metodo MFA desenvolvida 
   # por Paulo Cesar Ossani em 09/2013 a 01/2014
@@ -23,7 +25,11 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   #          centroide no Grafico Correspondente a Analise 
   #          Global dos Individuos e Variaveis (default = FALSE).
   # linlab - Nomes dos centroides, se omitido retorna os rotulos das linhas.
-  # casc    - Efeito cascata na apresentacao dos graficos (default = TRUE).
+  # savptc - Salva as imagens dos graficos em arquivos (default = FALSE).
+  # width  - Largura do grafico quanto savptc = TRUE (defaul = 3236).
+  # height - Altura do grafico quanto savptc = TRUE (default = 2000).
+  # res    - Resolucao nominal em ppi do grafico quanto savptc = TRUE (default = 300).
+  # casc   - Efeito cascata na apresentacao dos graficos (default = TRUE).).
   
   # Retorna:
   # Varios graficos
@@ -33,7 +39,8 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   if (!is.character(titles[1]) || is.na(titles[1])) titles[1] = c("Scree-plot das variancias dos componentes")
   if (!is.character(titles[2]) || is.na(titles[2])) titles[2] = c("Grafico correspondente a analise global dos individuos")
   if (!is.character(titles[3]) || is.na(titles[3])) titles[3] = c("Grafico correspondente a analise\n global dos individuos e variaveis")
-  if (!is.character(titles[4]) || is.na(titles[4])) titles[4] = c("Grafico das inercias dos grupos de variaveis")
+  if (!is.character(titles[4]) || is.na(titles[4])) titles[4] = c("Circulo de Correlacao")
+  if (!is.character(titles[5]) || is.na(titles[5])) titles[5] = c("Grafico das inercias dos grupos de variaveis")
   
   if (!is.character(xlabel) && !is.na(xlabel[1]))
      stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
@@ -58,6 +65,18 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   
   if (!is.logical(namarr)) 
      stop("Entrada para 'namarr' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+
+  if (!is.logical(savptc))
+     stop("Entrada para 'savptc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  
+  if (!is.numeric(width) || width <= 0)
+     stop("Entrada para 'width' esta incorreta, deve ser numerica e maior que zero. Verifique!")
+  
+  if (!is.numeric(height) || height <= 0)
+     stop("Entrada para 'height' esta incorreta, deve ser numerica e maior que zero. Verifique!")
+  
+  if (!is.numeric(res) || res <= 0)
+     stop("Entrada para 'res' esta incorreta, deve ser numerica e maior que zero. Verifique!")
   
   if (!is.logical(casc))
      stop("Entrada para 'casc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
@@ -97,16 +116,27 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   color_a = ifelse(color,"red","black") # cores nos pontos dos graficos
   #####   FIM - Informacoes usadas nos Graficos  #####
   
-  if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+  if (savptc) {
+     cat("\014") # limpa a tela
+     cat("\n\n Salvando graficos em disco. Aguarde o termino!")
+  }
+  
+  if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem dos Autovalores #####
+  if (savptc) png(filename = "Figure MFA Variances.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  
   mp <- barplot(MFA$mtxA[,1],names.arg=paste(round(MFA$mtxA[,2],2),"%",sep=""),
                 main = "Variancias dos componentes")
+  
+  if (savptc) { box(col = 'white'); dev.off() }
   ##### FIM - Plotagem dos Autovalores #####
   
-  if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+  if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Scree-plot dos componentes #####
+  if (savptc) png(filename = "Figure MFA Scree Plot.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  
   plot(1:length(MFA$mtxA[,1]), MFA$mtxA[,1], 
        type = "n", # nao plota pontos
        xlab = "Ordem dos componentes", 
@@ -129,11 +159,15 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   }
   
   points(1:length(MFA$mtxA[,1]), MFA$mtxA[,1], type = "b")
+  
+  if (savptc) { box(col = 'white'); dev.off() }
   ##### FIM - Scree-plot dos componentes #####
   
-  if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+  if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem da Analise Global #####
+  if (savptc) png(filename = "Figure MFA Observations.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  
   plot(MFA$mtxF, # cria grafico para as coordenadas principais da Analise Global
        xlab = xlabel, # Nomeia Eixo X
        ylab = ylabel, # Nomeia Eixo Y
@@ -162,12 +196,16 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
   LocLab(MFA$mtxF[,1:2], NomeLinhas)  # Coloca os nomes dos pontos das coordenadas principais das linhas
+  
+  if (savptc) { box(col = 'white'); dev.off() }
   ##### FIM - Plotagem da Analise Global #####
   
-  if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+  if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem da Analise por Grupo Juntamente com a Analise Global #####
   ## INICIO - Encontra as dimensoes maximas e minimas para as colunas e linhas ##
+  if (savptc) png(filename = "Figure MFA Variables Observations.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  
   MLC <- MFA$mtxF[,1:2]
   for (i in 1:length(MFA$mtxEFG)) 
     MLC <- rbind(MLC,MFA$mtxEFG[[i]][,1:2])
@@ -253,15 +291,18 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
      legend(posleg, NameGroups, lty = cor:(cor+NumGroups), col = color_b, text.col = color_b,
             bty=boxleg, text.font = 6, y.intersp = 0.9, xpd = TRUE) # cria a legenda
   
+  if (savptc) { box(col = 'white'); dev.off() }
   ##### FIM - Plotagem de Analise por Grupo Juntamento com a Analise Global #####
   
-  if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+  if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem das Correlacoes dos Componentes Principais com as Variaveis Originais #####
+  if (savptc) png(filename = "Figure MFA Correlation Circle.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  
   plot(0,0, # cria grafico para as coordenadas das Correlacoes dos Componentes Principais com as Variaveis Originais
        xlab = xlabel, # Nomeia Eixo X
        ylab = ylabel, # Nomeia Eixo Y
-       main = "Circulo de Correlacao", # Titulo
+       main = titles[4], # Titulo, # Titulo
        asp  = 1,   # Aspecto do grafico
        axes = F,
        type = "n", # nao plota pontos
@@ -310,11 +351,15 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   
   legend(posleg, NameGroups, lty = cor:(cor+NumGroups), col = color_b, text.col = color_b,
          bty = boxleg, text.font = 6, y.intersp = 0.9, xpd = TRUE) # cria a legenda
+  
+  if (savptc) { box(col = 'white'); dev.off() }
   ##### FIM - Plotagem das Correlacoes dos Componentes Principais com as Variaveis Originais #####
   
-  if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+  if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem das Inercias Parciais/Escores das Variareis #####
+  if (savptc) png(filename = "Figure MFA Group Inertia.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  
   VlrMinX = ifelse(min(MFA$mtxEV[,1])>0,-0.01, min(MFA$mtxEV[,1])) # Valor minimo para a linha X
   VlrMinY = ifelse(min(MFA$mtxEV[,2])>0,-0.01, min(MFA$mtxEV[,2])) # Valor minimo para a linha Y
   VlrMaxX = 1.01 # Valor maximo para a linha X
@@ -324,7 +369,7 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
        xlab = xlabel, # Nomeia Eixo X
        ylab = ylabel, # Nomeia Eixo Y
        type = "n",    # nao plota pontos
-       main = titles[4], # Titulo
+       main = titles[5], # Titulo
        xlim = c(VlrMinX,VlrMaxX), # Dimensao para as linhas do grafico
        ylim = c(VlrMinY,VlrMaxY)) # Dimensao para as colunas do grafico
 
@@ -349,4 +394,10 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   
   LocLab(MFA$mtxEV[,1:2],rownames(MFA$mtxEV))  # Coloca os nomes dos pontos das coordenadas principais das linhas
   ##### FIM - Plotagem das Inercias Parciais/Escores das Variareis #####
+  
+  if (savptc) { 
+     box(col = 'white')
+     dev.off()
+     cat("\n \n Fim!")
+  }
 }

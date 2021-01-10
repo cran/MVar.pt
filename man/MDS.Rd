@@ -9,7 +9,8 @@
 \usage{MDS(data, distance = "euclidean", title = NA, xlabel = NA,  
     ylabel = NA, posleg = 2, boxleg = TRUE, axes = TRUE, 
     size = 1.1, grid = TRUE, color = TRUE, linlab = NA, 
-    class = NA, classcolor = NA)}
+    class = NA, classcolor = NA, savptc = FALSE, width = 3236, 
+    height = 2000, res = 300)}
 
 \arguments{
   \item{data}{Dados a serem analizados.}
@@ -30,6 +31,10 @@
   \item{linlab}{Vetor com os rotulos para as observacoes.}
   \item{class}{Vetor com os nomes das classes dos dados.}
   \item{classcolor}{Vetor com as cores das classes.}
+  \item{savptc}{Salva as imagens dos graficos em arquivos (default = FALSE).}   
+  \item{width}{Largura do grafico quanto savptc = TRUE (defaul = 3236).}
+  \item{height}{Altura do grafico quanto savptc = TRUE (default = 2000).}
+  \item{res}{Resolucao nominal em ppi do grafico quanto savptc = TRUE (default = 300).}
 }
 
 \value{{Grafico de escalonamento multidimensional.}
@@ -55,11 +60,12 @@ data <- iris[,1:4]
 
 cls <- iris[,5] # classe dos dados
 
-MD <- MDS(data = data, distance = "euclidean", title = NA, xlabel = NA,  
+md <- MDS(data = data, distance = "euclidean", title = NA, xlabel = NA,  
           ylabel = NA, posleg = 2, boxleg = TRUE, axes = TRUE, color = TRUE,  
-          linlab = NA, class = cls, classcolor = c("goldenrod3","gray53","red"))
+          linlab = NA, class = cls, classcolor = c("goldenrod3","gray53","red"),
+          savptc = FALSE, width = 3236, height = 2000, res = 300)
 
-print("Matriz das distancias:"); MD$mtxD
+print("Matriz das distancias:"); md$mtxD
 }
 
 \keyword{Escalonamento Multidimensional}

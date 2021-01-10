@@ -1,7 +1,8 @@
 GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, ylabel = NA,
                       size = 1.1, grid = TRUE, color = TRUE, linlab = NA, class = NA,  
                       classcolor = NA, posleg = 2, boxleg = TRUE, axesvar = TRUE, 
-                      axes = TRUE, numrot = 200, choicerot = NA, savepicture = FALSE) {
+                      axes = TRUE, numrot = 200, choicerot = NA, savptc = FALSE, 
+                      width = 3236, height = 2000, res = 300) {
   
   # Esta funcao executa a rotacao dos dados multivariados em baixa dimensao
   # basea-se nos artigos de: Asimov, D. . The Grand Tour: A Tool for Viewing
@@ -39,8 +40,11 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
   # numrot  - Numero de rotacoes (default = 200).
   #           Se method = "Interpolation", numrot representara o angulo de rotacao.
   # choicerot - Escolhe rotacao especifica e apresenta na tela,
-  #             ou salva a imagem se savepicture = TRUE.
-  # savepicture - Salva as imagens dos graficos em arquivos (default = FALSE).
+  #             ou salva a imagem se savptc = TRUE.
+  # savptc - Salva as imagens dos graficos em arquivos (default = FALSE).
+  # width  - Largura do grafico quanto savptc = TRUE (defaul = 3236).
+  # height - Altura do grafico quanto savptc = TRUE (default = 2000).
+  # res    - Resolucao nominal em ppi do grafico quanto savptc = TRUE (default = 300).
 
   # Retorna:
   # Graficos com as rotacoes.
@@ -102,8 +106,17 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
        stop("numrot < choicerot, numrot tem que ser maior ou igual choicerot. Verifique!")
   }
 
-  if (!is.logical(savepicture))
-     stop("Entrada para 'savepicture' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  if (!is.logical(savptc))
+     stop("Entrada para 'savptc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+
+  if (!is.numeric(width) || width <= 0)
+     stop("Entrada para 'width' esta incorreta, deve ser numerica e maior que zero. Verifique!")
+  
+  if (!is.numeric(height) || height <= 0)
+     stop("Entrada para 'height' esta incorreta, deve ser numerica e maior que zero. Verifique!")
+  
+  if (!is.numeric(res) || res <= 0)
+     stop("Entrada para 'res' esta incorreta, deve ser numerica e maior que zero. Verifique!")
   
   if (!is.character(xlabel) && !is.na(xlabel[1]))
      stop("Entrada para 'xlabel' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
@@ -164,7 +177,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
      
      numrot <- ifelse(is.na(choicerot[1]), numrot, choicerot)
      
-     if (savepicture) {
+     if (savptc) {
         cat("\014") # limpa a tela
         cat("\n\n Salvando graficos em disco. Aguarde o termino!")
      }
@@ -194,7 +207,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
        
        if (is.na(choicerot[1]) || choicerot == i) {
          
-         if (savepicture) png(filename = paste("Picture ", i," - Metodo", method,".png",step="")) # salva os graficos em arquivos
+         if (savptc) png(filename = paste("Picture ", i," - Metodo", method,".png",step=""), width = width, height = height, res = res) # salva os graficos em arquivos
          
          maxX = max(proj.data[, 1], A[,1])
          minX = min(proj.data[, 1], A[,1])
@@ -319,7 +332,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
                    text.col = color_b, bty = boxleg, text.font = 6, y.intersp = 0.8, xpd = TRUE) # cria a legenda
          }
          
-         if (savepicture) dev.off()
+         if (savptc) { box(col = 'white'); dev.off() }
          
          Sys.sleep(0.05) # tempo entre as plotagens dos graficos
          
@@ -329,7 +342,8 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
        
      }
      
-     if (savepicture) cat("\n \n Fim!")
+     if (savptc) cat("\n \n Fim!")
+     
      
    }
    
@@ -353,7 +367,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
      a <- matrix(0, p, 1) # matriz de rotacao
      b <- matrix(0, p, 1) # matriz de rotacao
   
-     if (savepicture) {
+     if (savptc) {
         cat("\014") # limpa a tela
         cat("\n\n Salvando graficos em disco. Aguarde o termino!")
      }
@@ -380,7 +394,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
   
        if (is.na(choicerot[1]) || choicerot == i) {
          
-         if (savepicture) png(filename = paste("Picture ", i," - Metodo", method,".png",step="")) # salva os graficos em arquivos
+         if (savptc) png(filename = paste("Picture ", i," - Metodo", method,".png",step=""), width = width, height = height, res = res) # salva os graficos em arquivos
          
          maxX = max(proj.data[, 1], A[,1])
          minX = min(proj.data[, 1], A[,1])
@@ -505,7 +519,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
                    text.col = color_b, bty = boxleg, text.font = 6, y.intersp = 0.8, xpd = TRUE) # cria a legenda
          }  
 
-         if (savepicture) dev.off()
+         if (savptc) { box(col = 'white'); dev.off() }
          
          Sys.sleep(0.05) # tempo entre as plotagens dos graficos
          
@@ -515,7 +529,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
        
      }
      
-     if (savepicture) cat("\n \n Fim!")
+     if (savptc) cat("\n \n Fim!")
     
    }  
   
@@ -560,7 +574,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
      
      numrot <- ifelse(is.na(choicerot[1]), numrot, choicerot)
        
-     if (savepicture) {
+     if (savptc) {
         cat("\014") # limpa a tela 
         cat("\n\n Salvando graficos em disco. Aguarde o termino!")
      }
@@ -575,7 +589,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
           
        if (is.na(choicerot[1]) || choicerot == i) {
          
-         if (savepicture) png(filename = paste("Picture ", i," - Metodo", method,".png",step="")) # salva os graficos em arquivos
+         if (savptc) png(filename = paste("Picture ", i," - Metodo", method,".png",step=""), width = width, height = height, res = res) # salva os graficos em arquivos
          
          maxX = max(proj.data[, 1])
          minX = min(proj.data[, 1])
@@ -697,7 +711,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
                    text.col = color_b, bty = boxleg, text.font = 6, y.intersp = 0.8, xpd = TRUE) # cria a legenda
          }
        
-         if (savepicture) dev.off()
+         if (savptc) { box(col = 'white'); dev.off() }
         
          Sys.sleep(0.05) # tempo entre as plotagens dos graficos
        
@@ -711,7 +725,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
      
      proj.data <- proj.data[1:n,1:d] # dados projetados
      
-     if (savepicture) cat("\n \n Fim!")
+     if (savptc) cat("\n \n Fim!")
        
    }
    

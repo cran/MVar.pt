@@ -1,7 +1,8 @@
 MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
                 ylabel = NA, posleg = 2, boxleg = TRUE, axes = TRUE, 
                 size = 1.1, grid = TRUE, color = TRUE, linlab = NA, 
-                class = NA, classcolor = NA) {
+                class = NA, classcolor = NA, savptc = FALSE, width = 3236, 
+                height = 2000, res = 300) {
   
   # Esta funcao executa a Escalonamento Multidimensional
   # desenvolvida por Paulo Cesar Ossani em 07/2016
@@ -26,13 +27,17 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
   # linlab - Vetor com os rotulos para as observacoes. 
   # class  - Vetor com os nomes das classes dos dados.
   # classcolor - Vetor com as cores das classes.
+  # savptc - Salva as imagens dos graficos em arquivos (default = FALSE).
+  # width  - Largura do grafico quanto savptc = TRUE (defaul = 3236).
+  # height - Altura do grafico quanto savptc = TRUE (default = 2000).
+  # res    - Resolucao nominal em ppi do grafico quanto savptc = TRUE (default = 300).
   
   # Retorna:
   # Grafico de escalonamento multidimensional.
   # mtxD - Matriz das distancias.
 
-  if (!is.data.frame(data)) 
-     stop("Entrada 'data' esta incorreta, deve ser do tipo dataframe. Verifique!")
+  if (!is.data.frame(data) && !is.matrix(data)) 
+     stop("Entrada 'data' esta incorreta, deve ser do tipo dataframe ou matriz. Verifique!")
  
   if (!is.na(class[1])) {
     
@@ -86,12 +91,27 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
   if (!is.na(linlab[1]) && !is.character(linlab))
      stop("Entrada para 'linlab' esta incorreta, deve ser do tipo caracter ou string. Verifique!")
 
-  ##### INICIO - Informacoes usadas nos Graficos #####
-  if (is.na(xlabel[1]))
-     xlabel = "Eixo X" 
+  if (!is.logical(savptc))
+     stop("Entrada para 'savptc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  if (is.na(ylabel[1]))
-     ylabel = "Eixo Y"
+  if (!is.numeric(width) || width <= 0)
+     stop("Entrada para 'width' esta incorreta, deve ser numerica e maior que zero. Verifique!")
+  
+  if (!is.numeric(height) || height <= 0)
+     stop("Entrada para 'height' esta incorreta, deve ser numerica e maior que zero. Verifique!")
+  
+  if (!is.numeric(res) || res <= 0)
+     stop("Entrada para 'res' esta incorreta, deve ser numerica e maior que zero. Verifique!")
+  
+  if (savptc) {
+     cat("\014") # limpa a tela
+     cat("\n\n Salvando graficos em disco. Aguarde o termino!")
+  }
+  
+  ##### INICIO - Informacoes usadas nos Graficos #####
+  if (is.na(xlabel[1])) xlabel = "Eixo X" 
+  
+  if (is.na(ylabel[1])) ylabel = "Eixo Y"
 
   if (posleg==1) posleg = "topleft"     # posicao das legendas nos graficos
   if (posleg==2) posleg = "topright"
@@ -126,6 +146,8 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
      cor.classe <- classcolor
   }
   else { cor.classe <- c("red") }
+  
+  if (savptc) png(filename = "Figure MDS.png", width = width, height = height, res = res) # salva os graficos em arquivo
   
   if (Num.class == 0) {
     
@@ -225,6 +247,12 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
   
   if (!is.na(linlab[1])) LocLab(x, y, cex = 1, linlab)
 
+  if (savptc) {
+     box(col = 'white') 
+     dev.off()
+     cat("\n \n Fim!")
+  }
+  
   Lista <- list(mtxD = Md)
 
   return(Lista)

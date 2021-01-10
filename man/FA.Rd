@@ -19,7 +19,7 @@
               "ML" - Maxima Verossimilhanca.}
 \item{type}{1 para analise utilizando a matriz de covariancia,\cr
             2 para analise utilizando a matriz de correlacao (default).}
-\item{rotation}{Tipo de rotacao: "None" (default) e "Varimax".}
+\item{rotation}{Tipo de rotacao: "None" (default), "Varimax" e "Promax".}
 \item{nfactor}{Numero de fatores (default = 1).}
 \item{scoresobs}{Tipo de scores para as observacoes: "Bartlett" (default) ou "Regression".}
 \item{converg}{Valor limite para convergencia para soma do quadrado dos residuos para metodo de Maxima Verossimilhanca (default = 1e-5).}
@@ -68,19 +68,19 @@ data <- DataQuan[,2:ncol(DataQuan)]
 
 rownames(data) <- DataQuan[,1]
 
-Resp <- FA(data = data, method = "PC", type = 2, nfactor = 3, rotation = "None",
-           scoresobs = "Bartlett", converg = 1e-5, iteracao = 1000, 
-           testfit = TRUE) 
+res <- FA(data = data, method = "PC", type = 2, nfactor = 3, rotation = "None",
+          scoresobs = "Bartlett", converg = 1e-5, iteracao = 1000, 
+          testfit = TRUE) 
 
-print("Matriz com todos os resultados associados:"); round(Resp$mtxresult,3)
+print("Matriz com todos os resultados associados:"); round(res$mtxresult,3)
 
-print("Soma dos Quadrados dos Residuos:"); round(Resp$vlrsqr,3)
+print("Soma dos Quadrados dos Residuos:"); round(res$vlrsqr,3)
 
-print("Matriz das Cargas Fatoriais:"); round(Resp$mtxcarga,3)
+print("Matriz das Cargas Fatoriais:"); round(res$mtxcarga,3)
 
-print("Matriz com os escores das observacoes:"); round(Resp$mtxscores,3)
+print("Matriz com os escores das observacoes:"); round(res$mtxscores,3)
 
-print("Matriz com os escores dos coeficientes dos fatores:"); round(Resp$coefscores,3)
+print("Matriz com os escores dos coeficientes dos fatores:"); round(res$coefscores,3)
 
 }
 

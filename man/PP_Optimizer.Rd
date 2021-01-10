@@ -75,39 +75,39 @@ data <- iris[,1:4]
 
 class <- NA # classe dos dados
 
-Fcindex <- "kurtosismax" # funcao indice
+findex <- "kurtosismax" # funcao indice
 
-Dim <- 1 # dimensao da projecao dos dados
+dim <- 1 # dimensao da projecao dos dados
 
 sphere <- TRUE # Dados esfericos
 
-Res <- PP_Optimizer(data = data, class = class, findex = Fcindex,
-                    optmethod = "GTSA", dimproj = Dim, sphere = sphere, 
+res <- PP_Optimizer(data = data, class = class, findex = findex,
+                    optmethod = "GTSA", dimproj = dim, sphere = sphere, 
                     weight = TRUE, lambda = 0.1, r = 1, cooling = 0.9, 
                     eps = 1e-3, maxiter = 1000, half = 30)
  
-print("Numero de classes:"); Res$num.class
-print("Nomes das classes:"); Res$class.names
-print("Funcao indice de projecao:"); Res$findex
-print("Dados projetados:"); Res$proj.data
-print("Vetores de projecao:"); Res$vector.opt
-print("Indices de projecao:"); Res$index
+print("Numero de classes:"); res$num.class
+print("Nomes das classes:"); res$class.names
+print("Funcao indice de projecao:"); res$findex
+print("Dados projetados:"); res$proj.data
+print("Vetores de projecao:"); res$vector.opt
+print("Indices de projecao:"); res$index
 
 
 # Exemplo 2 - Com as classes nos dados
 class <- iris[,5] # classe dos dados
 
-Res <- PP_Optimizer(data = data, class = class, findex = Fcindex,
-                    optmethod = "GTSA", dimproj = Dim, sphere = sphere, 
+res <- PP_Optimizer(data = data, class = class, findex = findex,
+                    optmethod = "GTSA", dimproj = dim, sphere = sphere, 
                     weight = TRUE, lambda = 0.1, r = 1, cooling = 0.9, 
                     eps = 1e-3, maxiter = 1000, half = 30)
 
-print("Numero de classes:"); Res$num.class
-print("Nomes das classes:"); Res$class.names
-print("Funcao indice de projecao:"); Res$findex
-print("Dados projetados:"); Res$proj.data
-print("Vetores de projecao:"); Res$vector.opt
-print("Indices de projecao:"); Res$index
+print("Numero de classes:"); res$num.class
+print("Nomes das classes:"); res$class.names
+print("Funcao indice de projecao:"); res$findex
+print("Dados projetados:"); res$proj.data
+print("Vetores de projecao:"); res$vector.opt
+print("Indices de projecao:"); res$index
 }
 
 \keyword{Projection pursuit}

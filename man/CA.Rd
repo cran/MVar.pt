@@ -56,17 +56,17 @@ data <- DataFreq[,2:ncol(DataFreq)]
 
 rownames(data) <- as.character(t(DataFreq[1:nrow(DataFreq),1]))
 
-Resp <- CA(data = data, "f") # realiza CA
+res <- CA(data = data, "f") # realiza CA
 
-print("Existe dependencia entre as linhas e as colunas?"); Resp$depdata
+print("Existe dependencia entre as linhas e as colunas?"); res$depdata
 
-print("Numero de coordenadas principais:"); Resp$numcood
+print("Numero de coordenadas principais:"); res$numcood
 
-print("Coordenadas principais das Linhas:"); round(Resp$mtxX,2)
+print("Coordenadas principais das Linhas:"); round(res$mtxX,2)
 
-print("Coordenadas principais das Colunas:"); round(Resp$mtxY,2)
+print("Coordenadas principais das Colunas:"); round(res$mtxY,2)
 
-print("Inercias das componentes principais:"); round(Resp$mtxAutvlr,2)
+print("Inercias das componentes principais:"); round(res$mtxAutvlr,2)
 }
 
 \keyword{Analise de correspondencia simples}

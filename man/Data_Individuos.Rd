@@ -21,21 +21,21 @@ OSSANI, P. C. \emph{Qualidade de cafes especiais e nao especiais por meio da ana
 \examples{
 data(Data_Individuos) # conjundo de dados categorizados
 
-Data <- Data_Individuos[,2:ncol(Data_Individuos)]
+data <- Data_Individuos[,2:ncol(Data_Individuos)]
 
-rownames(Data) <- as.character(t(Data_Individuos[1:nrow(Data_Individuos),1]))
+rownames(data) <- as.character(t(Data_Individuos[1:nrow(Data_Individuos),1]))
 
-GroupNames = c("Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4")
+group.names = c("Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4")
 
-MF <- MFA(Data, c(16,16,16,16), c(rep("f",4)), GroupNames) # analise dos dados
+mf <- MFA(data, c(16,16,16,16), c(rep("f",4)), group.names) # analise dos dados
 
-print("Variancias dos Componentes Principais:"); round(MF$mtxA,2)
+print("Variancias dos Componentes Principais:"); round(mf$mtxA,2)
 
-print("Matriz das Inercias Parciais/Escores das Variaveis:"); round(MF$mtxEV,2)
+print("Matriz das Inercias Parciais/Escores das Variaveis:"); round(mf$mtxEV,2)
 
-Tit = c("Scree-plot","Individuos", "Individuos/Grupos Individuos", "Inercias Grupos")
+tit <- c("Scree-plot","Individuos", "Individuos/Grupos Individuos", "Inercias Grupos")
 
-Plot.MFA(MF, titles = Tit, xlabel = NA, ylabel = NA,
+Plot.MFA(mf, titles = tit, xlabel = NA, ylabel = NA,
          posleg = 2, boxleg = FALSE, color = TRUE, 
          namarr = FALSE, linlab = NA, casc = FALSE) # Imprime varios graficos da tela
 }

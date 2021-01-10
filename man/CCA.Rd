@@ -59,32 +59,32 @@ data <- DataMix[,2:ncol(DataMix)]
 
 rownames(data) <- DataMix[,1]
 
-X <- as.data.frame(NormData(data[,1:2],2))
+X <- data[,1:2]
 
-Y <- as.data.frame(NormData(data[,5:6],2))
+Y <- data[,5:6]
 
-Resp <- CCA(X, Y, type = 1, test = "Bartlett", sign = 0.05)
+res <- CCA(X, Y, type = 2, test = "Bartlett", sign = 0.05)
 
 print("Matriz com autovalores (variancias) dos pares cononicos U e V:");
-round(Resp$var.UV,3)
+round(res$var.UV,3)
 
-print("Matriz de correlacao dos pares cononicos U e V:"); round(Resp$corr.UV,3)
+print("Matriz de correlacao dos pares cononicos U e V:"); round(res$corr.UV,3)
 
-print("Matriz dos coeficientes canonicos do grupo X:"); round(Resp$coef.X,3)
+print("Matriz dos coeficientes canonicos do grupo X:"); round(res$coef.X,3)
 
-print("Matriz dos coeficientes canonicos do grupo Y:"); round(Resp$coef.Y,3)
-
-print("Matriz das correlacoes entre as variaveis canonicas
-       e as variaveis originais do grupo X:"); round(Resp$corr.X,3)
+print("Matriz dos coeficientes canonicos do grupo Y:"); round(res$coef.Y,3)
 
 print("Matriz das correlacoes entre as variaveis canonicas
-       e as variaveis originais do grupo Y:"); round(Resp$corr.Y,3)
+       e as variaveis originais do grupo X:"); round(res$corr.X,3)
 
-print("Matriz com os scores do grupo X:"); round(Resp$score.X,3)
+print("Matriz das correlacoes entre as variaveis canonicas
+       e as variaveis originais do grupo Y:"); round(res$corr.Y,3)
 
-print("Matriz com os scores do grupo Y:"); round(Resp$score.Y,3)
+print("Matriz com os scores do grupo X:"); round(res$score.X,3)
 
-print("teste de significancia dos pares canonicos:"); Resp$sigtest
+print("Matriz com os scores do grupo Y:"); round(res$score.Y,3)
+
+print("teste de significancia dos pares canonicos:"); res$sigtest
 }
 
 \keyword{Analise de correlacao canonica}

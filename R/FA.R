@@ -35,8 +35,8 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
 
    method <- toupper(method)   # transforma em maiusculo
    
-   if (!is.data.frame(data)) 
-      stop("Entrada 'data' esta incorreta, deve ser do tipo dataframe. Verifique!")
+   if (!is.data.frame(data) && !is.matrix(data)) 
+      stop("Entrada 'data' esta incorreta, deve ser do tipo dataframe ou matriz. Verifique!")
   
    if (!(method %in% c("PC", "PF", "ML"))) 
       stop("Entrada 'method' esta incorreta, deve ser 'PC', 'PF' ou 'ML'. Verifique!")
@@ -55,8 +55,8 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
  
    rotation <- toupper(rotation) # transforma em maiusculo
    
-   if (!(rotation %in% c("NONE","VARIMAX")))
-      stop("Entrada para 'rotation' esta incorreta, deve ser 'None' ou 'Varimax'. Verifique!")
+   if (!(rotation %in% c("NONE","VARIMAX", "PROMAX")))
+      stop("Entrada para 'rotation' esta incorreta, deve ser 'None', 'Varimax' or 'Promax'. Verifique!")
   
    if (rotation != "NONE" && nfactor < 2)
       stop("Para a rotacao, he necessario mais do que um fator. Altere o numero de fatores (nfactor) para continuar.")
@@ -69,37 +69,35 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
    if (!is.logical(testfit) && method == "ML")
       stop("Entrada para 'testfit' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
        
-   if (type == 1)     # Considera a Matriz de Covariancia para a decomposicao
-      MC <- cov(data) # Matriz de Covariancia
-  
-   if (type == 2)     # Considera a Matriz de Correlacao para a decomposicao
-      MC <- cor(data) # Matriz de Correlacao
+   if (type == 2) data <- scale(data) # normaliza os dados
+   
+   MC <- cov(data) # Matriz de Covariancia
 
-   Rotacao <- function(Mdata, type = NULL, Normalise = TRUE) {
+   Rotacao <- function(Mdata, type = NULL) {
    # Funcao que executa as rotacoes
      if (type == "VARIMAX") {
-        Var <- varimax(Mdata, normalize = Normalise)
+        Var <- varimax(Mdata, normalize = TRUE)
         Res <- Var$loadings[,]
      }
      
+     if (type == "PROMAX") {
+         Var <- promax(Mdata, m = 4)
+         Res <- Var$loadings[,]
+     }
+      
      return(Res)
    }
    
    if (method == "PC") { # Metodo dos Componentes Principais
       
       # Encontrando a Matriz de Decomposicao Expectral
-      MAV <- eigen(MC) # Encontra a matriz de autovalor e autovetor
-      MAutoVlr <- MAV$values  # Matriz de Autovalores
-      MAutoVec <- MAV$vectors # Matriz de Autovetores
-      
-      # MAV <- svd(MC) # Encontra a matriz de autovalor e autovetor
-      # MAutoVlr <- MAV$d # Matriz de Autovalores
-      # MAutoVec <- MAV$v # Matriz de Autovetores
-  
+      MAV <- svd(MC) # Encontra a matriz de autovalor e autovetor
+      MAutoVlr <- MAV$d  # Matriz de Autovalores 
+      MAutoVec <- MAV$v # Matriz de Autovetores
+
       Gama = MAutoVec%*%diag(sqrt(abs(MAutoVlr)),nrow(MC),ncol(MC)) # Matriz de Cargas Fatoriais
       if (rotation != "NONE") {
-         Gama <- Rotacao(Gama,rotation)
-         MAutoVlr <- colSums(Gama^2)
+         Gama <- Rotacao(Gama[,1:nfactor], rotation)
       }
       rownames(Gama) <- colnames(data)
       colnames(Gama) <- paste("Fator",1:ncol(Gama))
@@ -138,20 +136,13 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
 
       Sr <- MC - Psi0 # Encontrando a Matriz Sr
       
-      # Encontrando a Matriz de Decomposicao Expectral
-      # MAV <- eigen(Sr) # Encontra a matriz de autovalor e autovetor
-      # MAutoVlr <- MAV$values  # Matriz de Autovalores 
-      # MAutoVec <- MAV$vectors # Matriz de Autovetores
-
       MAV <- svd(Sr) # Encontra a matriz de autovalor e autovetor
       MAutoVlr <- MAV$d  # Matriz de Autovalores 
-      MAutoVec <- MAV$v # Matriz de Autovetores
+      MAutoVec <- MAV$v  # Matriz de Autovetores
       
       Gama = MAutoVec%*%diag(sqrt(abs(MAutoVlr)),nrow(MC),ncol(MC)) # Matriz de Cargas Fatoriais
       if (rotation != "NONE") {
-         Gama <- Rotacao(Gama,rotation)
-         # Gama <- Rotacao(Gama[,1:nfactor],rotation)
-         MAutoVlr <- colSums(Gama^2)
+         Gama <- Rotacao(Gama[,1:nfactor], rotation)
       }
       rownames(Gama) <- colnames(data)
       colnames(Gama) <- paste("Fator",1:ncol(Gama))
@@ -166,14 +157,7 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
       # Soma dos Quadrados dos Residuos
       M = MC - (Gama[,1:nfactor]%*%t(Gama[,1:nfactor]) + diag(Psi))
       SQR = sum(diag(M%*%t(M)))
-      if (rotation != "NONE") {
-         Gama <- Rotacao(Gama,rotation)
-         # Gama <- Rotacao(Gama[,1:nfactor],rotation)
-         MAutoVlr <- colSums(Gama^2)
-      }
-      rownames(Gama) <- colnames(data)
-      colnames(Gama) <- paste("Fator",1:ncol(Gama))
-      
+
       # Matriz das Variancias
       MEigen <- as.data.frame(matrix(NA, length(MAutoVlr), 3))
       rownames(MEigen) <- paste("Comp", 1:length(MAutoVlr))
@@ -182,13 +166,7 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
       MEigen[, "% da variancia"] <- (MAutoVlr/sum(MAutoVlr)) * 100
       MEigen[, "% acumulada da variancia"] <- cumsum(MEigen[,"% da variancia"])
       
-      # # Matriz com todos os resultados associados
-      # Result <- as.matrix(cbind(Gama[,1:nfactor],Comun,Psi))
-      # Result <- rbind(Result,t(rbind(as.matrix(MEigen[1:nfactor,1]),sum(Comun),NA)))
-      # Result <- rbind(Result,t(rbind(as.matrix(MEigen[1:nfactor,2]),MEigen[nfactor,3],NA)))
-      # colnames(Result) <- c(paste("Carga Fator",1:nfactor),"Comunalidade","Variancias especificas")
-      # rownames(Result) <- c(colnames(data),"Variancia","% Variancia")
-      
+      # Matriz com todos os resultados associados
       Result <- as.matrix(cbind(Gama[,1:nfactor],Comun,Psi))
       Result <- rbind(Result,t(rbind(as.matrix(MEigen[1:nfactor,1]),sum(Comun),NA)))
       Result <- rbind(Result,t(rbind(as.matrix(MEigen[1:nfactor,2]),MEigen[nfactor,3],NA)))
@@ -198,13 +176,8 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
    
    if (method == "ML") { # Metodo de maxima verossimilhanca
    
-      n <- ncol(data)*nrow(data) # numero de elementos amostrais
+      n  <- ncol(data)*nrow(data) # numero de elementos amostrais
       MC <- (n-ncol(data))/n*MC  # Matriz de Covariancia/Correlacao Maximizada para o teste
-      
-      # Encontrando a Matriz de Decomposicao Expectral
-      # MAV <- eigen(MC) # Encontra a matriz de autovalor e autovetor
-      # MAutoVlr <- MAV$values  # Matriz de Autovalores 
-      # MAutoVec <- MAV$vectors # Matriz de Autovetores
 
       MAV <- svd(MC) # Encontra a matriz de autovalor e autovetor
       MAutoVlr <- MAV$d  # Matriz de Autovalores 
@@ -216,7 +189,7 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
    
       M = MC - (Gama[,1:nfactor]%*%t(Gama[,1:nfactor]) + diag(Psi)) # Matriz dos residuos
       
-      SQRi= sum(diag(M%*%t(M))) # Soma dos Quadrados dos Residuos
+      SQRi = sum(diag(M%*%t(M))) # Soma dos Quadrados dos Residuos
 
       ### INICIO DA iteracao ###
       i = 1 # inicializa o contador de iteracoes
@@ -252,10 +225,8 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
       Gama = Gama_new # Matriz com as cargas fatoriais
   
       if (rotation != "NONE") {
-         Gama <- Rotacao(Gama,rotation,Normalise=TRUE)
-         # Gama <- Rotacao(Gama[,1:nfactor],rotation,Normalise=TRUE)
+         Gama <- Rotacao(Gama[,1:nfactor], rotation)
       }
-
       rownames(Gama) <- colnames(data)
       colnames(Gama) <- paste("Fator",1:ncol(Gama))
       
@@ -264,9 +235,7 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
          Comun = rowSums(Gama^2)#apply(Gama,1,function(Gama) Gama^2)) # Matriz de Comunalidades
       }
       
-      MAutoVlr <- colSums(Gama^2)
-      
-      if (type == 2)     # Considera a Matriz de Correlacao para a decomposicao
+      if (type == 2) # Considera a Matriz de Correlacao para a decomposicao
          Comun = diag(MC - Psi) # Matriz de Comunalidades
       
       # Matriz das Variancias
@@ -323,14 +292,6 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
       }
       ### FIM - Teste da falta de ajusto do modelo fatorial - teste Qui-quadrado ###
    }
-   
-   # ### INICIO - Scree-plot dos fatores ####
-   # if (Screeplot && rotation=="NONE")
-   #    plot(1:length(MEigen[,1]), MEigen[,1], type = "b", 
-   #         xlab = "Ordem dos fatores", 
-   #         ylab = "Variancia dos fatores",
-   #         main = "Scree-plot das variancias dos fatores sem rotacao")
-   # ### FIM - Scree-plot dos fatores
    
    ### INICIO - encontrar os scores das observacoes ###
    if (type == 1)  {   # Considera a Matriz de Covariancia para os calculos

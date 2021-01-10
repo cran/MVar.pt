@@ -1,5 +1,6 @@
 Plot.FA <- function(FA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
-                    grid = TRUE, color = TRUE, linlab = NA, casc = TRUE) {
+                    grid = TRUE, color = TRUE, linlab = NA, savptc = FALSE,
+                    width = 3236, height = 2000, res = 300, casc = TRUE) {
   # Rotina para Plotar Graficos do Metodo FA desenvolvida 
   # por Paulo Cesar Ossani em 02/2017
   
@@ -12,6 +13,10 @@ Plot.FA <- function(FA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   # grid   - Coloca grade nos graficos.
   # color  - Graficos coloridos (default = TRUE).
   # linlab - Vetor com os rotulos das observacoes.
+  # savptc - Salva as imagens dos graficos em arquivos (default = FALSE).
+  # width  - Largura do grafico quanto savptc = TRUE (defaul = 3236).
+  # height - Altura do grafico quanto savptc = TRUE (default = 2000).
+  # res    - Resolucao nominal em ppi do grafico quanto savptc = TRUE (default = 300).
   # casc   - Efeito cascata na apresentacao dos graficos (default = TRUE).
   
   # Retorna:
@@ -42,7 +47,19 @@ Plot.FA <- function(FA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   if (!is.na(linlab[1]) && length(linlab) != nrow(FA$mtxscores))
      stop("O numero elementos do rotulo para linhas 'linlab' difere do numero de linhas da base de dados. Verifique!")
   
-  if (!is.logical(casc))
+  if (!is.logical(savptc))
+     stop("Entrada para 'savptc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  
+  if (!is.numeric(width) || width <= 0)
+     stop("Entrada para 'width' esta incorreta, deve ser numerica e maior que zero. Verifique!")
+  
+  if (!is.numeric(height) || height <= 0)
+     stop("Entrada para 'height' esta incorreta, deve ser numerica e maior que zero. Verifique!")
+  
+  if (!is.numeric(res) || res <= 0)
+     stop("Entrada para 'res' esta incorreta, deve ser numerica e maior que zero. Verifique!")
+  
+  if (!is.logical(casc && !savptc))
      stop("Entrada para 'casc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
   if (is.na(xlabel[1]))
@@ -53,16 +70,27 @@ Plot.FA <- function(FA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   
   #####   FIM - Informacoes usadas nos Graficos  #####
   
-  if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+  if (savptc) {
+     cat("\014") # limpa a tela
+     cat("\n\n Salvando graficos em disco. Aguarde o termino!")
+  }
+  
+  if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
 
   ##### INICIO - Plotagem dos Autovalores #####
+  if (savptc) png(filename = "Figure FA Variances.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  
   mp <- barplot(FA$mtxvar[,1],names.arg=paste(round(FA$mtxvar[,2],2),"%",sep=""),
                 main = "Variancias dos Fatores")
+  
+  if (savptc) { box(col = 'white'); dev.off() }
   ##### FIM - Plotagem dos Autovalores #####
   
-  if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+  if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Scree-plot dos Fatores #####
+  if (savptc) png(filename = "Figure FA Scree Plot.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  
   plot(1:length(FA$mtxvar[,1]), FA$mtxvar[,1],
        type = "n", # nao plota pontos
        xlab = "Ordem dos Fatores", 
@@ -85,11 +113,15 @@ Plot.FA <- function(FA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   }
   
   points(1:length(FA$mtxvar[,1]), FA$mtxvar[,1], type = "b")
+  
+  if (savptc) { box(col = 'white'); dev.off() }
   ##### FIM - Scree-plot dos Fatores #####
 
-  if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+  if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem Escores das observacoes #####
+  if (savptc) png(filename = "Figure FA Observations.png", width = width, height = height, res = res) # salva os graficos em arquivo
+  
   plot(FA$mtxscores,  # cria grafico para os Escores das observacoes 
        xlab = xlabel, # Nomeia Eixo X
        ylab = ylabel, # Nomeia Eixo Y
@@ -119,11 +151,15 @@ Plot.FA <- function(FA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
   if (!is.na(linlab[1])) LocLab(FA$mtxscores, cex = 1, linlab)
+  
+  if (savptc) { box(col = 'white'); dev.off() }
   ##### FIM - Plotagem Escores das observacoes #####
   
-  if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+  if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Cargas fatoriais #####
+  if (savptc) png(filename = "Figure FA Loadings.png", width = width, height = height, res = res) # salva os graficos em arquivo
+  
   HpMat <- rbind(c(0,0),FA$mtxcarga[,1:2])
   MaxX  <- max(HpMat[,1]) + 0.05 # Dimenssoes maximas das linhas
   MinX  <- min(HpMat[,1]) - 0.05 # Dimenssoes minimas das linhas
@@ -157,11 +193,15 @@ Plot.FA <- function(FA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   
   NomeVar <- rownames(FA$mtxcarga) # nomes das variaveis
   LocLab(FA$mtxcarga[,1:2], NomeVar, col = ifelse(color,"Blue","Black"))  # Coloca os nomes das variaveis
+  
+  if (savptc) { box(col = 'white'); dev.off() }
   ##### FIM - Cargas fatoriais #####
 
-  if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+  if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Biplot ##### 
+  if (savptc) png(filename = "Figure FA Biplot.png", width = width, height = height, res = res) # salva os graficos em arquivo
+  
   HpMat <- rbind(c(0,0),FA$mtxcarga[,1:2],FA$mtxscores[,1:2])
   MaxX  <- max(HpMat[,1]) + 0.05 # Dimenssoes maximas das linhas
   MinX  <- min(HpMat[,1]) - 0.05 # Dimenssoes minimas das linhas
@@ -191,7 +231,7 @@ Plot.FA <- function(FA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   
   abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
-  arrows(0,0,FA$mtxcarga[,1],FA$mtxcarga[,2], lwd = 1, code = 2, length = 0.08, angle = 25, col = ifelse(color,"Black","Black")) # cria a seta apontando para cada variavel  
+  arrows(0,0,FA$mtxcarga[,1],FA$mtxcarga[,2], lwd = 1, code = 2, length = 0.08, angle = 25, col = ifelse(color,"Red","Black")) # cria a seta apontando para cada variavel  
   
   NomeVar <- rownames(FA$mtxcarga) # nomes das variaveis
   LocLab(FA$mtxcarga[,1:2], NomeVar, col = ifelse(color,"Blue","Black")) # Coloca os nomes das variaveis
@@ -203,5 +243,10 @@ Plot.FA <- function(FA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
          col = ifelse(color,"Red","Black"))
   
   if (!is.na(linlab[1])) LocLab(FA$mtxscores, cex = 1, linlab)
+  
+  if (savptc) { box(col = 'white'); dev.off() }
   ##### FIM - Biplot #####
+  
+  if (savptc) cat("\n \n Fim!")
+  
 }

@@ -87,13 +87,13 @@ data <- DataMix[,2:ncol(DataMix)]
 
 rownames(data) <- DataMix[1:nrow(DataMix),1]
 
-GroupNames = c("Notas Cafes/Trabalho", "Formacao/Dedicacao", "Cafes")
+group.names = c("Notas Cafes/Trabalho", "Formacao/Dedicacao", "Cafes")
 
-MF <- MFA(data = data, c(2,2,2), typegroups = c("n","c","f"), GroupNames) # realiza MFA
+mf <- MFA(data = data, c(2,2,2), typegroups = c("n","c","f"), group.names) # realiza MFA
 
-print("Variancias dos Componentes Principais:"); round(MF$mtxA,2)
+print("Variancias dos Componentes Principais:"); round(mf$mtxA,2)
 
-print("Matriz das Inercias Parciais/Escores das Variaveis:"); round(MF$mtxEV,2)
+print("Matriz das Inercias Parciais/Escores das Variaveis:"); round(mf$mtxEV,2)
 }
 
 \keyword{Analise de multiplos fatores}

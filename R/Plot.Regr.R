@@ -1,6 +1,7 @@
 Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA, 
                       ylabel = NA, namevary = NA, namevarx = NA, size = 1.1, 
                       grid = TRUE,  color = TRUE, intconf = TRUE, intprev = TRUE, 
+                      savptc = FALSE, width = 3236, height = 2000, res = 300, 
                       casc = TRUE) {
   # Esta funcao gera graficos da Analise de Regressao
   # desenvolvida por Paulo Cesar Ossani em 06/2016
@@ -26,7 +27,11 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
   #            Graficos com intervalo de confianca (default = TRUE).
   # intprev  - Caso typegraf = "Regression":
   #            Graficos com intervalo de previsao (default = TRUE).
-  # casc    - Efeito cascata na apresentacao dos graficos (default = TRUE).
+  # savptc   - Salva as imagens dos graficos em arquivos (default = FALSE).
+  # width    - Largura do grafico quanto savptc = TRUE (defaul = 3236).
+  # height   - Altura do grafico quanto savptc = TRUE (default = 2000).
+  # res      - Resolucao nominal em ppi do grafico quanto savptc = TRUE (default = 300).
+  # casc     - Efeito cascata na apresentacao dos graficos (default = TRUE).
 
   # Retorna:
   # Varios graficos.
@@ -65,16 +70,35 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
   if (is.na(namevarx[1]))
      namevarx <- c(paste("X",1:ncol(X),sep=""))
   
-  if (!is.logical(casc))
+  if (!is.logical(savptc))
+     stop("Entrada para 'savptc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  
+  if (!is.numeric(width) || width <= 0)
+     stop("Entrada para 'width' esta incorreta, deve ser numerica e maior que zero. Verifique!")
+  
+  if (!is.numeric(height) || height <= 0)
+     stop("Entrada para 'height' esta incorreta, deve ser numerica e maior que zero. Verifique!")
+  
+  if (!is.numeric(res) || res <= 0)
+     stop("Entrada para 'res' esta incorreta, deve ser numerica e maior que zero. Verifique!")
+  
+  if (!is.logical(casc && !savptc))
      stop("Entrada para 'casc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
+  if (savptc) {
+     cat("\014") # limpa a tela
+     cat("\n\n Salvando graficos em disco. Aguarde o termino!")
+  }
+  
   ## Inicio - Scatterplot
   if (typegraf == "Scatterplot") {
     
      if (is.na(title[1]))
         title = c("Grafico de dispersao 2 a 2")
      
-     if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+     if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
+     
+     if (savptc) png(filename = "Figure Regression Scatterplot.png", width = width, height = height, res = res) # salva os graficos em arquivos
      
      Dat <- as.data.frame(cbind(Reg$Y,X))
      colnames(Dat) <- c(namevary,namevarx)
@@ -84,6 +108,8 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
            pch  = 21,    # Formato dos pontos 
            cex  = size,  # Tamanho dos pontos  
            bg   = cor)
+     
+      if (savptc) { box(col = 'white'); dev.off() }
   }
   ## Fim - Scatterplot
   
@@ -94,6 +120,8 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
     
      if (ncol(X)==1) { # para calculos de regressao simples
         
+        if (savptc) png(filename = "Figure Regression Simples.png", width = width, height = height, res = res) # salva os graficos em arquivos
+       
         if (is.na(xlabel[1]))
            xlabel = "Eixo x"  # Nomeia Eixo X  
        
@@ -109,7 +137,7 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
         
         if (Reg$intercepts) Modelo <- lm(Y~X) else Modelo <- lm(Y~-1+X)
         
-        if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+        if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
         
         # Intervalo para abcissa
         Inter <- ifelse(length(Reg$Y)<100,150,length(Reg$Y)*1.5) # intervalo para o eixo X
@@ -167,12 +195,17 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
            lines(cbind(New.X,Inter.Pred[,3]), lty=2) # acrescenta I.P. Lim.Superior
         }
         ## Fim - Acrescenta o Intervalo das previsoes
+        
+         if (savptc) { box(col = 'white'); dev.off() }
      }
+     
   }
   ## Fim - Grafico da regressao
   
   ## Inicio - Grafico da probalidade normal
   if (typegraf == "QQPlot") {
+     
+     if (savptc) png(filename = "Figure Regression QQPlot.png", width = width, height = height, res = res) # salva os graficos em arquivos
     
      if (is.na(xlabel[1]))
         xlabel = "Quantis"  # Nomeia Eixo X  
@@ -183,7 +216,7 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
      if (is.na(title[1]))
         title = c("Grafico da probabilidade \n normal do residuo")
      
-     if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+     if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
 
      qqnorm(Reg$error,
             xlab = xlabel, # Nomeia Eixo X
@@ -194,12 +227,15 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
             panel.first = grid(col = ifelse(grid,"gray","white"), lwd = 1, lty = 7, equilogs = T),
             cex = size)    # Tamanho dos pontos 
      qqline(Reg$error, col = ifelse( color,"red","black"))
- 
+     
+      if (savptc) { box(col = 'white'); dev.off() }
   }
   ## Fim - Grafico da probalidade normal
   
   ## Inicio - Grafico da probalidade normal
   if (typegraf == "Histogram") {
+    
+     if (savptc) png(filename = "Figure Regression Histogram.png", width = width, height = height, res = res) # salva os graficos em arquivos
     
      if (is.na(xlabel[1]))
         xlabel = "Residuo"  # Nomeia Eixo X  
@@ -210,7 +246,7 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
      if (is.na(title[1]))
         title = c("Histograma do residuo")
      
-     if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+     if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
      
      hist(Reg$error,
           xlab = xlabel, # Nomeia Eixo X
@@ -218,11 +254,15 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
           main = title,  # Titulo
           pch  = 19,     # Formato dos pontos 
           cex = size)    # Tamanho dos pontos
+     
+      if (savptc) { box(col = 'white'); dev.off() }
   }
   ## Fim - Grafico da probalidade normal
   
   ## Inicio - Grafico dos valores ajustados com os residuos
   if (typegraf == "Fits") {
+    
+    if (savptc) png(filename = "Figure Regression Fits.png", width = width, height = height, res = res) # salva os graficos em arquivos
     
     if (is.na(xlabel[1]))
        xlabel = "Valores ajustados"  # Nomeia Eixo X  
@@ -233,7 +273,7 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
     if (is.na(title[1]))
        title = c("Valores ajustados vs. residuos")
     
-    if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+    if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
     
     plot(Reg$prev,Reg$error, # cria grafico
          xlab = xlabel, # Nomeia Eixo X
@@ -260,11 +300,14 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
       
     abline(0,0, lty = 2) # acrescenta a reta do eixo X
     
+     if (savptc) { box(col = 'white'); dev.off() }
   }
   ## Fim - Grafico dos valores ajustados com os residuos
   
   ## Inicio - Grafico com ordem das observacoes versus os residuos
   if (typegraf == "Order") {
+    
+    if (savptc) png(filename = "Figure Regression Order.png", width = width, height = height, res = res) # salva os graficos em arquivos
     
     if (is.na(xlabel[1]))
        xlabel = "Ordem das observacoes"  # Nomeia Eixo X  
@@ -275,7 +318,7 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
     if (is.na(title[1]))
        title = c("Ordem das observacoes vs. residuos")
     
-    if (casc) dev.new() # efeito cascata na apresentacao dos graficos
+    if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
     
     plot(1:length(Reg$error),Reg$error, # cria grafico
          xlab = xlabel, # Nomeia Eixo X
@@ -303,7 +346,9 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
       
     abline(0,0, lty = 2) # acrescenta a reta do eixo X
     
+     if (savptc) { box(col = 'white'); dev.off() }
   }
   ## Fim - Grafico com as ordem das observacoes versus os residuos
 
+  if (savptc) cat("\n \n Fim!")
 }

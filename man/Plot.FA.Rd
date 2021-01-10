@@ -8,6 +8,7 @@
 
 \usage{Plot.FA(FA, titles = NA, xlabel = NA, ylabel = NA,
         size = 1.1, grid = TRUE, color = TRUE, linlab = NA,
+        savptc = FALSE, width = 3236, height = 2000, res = 300,
         casc = TRUE)}
 
 \arguments{
@@ -19,6 +20,10 @@
 \item{grid}{Coloca grade nos graficos (default = TRUE).}
 \item{color}{Graficos coloridos (default = TRUE).}
 \item{linlab}{Vetor com os rotulos para as observacoes.}
+\item{savptc}{Salva as imagens dos graficos em arquivos (default = FALSE).}   
+\item{width}{Largura do grafico quanto savptc = TRUE (defaul = 3236).}
+\item{height}{Altura do grafico quanto savptc = TRUE (default = 2000).}
+\item{res}{Resolucao nominal em ppi do grafico quanto savptc = TRUE (default = 300).}
 \item{casc}{Efeito cascata na apresentacao dos graficos (default = TRUE).}
 }
 
@@ -35,17 +40,18 @@ Marcelo Angelo Cirillo
 \examples{
 data(DataQuan) # conjunto de dados
 
-Data <- DataQuan[,2:ncol(DataQuan)]
+data <- DataQuan[,2:ncol(DataQuan)]
 
-rownames(Data) <- DataQuan[,1]
+rownames(data) <- DataQuan[,1]
 
-Resp <- FA(Data, method = "PC", type = 2, nfactor = 3)
+res <- FA(data, method = "PC", type = 2, nfactor = 3)
 
-Tit = c("Scree-plot","Scores das observacoes","Cargas Fatoriais","Biplot")
+tit <- c("Scree-plot","Scores das observacoes","Cargas Fatoriais","Biplot")
 
-Plot.FA(Resp, titles = Tit, xlabel = NA, ylabel = NA,
-        color = TRUE, linlab = rep("", nrow(Data)),
-        casc = TRUE)
+Plot.FA(res, titles = tit, xlabel = NA, ylabel = NA,
+        color = TRUE, linlab = rep("", nrow(data)),
+        savptc = FALSE, width = 3236, height = 2000, 
+        res = 300, casc = TRUE)
 
 }
 

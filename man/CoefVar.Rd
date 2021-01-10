@@ -31,11 +31,11 @@ data(DataQuan) # conjunto de dados
 
 data <- DataQuan[,2:8]
 
-Resp <- CoefVar(data = data, type = 1) # coeficiente de variacao global
-round(Resp,2)
+res <- CoefVar(data = data, type = 1) # coeficiente de variacao global
+round(res,2)
 
-Resp <- CoefVar(data = data, type = 2) # coeficiente de variacao por coluna
-round(Resp,2)
+res <- CoefVar(data = data, type = 2) # coeficiente de variacao por coluna
+round(res,2)
 }
 
 \keyword{Coeficiente de variacao.}

@@ -26,11 +26,11 @@ CCA <- function(X = NULL, Y = NULL, type = 1, test = "Bartlett", sign = 0.05) {
    # score.Y - Matriz com os scores do grupo Y,
    # sigtest  - Restorna o teste significancia da relacao entre o grupo X e Y, 'Bartlett' (default) ou "Rao".
   
-   if (!is.data.frame(X)) 
-      stop("Entrada 'X' esta incorreta, deve ser do tipo dataframe. Verifique!")
+   if (!is.data.frame(X) && !is.matrix(X)) 
+      stop("Entrada 'X' esta incorreta, deve ser do tipo dataframe ou matriz. Verifique!")
 
-   if (!is.data.frame(Y)) 
-      stop("Entrada 'Y' esta incorreta, deve ser do tipo dataframe. Verifique!")
+   if (!is.data.frame(Y) && !is.matrix(Y)) 
+      stop("Entrada 'Y' esta incorreta, deve ser do tipo dataframe ou matriz. Verifique!")
   
    if (nrow(X)!=nrow(Y)) 
       stop("O numero de observacoes de 'X' deve ser igual a de 'Y'. Verifique!")
@@ -47,22 +47,18 @@ CCA <- function(X = NULL, Y = NULL, type = 1, test = "Bartlett", sign = 0.05) {
    if (sign<=0 || sign>1) 
       stop("Entrada para 'sign' esta incorreta, deve ser valores entre 0 e 1. Verifique!")
   
-   if (type == 1) { # Considera a Matriz de Covariancia para a decomposicao
-      MC  = cov(cbind(X,Y))  # Matriz de Covariancia
-      S11 = cov(X)   # Matriz de Covariancia dos primeiros dados
-      S22 = cov(Y)   # Matriz de Covariancia dos segundos dados
-      S12 = cov(X,Y) # Matriz de Covariancia de X e Y
-      S21 = cov(Y,X) # Matriz de Covariancia de Y e X
+   if (type == 2) { # normaliza os dados
+      X <- scale(X) 
+      Y <- scale(Y)
    }
-    
-   if (type == 2) { # Considera a Matriz de Correlacao para a decomposicao
-      MC  = cor(cbind(X,Y)) ## Matriz de Correlacao
-      S11 = cor(X)   # Matriz dos Coeficientes dos primeiros dados
-      S22 = cor(Y)   # Matriz dos Coeficientes dos segundos dados
-      S12 = cor(X,Y) # Matriz dos Coeficientes de X e Y
-      S21 = cor(Y,X) # Matriz dos Coeficientes de Y e X
-   }
-
+   
+   # Considera a Matriz de Covariancia para a decomposicao
+   MC  = cov(cbind(X,Y))  # Matriz de Covariancia
+   S11 = cov(X)   # Matriz de Covariancia dos primeiros dados
+   S22 = cov(Y)   # Matriz de Covariancia dos segundos dados
+   S12 = cov(X,Y) # Matriz de Covariancia de X e Y
+   S21 = cov(Y,X) # Matriz de Covariancia de Y e X
+   
    ### Calculo da Matriz S11^(-1/2) e inversa de S22 
    M1 <- eigen(S11) # Calcula a matriz de autovalor e de autovetor de S11
    MAutoVlr1 <- M1$values  # Matriz de Autovalores 
@@ -159,7 +155,7 @@ CCA <- function(X = NULL, Y = NULL, type = 1, test = "Bartlett", sign = 0.05) {
           
           Chi.Observado <- -((n - 1) - (p + q + 1)/2)*log(Lambda) # Estatistica do teste
           
-          gl  <- (p -i +1)*(q -i +1) # grau de libardade
+          gl <- (p -i +1)*(q -i +1) # grau de libardade
           
           Chi.Encontrado <- qchisq(1 - sign,gl,ncp=0)
           
