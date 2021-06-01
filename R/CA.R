@@ -45,8 +45,6 @@ CA <- function(data, typdata = "f", typmatrix = "I") {
     if (sum(data)!=round(sum(abs(data)),0))
        stop("Os dados devem ser de numeros inteiros positivos oriundos de contagem. Verifique!")
   
-  Nc = min(nrow(data) - 1, ncol(data) - 1) # numero de coordenadas principais
-  
   if (typdata == "C") {  
     # Converte para variaveis Dummy para execucao analise
     # de Correspondencia Multipla, ou seja, em 0 e 1, caso dados nominais
@@ -78,6 +76,8 @@ CA <- function(data, typdata = "f", typmatrix = "I") {
     }
     
   } 
+  
+  # Nc = min(nrow(data) - 1, ncol(data) - 1) # numero de coordenadas principais
   
   SDados <- sum(data) # Soma Total dos Dados
   
@@ -140,12 +140,13 @@ CA <- function(data, typdata = "f", typmatrix = "I") {
   ##### FIM Calculo das Coordenadas principais das Linhas e Colunas #####
   
   ##### INICIO - Calculo das Inercia Total #####
-  MAutoVlr = diag(Md%*%Md)
+  MAutoVlr = Md[Md > 0.0001]^2
+  Nc <- length(MAutoVlr)
   MEigen <- as.data.frame(matrix(NA, Nc, 3))
   rownames(MEigen) <- paste("Comp", 1:Nc)
   colnames(MEigen) <- c("Autovalor", "% da variancia","% acumulada da variancia")
-  MEigen[, "Autovalor"] <- MAutoVlr[1:Nc]
-  MEigen[, "% da variancia"] <- (MAutoVlr[1:Nc]/sum(MAutoVlr[1:Nc])) * 100
+  MEigen[, "Autovalor"] <- MAutoVlr 
+  MEigen[, "% da variancia"] <- (MAutoVlr /sum(MAutoVlr )) * 100
   MEigen[, "% acumulada da variancia"] <- cumsum(MEigen[,"% da variancia"])
   ##### FIM - Calculo das Inercia Total #####
   
