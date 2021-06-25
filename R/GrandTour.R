@@ -221,55 +221,33 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
          }
          else { cor.classe <- c("blue") }
          
+         plot(proj.data, # coordenadas do grafico
+              xlab = xlabel, # Nomeia Eixo X
+              ylab = ylabel, # Nomeia Eixo Y
+              type = "n",    # nao plota pontos
+              main = Tit,    # Titulo para o grafico
+              xlim = c(minX,maxX), # dimensao eixo X
+              ylim = c(minY,maxY)) # dimensao eixo Y 
+         
+         if (grid) {
+           
+           args <- append(as.list(par('usr')), c('gray93','gray93'))
+           
+           names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
+           
+           do.call(rect, args) # chama a funcao rect com os argumentos (args)
+           
+           grid(col = "white", lwd = 2, lty = 7, equilogs = T)
+           
+         }
+         
          if (Num.class == 0) {
-           
-            plot(proj.data, # coordenadas do grafico
-                 xlab = xlabel, # Nomeia Eixo X
-                 ylab = ylabel, # Nomeia Eixo Y
-                 type = "n",    # nao plota pontos
-                 main = Tit,    # Titulo para o grafico
-                 xlim = c(minX,maxX), # dimensao eixo X
-                 ylim = c(minY,maxY)) # dimensao eixo Y 
-
-            if (grid) {
-             
-               args <- append(as.list(par('usr')), c('gray93','gray93'))
-               
-               names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
-              
-               do.call(rect, args) # chama a funcao rect com os argumentos (args)
-              
-               grid(col = "white", lwd = 2, lty = 7, equilogs = T)
-             
-            }
-           
             points(proj.data, # coordenadas do grafico
                    pch  = 16, # formato dos pontos
                    cex = size,  # Tamanho dos pontos 
                    col = ifelse(color, cor.classe, "Black"))
 
          } else {
-           
-            plot(0,0, # cria grafico para as coordenadas linhas x e colunas y
-                 xlab = xlabel, # Nomeia Eixo X
-                 ylab = ylabel, # Nomeia Eixo Y
-                 main = Tit,    # Titulo
-                 type = "n",    # nao plota pontos
-                 xlim = c(minX,maxX), # dimensao eixo X
-                 ylim = c(minY,maxY),) # dimensao eixo Y
-                 # col  = ifelse(color,"red","black"))  # Cor dos pontos  
-
-            if (grid) {
-             
-               args <- append(as.list(par('usr')), c('gray93','gray93'))
-              
-               names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
-              
-               do.call(rect, args) # chama a funcao rect com os argumentos (args)
-              
-               grid(col = "white", lwd = 2, lty = 7, equilogs = T)
-             
-            } 
            
             Init.Form <- 14 # formato inicial dos pontos
             
@@ -294,8 +272,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
          
          if (!is.na(linlab[1])) LocLab(proj.data, cex = size, linlab)
          
-         if (axes) # coloca os eixos
-            abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
+         if (axes) abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
          
          if (axesvar) { # plota os eixos das variaveis
            
@@ -408,55 +385,33 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
          }
          else { cor.classe <- c("blue") }
          
+         plot(proj.data,     # coordenadas do grafico
+              xlab = xlabel, # Nomeia Eixo X
+              ylab = ylabel, # Nomeia Eixo Y
+              type = "n",    # nao plota pontos
+              main = Tit,    # Titulo para o grafico
+              xlim = c(minX,maxX), # dimensao eixo X
+              ylim = c(minY,maxY)) # dimensao eixo Y
+         
+         if (grid) {
+           
+           args <- append(as.list(par('usr')), c('gray93','gray93'))
+           
+           names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
+           
+           do.call(rect, args) # chama a funcao rect com os argumentos (args)
+           
+           grid(col = "white", lwd = 2, lty = 7, equilogs = T)
+           
+         }
+         
          if (Num.class == 0) { 
-
-            plot(proj.data,     # coordenadas do grafico
-                 xlab = xlabel, # Nomeia Eixo X
-                 ylab = ylabel, # Nomeia Eixo Y
-                 type = "n",    # nao plota pontos
-                 main = Tit,    # Titulo para o grafico
-                 xlim = c(minX,maxX), # dimensao eixo X
-                 ylim = c(minY,maxY)) # dimensao eixo Y
-           
-            if (grid) {
-             
-               args <- append(as.list(par('usr')), c('gray93','gray93'))
-              
-               names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
-              
-               do.call(rect, args) # chama a funcao rect com os argumentos (args)
-              
-               grid(col = "white", lwd = 2, lty = 7, equilogs = T)
-             
-            }
-           
             points(proj.data,  # coordenadas do grafico
                    pch  = 16,  # formato dos pontos
                    cex = size,  # Tamanho dos pontos 
                    col = ifelse(color, cor.classe, "Black"))
             
          } else {
-           
-            plot(0,0, # cria grafico para as coordenadas linhas x e colunas y
-                 xlab = xlabel, # Nomeia Eixo X
-                 ylab = ylabel, # Nomeia Eixo Y
-                 main = Tit,    # Titulo
-                 type = "n",    # nao plota pontos
-                 xlim = c(minX,maxX), # dimensao eixo X
-                 ylim = c(minY,maxY)) # dimensao eixo Y
-                 # col  = ifelse(color,"red","black"))  # Cor dos pontos
-           
-            if (grid) {
-             
-               args <- append(as.list(par('usr')), c('gray93','gray93'))
-              
-               names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
-              
-               do.call(rect, args) # chama a funcao rect com os argumentos (args)
-              
-               grid(col = "white", lwd = 2, lty = 7, equilogs = T)
-             
-            } 
            
             Init.Form <- 14 # formato inicial dos pontos
             
@@ -481,8 +436,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
 
          if (!is.na(linlab[1])) LocLab(proj.data, cex = size, linlab)
         
-         if (axes) # coloca os eixos
-            abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
+         if (axes) abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
          
          if (axesvar) { # plota os eixos das variaveis
            
@@ -603,28 +557,27 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
          }
          else { cor.classe <- c("blue") }
          
+         plot(proj.data, # coordenadas do grafico
+              xlab = xlabel, # Nomeia Eixo X
+              ylab = ylabel, # Nomeia Eixo Y
+              type = "n",    # nao plota pontos
+              main = Tit,    # Titulo para o grafico
+              xlim = c(minX,maxX), # dimensao eixo X
+              ylim = c(minY,maxY)) # dimensao eixo Y
+         
+         if (grid) {
+           
+           args <- append(as.list(par('usr')), c('gray93','gray93'))
+           
+           names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
+           
+           do.call(rect, args) # chama a funcao rect com os argumentos (args)
+           
+           grid(col = "white", lwd = 2, lty = 7, equilogs = T)
+           
+         }
+         
          if (Num.class == 0) {
-           
-            plot(proj.data, # coordenadas do grafico
-                 xlab = xlabel, # Nomeia Eixo X
-                 ylab = ylabel, # Nomeia Eixo Y
-                 type = "n",    # nao plota pontos
-                 main = Tit,    # Titulo para o grafico
-                 xlim = c(minX,maxX), # dimensao eixo X
-                 ylim = c(minY,maxY)) # dimensao eixo Y
-          
-            if (grid) {
-            
-               args <- append(as.list(par('usr')), c('gray93','gray93'))
-              
-               names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
-              
-               do.call(rect, args) # chama a funcao rect com os argumentos (args)
-              
-               grid(col = "white", lwd = 2, lty = 7, equilogs = T)
-             
-            }
-           
             points(proj.data, # coordenadas do grafico
                    pch  = 16,  # formato dos pontos
                    cex = size,  # Tamanho dos pontos 
@@ -632,27 +585,6 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
            
          } else {
             
-            plot(0,0, # cria grafico para as coordenadas linhas x e colunas y
-                 xlab = xlabel, # Nomeia Eixo X
-                 ylab = ylabel, # Nomeia Eixo Y
-                 main = Tit,    # Titulo
-                 type = "n",    # nao plota pontos
-                 xlim = c(minX,maxX), # dimensao eixo X
-                 ylim = c(minY,maxY)) # dimensao eixo Y
-                 # col  = ifelse(color,"red","black"))  # Cor dos pontos
-          
-            if (grid) {
-            
-               args <- append(as.list(par('usr')), c('gray93','gray93'))
-             
-               names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
-             
-               do.call(rect, args) # chama a funcao rect com os argumentos (args)
-              
-               grid(col = "white", lwd = 2, lty = 7, equilogs = T)
-             
-            } 
-          
             Init.Form <- 14 # formato inicial dos pontos
            
             for (k in 1:Num.class) {
@@ -676,8 +608,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
          
          if (!is.na(linlab[1])) LocLab(proj.data[1:n,], cex = size, linlab)
          
-         if (axes) # coloca os eixos
-            abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
+         if (axes) abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
          
          if (axesvar) { # plota os eixos das variaveis
            

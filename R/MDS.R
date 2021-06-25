@@ -149,55 +149,33 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
   
   if (savptc) png(filename = "Figure MDS.png", width = width, height = height, res = res) # salva os graficos em arquivo
   
+  plot(x,y, # cria grafico para as coordenadas linhas x e colunas y
+       xlab = xlabel, # Nomeia Eixo X
+       ylab = ylabel, # Nomeia Eixo Y
+       type = "n",    # tipo de grafico  
+       main = title,  # Titulo
+       xlim = c(min(x)-0.5,max(x)+0.5), # Dimensao para as linhas do grafico
+       ylim = c(min(y)-0.5,max(y)+0.5)) # Dimensao para as colunas do grafico
+  
+  if (grid) {
+    
+    args <- append(as.list(par('usr')), c('gray93','gray93'))
+    
+    names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
+    
+    do.call(rect, args) # chama a funcao rect com os argumentos (args)
+    
+    grid(col = "white", lwd = 2, lty = 7, equilogs = T)
+    
+  }
+  
   if (Num.class == 0) {
-    
-    plot(x,y, # cria grafico para as coordenadas linhas x e colunas y
-         xlab = xlabel, # Nomeia Eixo X
-         ylab = ylabel, # Nomeia Eixo Y
-         type = "n",    # tipo de grafico  
-         main = title,  # Titulo
-         xlim = c(min(x)-0.5,max(x)+0.5), # Dimensao para as linhas do grafico
-         ylim = c(min(y)-0.5,max(y)+0.5)) # Dimensao para as colunas do grafico
-
-    if (grid) {
-      
-       args <- append(as.list(par('usr')), c('gray93','gray93'))
-      
-       names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
-      
-       do.call(rect, args) # chama a funcao rect com os argumentos (args)
-      
-       grid(col = "white", lwd = 2, lty = 7, equilogs = T)
-      
-    }
-    
-    points(x,y, # cria grafico para as coordenadas linhas x e colunas y
+     points(x,y, # cria grafico para as coordenadas linhas x e colunas y
            pch = 19,   # Formato dos pontos 
            cex = size, # tamanho dos pontos         
            col = ifelse(color, cor.classe, "Black"))
       
   } else {
-    
-    plot(0,0, # cria grafico para as coordenadas linhas x e colunas y
-         xlab = xlabel, # Nomeia Eixo X
-         ylab = ylabel, # Nomeia Eixo Y
-         main = title,  # Titulo
-         type = "n",    # nao plota pontos
-         xlim = c(min(x)-0.5,max(x)+0.5), # Dimensao para as linhas do grafico
-         ylim = c(min(y)-0.5,max(y)+0.5), # Dimensao para as colunas do grafico
-         col  = ifelse(color,"red","black"))  # Cor dos pontos
-
-    if (grid) {
-      
-       args <- append(as.list(par('usr')), c('gray93','gray93'))
-      
-       names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
-      
-       do.call(rect, args) # chama a funcao rect com os argumentos (args)
-      
-       grid(col = "white", lwd = 2, lty = 7, equilogs = T)   
-       
-    }
     
     Newdata <- cbind(x,y)
     
@@ -242,8 +220,7 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
             text.col = color_b, bty = boxleg, text.font = 6, y.intersp = 0.8, xpd = TRUE) # cria a legenda
   }
   
-  if (axes) # coloca axes no grafico
-     abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
+  if (axes) abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
   if (!is.na(linlab[1])) LocLab(x, y, cex = 1, linlab)
 

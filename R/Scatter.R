@@ -194,28 +194,28 @@ Scatter <- function(data, ellipse = TRUE, ellipse.level = 0.95, rectangle = FALS
   }
   else { cor.classe <- c("blue") }
   
-  if (num.class == 0) {
+  plot(0,0, # cria grafico para as coordenadas linhas x e colunas y
+       xlab = xlabel, # Nomeia Eixo X
+       ylab = ylabel, # Nomeia Eixo Y
+       main = title,  # Titulo
+       asp  = 0,      # Aspecto do Grafico
+       type = "n",    # nao plota pontos
+       xlim = axes.x, # Dimensao para as linhas do grafico
+       ylim = axes.y) # Dimensao para as colunas do grafico 
+  
+  if (grid) {
     
-     plot(0,0, # cria grafico para as coordenadas linhas x e colunas y
-          xlab = xlabel, # Nomeia Eixo X
-          ylab = ylabel, # Nomeia Eixo Y
-          main = title,  # Titulo
-          asp  = 0,      # Aspecto do Grafico
-          type = "n",    # nao plota pontos
-          xlim = axes.x, # Dimensao para as linhas do grafico
-          ylim = axes.y) # Dimensao para as colunas do grafico 
-
-     if (grid) {
-      
-        args <- append(as.list(par('usr')), c('gray93','gray93'))
-       
-        names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
-       
-        do.call(rect, args) # chama a funcao rect com os argumentos (args)
-       
-        grid(col = "white", lwd = 2, lty = 7, equilogs = T)
-       
-     }
+    args <- append(as.list(par('usr')), c('gray93','gray93'))
+    
+    names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
+    
+    do.call(rect, args) # chama a funcao rect com os argumentos (args)
+    
+    grid(col = "white", lwd = 2, lty = 7, equilogs = T)
+    
+  }
+  
+  if (num.class == 0) {
     
      points(x, y, # cria grafico para as coordenadas principais das linhas
             pch = 16,   # Formato dos pontos 
@@ -224,27 +224,6 @@ Scatter <- function(data, ellipse = TRUE, ellipse.level = 0.95, rectangle = FALS
     
   } else {
     
-     plot(0,0, # cria grafico para as coordenadas linhas x e colunas y
-          xlab = xlabel, # Nomeia Eixo X
-          ylab = ylabel, # Nomeia Eixo Y
-          main = title,  # Titulo
-          asp  = 0,      # Aspecto do Grafico
-          type = "n",    # nao plota pontos
-          xlim = axes.x, # Dimensao para as linhas do grafico
-          ylim = axes.y) # Dimensao para as colunas do grafico
-
-     if (grid) {
-      
-        args <- append(as.list(par('usr')), c('gray93','gray93'))
-      
-        names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
-       
-        do.call(rect, args) # chama a funcao rect com os argumentos (args)
-       
-        grid(col = "white", lwd = 2, lty = 7, equilogs = T)
-       
-     }
-     
      newdata <- cbind(x,y)
      
      init.form <- 14 # formato inicial dos pontos
@@ -261,8 +240,8 @@ Scatter <- function(data, ellipse = TRUE, ellipse.level = 0.95, rectangle = FALS
        point.data <- newdata[which(class == class.Names[i]),] 
 
        if (ellipse && num.class > 0) { # desenha a elipse das classes
-         elip <- fellipse(data = point.data, ellipse.level = ellipse.level)
-         lines(elip, col = cor1)
+          elip <- fellipse(data = point.data, ellipse.level = ellipse.level)
+          lines(elip, col = cor1)
        } 
       
        if (rectangle && num.class > 0) { # desenha o retangunlo das classes
@@ -299,8 +278,7 @@ Scatter <- function(data, ellipse = TRUE, ellipse.level = 0.95, rectangle = FALS
             text.col = color_b, bty = boxleg, text.font = 6, y.intersp = 0.8, xpd = TRUE) # cria a legenda
   }
   
-  if (axes) # coloca axes no grafico
-     abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
+  if (axes) abline(h = 0, v = 0, cex = 1.5, lty = 2)
   
   if (!is.na(linlab[1])) LocLab(x, y, cex = 1, linlab)
 

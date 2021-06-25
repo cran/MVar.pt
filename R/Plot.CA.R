@@ -150,7 +150,7 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
             cex = size,  # Tamanho dos pontos  
             col = ifelse(color,"red","black")) # Cor dos pontos
        
-     abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
+     abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
     
      if (!is.na(linlab[1])) LocLab(CA$mtxX,cex=1, linlab)
     
@@ -189,7 +189,7 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
          cex = size,  # Tamanho dos pontos  
          col = ifelse(color,ifelse(CA$typdata=="C","red","blue"),"black"))             # Cor dos pontos
     
-  abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
+  abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
   LocLab(CA$mtxY, cex=1, rownames(CA$mtxY))
   
@@ -229,7 +229,7 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
 
      points(CA$mtxY, pch = 16, cex = size, col = ifelse(color,"blue","black")) # adiciona ao grafico as coordenadas principais das colunas
      
-     abline(h = 0, v=0, cex = 1.5, lty=2) # cria o eixo central
+     abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
      
      if (!is.na(linlab[1])) LocLab(rbind(CA$mtxX[,1:2], CA$mtxY[,1:2]), cex=1, rbind(as.matrix(linlab), as.matrix(rownames(CA$mtxY))))
   

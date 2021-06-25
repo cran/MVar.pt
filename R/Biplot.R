@@ -194,8 +194,7 @@ Biplot <- function(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
     
   }
 
-  if (axes) # coloca os eixos
-     abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
+  if (axes) abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
   if (var) {
      arrows(0,0,coorV[,1],coorV[,2], lwd = 1, code = 2, length = 0.08, angle = 25, col = ifelse(color==TRUE,"Red","Black")) # cria a seta apontando para cada variavel  
