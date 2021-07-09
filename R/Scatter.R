@@ -228,6 +228,8 @@ Scatter <- function(data, ellipse = TRUE, ellipse.level = 0.95, rectangle = FALS
      
      init.form <- 14 # formato inicial dos pontos
   
+     cor <- 1 # cor inicial
+     
      for (i in 1:num.class) {
        
        point.form <- init.form + i # fomato dos pontos de cada classe

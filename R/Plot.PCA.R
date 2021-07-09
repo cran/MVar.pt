@@ -207,6 +207,8 @@ Plot.PCA <- function(PC, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
     
     init.form <- 14 # formato inicial dos pontos
     
+    cor <- 1 # cor inicial
+    
     for (i in 1:num.class) {
       
       point.form <- init.form + i # fomato dos pontos de cada classe
