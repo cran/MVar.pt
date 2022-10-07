@@ -268,20 +268,26 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
     
      if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
 
+     minX = 1
+     maxX = length(Data[,1]) + minX
+     maxY = max(Data[, 1]) 
+     minY = min(Data[, 1]) 
+     
      if (num.class == 0) {
                
         if (color && !is.na(classcolor[1])) {
           cor1 <- classcolor
         }
         else { cor1 <- ifelse(color, "blue", "Black") }
-        
-        
+
         plot(Data, # coordenadas do grafico
              xlab = xlabel, # Nomeia Eixo X
              ylab = ylabel, # Nomeia Eixo Y
              type = "n",    # tipo de grafico
              main = titles[2], # Titulo
-             axes = F)      # Elimina os eixos
+             axes = T,      # Elimina os eixos
+             xlim = c(minX, maxX), # Dimensao para as linhas do grafico
+             ylim = c(minY, maxY)) # Dimensao para as colunas do grafico
              
         if (grid) {
           
@@ -303,11 +309,6 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
        
      } else {
        
-        minX = 5
-        maxX = length(Data[,1]) + minX
-        maxY = max(Data[, 1]) 
-        minY = min(Data[, 1]) 
-        
         Init.Form <- 15 # formato inicial dos pontos
         
         if (color && !is.na(classcolor[1])) {
@@ -325,7 +326,7 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
              ylab = ylabel, # Nomeia Eixo Y
              type = "n",    # tipo de grafico
              main = titles[2], # Titulo
-             axes = F,      # Elimina os eixos  
+             axes = T,      # Elimina os eixos  
              xlim = c(minX, maxX), # Dimensao para as linhas do grafico
              ylim = c(minY, maxY)) # Dimensao para as colunas do grafico
 

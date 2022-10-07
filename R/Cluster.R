@@ -169,7 +169,10 @@ Cluster <- function(data, titles = NA, hierarquico = TRUE, analise = "Obs",
         
         if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
        
-        if (savptc) png(filename = "Figure Cluster Screen plots 1.png", width = width, height = height, res = res) # salva os graficos em arquivos
+        if (savptc) {
+           name.figure = paste("Figure Cluster Screen plots 1 - distance ",distance," - method ", method,".png",sep="")
+           png(filename = name.figure, width = width, height = height, res = res) # salva os graficos em arquivos
+        }
        
         plot(length(Sim):1, 1/Sim, 
              type = "b", 
@@ -183,7 +186,10 @@ Cluster <- function(data, titles = NA, hierarquico = TRUE, analise = "Obs",
         
         if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
         
-        if (savptc) png(filename = "Figure Cluster Screen plots 2.png", width = width, height = height, res = res) # salva os graficos em arquivos
+        if (savptc) {
+           name.figure = paste("Figure Cluster Screen plots 2 - distance ",distance," - method ", method,".png",sep="")
+           png(filename = name.figure, width = width, height = height, res = res) # salva os graficos em arquivos
+        }
         
         plot(length(Distancia):1, Distancia, 
              type ="b", 
@@ -200,7 +206,10 @@ Cluster <- function(data, titles = NA, hierarquico = TRUE, analise = "Obs",
      if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
      
      ## INICIO - Plotagem do Dendrograma ##
-     if (savptc) png(filename = "Figure Cluster Dendrogram.png", width = width, height = height, res = res) # salva os graficos em arquivos
+     if (savptc) {
+        name.figure = paste("Figure Cluster Dendrogram - distance ",distance," - method ", method,".png",sep="")
+        png(filename = name.figure, width = width, height = height, res = res) # salva os graficos em arquivos
+     }
      
      Dendo <- as.dendrogram(hc)
      plot(Dendo, # cordenadas para plotar

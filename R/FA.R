@@ -275,7 +275,7 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
           
             Ps_i = diag(diag(MC - Gama[,1:nfactor]%*%t(Gama[,1:nfactor])))
           
-            Chi.Quad.Observado <- (n - 1 - (2*p + 5)/6 - 2*nfactor/3)*log(det(Gama[,1:nfactor]%*%t(Gama[,1:nfactor])+Ps_i)/det(MC))
+            Chi.Quad.Observado <- (n - 1 - (2*p + 5)/6 - 2*nfactor/3)*log(abs(det(Gama[,1:nfactor]%*%t(Gama[,1:nfactor])+Ps_i))/abs(det(MC)))
 
             qt = qchisq(0.95,gl,ncp=0)
     

@@ -23,23 +23,23 @@ NormTest <- function(data, sign = 0.05) {
   if (sign<=0 || sign>1) 
      stop("Entrada para 'sign' esta incorreta, deve ser valores entre 0 e 1. Verifique!")
   
-  n <- ncol(data)*nrow(data) # numero de elementos amostrais
+  n <- ncol(data) * nrow(data) # numero de elementos amostrais
   
   p <- ncol(data)  # numero de parametros
   
-  gl =  p*(p+1)*(p+2)/6 # grau de liberdade
+  gl =  p * (p + 1) * (p + 2)/6 # grau de liberdade
   
-  Media = as.vector(apply(data,2,mean))  # data medias das colunas
+  Media = as.vector(apply(data, 2, mean))  # data medias das colunas
   
-  G     = t(t(data)-Media)%*%solve(cov(data))%*%(t(data)-Media)
+  G     = t(t(data) - Media) %*% solve(cov(data)) %*% (t(data) - Media)
   
   B1p   = sum((diag(G))^3/n^2)
   
-  Chi.Quad.Observado <- n*B1p/6 # Estatistica do Teste
+  Chi.Quad.Observado <- n * B1p/6 # Estatistica do Teste
   
-  qt = qchisq(1-sign,gl,ncp=0) # Valor Qui-quadrado calculado
+  qt = qchisq(1 - sign, gl, ncp = 0) # Valor Qui-quadrado calculado
   
-  pVal <- pchisq(Chi.Quad.Observado,gl,ncp=0, lower.tail = F)
+  pVal <- pchisq(Chi.Quad.Observado, gl, ncp = 0, lower.tail = F)
   
 #  cat(paste("Grau de liberdade observado:", round(gl,7)),"\n")
 

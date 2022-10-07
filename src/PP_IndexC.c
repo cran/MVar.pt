@@ -73,10 +73,10 @@ double is_par(int num); /* funcao usada no indice Natural Hermite */
 //
 //    int i, j;
 //    
-//    //MC    <- scale(Data, center = TRUE, scale = FALSE) // Centraliza na média
+//    //MC    <- scale(Data, center = TRUE, scale = FALSE) // Centraliza na media
 //    //SqSum <- sqrt(colSums(MC^2))
 //    //Data  <- sweep(MC, 2, SqSum, FUN = "/") // Normaliza os dados ou seja a norma dos vetores he 1
-//    //Pe    <- svd(Data)$d[1]  // Encontra o 1º Valor Singular de Data
+//    //Pe    <- svd(Data)$d[1]  // Encontra o 1th Valor Singular de Data
 //    
 //    // *aa = svd(*Data);
 //    // printf("%f ", aa[1]);
