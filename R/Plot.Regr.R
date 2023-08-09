@@ -62,7 +62,7 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
   if (!is.logical(intprev))
      stop("Entrada para 'intprev' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
  
-  if (Reg$intercepts) X <- as.matrix(Reg$X[,2:ncol(Reg$X)]) else X <- as.matrix(Reg$X)
+  if (Reg$intercept) X <- as.matrix(Reg$X[,2:ncol(Reg$X)]) else X <- as.matrix(Reg$X)
   
   if (is.na(namevary[1]))
      namevary <- c("Y")
@@ -135,7 +135,7 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
         
         X <- as.numeric(X)
         
-        if (Reg$intercepts) Modelo <- lm(Y~X) else Modelo <- lm(Y~-1+X)
+        if (Reg$intercept) Modelo <- lm(Y~X) else Modelo <- lm(Y~-1+X)
         
         if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
         

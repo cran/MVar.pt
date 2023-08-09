@@ -57,7 +57,7 @@ name.y <- "Media das notas"
 
 name.x <- "Cafes comerciais"
 
-res <- Regr(Y, X, namevarx = name.x ,intercepts = TRUE, sigf = 0.05)
+res <- Regr(Y, X, namevarx = name.x ,intercept = TRUE, sigf = 0.05)
 
 tit <- c("Scatterplot")
 Plot.Regr(res, typegraf = "Scatterplot", title = tit,

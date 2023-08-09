@@ -1,93 +1,91 @@
-Cluster <- function(data, titles = NA, hierarquico = TRUE, analise = "Obs",  
-                    corabs = FALSE, normaliza = FALSE, distance = "euclidean",  
-                    method = "complete", horizontal = FALSE, numgrupos = 0,
+Cluster <- function(data, titles = NA, hierarquic = TRUE, analysis = "Obs",  
+                    cor.abs = FALSE, normalize = FALSE, distance = "euclidean",  
+                    method = "complete", horizontal = FALSE, num.groups = 0,
                     lambda = 2, savptc = FALSE, width = 3236, height = 2000, 
                     res = 300, casc = TRUE) {
   
-  # Esta funcao executa a analise de Agrupamentos hierarquicos e
+  # Esta funcao executa a analysis de Agrupamentos hierarquicos e
   # Nao-hierarquicos, desenvolvida por Paulo Cesar Ossani em 07/2016
   
   # Entrada:
   # data - Dados a serem a analizados
   # titles - Titulos para os graficos.
-  # hierarquico - Agrupamentos hierarquicos (default = TRUE), 
-  #               para agrupamentos nao hierarquicos (method K-Means), 
-  #               somente para caso analise = "Obs".
-  # analise - "Obs" para analises nas observacoes (default),
-  #           "Var" para analises nas variaveis.
-  # corabs  - Matriz de correlacao absoluta caso analise = "Var" (default = FALSE).
-  # normaliza - normalizar os dados somente para caso analise = "Obs" (default = TRUE).
-  # distance - Metrica das distancias caso agrupamentos hierarquicos:
-  #            "euclidean" (default), "maximum", "manhattan",
-  #            "canberra", "binary" ou "minkowski". Caso analise = "Var" a metrica
-  #            sera a matriz de correlacao, conforme corabs.
-  # method - Metodo para analises caso agrupamentos hierarquicos:
+  # hierarquic - Agrupamentos hierarquicos (default = TRUE), 
+  #              para agrupamentos nao hierarquicos (method K-Means), 
+  #              somente para caso analysis = "Obs".
+  # analysis - "Obs" para analysiss nas observacoes (default),
+  #            "Var" para analysiss nas variaveis.
+  # cor.abs  - Matriz de correlacao absoluta caso analysis = "Var" (default = FALSE).
+  # normalize - normalizar os dados somente para caso analysis = "Obs" (default = TRUE).
+  # distance  - Metrica das distancias caso agrupamentos hierarquicos:
+  #             "euclidean" (default), "maximum", "manhattan",
+  #             "canberra", "binary" ou "minkowski". Caso analysis = "Var" a metrica
+  #              sera a matriz de correlacao, conforme cor.abs.
+  # method - Metodo para analysiss caso agrupamentos hierarquicos:
   #          "complete" (default), "ward.D", "ward.D2", "single",
   #          "average", "mcquitty", "median" ou "centroid".
   # horizontal - Dendrograma na horizontal (default = FALSE).
-  # numgrupos - Numero de grupos a formar.
-  # lambda    - Valor usado na distancia de minkowski.
-  # savptc   - Salva as imagens dos graficos em arquivos (default = FALSE).
-  # width    - Largura do grafico quanto savptc = TRUE (defaul = 3236).
-  # height   - Altura do grafico quanto savptc = TRUE (default = 2000).
-  # res      - Resolucao nominal em ppi do grafico quanto savptc = TRUE (default = 300).
-  # casc      - Efeito cascata na apresentacao dos graficos (default = TRUE).
+  # num.groups - Numero de grupos a formar.
+  # lambda - Valor usado na distancia de minkowski.
+  # savptc - Salva as imagens dos graficos em arquivos (default = FALSE).
+  # width  - Largura do grafico quanto savptc = TRUE (defaul = 3236).
+  # height - Altura do grafico quanto savptc = TRUE (default = 2000).
+  # res    - Resolucao nominal em ppi do grafico quanto savptc = TRUE (default = 300).
+  # casc   - Efeito cascata na apresentacao dos graficos (default = TRUE).
   
   # Retorna:
   # Varios graficos.
-  # tabres - Tabela com as similaridades e distancias dos grupos formados.
+  # tab.res - Tabela com as similaridades e distancias dos grupos formados.
   # groups - Dados originais com os grupos formados.
-  # resgroups - Resultados dos grupos formados.
-  # sqt - Soma do quadrado total.
-  # mtxD - Matriz das distancias.
+  # res.groups - Resultados dos grupos formados.
+  # sum.sqt - Soma do quadrado total.
+  # R.sqt   - R quadrado
+  # mtx.dist - Matriz das distancias.
   
   if (!is.data.frame(data)) 
      stop("Entrada 'data' esta incorreta, deve ser do tipo dataframe. Verifique!")
 
-  if (!is.logical(hierarquico)) 
-     stop("Entrada para 'hierarquico' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  if (!is.logical(hierarquic)) 
+     stop("Entrada para 'hierarquic' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  analise <- toupper(analise)
+  analysis <- toupper(analysis)
   
-  if (analise != "OBS" && analise != "VAR") 
-     stop("Entrada para 'analise' esta incorreta, deve ser 'Obs' para as observacoes ou 'Var' para as variaveis. Verifique!")
+  if (analysis != "OBS" && analysis != "VAR") 
+     stop("Entrada para 'analysis' esta incorreta, deve ser 'Obs' para as observacoes ou 'Var' para as variaveis. Verifique!")
 
-  if (!is.logical(corabs)) 
-     stop("Entrada para 'corabs' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  if (!is.logical(cor.abs)) 
+     stop("Entrada para 'cor.abs' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
-  if (!is.logical(normaliza)) 
-     stop("Entrada para 'normaliza' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  if (!is.logical(normalize)) 
+     stop("Entrada para 'normalize' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
   distance <- tolower(distance) # torna minusculo
   
-  Distances <- c("euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski")
-  #if (is.na(pmatch(distance, distance)))
-  if (!(distance %in% Distances))
+  if (!(distance %in% c("euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski")))
      stop("Entrada para 'distance' esta incorreta, deve ser: 'euclidean', 
           'maximum', 'manhattan', 'canberra', 'binary' ou 'minkowski'. Verifique!")
   
-  Methods <- c("complete", "ward.D", "ward.D2", "single", "average", "mcquitty", "median" , "centroid")
-  # if (is.na(pmatch(method, methodS)))
-  if (!(method %in% Methods)) 
+  meth <- c("complete", "ward.D", "ward.D2", "single", "average", "mcquitty", "median" , "centroid")
+  if (!(method %in% meth)) 
      stop("Entrada para 'method' esta incorreta, deve ser: 'complete', 'ward.D', 
           'ward.D2', 'single', 'average', 'mcquitty', 'median' ou 'centroid'. Verifique!")
   
   if (!is.logical(horizontal)) 
      stop("Entrada para 'horizontal' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
-  if (is.na(numgrupos)) numgrupos <- 0 # numero de grupos a formar
+  if (is.na(num.groups)) num.groups <- 0 # numero de grupos a formar
   
-  if (numgrupos >= nrow(data) )
-     stop("Entrada para 'numgrupos' esta elevada. Verifique!")
+  if (num.groups >= nrow(data) )
+     stop("Entrada para 'num.groups' esta elevada. Verifique!")
   
-  if (numgrupos < 0)
-     stop("Entrada para 'numgrupos' esta incorreta, deve ser numeros inteiros positivos, ou zero. Verifique!")
+  if (num.groups < 0)
+     stop("Entrada para 'num.groups' esta incorreta, deve ser numeros inteiros positivos, ou zero. Verifique!")
   
-  if (!hierarquico && analise == "VAR")
+  if (!hierarquic && analysis == "VAR")
      stop("O method nao hierarquico e valido apenas para as observacoes. Verifique!")
   
-  if (!hierarquico && numgrupos < 2)
-     stop("Para o method nao hierarquico se faz necessario NumGrupo > 1. Verifique!")
+  if (!hierarquic && num.groups < 2)
+     stop("Para o method nao hierarquico se faz necessario num.groups > 1. Verifique!")
 
   if (!is.numeric(lambda) || lambda <= 0)
      stop("Entrada para 'lambda' esta incorreta, e necessario lambda > 0. Verifique!")
@@ -107,10 +105,10 @@ Cluster <- function(data, titles = NA, hierarquico = TRUE, analise = "Obs",
   if (!is.logical(casc && !savptc))
      stop("Entrada para 'casc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  dataNew <- data # dados a serem analizados
+  data.new <- data # dados a serem analizados
   
-  if (normaliza && analise == "OBS")
-     dataNew <- NormData(dataNew, 2) # normaliza por colunas os dados
+  if (normalize && analysis == "OBS")
+     data.new <- scale(data.new) # normaliza por colunas os dados
 
   # Cria Titulos para os graficos caso nao existam
   if (!is.character(titles[1]) || is.na(titles[1])) titles[1] = c("Grafico da similaridade\n dentro dos grupos")
@@ -118,54 +116,54 @@ Cluster <- function(data, titles = NA, hierarquico = TRUE, analise = "Obs",
   if (!is.character(titles[3]) || is.na(titles[3])) titles[3] = c("Dendrograma")
   
   ### INICIO - Agrupamentos hierarquicos ###
-  if (hierarquico) {
+  if (hierarquic) {
     
      if (savptc) {
         cat("\014") # limpa a tela
         cat("\n\n Salvando graficos em disco. Aguarde o termino!")
      }
      
-     if (analise == "OBS") # analise nas observacoes
-         Md <- dist(dataNew, method = distance, p = lambda) # matrix das distancias
+     if (analysis == "OBS") # analysis nas observacoes
+         mtx.dist <- dist(data.new, method = distance, p = lambda) # matrix das distancias
      
-     if (analise == "VAR") {# analise nas variaveis
-        if (corabs) # matrix de correlacao absoluta
-            Md <- as.dist(1 - abs(cor(data))) # matrix das distancias
+     if (analysis == "VAR") {# analysis nas variaveis
+        if (cor.abs) # matrix de correlacao absoluta
+            mtx.dist <- as.dist(1 - abs(cor(data))) # matrix das distancias
         
-        if (!corabs) # matrix de correlacao
-            Md <- as.dist(1 - cor(data)) # matrix das distancias
+        if (!cor.abs) # matrix de correlacao
+            mtx.dist <- as.dist(1 - cor(data)) # matrix das distancias
      }
      
-     hc <- hclust(Md, method = method) # procedimento hierarquico
+     hc <- hclust(mtx.dist, method = method) # procedimento hierarquico
      
-     Grupos <- 0
-     if (numgrupos!=0) 
-        Grupos <- cutree(hc, k = numgrupos) # grupos formados
+     groups <- 0
+     if (num.groups!=0) 
+        groups <- cutree(hc, k = num.groups) # grupos formados
 
-     if (analise == "OBS") # novos grupos para as observacoes
-        MGrupos  <- cbind(data, Grupos) # matriz com dados originais mais os grupos formados
+     if (analysis == "OBS") # novos grupos para as observacoes
+        m.groups  <- cbind(data, groups) # matriz com dados originais mais os grupos formados
      
-     if (analise == "VAR") {# novos grupos para as variaveis
-        MGrupos <- cbind(colnames(data), Grupos) # matriz com dados originais mais os grupos formados
-        colnames(MGrupos) <- c("Variaveis","Grupos")
-        rownames(MGrupos) <- NULL
+     if (analysis == "VAR") {# novos grupos para as variaveis
+        m.groups <- cbind(colnames(data), groups) # matriz com dados originais mais os grupos formados
+        colnames(m.groups) <- c("Variaveis","Grupos")
+        rownames(m.groups) <- NULL
      }
      
      ## INICIO - Tabelas com as Similaridade e as Distancias ##
-     if (numgrupos == 0) Distancia <- hc$height else # Distancias dos agrupamentos
-        Distancia <- hc$height[(length(hc$height) - numgrupos):length(hc$height)]
+     if (num.groups == 0) dist.groups <- hc$height else # Distancias dos agrupamentos
+        dist.groups <- hc$height[(length(hc$height) - num.groups):length(hc$height)]
 
-     Sim <- (1 - Distancia/max(Md)) # calculo das similaridades
+     sim.calc <- (1 - dist.groups / max(mtx.dist)) # calculo das similaridades
      
-     Passos <- 1:length(Sim)
-     SimGrupos <- length(Sim):1
-     Similaridade <- Sim*100
-     Tab <- cbind(Passos, SimGrupos, round(Similaridade,3), round(Distancia,2))
-     colnames(Tab) <- c("Passos","Grupos","Similaridade","Distancia")
+     steps      <- 1:length(sim.calc)
+     sim.groups <- length(sim.calc):1
+     similarity <- sim.calc * 100
+     tab.sim    <- cbind(steps, sim.groups, round(similarity,3), round(dist.groups,2))
+     colnames(tab.sim) <- c("steps","Grupos","Similaridade","Distancia")
      ## FIM - Tabela com as similirades e distancias ##
      
      ## INICIO - Screen plots ##
-     if (analise == "OBS") {
+     if (analysis == "OBS") {
         
         if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
        
@@ -174,15 +172,30 @@ Cluster <- function(data, titles = NA, hierarquico = TRUE, analise = "Obs",
            png(filename = name.figure, width = width, height = height, res = res) # salva os graficos em arquivos
         }
        
-        plot(length(Sim):1, 1/Sim, 
-             type = "b", 
+        plot(length(sim.calc):1, 1/sim.calc, 
+             type = "n", 
              xlab = "Numero de agrupamentos", 
              ylab = "Similaridade dentro dos grupos",
              main = titles[1]) # Titulo
         
-        abline(v=numgrupos, cex = 1.5, lty = 2) # cria o eixo no agrupamento desejado
+        ## Inicio - Grid
+        args <- append(as.list(par('usr')), c('gray93','gray93'))
         
-        if (savptc) dev.off() 
+        names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
+        
+        do.call(rect, args) # chama a funcao rect com os argumentos (args)
+        
+        grid(col = "white", lwd = 2, lty = 7, equilogs = T)
+        ## Fim - Grid
+        
+        points(length(sim.calc):1, 1/sim.calc, lwd = 1.5, lty = 1, type = "b")
+        
+        abline(v = num.groups, cex = 1.5, lty = 2) # cria o eixo no agrupamento desejado
+        
+        if (savptc) {
+           box(col = 'white')
+           dev.off()
+        } 
         
         if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
         
@@ -191,15 +204,31 @@ Cluster <- function(data, titles = NA, hierarquico = TRUE, analise = "Obs",
            png(filename = name.figure, width = width, height = height, res = res) # salva os graficos em arquivos
         }
         
-        plot(length(Distancia):1, Distancia, 
-             type ="b", 
+        plot(length(dist.groups):1, dist.groups, 
+             type ="n", 
              xlab ="Numero de agrupamentos", 
              ylab ="Distancias dentro dos grupos",
              main = titles[2]) # Titulo
              
-        abline(v=numgrupos, cex = 1.5, lty = 2) # cria o eixo no agrupamento desejado
+        ## Inicio - Grid
+        args <- append(as.list(par('usr')), c('gray93','gray93'))
         
-        if (savptc) dev.off() 
+        names(args) <- c('xleft', 'xright', 'ybottom', 'ytop', 'col', 'border')
+        
+        do.call(rect, args) # chama a funcao rect com os argumentos (args)
+        
+        grid(col = "white", lwd = 2, lty = 7, equilogs = T)
+        ## Fim - Grid
+        
+        points(length(dist.groups):1, dist.groups, lwd = 1.5, lty = 1, type = "b")
+        
+        abline(v=num.groups, cex = 1.5, lty = 2) # cria o eixo no agrupamento desejado
+        
+        if (savptc) {
+           box(col = 'white')
+           dev.off()
+        }
+        
      }
      ## FIM - Screen plots ##
  
@@ -211,16 +240,16 @@ Cluster <- function(data, titles = NA, hierarquico = TRUE, analise = "Obs",
         png(filename = name.figure, width = width, height = height, res = res) # salva os graficos em arquivos
      }
      
-     Dendo <- as.dendrogram(hc)
-     plot(Dendo, # cordenadas para plotar
+     dendro <- as.dendrogram(hc)
+     plot(dendro, # cordenadas para plotar
           ylab   = "Distancia",  # Nomeia Eixo Y
           main   = titles[3],    # Titulo
           center = TRUE,         # centraliza o grafico
           horiz  = horizontal,   # posicao do grafico
           cex    = 1) # Tamanho dos pontos
      
-     if (numgrupos > 1 && !horizontal) 
-        rect.hclust(hc, k = numgrupos, border = "red") # coloca retangulos nos agrupamentos de acordo com numgrupos
+     if (num.groups > 1 && !horizontal) 
+        rect.hclust(hc, k = num.groups, border = "red") # coloca retangulos nos agrupamentos de acordo com num.groups
      
      if (savptc) { 
         dev.off() 
@@ -231,51 +260,58 @@ Cluster <- function(data, titles = NA, hierarquico = TRUE, analise = "Obs",
   ### FIM - Agrupamentos hierarquicos ###
 
   ### INICIO - method K-Means ###
-  if (!hierarquico && analise=="OBS") {
+  if (!hierarquic && analysis=="OBS") {
     
      set.seed(7) # semente para fixar processo heuristico
       
-     hc <- kmeans(dataNew, numgrupos, iter.max = 100) # executa o method K-Means
+     hc <- kmeans(data.new, num.groups, iter.max = 100) # executa o method K-Means
      #,iter.max = 100, nstart = 21, algorithm = c("Hartigan-Wong", "Lloyd", "Forgy","MacQueen")) # cria particoes pelo method K-means
       
      #fitted(hc, method = c("centers", "classes"))
-     Grupos <- hc$cluster
+     groups <- hc$cluster
      
-     MGrupos  <- cbind(data, Grupos) # matriz com dados originais mais os grupos formados
+     m.groups  <- cbind(data, groups) # matriz com dados originais mais os grupos formados
      
-     Tab <- NA # tabelas com as similiridades e distancias
-     Md  <- NA # matrix das distancias
+     tab.sim <- NA # tabelas com as similiridades e distancias
+     mtx.dist  <- NA # matrix das distancias
   }
   ### FIM - method K-Means ###
   
-  ### INICIO - analises dos grupos ###
-  sqt <- NA # soma do quadrado total 
-  tabresGrupos = NA # tabela com os resultados dos grupos
-  if (analise == "OBS" && numgrupos > 1) {
-     tabresGrupos <- NULL
-     MGr <- cbind(dataNew, Grupos) # matriz com dados originais mais os grupos formados
-     for (i in 1:numgrupos) { 
-        Newgroups <- subset(MGr, Grupos == i) 
-        GrupCalc <- Newgroups[,1:(ncol(Newgroups)-1)]
-        Qtd.Elementos <- nrow(Newgroups)
+  ### INICIO - analysiss dos grupos ###
+  sum.sqt <- NA # soma do quadrado total 
+  tab.res.groups <- NA # tabela com os resultados dos grupos
+  SSB   <- 0 # soma de quadrado entre grupos
+  R.sqt <- 0 # R quadrado
+  if (analysis == "OBS" && num.groups > 1) {
+     tab.res.groups <- NULL
+     mtx.groups <- cbind(data.new, groups) # matriz com dados originais mais os grupos formados
+     mean.g <- apply(data.new, 2, mean)
+     for (i in 1:num.groups) { 
+        new.groups   <- subset(mtx.groups, groups == i) 
+        groups.calc  <- new.groups[,1:(ncol(new.groups)-1)]
+        qtd.elements <- nrow(new.groups)
         
-        if (Qtd.Elementos==1) Media <- GrupCalc else
-           Media <- apply(GrupCalc, 2, mean)
+        if (qtd.elements==1) mean <- groups.calc else
+           mean <- apply(groups.calc, 2, mean)
         
-        if (Qtd.Elementos==1) SqG <- 0 else # soma dos quadrados dos grupos
-           SqG <- sum(sweep(GrupCalc,2, Media)^2) # soma dos quadrados dos grupos
+        if (qtd.elements==1) SqG <- 0 else # soma dos quadrados dos grupos
+           SqG <- sum(sweep(groups.calc, 2, mean)^2) # soma dos quadrados dos grupos
         
-        tabresGrupos <- rbind(tabresGrupos,c(i,Qtd.Elementos,SqG,Media))
+        SSB <- SSB + sum(qtd.elements * (apply(groups.calc, 2, mean) - mean.g)^2) # soma de quadrado entre grupos
+        
+        tab.res.groups <- rbind(tab.res.groups,c(i,qtd.elements,SqG,mean))
      }
-     colnames(tabresGrupos) <- c("Grupos","Qtd.Elementos","Soma Quadrados",paste("Media",colnames(tabresGrupos[,4:(ncol(tabresGrupos))])))
+     colnames(tab.res.groups) <- c("Grupos","qtd.elements","Soma Quadrados",paste("Media",colnames(tab.res.groups[,4:(ncol(tab.res.groups))])))
     
-     sqt <- sum(sweep(dataNew,2,apply(dataNew, 2, mean))^2) # soma do quadrado total 
+     sum.sqt <- sum(sweep(data.new,2,apply(data.new, 2, mean))^2) # soma do quadrado total
+    
+     R.sqt <- SSB / sum.sqt # R quadrado
   }
-  ### FIM - analises dos grupos ###
+  ### FIM - analysiss dos grupos ###
   
-  Lista <- list(tabres = Tab, groups = MGrupos, 
-                resgroups = tabresGrupos, sqt = sqt,
-                mtxD = Md)
+  Lista <- list(tab.res = tab.sim, groups = m.groups, 
+                res.groups = tab.res.groups, sum.sqt = sum.sqt,
+                R.sqt = R.sqt, mtx.dist = mtx.dist)
   
   return(Lista)
 }

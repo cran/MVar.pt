@@ -90,29 +90,29 @@ DA <- function(data, class = NA, type = "lda", validation = "learning",
   if (validation == "learning" || is.na(testing[1]))
      Learning = -Learning
   
-  Predict <- predict(disc, data[-Learning,])$class
+  predict <- predict(disc, data[-Learning,])$class
   
-  Mclass <- cbind(as.vector(class[-Learning]), as.vector(Predict), " ")
-  Mclass[Mclass[,1]!=Mclass[,2],3] = "*" # acrescenta * quando divergir
-  Mclass <- as.data.frame(Mclass)
-  colnames(Mclass) <- c("classes inicial", "classes predita", "Divergencia")
+  mclass <- cbind(as.vector(class[-Learning]), as.vector(predict), " ")
+  mclass[mclass[,1] != mclass[,2], 3] = "*" # acrescenta * quando divergir
+  mclass <- as.data.frame(mclass)
+  colnames(mclass) <- c("classes inicial", "classes predita", "Divergencia")
 
-  confusion <- table(class[-Learning], Predict) # tabela de confunsao
+  confusion <- table(class[-Learning], predict) # tabela de confunsao
   
   num.correct <- sum(diag(confusion)) # numero de observacoes corretas
   
   error_rate <- 1 - num.correct / sum(confusion) # taxa de erro
   
-  total <- colSums(confusion)
-  prop  <- round(diag(confusion)/total,4)
+  total     <- colSums(confusion)
+  prop      <- round(diag(confusion)/total,4)
   confusion <- rbind(confusion, total) # total real
   confusion <- rbind(confusion, diag(confusion)) # total de acertos
   confusion <- as.table(rbind(confusion, as.character(prop)))
   rownames(confusion) <- c(colnames(confusion), "Total", "Numero de acertos", "Proporcao de acertos")
   
-  Lista <- list(confusion = confusion, error.rate = error_rate, prior = disc$prior, type = type,
+  lista <- list(confusion = confusion, error.rate = error_rate, prior = disc$prior, type = type,
                 num.class = num.class, class.names = class.names, method = method, 
-                validation = validation, num.correct = num.correct, results = Mclass)
+                validation = validation, num.correct = num.correct, results = mclass)
 
-  return(Lista)
+  return(lista)
 }

@@ -1,13 +1,13 @@
-Regr <- function(Y, X, namevarx = NA, intercepts = TRUE, sigf = 0.05) {
+Regr <- function(Y, X, namevarx = NA, intercept = TRUE, sigf = 0.05) {
   # Esta funcao executa a Analise de Regressao
   # desenvolvida por Paulo Cesar Ossani em 06/2016
     
   # Entrada:
   # Y - Respotas.
   # X - Variaveis regressoras.
-  # namevarx - Nome da variavel, ou variaveis X, se omitido retorna padrao.
-  # intercepts  - Considerar o intercepto na regressao (default = TRUE).
-  # sigf        - Nivel de significancia dos testes dos residuos (default = 5%).
+  # namevarx  - Nome da variavel, ou variaveis X, se omitido retorna padrao.
+  # intercept - Considerar o intercepto na regressao (default = TRUE).
+  # sigf      - Nivel de significancia dos testes dos residuos (default = 5%).
   
   # Retorna:
   # Betas    - Coeficientes da regressao.
@@ -39,8 +39,8 @@ Regr <- function(Y, X, namevarx = NA, intercepts = TRUE, sigf = 0.05) {
   if (is.na(namevarx[1]))
      namevarx <- c(paste("X",1:ncol(as.matrix(X)),sep=""))
   
-  if (!is.logical(intercepts)) 
-     stop("Entrada para 'intercepts' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  if (!is.logical(intercept)) 
+     stop("Entrada para 'intercept' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
   #### INICIO - Analises #####
   Y <- as.matrix(Y) # variavel resposta
@@ -49,19 +49,19 @@ Regr <- function(Y, X, namevarx = NA, intercepts = TRUE, sigf = 0.05) {
   p <- ncol(X) # numero de variaveis regressoras
 
   ## Inicio - Calculo dos coeficientes 
-  if (intercepts)
+  if (intercept)
      X <- cbind(rep(1,length(Y)),X)
   
-  gl_i <- ifelse(intercepts, 1, 0) # grau de liberdade o intercepto
+  gl_i <- ifelse(intercept, 1, 0) # grau de liberdade o intercepto
   
   B <- solve(t(X)%*%X)%*%t(X)%*%Y # Calculo dos coeficientes
-  V <- ifelse(intercepts,1,0)
+  V <- ifelse(intercept,1,0)
   rownames(B) <- paste("B",(1-V):ifelse(ncol(X)>1,(ncol(X)-V),ncol(X)),sep="") 
   colnames(B) <- c("Coeficientes")
   ## Fim - Calculo dos coeficientes
   
   ## Inicio - Tabela de Analise de Variancia (ANOVA) parcial
-  if (intercepts=="N") MediaY <- 0 else MediaY <- mean(Y)
+  if (intercept=="N") MediaY <- 0 else MediaY <- mean(Y)
   SQR <- t(B)%*%t(X)%*%Y - n*MediaY^2 # Soma dos Quadrados da Regressao
   SQE <- t(Y)%*%Y - t(B)%*%t(X)%*%Y   # Soma dos Quadrados dos Erros (Residuos)
   SQT <- t(Y)%*%Y - n*MediaY^2        # Soma dos Quadrados Total 
@@ -86,7 +86,7 @@ Regr <- function(Y, X, namevarx = NA, intercepts = TRUE, sigf = 0.05) {
   
   LinFinal <- ANOVA[2:3,] # linha do Erro + Total
   
-  if (intercepts) NVaR <- c(2:ncol(X)) else NVaR <- c(1:ncol(X)); # numero das colunas com as variaveis regressoras
+  if (intercept) NVaR <- c(2:ncol(X)) else NVaR <- c(1:ncol(X)); # numero das colunas com as variaveis regressoras
   
   ### Inicio - Analise sequencial nas variaveis
   ANOVA_X <- as.data.frame(matrix(NA, nrow=p, ncol=6))
@@ -298,7 +298,7 @@ Regr <- function(Y, X, namevarx = NA, intercepts = TRUE, sigf = 0.05) {
   
   #### FIM - Analises #####
   
-  Lista <- list(Y = Y, X = X, intercepts = intercepts, Betas = B, CovBetas = CovB,
+  Lista <- list(Y = Y, X = X, intercept = intercept, Betas = B, CovBetas = CovB,
                  ICc = ICc, hip.test = hip.test, ANOVA = ANOVA, R = R, Rc = Rc,
                  Ra = Ra, QME = QME, prev = prev, error = error, ICQME= ICQME,
                  ICp = ICp, IPp = IPp, error.test = MResi)

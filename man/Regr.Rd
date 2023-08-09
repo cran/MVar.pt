@@ -6,13 +6,13 @@
 
 \description{Realiza a regressao linear em um conjunto de dados.}
 
-\usage{Regr(Y, X, namevarx = NA, intercepts = TRUE, sigf = 0.05)}
+\usage{Regr(Y, X, namevarx = NA, intercept = TRUE, sigf = 0.05)}
 
 \arguments{
 \item{Y}{Variaveis respotas.}
 \item{X}{Variaveis regressoras.}
 \item{namevarx}{Nome da variavel, ou variaveis X, se nao for definido assume texto padrao.}
-\item{intercepts}{Considerar o intercepto na regressao (default = TRUE).}
+\item{intercept}{Considerar o intercepto na regressao (default = TRUE).}
 \item{sigf}{Nivel de significancia dos testes dos residuos (default = 5\%).}
 }
 
@@ -57,7 +57,7 @@ X <- DataMix[,6:7]
 
 name.x <- c("Cafes Expeciais","Cafes Comerciais")
 
-res <- Regr(Y, X, namevarx = name.x , intercepts = TRUE, sigf = 0.05)
+res <- Regr(Y, X, namevarx = name.x , intercept = TRUE, sigf = 0.05)
 
 print("Coeficientes da Regressao:"); round(res$Betas,4)
 print("Analise de Variancia:"); res$ANOVA

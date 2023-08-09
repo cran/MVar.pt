@@ -73,6 +73,8 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
    
    MC <- cov(data) # Matriz de Covariancia
 
+   num.comp <- min(dim(data)) # numero de componentes
+   
    Rotacao <- function(Mdata, type = NULL) {
    # Funcao que executa as rotacoes
      if (type == "VARIMAX") {
@@ -92,7 +94,7 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
       
       # Encontrando a Matriz de Decomposicao Expectral
       MAV <- svd(MC) # Encontra a matriz de autovalor e autovetor
-      MAutoVlr <- MAV$d  # Matriz de Autovalores 
+      MAutoVlr <- MAV$d[1:num.comp]  # Matriz de Autovalores 
       MAutoVec <- MAV$v # Matriz de Autovetores
 
       Gama = MAutoVec%*%diag(sqrt(abs(MAutoVlr)),nrow(MC),ncol(MC)) # Matriz de Cargas Fatoriais
@@ -130,14 +132,18 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
       
    }
     
-   if (method == "PF") { # Metodo dos Fatores Principais
+   if (method == "PF" && det(MC) == 0) { # Metodo dos Fatores Principais
+      stop("\n\nA matriz de covariancia ou correlacao nao e positiva definida. Portanto nao sendo possivel aplicar este metodo. Sugere-se utilizar o metodo 'PC' ou  'ML'\n\n")
+   }
+   
+   if (method == "PF" && det(MC) != 0) { # Metodo dos Fatores Principais
      
       Psi0 <- (solve(diag(diag(solve(MC))))) # Encontrando a Matriz Psi
 
       Sr <- MC - Psi0 # Encontrando a Matriz Sr
       
       MAV <- svd(Sr) # Encontra a matriz de autovalor e autovetor
-      MAutoVlr <- MAV$d  # Matriz de Autovalores 
+      MAutoVlr <- MAV$d[1:num.comp]  # Matriz de Autovalores 
       MAutoVec <- MAV$v  # Matriz de Autovetores
       
       Gama = MAutoVec%*%diag(sqrt(abs(MAutoVlr)),nrow(MC),ncol(MC)) # Matriz de Cargas Fatoriais
@@ -180,7 +186,7 @@ FA <- function(data, method = "PC", type = 2, nfactor = 1,
       MC <- (n-ncol(data))/n*MC  # Matriz de Covariancia/Correlacao Maximizada para o teste
 
       MAV <- svd(MC) # Encontra a matriz de autovalor e autovetor
-      MAutoVlr <- MAV$d  # Matriz de Autovalores 
+      MAutoVlr <- MAV$d[1:num.comp]  # Matriz de Autovalores 
       MAutoVec <- MAV$v # Matriz de Autovetores
 
       Gama = MAutoVec%*%diag(sqrt(abs(MAutoVlr)),nrow(MC),ncol(MC)) # Matriz de Cargas Fatoriais para Inicializacao da iteracao
