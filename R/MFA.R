@@ -398,17 +398,17 @@ MFA <- function(data, groups, typegroups = rep("n",length(groups)), namegroups =
   MAutoVecU <- MDS$u  # Matriz de Autovetores
   MAutoVecV <- MDS$v  # Matriz de Autovetores
   
+  NE <- length(MAutoVlr[MAutoVlr>1e-10]) # Numero de elementos sigificativos dos Autovalores considerados somente valores acima de 10xe^(-9), isto e importante para calculos das inversas
+  
   ## Matriz das Variancias
-  MEigen <- as.data.frame(matrix(NA, length(MAutoVlr), 3))
-  rownames(MEigen) <- paste("Comp", 1:length(MAutoVlr))
+  MEigen <- as.data.frame(matrix(NA, NE, 3))
+  rownames(MEigen) <- paste("Comp", 1:NE)
   colnames(MEigen) <- c("Autovalor", "% da variancia","% acumulada da variancia")
-  MEigen[, "Autovalor"] <- MAutoVlr^2
-  MEigen[, "% da variancia"] <- (MAutoVlr^2/sum(MAutoVlr^2)) * 100
+  MEigen[, "Autovalor"] <- MAutoVlr[1:NE]^2
+  MEigen[, "% da variancia"] <- (MAutoVlr[1:NE]^2/sum(MAutoVlr^2)) * 100
   MEigen[, "% acumulada da variancia"] <- cumsum(MEigen[,"% da variancia"])
   
   NumAutoVlr <- length(MAutoVlr) # Numero de auto valores
-  
-  NE <- length(MAutoVlr[MAutoVlr>1e-10]) # Numero de elementos sigificativos dos Autovalores considerados somente valores acima de 10xe^(-9), isto e importante para calculos das inversas
   ### Fim - Encontra os Autovetores e Autovalores ###
   
   ### INICIO - Matriz Glogal Escore ###
@@ -482,7 +482,7 @@ MFA <- function(data, groups, typegroups = rep("n",length(groups)), namegroups =
   Lista <- list(vtrG = groups, vtrNG = namegroups, vtrplin = PLinG,
                 vtrpcol = PColG, mtxZ = MZG, mtxA = MEigen,
                 mtxU = MAutoVecU, mtxV = MAutoVecV, mtxF = MF, 
-                mtxEFG = LMFgroups, mtxCCP = CCP, mtxEV = EscVar)
+                mtxEFG = LMFgroups, mtxCCP = CCP, mtxEV = EscVar[,1:NE])
   
   return(Lista)
 }
