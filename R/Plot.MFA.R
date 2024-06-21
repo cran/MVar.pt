@@ -117,8 +117,8 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   #####   FIM - Informacoes usadas nos Graficos  #####
   
   if (savptc) {
-     cat("\014") # limpa a tela
-     cat("\n\n Salvando graficos em disco. Aguarde o termino!")
+     message("\014") # limpa a tela
+     message("\n\n Salvando graficos em disco. Aguarde o termino!")
   }
   
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
@@ -398,6 +398,6 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   if (savptc) { 
      box(col = 'white')
      dev.off()
-     cat("\n \n Fim!")
+     message("\n \n Fim!")
   }
 }

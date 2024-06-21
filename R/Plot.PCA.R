@@ -117,8 +117,8 @@ Plot.PCA <- function(PC, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   #####   FIM - Informacoes usadas nos Graficos  #####
   
   if (savptc) {
-     cat("\014") # limpa a tela
-     cat("\n\n Salvando graficos em disco. Aguarde o termino!")
+     message("\014") # limpa a tela
+     message("\n\n Salvando graficos em disco. Aguarde o termino!")
   }
   
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
@@ -293,6 +293,6 @@ Plot.PCA <- function(PC, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   if (savptc) { box(col = 'white'); dev.off() }
   ##### FIM - Plotagem das Correlacoes dos Componentes Principais com as Variaveis Originais #####
   
-  if (savptc) cat("\n \n Fim!")
+  if (savptc) message("\n \n Fim!")
   
 }

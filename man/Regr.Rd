@@ -35,11 +35,11 @@
 }
 
 \references{
-CHARNET, R.; at al.. \emph{Analise de modelos de regressao lienar,} 2a ed. Campinas: Editora da Unicamp, 2008. 357 p.
+Charnet, R.; at al.. \emph{Analise de modelos de regressao lienar,} 2a ed. Campinas: Editora da Unicamp, 2008. 357 p.
 
-RENCHER, A. C.; SCHAALJE, G. B. \emph{Linear models in statisctic.} 2th. ed. New Jersey: John & Sons, 2008. 672 p.
+Rencher, A. C.; Schaalje, G. B. \emph{Linear models in statisctic.} 2th. ed. New Jersey: John & Sons, 2008. 672 p.
 
-RENCHER, A. C. \emph{Methods of multivariate analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
+Rencher, A. C. \emph{Methods of multivariate analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
 }
 
 \author{

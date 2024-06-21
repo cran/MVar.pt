@@ -44,9 +44,9 @@
 \value{{Grafico de dispersao.}}
 
 \references{
-RENCHER, A. C. \emph{Methods of multivariate analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
+Rencher, A. C. \emph{Methods of multivariate analysis.} 2th. ed. New York: J.Wiley, 2002. 708 p.
 
-ANTON, H.; RORRES, C. \emph{Elementary linear algebra: applications version.} 10th ed. New Jersey: John Wiley & Sons, 2010. 768 p.
+Anton, H.; Rorres, C. \emph{Elementary linear algebra: applications version.} 10th ed. New Jersey: John Wiley & Sons, 2010. 768 p.
 }
 
 \author{

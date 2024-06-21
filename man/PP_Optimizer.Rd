@@ -54,9 +54,9 @@
 }
 
 \references{
-COOK, D., LEE, E. K., BUJA, A., WICKHAM, H.. Grand tours, projection pursuit guided tours and manual controls. In Chen, Chunhouh, Hardle, Wolfgang, Unwin, e Antony (Eds.), \emph{Handbook of data Visualization}, Springer Handbooks of Computational Statistics, chapter III.2, p. 295-314. Springer, 2008.
+Cook, D.; Lee, E. K.; Buja, A.; Wickmam, H. Grand tours, projection pursuit guided tours and manual controls. In Chen, Chunhouh, Hardle, Wolfgang, Unwin, e Antony (Eds.), \emph{Handbook of data Visualization}, Springer Handbooks of Computational Statistics, chapter III.2, p. 295-314. Springer, 2008.
 
-LEE, E., COOK, D., KLINKE, S., LUMLEY, T.. Projection pursuit for exploratory supervised classification. \emph{Journal of Computational and Graphical Statistics}, 14(4):831-846, 2005.
+Lee, E.; Cook, D.; Klinke, S.; Lumley, T. Projection pursuit for exploratory supervised classification. \emph{Journal of Computational and Graphical Statistics}, 14(4):831-846, 2005.
 }
 
 \author{

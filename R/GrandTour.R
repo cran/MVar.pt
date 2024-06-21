@@ -178,8 +178,8 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
      numrot <- ifelse(is.na(choicerot[1]), numrot, choicerot)
      
      if (savptc) {
-        cat("\014") # limpa a tela
-        cat("\n\n Salvando graficos em disco. Aguarde o termino!")
+        message("\014") # limpa a tela
+        message("\n\n Salvando graficos em disco. Aguarde o termino!")
      }
      
      i <- 1
@@ -319,7 +319,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
        
      }
      
-     if (savptc) cat("\n \n Fim!")
+     if (savptc) message("\n \n Fim!")
      
      
    }
@@ -345,8 +345,8 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
      b <- matrix(0, p, 1) # matriz de rotacao
   
      if (savptc) {
-        cat("\014") # limpa a tela
-        cat("\n\n Salvando graficos em disco. Aguarde o termino!")
+        message("\014") # limpa a tela
+        message("\n\n Salvando graficos em disco. Aguarde o termino!")
      }
      
      numrot <- ifelse(is.na(choicerot[1]), numrot, choicerot)
@@ -483,7 +483,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
        
      }
      
-     if (savptc) cat("\n \n Fim!")
+     if (savptc) message("\n \n Fim!")
     
    }  
   
@@ -529,8 +529,8 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
      numrot <- ifelse(is.na(choicerot[1]), numrot, choicerot)
        
      if (savptc) {
-        cat("\014") # limpa a tela 
-        cat("\n\n Salvando graficos em disco. Aguarde o termino!")
+        message("\014") # limpa a tela 
+        message("\n\n Salvando graficos em disco. Aguarde o termino!")
      }
      
      i <- 1  
@@ -656,7 +656,7 @@ GrandTour <- function(data, method = "Interpolation", title = NA, xlabel = NA, y
      
      proj.data <- proj.data[1:n,1:d] # dados projetados
      
-     if (savptc) cat("\n \n Fim!")
+     if (savptc) message("\n \n Fim!")
        
    }
    

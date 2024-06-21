@@ -86,8 +86,8 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
      stop("Entrada para 'casc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
 
   if (savptc) {
-     cat("\014") # limpa a tela
-     cat("\n\n Salvando graficos em disco. Aguarde o termino!")
+     message("\014") # limpa a tela
+     message("\n\n Salvando graficos em disco. Aguarde o termino!")
   }
   
   ## Inicio - Scatterplot
@@ -350,5 +350,5 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
   }
   ## Fim - Grafico com as ordem das observacoes versus os residuos
 
-  if (savptc) cat("\n \n Fim!")
+  if (savptc) message("\n \n Fim!")
 }

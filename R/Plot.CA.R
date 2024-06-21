@@ -72,8 +72,8 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
   #####   FIM - Informacoes usadas nos Graficos  #####
   
   if (savptc) {
-     cat("\014") # limpa a tela
-     cat("\n\n Salvando graficos em disco. Aguarde o termino!")
+     message("\014") # limpa a tela
+     message("\n\n Salvando graficos em disco. Aguarde o termino!")
   }
   
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
@@ -238,5 +238,5 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
   
   ##### FIM - Plotagem dos Dados das linhas e colunas conjuntamente #####
   
-  if (savptc) cat("\n \n Fim!")
+  if (savptc) message("\n \n Fim!")
 }

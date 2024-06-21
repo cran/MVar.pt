@@ -58,7 +58,7 @@ PCA <- function(data, type = 1) {
   
   Lista <- list(mtxC = MC, mtxAutvlr = MEigen,
                 mtxAutvec = MAutoVec, mtxVCP = VCP, 
-                mtxCCP = CCP, mtxscores = Esc)
+                mtxCCP = t(CCP), mtxscores = Esc)
   
   return(Lista)
 }

@@ -41,17 +41,17 @@ NormTest <- function(data, sign = 0.05) {
   
   pVal <- pchisq(Chi.Quad.Observado, gl, ncp = 0, lower.tail = F)
   
-#  cat(paste("Grau de liberdade observado:", round(gl,7)),"\n")
+#  message(paste("Grau de liberdade observado:", round(gl,7)),"\n")
 
-#  cat(paste("Valor da estatistica do teste Qui-quadrado (Chiq1):", round(Chi.Quad.Observado,7)),"\n")
+#  message(paste("Valor da estatistica do teste Qui-quadrado (Chiq1):", round(Chi.Quad.Observado,7)),"\n")
   
-#  cat(paste("Valor Qui-quadrado calculado (Chiq2) com", sign*100,"% de significancia:", round(qt,7)),"\n")
+#  message(paste("Valor Qui-quadrado calculado (Chiq2) com", sign*100,"% de significancia:", round(qt,7)),"\n")
   
-#  if (Chi.Quad.Observado<=qt) cat("Como Chiq1 <= Chiq2, VERIFICA-SE a normalidade dos dados.\n")
+#  if (Chi.Quad.Observado<=qt) message("Como Chiq1 <= Chiq2, VERIFICA-SE a normalidade dos dados.\n")
   
-#  if (Chi.Quad.Observado>qt) cat("Como Chiq1 > Chiq2, NAO VERIFICA-SE a normalidade dos dados.\n")
+#  if (Chi.Quad.Observado>qt) message("Como Chiq1 > Chiq2, NAO VERIFICA-SE a normalidade dos dados.\n")
   
-#  cat("Valor-p:", pVal)
+#  message("Valor-p:", pVal)
   
   Lista <- list(statistic = Chi.Quad.Observado, chisquare = qt, gl = gl, p.value = pVal)
   

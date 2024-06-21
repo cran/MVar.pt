@@ -63,8 +63,8 @@ Plot.CCA <- function(CCA, titles = NA, xlabel = NA, ylabel = NA,
   if (is.na(ylabel[1])) ylabel = "Eixo Y"
   
   if (savptc) {
-     cat("\014") # limpa a tela
-     cat("\n\n Salvando graficos em disco. Aguarde o termino!")
+     message("\014") # limpa a tela
+     message("\n\n Salvando graficos em disco. Aguarde o termino!")
   }
   
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
@@ -222,6 +222,6 @@ Plot.CCA <- function(CCA, titles = NA, xlabel = NA, ylabel = NA,
   if (savptc) { box(col = 'white'); dev.off() }
   ##### FIM - Plotagem dos scores dos grupos X e Y #####
   
-  if (savptc) cat("\n \n Fim!")
+  if (savptc) message("\n \n Fim!")
   
 }

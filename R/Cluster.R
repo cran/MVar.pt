@@ -119,8 +119,8 @@ Cluster <- function(data, titles = NA, hierarquic = TRUE, analysis = "Obs",
   if (hierarquic) {
     
      if (savptc) {
-        cat("\014") # limpa a tela
-        cat("\n\n Salvando graficos em disco. Aguarde o termino!")
+        message("\014") # limpa a tela
+        message("\n\n Salvando graficos em disco. Aguarde o termino!")
      }
      
      if (analysis == "OBS") # analysis nas observacoes
@@ -253,7 +253,7 @@ Cluster <- function(data, titles = NA, hierarquic = TRUE, analysis = "Obs",
      
      if (savptc) { 
         dev.off() 
-        cat("\n \n Fim!")
+        message("\n \n Fim!")
      }
      ## FIM - Plotagem do Dendrograma ##
   }

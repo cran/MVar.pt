@@ -114,8 +114,8 @@ Biplot <- function(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
   # if (is.na(linlab[1])) linlab <- rownames(data)
   
   if (savptc) {
-     cat("\014") # limpa a tela
-     cat("\n\n Salvando graficos em disco. Aguarde o termino!")
+     message("\014") # limpa a tela
+     message("\n\n Salvando graficos em disco. Aguarde o termino!")
   }
   
   if (is.na(title[1])) title = "Grafico Biplot" 
@@ -273,7 +273,7 @@ Biplot <- function(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
   if (savptc) {
      box(col = 'white')
      dev.off()
-     cat("\n \n Fim!")
+     message("\n \n Fim!")
   }
   
   Lista <- list(Md = Md, Mu = Mu, Mv = Mv, coorI = coorI,

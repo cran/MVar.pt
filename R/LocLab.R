@@ -110,9 +110,9 @@ LocLab <- function(x, y = NULL, labels = seq(along = x), cex = 1,
                                 xy[rectidx2], 2 * rectv[rectidx2]) > 0
   rectidx1 = rectidx1[canIntersect]
   rectidx2 = rectidx2[canIntersect]
-  if (trace) cat("possible intersects =", length(rectidx1), "\n")
+  if (trace) message("possible intersects =", length(rectidx1), "\n")
 
-  if (trace) cat("portion covered =", sum(rect_intersect(xy, rectv,xy,rectv))/(image_width*image_height),"\n")
+  if (trace) message("portion covered =", sum(rect_intersect(xy, rectv,xy,rectv))/(image_width*image_height),"\n")
 
   SANN <- function() {
     # Make some starting "genes"
@@ -154,11 +154,11 @@ LocLab <- function(x, y = NULL, labels = seq(along = x), cex = 1,
         if (bestscore == 0 || k == 10) break
       }
       if (bestscore == 0) break
-      if (trace) cat("overlap area =", bestscore, "\n")
+      if (trace) message("overlap area =", bestscore, "\n")
       T = 0.9 * T
     }
   
-    if (trace) cat("overlap area =", bestscore, "\n")
+    if (trace) message("overlap area =", bestscore, "\n")
     nx = Re(xy + gen_offset(bestgene))
     ny = Im(xy + gen_offset(bestgene))
     list(x = nx, y = ny)

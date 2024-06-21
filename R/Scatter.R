@@ -136,8 +136,8 @@ Scatter <- function(data, ellipse = TRUE, ellipse.level = 0.95, rectangle = FALS
   }
   
   if (savptc) {
-     cat("\014") # limpa a tela
-     cat("\n\n Salvando graficos em disco. Aguarde o termino!")
+     message("\014") # limpa a tela
+     message("\n\n Salvando graficos em disco. Aguarde o termino!")
   }
   
   if (is.na(title[1]))  title = "Grafico de dispersao" # Titulo
@@ -287,7 +287,7 @@ Scatter <- function(data, ellipse = TRUE, ellipse.level = 0.95, rectangle = FALS
   if (savptc) {
      box(col = 'white')
      dev.off()
-     cat("\n \n Fim!")
+     message("\n \n Fim!")
   }
   
 }

@@ -49,37 +49,37 @@
 }
 
 \references{
-OSSANI, P. C.; FIGUEIRA, M. R.; CIRILLO, M. A. Proposition of a new index for projection pursuit in the multiple factor analysis. \emph{Computational and Mathematical Methods}, v. 1, p. 1-18, 2020.
+Ossani, P. C.; Figueira, M. R.; Cirillo, M. A. Proposition of a new index for projection pursuit in the multiple factor analysis. \emph{Computational and Mathematical Methods}, v. 1, p. 1-18, 2020.
 
-COOK, D., BUJA, A., CABRERA, J.. Projection pursuit indexes based on orthonormal function expansions. \emph{Journal of Computational and Graphical Statistics}, 2(3):225-250, 1993.
+Cook, D.; Buja, A.; Cabrera, J. Projection pursuit indexes based on orthonormal function expansions. \emph{Journal of Computational and Graphical Statistics}, 2(3):225-250, 1993.
 
-COOK, D., BUJA, A., CABRERA, J., HURLEY, C.. Grand tour and projection pursuit, \emph{Journal of Computational and Graphical Statistics}, 4(3), 155-172, 1995.
+Cook, D.; Buja, A.; Cabrera, J.; Hurley, C. Grand tour and projection pursuit, \emph{Journal of Computational and Graphical Statistics}, 4(3), 155-172, 1995.
 
-COOK, D., SWAYNE, D. F.. Interactive and Dynamic Graphics for data Analysis: With R and GGobi. Springer. 2007.
+Cook, D.; Swayne, D. F. Interactive and Dynamic Graphics for data Analysis: With R and GGobi. Springer. 2007.
 
-ESPEZUA, S., VILLANUEVA, E., MACIEL, C.D., CARVALHO, A.. A projection pursuit framework for supervised dimension reduction of high dimensional small sample datasets. \emph{Neurocomputing}, 149, 767-776, 2015.
+Espezua, S.; Villanueva, E.; Maciel, C. D.; Carvalho, A. A projection pursuit framework for supervised dimension reduction of high dimensional small sample datasets. \emph{Neurocomputing}, 149, 767-776, 2015.
 
-FRIEDMAN, J. H., TUKEY, J. W. A projection pursuit algorithm for exploratory data analysis. \emph{IEEE Transaction on Computers}, 23(9):881-890, 1974.
+Friedman, J. H., Tukey, J. W. A projection pursuit algorithm for exploratory data analysis. \emph{IEEE Transaction on Computers}, 23(9):881-890, 1974.
 
-HASTIE, T., BUJA, A., TIBSHIRANI, R.: Penalized discriminant analysis. \emph{The Annals of Statistics}. 23(1), 73-102 . 1995.
+Hastie, T., Buja, A., Tibshirani, R. Penalized discriminant analysis. \emph{The Annals of Statistics}. 23(1), 73-102 . 1995.
 
-HUBER, P. J.. Projection pursuit. \emph{Annals of Statistics}, 13(2):435-475, 1985.
+Huber, P. J. Projection pursuit. \emph{Annals of Statistics}, 13(2):435-475, 1985.
 
-JONES, M. C., SIBSON, R.. What is projection pursuit, (with discussion), \emph{Journal of the Royal Statistical Society}, Series A 150, 1-36, 1987.
+Jones, M. C.; Sibson, R. What is projection pursuit, (with discussion), \emph{Journal of the Royal Statistical Society}, Series A 150, 1-36, 1987.
 
-LEE, E. K., COOK, D.. A projection pursuit index for large p small n data. \emph{Statistics and Computing}, 20(3):381-392, 2010.
+Lee, E. K.; Cook, D. A projection pursuit index for large p small n data. \emph{Statistics and Computing}, 20(3):381-392, 2010.
 
-LEE, E., COOK, D., KLINKE, S., LUMLEY, T.. Projection pursuit for exploratory supervised classification. \emph{Journal of Computational and Graphical Statistics}, 14(4):831-846, 2005.
+Lee, E.; Cook, D.; Klinke, S.; Lumley, T. Projection pursuit for exploratory supervised classification. \emph{Journal of Computational and Graphical Statistics}, 14(4):831-846, 2005.
 
-MARTINEZ, W. L., MARTINEZ, A. R.; \emph{Computational Statistics Handbook with MATLAB}, 2th. ed. New York: Chapman & Hall/CRC, 2007. 794 p.
+Martinez, W. L., Martinez, A. R.; \emph{Computational Statistics Handbook with MATLAB}, 2th. ed. New York: Chapman & Hall/CRC, 2007. 794 p.
 
-MARTINEZ, W.  L., MARTINEZ, A. R., SOLKA, J.; \emph{Exploratory data Analysis with MATLAB}, 2th. ed. New York: Chapman & Hall/CRC, 2010. 499 p.
+Martinez, W.  L.; Martinez, A. R.; Solka, J. \emph{Exploratory data Analysis with MATLAB}, 2th. ed. New York: Chapman & Hall/CRC, 2010. 499 p.
 
-PENA, D., PRIETO, F.. Cluster identification using projections. \emph{Journal of the American Statistical Association}, 96(456):1433-1445, 2001.
+Pena, D.; Prieto, F. Cluster identification using projections. \emph{Journal of the American Statistical Association}, 96(456):1433-1445, 2001.
 
-POSSE, C.. Projection pursuit exploratory data analysis, \emph{Computational Statistics and data Analysis}, 29:669-687, 1995a.
+Posse, C. Projection pursuit exploratory data analysis, \emph{Computational Statistics and data Analysis}, 29:669-687, 1995a.
 
-POSSE, C.. Tools for two-dimensional exploratory projection pursuit, \emph{Journal of Computational and Graphical Statistics}, 4:83-100, 1995b.
+Posse, C. Tools for two-dimensional exploratory projection pursuit, \emph{Journal of Computational and Graphical Statistics}, 4:83-100, 1995b.
 
 }
 

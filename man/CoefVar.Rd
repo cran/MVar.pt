@@ -17,7 +17,7 @@
 \value{{Coeficiente de variacao, global ou por coluna.}}
 
 \references{
-FERREIRA, D. F.; \emph{Estatistica Basica.} 2 ed. rev. Lavras: UFLA, 2009. 664 p.
+Ferreira, D. F. \emph{Estatistica Basica.} 2 ed. rev. Lavras: UFLA, 2009. 664 p.
 }
 
 \author{

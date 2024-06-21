@@ -104,8 +104,8 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
      stop("Entrada para 'res' esta incorreta, deve ser numerica e maior que zero. Verifique!")
   
   if (savptc) {
-     cat("\014") # limpa a tela
-     cat("\n\n Salvando graficos em disco. Aguarde o termino!")
+     message("\014") # limpa a tela
+     message("\n\n Salvando graficos em disco. Aguarde o termino!")
   }
   
   ##### INICIO - Informacoes usadas nos Graficos #####
@@ -227,7 +227,7 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
   if (savptc) {
      box(col = 'white') 
      dev.off()
-     cat("\n \n Fim!")
+     message("\n \n Fim!")
   }
   
   Lista <- list(mtxD = Md)
