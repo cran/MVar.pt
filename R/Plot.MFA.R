@@ -117,8 +117,8 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   #####   FIM - Informacoes usadas nos Graficos  #####
   
   if (savptc) {
-     message("\014") # limpa a tela
-     message("\n\n Salvando graficos em disco. Aguarde o termino!")
+     cat("\014") # limpa a tela
+     cat("\n\n Salvando graficos em disco. Aguarde o termino!")
   }
   
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
@@ -244,7 +244,7 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   
   LocLab(MFA$mtxF[,1:2], NomeLinhas)  # Coloca os nomes dos pontos das coordenadas principais da analise global
   ## Acrescenta no grafico da Analise Global as coordenadas principais da Analise por Grupo
-  NumObserv = 4 # numero de centroides a considerar para plotagem das orbitas
+  NumObserv = nrow(MFA$mtxEFG[[1]]) # 4 # numero de centroides a considerar para plotagem das orbitas
   NumLinhas = nrow(MFA$mtxEFG[[1]]) # numero de linhas
   if (NumObserv<NumLinhas) {
     Position = floor(NumLinhas/NumObserv)
@@ -398,6 +398,6 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   if (savptc) { 
      box(col = 'white')
      dev.off()
-     message("\n \n Fim!")
+     cat("\n \n Fim!")
   }
 }

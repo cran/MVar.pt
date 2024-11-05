@@ -52,8 +52,8 @@ PP_Optimizer = function(data, class = NA, findex = "HOLES", dimproj = 2, sphere 
      stop("Entrada 'data' esta incorreta, deve ser do tipo dataframe ou matrix. Verifique!")
 
   if (!is.na(class[1])) {
-
-    class <- as.matrix(class)
+    
+    class <- as.vector(class)
 
     if (nrow(data) != length(class))
        stop("Entrada 'class' ou 'data' esta incorreta, devem conter o mesmo numero de linhas. Verifique!")

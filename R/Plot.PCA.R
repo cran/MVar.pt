@@ -286,9 +286,9 @@ Plot.PCA <- function(PC, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   
   if (axes) abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
-  arrows(0,0,PC$mtxCCP[1,],PC$mtxCCP[2,], lty=1, code = 2, length = 0.08, angle = 25, col = ifelse(color,"Red","Black")) # cria a seta apontando para cada coordenada principal
+  arrows(0,0,PC$mtxCCP[,1],PC$mtxCCP[,2], lty=1, code = 2, length = 0.08, angle = 25, col = ifelse(color,"Red","Black")) # cria a seta apontando para cada coordenada principal
   
-  LocLab(t(PC$mtxCCP), cex = 1, colnames(PC$mtxCCP) , col = ifelse(color,"Blue","Black"), xpd = TRUE)
+  LocLab(t(PC$mtxCCP), cex = 1, rownames(PC$mtxCCP) , col = ifelse(color,"Blue","Black"), xpd = TRUE)
   
   if (savptc) { box(col = 'white'); dev.off() }
   ##### FIM - Plotagem das Correlacoes dos Componentes Principais com as Variaveis Originais #####

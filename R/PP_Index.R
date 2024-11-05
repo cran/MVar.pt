@@ -44,7 +44,7 @@ PP_Index <- function (data, class = NA, vector.proj = NA, findex = "HOLES",
   
   if (!is.na(class[1])) {
     
-    class <- as.matrix(class)
+    class <- as.vector(class)
     
     if (nrow(data) != length(class))
        stop("Entrada 'class' ou 'data' esta incorreta, devem conter o mesmo numero de linhas. Verifique!")
