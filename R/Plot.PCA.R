@@ -288,7 +288,7 @@ Plot.PCA <- function(PC, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   
   arrows(0,0,PC$mtxCCP[,1],PC$mtxCCP[,2], lty=1, code = 2, length = 0.08, angle = 25, col = ifelse(color,"Red","Black")) # cria a seta apontando para cada coordenada principal
   
-  LocLab(t(PC$mtxCCP), cex = 1, rownames(PC$mtxCCP) , col = ifelse(color,"Blue","Black"), xpd = TRUE)
+  LocLab(PC$mtxCCP, cex = 1, rownames(PC$mtxCCP) , col = ifelse(color,"Blue","Black"), xpd = TRUE)
   
   if (savptc) { box(col = 'white'); dev.off() }
   ##### FIM - Plotagem das Correlacoes dos Componentes Principais com as Variaveis Originais #####

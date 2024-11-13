@@ -2,8 +2,8 @@ Package: MVar.pt
 Type: Package
 Language: pt_BR
 Title: Analise multivariada (brazilian portuguese)
-Version: 2.2.3
-Date: 2024-11-05
+Version: 2.2.4
+Date: 2024-11-13
 Imports: graphics, grDevices, MASS, stats
 Authors@R: c(
            person(given = c("Paulo Cesar"), family = "Ossani", 
@@ -23,5 +23,5 @@ Author: Paulo Cesar Ossani [aut, cre] (<https://orcid.org/0000-0002-6617-8085>),
   Marcelo Angelo Cirillo [aut] (<https://orcid.org/0000-0002-2647-439X>)
 Maintainer: Paulo Cesar Ossani <ossanipc@hotmail.com>
 Repository: CRAN
-Packaged: 2024-11-05 15:54:38 UTC; UEM
-Date/Publication: 2024-11-05 16:30:02 UTC
+Packaged: 2024-11-13 16:22:42 UTC; Ossan
+Date/Publication: 2024-11-13 17:30:05 UTC
