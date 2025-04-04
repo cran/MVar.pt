@@ -123,6 +123,7 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   }
 
   cor <- 1 # cor inicial dos pontos e legendas
+  ncol <- ncol(Data)
   ##### FIM - Informacoes usadas nos Graficos #####
   
   if (!is.character(titles[1]) || is.na(titles[1])) titles[1] = c("Evolucao do indice")
@@ -166,7 +167,7 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   if (savptc) png(filename = paste("Figure PP Projetions -",PP$findex[1],".png"), width = width, height = height, res = res) # salva os graficos em arquivo
   
   #### Plotas as projecoes 2D
-  if (ncol(Data) == 2) {
+  if (ncol == 2) {
     
      maxX = max(Data[,1], PP$vector.opt[,1]) 
      minX = min(Data[,1], PP$vector.opt[,1]) 
@@ -264,7 +265,7 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   
   
   #### Plotas as projecoes 1D
-  if (ncol(Data) == 1) {  
+  if (ncol == 1) {  
     
      if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
 
@@ -352,7 +353,7 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
 
   }
   
-  if (ncol(Data) <= 2) {
+  if (ncol <= 2) {
     
     if (posleg != 0 && num.class > 0) {
 
@@ -380,7 +381,7 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
 
     if (axes) abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central 
    
-    if (axesvar && ncol(Data) == 2 ) { # plota os eixos das variaveis
+    if (axesvar && ncol == 2 ) { # plota os eixos das variaveis
       
        Ajuste <- c(diff(range(Data[,1])) / 2 + min(Data[,1]),
                    diff(range(Data[,2])) / 2 + min(Data[,2]))
@@ -397,7 +398,7 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
     
   }
   
-  if (savptc) { 
+  if (savptc && ncol == 2) { 
      box(col = 'white')
      dev.off() 
      message("\n \n Fim!")
