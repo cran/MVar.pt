@@ -167,7 +167,7 @@ Scatter <- function(data, ellipse = TRUE, ellipse.level = 0.95, rectangle = FALS
   
   ##### FIM - Informacoes usadas nos Graficos #####
 
-  if (savptc) png(filename = "Figure Scatter Plot.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_Scatter_Plot.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   x <- data[,1] # valores eixo x
   y <- data[,2] # valores eixo y

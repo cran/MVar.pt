@@ -124,7 +124,7 @@ Plot.PCA <- function(PC, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
 
   ##### INICIO - Plotagem dos Autovalores #####
-  if (savptc) png(filename = "Figure PCA Variances.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_PCA_Variances.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   mp <- barplot(PC$mtxAutvlr[,1],names.arg=paste(round(PC$mtxAutvlr[,2],2),"%",sep=""),
                 main = "Variancias dos componentes")
@@ -135,7 +135,7 @@ Plot.PCA <- function(PC, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Scree-plot dos componentes #####
-  if (savptc) png(filename = "Figure PCA Scree Plot.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_PCA_Scree_Plot.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   plot(1:length(PC$mtxAutvlr[,1]), PC$mtxAutvlr[,1],
        type = "n", # nao plota pontos
@@ -166,7 +166,7 @@ Plot.PCA <- function(PC, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem dos Dados das linhas #####
-  if (savptc) png(filename = "Figure PCA Observations.png", width = width, height = height, res = res) # salva os graficos em arquivo
+  if (savptc) png(filename = "Figure_PCA_Observations.png", width = width, height = height, res = res) # salva os graficos em arquivo
   
   plot(PC$mtxscores, # cria grafico para as coordenadas principais das linhas
        xlab = xlabel, # Nomeia Eixo X
@@ -258,7 +258,7 @@ Plot.PCA <- function(PC, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem das Correlacoes dos Componentes Principais com as Variaveis Originais #####
-  if (savptc) png(filename = "Figure PCA Correlations.png", width = width, height = height, res = res) # salva os graficos em arquivo
+  if (savptc) png(filename = "Figure_PCA_Correlations.png", width = width, height = height, res = res) # salva os graficos em arquivo
   
   plot(0,0, # cria grafico para as coordenadas das Correlacoes dos Componentes Principais com as Variaveis Originais
        xlab = xlabel, # Nomeia Eixo X

@@ -125,7 +125,7 @@ Plot.FA <- function(FA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
 
   ##### INICIO - Plotagem dos Autovalores #####
-  if (savptc) png(filename = "Figure FA Variances.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_FA_Variances.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   mp <- barplot(FA$mtxvar[,1],names.arg=paste(round(FA$mtxvar[,2],2),"%",sep=""),
                 main = "Variancias dos Fatores")
@@ -136,7 +136,7 @@ Plot.FA <- function(FA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Scree-plot dos Fatores #####
-  if (savptc) png(filename = "Figure FA Scree Plot.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_FA_Scree_Plot.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   plot(1:length(FA$mtxvar[,1]), FA$mtxvar[,1],
        type = "n", # nao plota pontos
@@ -167,7 +167,7 @@ Plot.FA <- function(FA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem Escores das observacoes #####
-  if (savptc) png(filename = "Figure FA Observations.png", width = width, height = height, res = res) # salva os graficos em arquivo
+  if (savptc) png(filename = "Figure_FA_Observations.png", width = width, height = height, res = res) # salva os graficos em arquivo
   
   plot(FA$mtxscores,  # cria grafico para os Escores das observacoes 
        xlab = xlabel, # Nomeia Eixo X
@@ -259,7 +259,7 @@ Plot.FA <- function(FA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Cargas fatoriais #####
-  if (savptc) png(filename = "Figure FA Loadings.png", width = width, height = height, res = res) # salva os graficos em arquivo
+  if (savptc) png(filename = "Figure_FA_Loadings.png", width = width, height = height, res = res) # salva os graficos em arquivo
   
   HpMat <- rbind(c(0,0),FA$mtxcarga[,1:2])
   MaxX  <- max(HpMat[,1]) + 0.05 # Dimenssoes maximas das linhas
@@ -301,7 +301,7 @@ Plot.FA <- function(FA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Biplot ##### 
-  if (savptc) png(filename = "Figure FA Biplot.png", width = width, height = height, res = res) # salva os graficos em arquivo
+  if (savptc) png(filename = "Figure_FA_Biplot.png", width = width, height = height, res = res) # salva os graficos em arquivo
   
   HpMat <- rbind(c(0,0),FA$mtxcarga[,1:2],FA$mtxscores[,1:2])
   MaxX  <- max(HpMat[,1]) + 0.05 # Dimenssoes maximas das linhas

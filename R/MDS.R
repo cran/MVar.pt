@@ -147,7 +147,7 @@ MDS <- function(data, distance = "euclidean", title = NA, xlabel = NA,
   }
   else { cor.classe <- c("red") }
   
-  if (savptc) png(filename = "Figure MDS.png", width = width, height = height, res = res) # salva os graficos em arquivo
+  if (savptc) png(filename = "Figure_MDS.png", width = width, height = height, res = res) # salva os graficos em arquivo
   
   plot(x,y, # cria grafico para as coordenadas linhas x e colunas y
        xlab = xlabel, # Nomeia Eixo X

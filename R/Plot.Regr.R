@@ -98,7 +98,7 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
      
      if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
      
-     if (savptc) png(filename = "Figure Regression Scatterplot.png", width = width, height = height, res = res) # salva os graficos em arquivos
+     if (savptc) png(filename = "Figure_Regression_Scatterplot.png", width = width, height = height, res = res) # salva os graficos em arquivos
      
      Dat <- as.data.frame(cbind(Reg$Y,X))
      colnames(Dat) <- c(namevary,namevarx)
@@ -120,7 +120,7 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
     
      if (ncol(X)==1) { # para calculos de regressao simples
         
-        if (savptc) png(filename = "Figure Regression Simples.png", width = width, height = height, res = res) # salva os graficos em arquivos
+        if (savptc) png(filename = "Figure_Regression_Simples.png", width = width, height = height, res = res) # salva os graficos em arquivos
        
         if (is.na(xlabel[1]))
            xlabel = "Eixo x"  # Nomeia Eixo X  
@@ -205,7 +205,7 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
   ## Inicio - Grafico da probalidade normal
   if (typegraf == "QQPlot") {
      
-     if (savptc) png(filename = "Figure Regression QQPlot.png", width = width, height = height, res = res) # salva os graficos em arquivos
+     if (savptc) png(filename = "Figure_Regression_QQPlot.png", width = width, height = height, res = res) # salva os graficos em arquivos
     
      if (is.na(xlabel[1]))
         xlabel = "Quantis"  # Nomeia Eixo X  
@@ -235,7 +235,7 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
   ## Inicio - Grafico da probalidade normal
   if (typegraf == "Histogram") {
     
-     if (savptc) png(filename = "Figure Regression Histogram.png", width = width, height = height, res = res) # salva os graficos em arquivos
+     if (savptc) png(filename = "Figure_Regression_Histogram.png", width = width, height = height, res = res) # salva os graficos em arquivos
     
      if (is.na(xlabel[1]))
         xlabel = "Residuo"  # Nomeia Eixo X  
@@ -262,7 +262,7 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
   ## Inicio - Grafico dos valores ajustados com os residuos
   if (typegraf == "Fits") {
     
-    if (savptc) png(filename = "Figure Regression Fits.png", width = width, height = height, res = res) # salva os graficos em arquivos
+    if (savptc) png(filename = "Figure_Regression_Fits.png", width = width, height = height, res = res) # salva os graficos em arquivos
     
     if (is.na(xlabel[1]))
        xlabel = "Valores ajustados"  # Nomeia Eixo X  
@@ -307,7 +307,7 @@ Plot.Regr <- function(Reg, typegraf = "Scatterplot", title = NA, xlabel = NA,
   ## Inicio - Grafico com ordem das observacoes versus os residuos
   if (typegraf == "Order") {
     
-    if (savptc) png(filename = "Figure Regression Order.png", width = width, height = height, res = res) # salva os graficos em arquivos
+    if (savptc) png(filename = "Figure_Regression_Order.png", width = width, height = height, res = res) # salva os graficos em arquivos
     
     if (is.na(xlabel[1]))
        xlabel = "Ordem das observacoes"  # Nomeia Eixo X  

@@ -1,6 +1,6 @@
 Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
-                    size = 1.1, grid = TRUE, color = TRUE, 
-                    linlab = NA, savptc = FALSE, width = 3236, 
+                    size = 1.1, grid = TRUE, color = TRUE, linlab = NA,
+                    axes = TRUE, savptc = FALSE, width = 3236, 
                     height = 2000, res = 300, casc = TRUE) {
   # Rotina para Plotar Graficos do Metodo AC desenvolvida 
   # por Paulo Cesar Ossani em 11/2014
@@ -14,6 +14,7 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
   # grid   - Coloca grade nos graficos.
   # color  - Graficos coloridos (default = TRUE).
   # linlab - Vetor com os rotulos para as observacoes.
+  # axes   - Coloca eixos no grafico (default = TRUE).
   # savptc - Salva as imagens dos graficos em arquivos (default = FALSE).
   # width  - Largura do grafico quanto savptc = TRUE (defaul = 3236).
   # height - Altura do grafico quanto savptc = TRUE (default = 2000).
@@ -48,6 +49,9 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
   if (!is.na(linlab[1]) && length(linlab)!=nrow(CA$mtxX) && CA$typdata=="F")
      stop("O numero elementos do rotulo para linhas 'linlab' difere do numero de linhas da base de dados. Verifique!")
   
+  if (!is.logical(axes)) 
+    stop("Entrada para 'axes' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  
   if (!is.logical(savptc))
      stop("Entrada para 'savptc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
@@ -79,7 +83,7 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem dos Autovalores #####
-  if (savptc) png(filename = "Figure CA Variances.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_CA_Variances.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   mp <- barplot(CA$mtxAutvlr[,1],names.arg=paste(round(CA$mtxAutvlr[,2],2),"%",sep=""),
                 main = "Variancias dos componentes")
@@ -90,7 +94,7 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
 
   ##### INICIO - Scree-plot dos componentes #####
-  if (savptc) png(filename = "Figure CA Scree Plot.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_CA_Scree_Plot.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   plot(1:length(CA$mtxAutvlr[,1]), CA$mtxAutvlr[,1], 
        type = "n", # nao plota pontos
@@ -121,7 +125,7 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
   ##### INICIO - Plotagem dos Dados das linhas #####
   if (CA$typdata == "F") { # plota se nao for analise de correspondencia multipla
     
-     if (savptc) png(filename = "Figure CA Observations.png", width = width, height = height, res = res) # salva os graficos em arquivos
+     if (savptc) png(filename = "Figure_CA_Observations.png", width = width, height = height, res = res) # salva os graficos em arquivos
     
      if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
     
@@ -149,8 +153,8 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
             pch = 17, # Formato dos pontos 
             cex = size,  # Tamanho dos pontos  
             col = ifelse(color,"red","black")) # Cor dos pontos
-       
-     abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
+
+     if (axes) abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
     
      if (!is.na(linlab[1])) LocLab(CA$mtxX,cex=1, linlab)
     
@@ -162,7 +166,7 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem Dados das colunas #####
-  if (savptc) png(filename = "Figure CA Variables.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_CA_Variables.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   plot(0, # cria grafico para as coordenadas principais das linhas
        xlab = xlabel, # Nomeia Eixo X
@@ -189,7 +193,7 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
          cex = size,  # Tamanho dos pontos  
          col = ifelse(color,ifelse(CA$typdata=="C","red","blue"),"black"))             # Cor dos pontos
     
-  abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
+  if (axes) abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
   LocLab(CA$mtxY, cex=1, rownames(CA$mtxY))
   
@@ -199,7 +203,7 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
   ##### INICIO - Plotagem dos Dados das linhas e colunas conjuntamente #####
   if (CA$typdata=="F") { # plota se nao for analise de correspondencia multipla
     
-     if (savptc) png(filename = "Figure CA Variables Observations.png", width = width, height = height, res = res) # salva os graficos em arquivos
+     if (savptc) png(filename = "Figure_CA_Variables_Observations.png", width = width, height = height, res = res) # salva os graficos em arquivos
     
      if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
     
@@ -229,7 +233,7 @@ Plot.CA <- function(CA, titles = NA, xlabel = NA, ylabel = NA,
 
      points(CA$mtxY, pch = 16, cex = size, col = ifelse(color,"blue","black")) # adiciona ao grafico as coordenadas principais das colunas
      
-     abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
+     if (axes) abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
      
      if (!is.na(linlab[1])) LocLab(rbind(CA$mtxX[,1:2], CA$mtxY[,1:2]), cex=1, rbind(as.matrix(linlab), as.matrix(rownames(CA$mtxY))))
   

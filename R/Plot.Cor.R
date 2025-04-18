@@ -74,7 +74,7 @@ Plot.Cor <- function(data, title = NA, grid = TRUE, leg = TRUE, boxleg = FALSE, 
      message("\n\n Salvando graficos em disco. Aguarde o termino!")
   }
   
-  if (savptc) png(filename = "Figure Correlation.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_Correlation.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   tab.corr <- cor(data) # correlacao entre as variaveis
   

@@ -130,7 +130,7 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   if (!is.character(titles[2]) || is.na(titles[2])) titles[2] = paste("Funcao indice:", PP$findex)
 
   #### INICIO - Plota os indices das projecoes ####
-  if (savptc) png(filename = paste("Figure PP Index -",PP$findex[1],".png"), width = width, height = height, res = res) # salva os graficos em arquivo
+  if (savptc) png(filename = paste("Figure_PP_Index-",PP$findex[1],".png", sep=""), width = width, height = height, res = res) # salva os graficos em arquivo
   
   linCol <- c('blue') # cor da funcao plotada
   
@@ -164,7 +164,7 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   if (savptc) { box(col = 'white'); dev.off() }
   #### FIM - Plota os indices das projecoes ####
   
-  if (savptc) png(filename = paste("Figure PP Projetions -",PP$findex[1],".png"), width = width, height = height, res = res) # salva os graficos em arquivo
+  if (savptc) png(filename = paste("Figure_PP_Projetions-",PP$findex[1],".png", sep=""), width = width, height = height, res = res) # salva os graficos em arquivo
   
   #### Plotas as projecoes 2D
   if (ncol == 2) {
@@ -398,7 +398,7 @@ Plot.PP <- function(PP, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
     
   }
   
-  if (savptc && ncol == 2) { 
+  if (savptc) { 
      box(col = 'white')
      dev.off() 
      message("\n \n Fim!")

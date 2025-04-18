@@ -172,7 +172,7 @@ Biplot <- function(data, alpha = 0.5, title = NA, xlabel = NA, ylabel = NA,
 
   ##### INICIO - Grafico Biplot #####  
   
-  if (savptc) png(filename = "Figure Biplot.png", width = width, height = height, res = res) # salva os graficos em arquivo
+  if (savptc) png(filename = "Figure_Biplot.png", width = width, height = height, res = res) # salva os graficos em arquivo
   
   plot(0,0, # Plota as variaveis
        xlab = xlabel, # Nomeia Eixo X

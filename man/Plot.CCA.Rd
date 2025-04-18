@@ -6,8 +6,8 @@
 
 \description{Graficos da analise de correlacao canonica (CCA).}
 
-\usage{Plot.CCA(CCA, titles = NA, xlabel = NA, ylabel = NA,
-         size = 1.1, grid = TRUE, color = TRUE, savptc = FALSE, 
+\usage{Plot.CCA(CCA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1, 
+         grid = TRUE, color = TRUE, axes = TRUE, savptc = FALSE, 
          width = 3236, height = 2000, res = 300, casc = TRUE)}
 
 \arguments{
@@ -18,6 +18,7 @@
 \item{size}{Tamanho dos pontos no grafico.}
 \item{grid}{Coloca grade nos graficos (default = TRUE).}
 \item{color}{Graficos coloridos (default = TRUE).}
+\item{axes}{Plota os eixos X e Y (default = TRUE).}
 \item{savptc}{Salva as imagens dos graficos em arquivos (default = FALSE).}   
 \item{width}{Largura do grafico quanto savptc = TRUE (defaul = 3236).}
 \item{height}{Altura do grafico quanto savptc = TRUE (default = 2000).}
@@ -52,7 +53,8 @@ tit <- c("Scree-plot","Correlacoes","Scores do grupo X","Scores do grupo Y")
 
 Plot.CCA(res, titles = tit, xlabel = NA, ylabel = NA,
          color = TRUE, savptc = FALSE, width = 3236, 
-         height = 2000, res = 300, casc = TRUE)
+         height = 2000, res = 300, axes = TRUE,
+         casc = FALSE)
 }
 
 \keyword{Analise de correlacao canonica}

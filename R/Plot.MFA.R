@@ -124,7 +124,7 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem dos Autovalores #####
-  if (savptc) png(filename = "Figure MFA Variances.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_MFA_Variances.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   mp <- barplot(MFA$mtxA[,1],names.arg=paste(round(MFA$mtxA[,2],2),"%",sep=""),
                 main = "Variancias dos componentes")
@@ -135,7 +135,7 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Scree-plot dos componentes #####
-  if (savptc) png(filename = "Figure MFA Scree Plot.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_MFA_Scree_Plot.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   plot(1:length(MFA$mtxA[,1]), MFA$mtxA[,1], 
        type = "n", # nao plota pontos
@@ -166,7 +166,7 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem da Analise Global #####
-  if (savptc) png(filename = "Figure MFA Observations.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_MFA_Observations.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   plot(MFA$mtxF, # cria grafico para as coordenadas principais da Analise Global
        xlab = xlabel, # Nomeia Eixo X
@@ -204,7 +204,7 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   
   ##### INICIO - Plotagem da Analise por Grupo Juntamente com a Analise Global #####
   ## INICIO - Encontra as dimensoes maximas e minimas para as colunas e linhas ##
-  if (savptc) png(filename = "Figure MFA Variables Observations.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_MFA_Variables_Observations.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   MLC <- MFA$mtxF[,1:2]
   for (i in 1:length(MFA$mtxEFG)) 
@@ -297,7 +297,7 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem das Correlacoes dos Componentes Principais com as Variaveis Originais #####
-  if (savptc) png(filename = "Figure MFA Correlation Circle.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_MFA_Correlation_Circle.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   plot(0,0, # cria grafico para as coordenadas das Correlacoes dos Componentes Principais com as Variaveis Originais
        xlab = xlabel, # Nomeia Eixo X
@@ -358,7 +358,7 @@ Plot.MFA <- function(MFA, titles = NA, xlabel = NA, ylabel = NA, posleg = 2,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem das Inercias Parciais/Escores das Variareis #####
-  if (savptc) png(filename = "Figure MFA Group Inertia.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_MFA_Group_Inertia.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   VlrMinX = ifelse(min(MFA$mtxEV[,1])>0,-0.01, min(MFA$mtxEV[,1])) # Valor minimo para a linha X
   VlrMinY = ifelse(min(MFA$mtxEV[,2])>0,-0.01, min(MFA$mtxEV[,2])) # Valor minimo para a linha Y

@@ -6,10 +6,10 @@
 
 \description{Graficos da analise de correspondencia (CA) simples e multipla.}
 
-\usage{Plot.CA(CA, titles = NA, xlabel = NA, ylabel = NA,
-        size = 1.1, grid = TRUE, color = TRUE, linlab = NA, 
-        savptc = FALSE, width = 3236, height = 2000, 
-        res = 300, casc = TRUE)}
+\usage{Plot.CA(CA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1, 
+        grid = TRUE, color = TRUE, linlab = NA, axes = TRUE,
+        savptc = FALSE, width = 3236, height = 2000, res = 300, 
+        casc = TRUE)}
 
 \arguments{
 \item{CA}{Dados da funcao CA.}
@@ -20,6 +20,7 @@
 \item{grid}{Coloca grade nos graficos (default = TRUE).}
 \item{color}{Graficos coloridos (default = TRUE).}
 \item{linlab}{Vetor com os rotulos para as observacoes.}
+\item{axes}{Plota os eixos X e Y (default = TRUE).}
 \item{savptc}{Salva as imagens dos graficos em arquivos (default = FALSE).}   
 \item{width}{Largura do grafico quanto savptc = TRUE (defaul = 3236).}
 \item{height}{Altura do grafico quanto savptc = TRUE (default = 2000).}
@@ -48,7 +49,7 @@ res <- CA(data, "f") # realiza CA
 
 tit <- c("Scree-plot","Observacoes", "Variaveis", "Observacoes/Variaveis")
 
-Plot.CA(res, titles = tit, xlabel = NA, ylabel = NA,
+Plot.CA(res, titles = tit, xlabel = NA, ylabel = NA, axes = TRUE,
         color = TRUE, linlab = rownames(data), savptc = FALSE,
         width = 3236, height = 2000, res = 300, casc = FALSE)
 
@@ -63,8 +64,8 @@ tit <- c("","","Grafico das Variaveis")
 
 Plot.CA(res, titles = tit, xlabel = NA, ylabel = NA,
         color = TRUE, linlab = NA, savptc = FALSE, 
-        width = 3236, height = 2000, res = 300,
-        casc = FALSE)
+        width = 3236, height = 2000, res = 300, 
+        axes = TRUE, casc = FALSE)
 
 }
 

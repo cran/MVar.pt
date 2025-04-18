@@ -1,5 +1,5 @@
-Plot.CCA <- function(CCA, titles = NA, xlabel = NA, ylabel = NA, 
-                     size = 1.1, grid = TRUE, color = TRUE, savptc = FALSE, 
+Plot.CCA <- function(CCA, titles = NA, xlabel = NA, ylabel = NA, size = 1.1, 
+                     grid = TRUE, color = TRUE, axes = TRUE, savptc = FALSE, 
                      width = 3236, height = 2000, res = 300, casc = TRUE) {
   # Rotina para Plotar Graficos do Metodo CCA desenvolvida 
   # por Paulo Cesar Ossani em 09/04/2016
@@ -11,6 +11,7 @@ Plot.CCA <- function(CCA, titles = NA, xlabel = NA, ylabel = NA,
   # size   - Tamanho dos pontos nos graficos.
   # grid   - Coloca grade nos graficos.
   # color  - Graficos coloridos (default = TRUE).
+  # axes   - Coloca eixos no grafico (default = TRUE).
   # savptc - Salva as imagens dos graficos em arquivos (default = FALSE).
   # width  - Largura do grafico quanto savptc = TRUE (defaul = 3236).
   # height - Altura do grafico quanto savptc = TRUE (default = 2000).
@@ -43,6 +44,9 @@ Plot.CCA <- function(CCA, titles = NA, xlabel = NA, ylabel = NA,
   if (!is.logical(color))
      stop("Entrada para 'color' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
+  if (!is.logical(axes)) 
+    stop("Entrada para 'axes' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
+  
   if (!is.logical(savptc))
      stop("Entrada para 'savptc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
@@ -70,7 +74,7 @@ Plot.CCA <- function(CCA, titles = NA, xlabel = NA, ylabel = NA,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
 
   ##### INICIO - Scree-plot dos fatores #####
-  if (savptc) png(filename = "Figure CCA Scree Plot.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_CCA_Scree_Plot.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   plot(1:length(CCA$var.UV[,1]), CCA$var.UV[,1], 
        type = "n", # nao plota pontos
@@ -101,7 +105,7 @@ Plot.CCA <- function(CCA, titles = NA, xlabel = NA, ylabel = NA,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem Correlacoes entre as variaveis canonicas e as variaveis originais #####
-  if (savptc) png(filename = "Figure CCA Correlations.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_CCA_Correlations.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   plot(0,0, 
        xlab = xlabel, # Nomeia Eixo X
@@ -127,7 +131,7 @@ Plot.CCA <- function(CCA, titles = NA, xlabel = NA, ylabel = NA,
   
   symbols(0, 0, circles = 1, inches = FALSE, fg = 1, add = TRUE) # cria um circulo
   
-  abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
+  if (axes) abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
   ## Grupo X
   arrows(0,0,CCA$corr.X[,1], CCA$corr.X[,2], lty = 2, code = 2, angle = 10, col = ifelse(color,"red","black")) # cria a seta apontando para cada ponto do grupo X
@@ -143,7 +147,7 @@ Plot.CCA <- function(CCA, titles = NA, xlabel = NA, ylabel = NA,
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
   ##### INICIO - Plotagem dos scores dos grupos X e Y #####
-  if (savptc) png(filename = "Figure CCA Scores X.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_CCA_Scores_X.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   plot(CCA$score.X, # grafico para os scores do grupo X
        xlab = xlabel, # Nomeia Eixo X
@@ -171,7 +175,7 @@ Plot.CCA <- function(CCA, titles = NA, xlabel = NA, ylabel = NA,
          cex = size,  # Tamanho dos pontos
          col = ifelse(color,"red","black")) # Cor dos pontos
     
-  abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
+  if (axes) abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
   if (is.null(rownames(CCA$score.X)[1])) LineNames <- as.character(1:nrow(CCA$score.X))
   
@@ -183,7 +187,7 @@ Plot.CCA <- function(CCA, titles = NA, xlabel = NA, ylabel = NA,
   
   if (casc && !savptc) dev.new() # efeito cascata na apresentacao dos graficos
   
-  if (savptc) png(filename = "Figure CCA Scores Y.png", width = width, height = height, res = res) # salva os graficos em arquivos
+  if (savptc) png(filename = "Figure_CCA_Scores_Y.png", width = width, height = height, res = res) # salva os graficos em arquivos
   
   plot(CCA$score.Y, # grafico para os scores do grupo Y
        xlab = xlabel, # Nomeia Eixo X
@@ -211,7 +215,7 @@ Plot.CCA <- function(CCA, titles = NA, xlabel = NA, ylabel = NA,
          cex = size,  # Tamanho dos pontos
          col = ifelse(color,"red","black")) # Cor dos pontos
   
-  abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
+  if (axes) abline(h = 0, v = 0, cex = 1.5, lty = 2) # cria o eixo central
   
   if (is.null(rownames(CCA$score.Y)[1])) LineNames <- as.character(1:nrow(CCA$score.Y))
     
