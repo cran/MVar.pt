@@ -15,12 +15,13 @@
 }
 
 \value{
-\item{mtxC      }{Matriz de covariancia ou de correlacao conforme "type".}
-\item{mtxAutvlr }{Matriz de autovalores (variancias) com as proporcoes e proporcoes acumuladas.}
-\item{mtxAutvec }{Matriz de autovetores - componentes principais.}
-\item{mtxVCP     }{Matriz da covariancia dos componentes principais com as variaveis originais.}
-\item{mtxCCP     }{Matriz da correlacao dos componentes principais com as variaveis originais.}
-\item{mtxscores     }{Matriz com os escores dos componentes principais.}
+  \item{mtxC     }{Matriz de covariancia ou de correlacao conforme "type".}
+  \item{mtxAutvlr}{Matriz de autovalores (variancias) com as proporcoes e proporcoes acumuladas.}
+  \item{mtxAutvec}{Matriz de autovetores - componentes principais.}
+  \item{mtxVCP   }{Matriz da covariancia dos componentes principais com as variaveis originais.}
+  \item{mtxCCP   }{Matriz da correlacao dos componentes principais com as variaveis originais.}
+  \item{mtxscores}{Matriz com os escores dos componentes principais.}
+  \item{mtxresult}{Matriz com todos os resultados associados.}
 }
 
 \references{
@@ -48,7 +49,7 @@ data <- DataQuan[,2:8]
 
 rownames(data) <- DataQuan[1:nrow(DataQuan),1]
 
-pc <- PCA(data = data, 2) # executa o PCA
+pc <- PCA(data = data, type = 1) # executa o PCA
 
 print("Matriz de Covariancia/Correlacao:"); round(pc$mtxC,2)
 
@@ -61,6 +62,8 @@ print("Covariancia dos Componentes Principais:"); round(pc$mtxVCP,2)
 print("Correlacao dos Componentes Principais:"); round(pc$mtxCCP,2)
 
 print("Escores dos Componentes Principais:"); round(pc$mtxscores,2)
+
+print("Matriz com todos os resultados associados:"); round(pc$mtxresult,3)
 }
 
 \keyword{Analise de componentes principais}

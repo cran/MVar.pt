@@ -14,6 +14,7 @@ PCA <- function(data, type = 1) {
   # mtxVCP    - Matriz da Covariancia dos Componentes Principais com as Variaveis Originais
   # mtxCCP    - Matriz da Correlacao dos Componentes Principais com as Variaveis Originais
   # mtxscores - Matriz com os escores dos Componentes Principais
+  # mtxresult - Matriz com todos os resultados associados
   
   if (!is.data.frame(data) && !is.matrix(data)) 
      stop("Entrada 'data' esta incorreta, deve ser do tipo dataframe ou matriz. Verifique!")
@@ -35,17 +36,17 @@ PCA <- function(data, type = 1) {
   ## Matriz das Variancias
   MEigen <- as.data.frame(matrix(NA, length(MAutoVlr), 3))
   rownames(MEigen) <- paste("Comp", 1:length(MAutoVlr))
-  colnames(MEigen) <- c("Autovalor", "% da variancia","% acumulada da variancia")
+  colnames(MEigen) <- c("Autovalor", "% variancia","% acumulada da variancia")
   MEigen[, "Autovalor"] <- MAutoVlr
-  MEigen[, "% da variancia"] <- (MAutoVlr/sum(MAutoVlr)) * 100
-  MEigen[, "% acumulada da variancia"] <- cumsum(MEigen[,"% da variancia"])
+  MEigen[, "% variancia"] <- (MAutoVlr/sum(MAutoVlr)) * 100
+  MEigen[, "% acumulada da variancia"] <- cumsum(MEigen[,"% variancia"])
   
   ## Matriz de Autovetores,ou seja, os Componentes Principais
   colnames(MAutoVec) <- paste("Comp.", 1:nrow(MC), sep = " ")
   rownames(MAutoVec) <- colnames(data)  
-
+  
   ## Covariancia dos Componentes Principais com as Variaveis Originais
-  VCP <- diag(MAutoVlr,nrow(MC),ncol(MC))%*%t(MAutoVec)
+  VCP <- diag(MAutoVlr, nrow(MC), ncol(MC))%*%t(MAutoVec)
   rownames(VCP) <- paste("Comp", 1:nrow(MC))
   
   ## Correlacao dos Componentes Principais com as Variaveis Originais
@@ -53,12 +54,18 @@ PCA <- function(data, type = 1) {
   colnames(CCP) <- colnames(data) # Nomeia as linhas
   rownames(CCP) <- paste("Comp", 1:nrow(MC))
   
+  # Matriz com todos os resultados associados
+  mvar <- t(MEigen)
+  comp <- t(CCP)[,1:ncol(mvar)]
+  Result <- rbind(comp, mvar)
+  
   Esc = as.matrix(data)%*%MAutoVec # Escores do componentes principais
   rownames(Esc) <- rownames(data)
   
   Lista <- list(mtxC = MC, mtxAutvlr = MEigen,
                 mtxAutvec = MAutoVec, mtxVCP = VCP, 
-                mtxCCP = t(CCP), mtxscores = Esc)
+                mtxCCP = t(CCP), mtxscores = Esc, 
+                mtxresult = Result)
   
   return(Lista)
 }
