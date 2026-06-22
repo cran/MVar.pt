@@ -4,7 +4,7 @@ importFrom("graphics", "abline", "arrows", "barplot", "legend", "par", "plot",
 importFrom("stats", "cor", "var", "cov", "qchisq", "runif", "sd", "pchisq", "pf", "qf",
            "varimax", "cmdscale", "dist", "integrate", "prcomp", "rnorm", "as.dendrogram",
            "as.dist", "cutree", "hclust", "kmeans", "rect.hclust", "Box.test", 
-           "bartlett.test", "pt", "qqline","qqnorm", "qt", "lm", "predict", "promax")
+           "bartlett.test", "pt", "qqline","qqnorm","qnorm", "qt", "lm", "predict", "promax")
 importFrom("MASS", "ginv", "lda", "qda")
 importFrom("grDevices","dev.off","png", "dev.new", "xy.coords", "chull")
 useDynLib(MVar.pt, .registration = TRUE)
