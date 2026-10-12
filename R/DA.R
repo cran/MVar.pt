@@ -76,7 +76,7 @@ DA <- function(data, class = NA, type = "lda", validation = "learning",
   
   if (validation == "testing" && !is.na(testing[1]))
      Learning = as.integer(rownames(data[-testing,]))
-     
+  
   ## Analise Discriminante Linear
   if (type == "lda") {
      disc <- MASS::lda(class~., data, prior = prior, method = method, subset = Learning)

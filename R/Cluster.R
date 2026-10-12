@@ -82,7 +82,7 @@ Cluster <- function(data, titles = NA, hierarquic = TRUE, analysis = "Obs",
      stop("Entrada para 'num.groups' esta incorreta, deve ser numeros inteiros positivos, ou zero. Verifique!")
   
   if (!hierarquic && analysis == "VAR")
-     stop("O method nao hierarquico e valido apenas para as observacoes. Verifique!")
+     stop("O metodo nao hierarquico e valido apenas para as observacoes. Verifique!")
   
   if (!hierarquic && num.groups < 2)
      stop("Para o method nao hierarquico se faz necessario num.groups > 1. Verifique!")
@@ -105,8 +105,35 @@ Cluster <- function(data, titles = NA, hierarquic = TRUE, analysis = "Obs",
   if (!is.logical(casc && !savptc))
      stop("Entrada para 'casc' esta incorreta, deve ser TRUE ou FALSE. Verifique!")
   
-  data.new <- data # dados a serem analizados
+  transf.data <- function(dados) {
+    # Funcao que transforma dados categoricos em binarios
+    for (col in names(dados)) {
+      
+      if (is.factor(dados[[col]]) || is.character(dados[[col]])) { # Verifica se a coluna é categórica (fator ou caractere)
+        # message(sprintf("Convertendo a variável categórica: '%s'", col))
+        
+        resul.bin <- IM(dados[[col]]) # transforma dados categoricos em binaria
+        
+        dados[[col]] <- NULL # Remove a coluna categórica original do dataset
+        
+        dados <- cbind(dados, as.data.frame(resul.bin))
+      }
+      
+    }
+    
+    # quando houver nomes iguais acrescenta numeros para tornarem unicos
+    names(dados) <- make.unique(names(dados), sep = "")
+    
+    return(dados)
+  }
   
+  numeric.var <- any(!sapply(sapply(data, class), function(x) any(x %in% c("numeric", "integer"))))
+  if (numeric.var) { # transforma os dados categoricos em binarios
+     data.new <- transf.data(data)
+  } else {
+     data.new <- data # dados a serem analizados
+  }
+
   if (normalize && analysis == "OBS")
      data.new <- scale(data.new) # normaliza por colunas os dados
 
@@ -128,10 +155,10 @@ Cluster <- function(data, titles = NA, hierarquic = TRUE, analysis = "Obs",
      
      if (analysis == "VAR") {# analysis nas variaveis
         if (cor.abs) # matrix de correlacao absoluta
-            mtx.dist <- as.dist(1 - abs(cor(data))) # matrix das distancias
+            mtx.dist <- as.dist(1 - abs(cor(data.new))) # matrix das distancias
         
         if (!cor.abs) # matrix de correlacao
-            mtx.dist <- as.dist(1 - cor(data)) # matrix das distancias
+            mtx.dist <- as.dist(1 - cor(data.new)) # matrix das distancias
      }
      
      hc <- hclust(mtx.dist, method = method) # procedimento hierarquico
@@ -144,7 +171,7 @@ Cluster <- function(data, titles = NA, hierarquic = TRUE, analysis = "Obs",
         m.groups  <- cbind(data, groups) # matriz com dados originais mais os grupos formados
      
      if (analysis == "VAR") {# novos grupos para as variaveis
-        m.groups <- cbind(colnames(data), groups) # matriz com dados originais mais os grupos formados
+        m.groups <- cbind(colnames(data.new), groups) # matriz com dados originais mais os grupos formados
         colnames(m.groups) <- c("Variaveis","Grupos")
         rownames(m.groups) <- NULL
      }

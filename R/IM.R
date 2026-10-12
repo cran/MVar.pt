@@ -1,3 +1,7 @@
+#' Função auxiliar interna IM
+#' 
+#' @param x Descrição do argumento
+#' @noRd
 IM <- function(data, names = TRUE) {
   # Converte para variaveis Dummy para execucao da Analise
   # de Correspondencia Multipla, ou seja, em 0 e 1, caso dados nominais
@@ -34,11 +38,11 @@ IM <- function(data, names = TRUE) {
         
         if (MConver[j]==Nivel[i]) MDummy[j,i] <- 1
     
-    if (names)
+    if (names) {
        colnames(MDummy) <- paste(colnames(data[k]),Nivel,sep=":") # Nomeia as colunas 
-    
-    if (names=="N")
+    } else {
        colnames(MDummy) <- Nivel # Nomeia as colunas  
+    }
     
     if (k==1) MFinal <- MDummy
     
@@ -48,5 +52,5 @@ IM <- function(data, names = TRUE) {
     
   }
   
-  return(mtxIndc=MFinal)
+  return(mtxIndc = MFinal)
 }
